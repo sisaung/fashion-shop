@@ -1,0 +1,55 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+
+    --font-heading:"serif";
+    --font-sans: "Poppins", sans-serif;
+    --color-pearl-bush-50: #f9f6f3;
+    --color-pearl-bush-100: #ebe3db;
+    --color-pearl-bush-200: #e0d3c8;
+    --color-pearl-bush-300: #ccb6a5;
+    --color-pearl-bush-400: #b79580;
+    --color-pearl-bush-500: #a87d67;
+    --color-pearl-bush-600: #9b6c5b;
+    --color-pearl-bush-700: #81584d;
+    --color-pearl-bush-800: #694943;
+    --color-pearl-bush-900: #563e38;
+    --color-pearl-bush-950: #2e1f1c;
+}
+
+/* first */
+/* --color-swirl-50: #f8f6f4;
+--color-swirl-100: #eeebe6;
+--color-swirl-200: #d1c7bd;
+--color-swirl-300: #c5b8ac;
+--color-swirl-400: #ad998a;
+--color-swirl-500: #9c8373;
+--color-swirl-600: #8f7467;
+--color-swirl-700: #785f56;
+--color-swirl-800: #624f4a;
+--color-swirl-900: #51413d;
+--color-swirl-950: #2a2220; */
+
+/* second */
+
+/* --color-tan-50: #f9f6f3;
+--color-tan-100: #f2ebe2;
+--color-tan-200: #e4d5c4;
+--color-tan-300: #cbad8d;
+--color-tan-400: #c09877;
+--color-tan-500: #b3805c;
+--color-tan-600: #a66e50;
+--color-tan-700: #8a5844;
+--color-tan-800: #70493c;
+--color-tan-900: #5b3d33;
+--color-tan-950: #311e19; */
+
+/* --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji"; */

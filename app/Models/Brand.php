@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+
+class Brand extends Model
+{
+    /** @use HasFactory<\Database\Factories\BrandFactory> */
+    use HasFactory;
+    protected $fillable = ['brand_name','brand_image','user_id'];
+
+    public function users() {
+
+        return $this->belongsTo(User::class);
+    }
+
+    public function getBrandImageAttribute($value) {
+
+        return $value ? asset(Storage::url($value)) : null;
+    }
+}
