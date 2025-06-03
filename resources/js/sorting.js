@@ -1,81 +1,36 @@
+import urlString from "./utils/urlString";
+
+   
 const handleSorting = () => {
-    const sortedElement = document.querySelectorAll("[data-sortby]");
+    // Delegate to the container to handle all sort clicks
+    const headerSortBy = document.querySelectorAll("th[data-sortby]");
 
+    headerSortBy.forEach((header) => {
+        const sortBy = header.dataset.sortby;
+        const ascBtn = header.querySelector('[data-sort-direction="asc"]');
+        const descBtn = header.querySelector('[data-sort-direction="desc"]');
 
-    // console.dir(sortedElement);
+        if (ascBtn) {
+            ascBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const url = urlString(sortBy, "asc");
+            //    ascBtn.href = url;
+                
+                window.location.href = url;
+            });
+        }
 
-    document.addEventListener("click", (e) => {
-
-        const sortDirectionBtn = e.target.closest("[data-sort-direction]");
-        if (!sortDirectionBtn) return;
-        e.preventDefault();
-        const sortDir = sortDirectionBtn.closest(".sort-dir");
-        const sortContainer = sortDir.closest("[data-sortby]");
-        console.dir(sortContainer);
-
-        // const sortDirection = sortDirectionBtn.dataset.sortDirection;
-        // console.log(sortDirection);
-
-        const params = document.location.search;
-        const urlSearchParams = new URLSearchParams(params);
-        const currentParams = Object.fromEntries(urlSearchParams);
-
-        // const newParamsAsc = {
-        //     ...currentParams,
-        //     sort_by: el.dataset.sortby,
-        //     sort_direction: "asc",
-        // };
-
-        // const newParamsDesc = {
-        //     ...currentParams,
-        //     sort_by: el.dataset.sortby,
-        //     sort_direction: "desc",
-        // };
-        // const newQueryStringAsc = new URLSearchParams(newParamsAsc).toString();
-        // const newQueryStringDesc = new URLSearchParams(
-        //     newParamsDesc
-        // ).toString();
+        if (descBtn) {
+            descBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const url = urlString(sortBy,"desc")
+                window.location.href = url;
+                // descBtn.href = url;
+            });
+        }
     });
 
-
-
-    // sortedElement.forEach((el) => {
-    //     console.dir(el.dataset.sortby);
-
-    //     const asc = document.querySelector('[data-sort-direction="asc"]');
-    //     const desc = document.querySelector('[data-sort-direction="desc"]');
-
-    //     const params = document.location.search;
-    //     const urlSearchParams = new URLSearchParams(params);
-    //     const currentParams = Object.fromEntries(urlSearchParams);
-
-    //     const newParamsAsc = {
-    //         ...currentParams,
-    //         sort_by: el.dataset.sortby,
-    //         sort_direction: "asc",
-    //     };
-
-    //     const newParamsDesc = {
-    //         ...currentParams,
-    //         sort_by: el.dataset.sortby,
-    //         sort_direction: "desc",
-    //     };
-    //     const newQueryStringAsc = new URLSearchParams(newParamsAsc).toString();
-    //     const newQueryStringDesc = new URLSearchParams(
-    //         newParamsDesc
-    //     ).toString();
-
-    //     asc.addEventListener("click", () => {
-    //         asc.href =
-    //             location.origin + location.pathname + "?" + newQueryStringAsc;
-    //     });
-
-    //     desc.addEventListener("click", () => {
-    //         desc.href =
-    //             location.origin + location.pathname + "?" + newQueryStringDesc;
-    //     });
-    // });
+  
 };
 
-export default handleSorting;
 document.addEventListener("DOMContentLoaded", handleSorting);

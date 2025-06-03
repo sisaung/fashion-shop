@@ -5,7 +5,7 @@
 
 
         @include('components.admin.breadcrumb', [
-            'currentPageTitle' => 'Brand List',
+            'currentPageTitle' => 'Manage Brand',
         ])
 
         @include('admin.brands.header')
@@ -15,84 +15,15 @@
                 <table class="w-full divide-y divide-gray-200">
                     <thead class="bg-stone-50">
                         <tr>
-                            <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500" >
+                            <th data-sortby="id" scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500">
 
-                                {{-- @include('components.admin.sortTable', [
-                                    'sortTitle' => 'ID',
-                                ]) --}}
-                                <div class="flex items-center gap-1" data-sortby="id">
-                                    <div class="flex flex-col sort-dir ">
-
-                                        <a data-sort-direction='asc'
-                                            class="hover:bg-stone-200 cursor-pointer duration-300 sort-direction">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor" class="size-2.5">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="m4.5 15.75 7.5-7.5 7.5 7.5" />
-                                            </svg>
-
-                                        </a>
-
-
-
-                                        <a data-sort-direction='desc'
-                                            class="hover:bg-stone-200 duration-300 cursor-pointer sort-direction">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor" class="size-2.5">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                            </svg>
-
-                                        </a>
-
-                                    </div>
-                                    <span>
-
-                                        ID
-
-                                    </span>
-                                </div>
-
+                                @include('components.admin.sortTable', ['sortTitle' => 'ID'])
 
                             </th>
-                            <th data-sortby="id" scope="col"
+                            <th data-sortby="brand_name" scope="col"
                                 class="px-4 py-3 text-left text-sm font-medium text-gray-500">
-                                {{-- @include('components.admin.sortTable', [
-                                    'sortTitle' => 'Brand Name',
-                                ]) --}}
+                                @include('components.admin.sortTable', ['sortTitle' => 'Brand Name'])
 
-                                <div class="flex items-center gap-1">
-                                    <div class="flex flex-col ">
-
-                                        <a data-sort-direction='asc'
-                                            class="hover:bg-stone-200 cursor-pointer duration-300 asc">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor" class="size-2.5">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="m4.5 15.75 7.5-7.5 7.5 7.5" />
-                                            </svg>
-
-                                        </a>
-
-
-
-                                        <a data-sort-direction='desc'
-                                            class="hover:bg-stone-200 duration-300 cursor-pointer ">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor" class="size-2.5">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                            </svg>
-
-                                        </a>
-
-                                    </div>
-                                    <span>
-
-                                        Brand Name
-
-                                    </span>
-                                </div>
                             </th>
 
                             <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500">
@@ -216,4 +147,5 @@
 
 @push('scripts')
     @vite(['resources/js/sorting.js'])
+    @vite(['resources/js/search.js'])
 @endpush
