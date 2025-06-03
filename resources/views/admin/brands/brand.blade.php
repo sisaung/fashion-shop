@@ -15,12 +15,12 @@
                 <table class="w-full divide-y divide-gray-200">
                     <thead class="bg-stone-50">
                         <tr>
-                            <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500" >
+                            <th  data-sortby="id" scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500" >
 
                                 {{-- @include('components.admin.sortTable', [
                                     'sortTitle' => 'ID',
                                 ]) --}}
-                                <div class="flex items-center gap-1" data-sortby="id">
+                                <div class="flex items-center gap-1">
                                     <div class="flex flex-col sort-dir ">
 
                                         <a data-sort-direction='asc'
@@ -55,7 +55,7 @@
 
 
                             </th>
-                            <th data-sortby="id" scope="col"
+                            <th data-sortby="brand_name" scope="col"
                                 class="px-4 py-3 text-left text-sm font-medium text-gray-500">
                                 {{-- @include('components.admin.sortTable', [
                                     'sortTitle' => 'Brand Name',
