@@ -15,35 +15,83 @@
                 <table class="w-full divide-y divide-gray-200">
                     <thead class="bg-stone-50">
                         <tr>
-                            <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500">
-                              <div class="flex items-center gap-1">
-                                <div class="flex flex-col ">
-                                    <a href="" class="hover:bg-stone-200 duration-300">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="size-2.5">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="m4.5 15.75 7.5-7.5 7.5 7.5" />
-                                        </svg>
+                            <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500" >
 
-                                    </a>
-                                    <a href="" class="hover:bg-stone-200 duration-300">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="size-2.5">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                        </svg>
+                                {{-- @include('components.admin.sortTable', [
+                                    'sortTitle' => 'ID',
+                                ]) --}}
+                                <div class="flex items-center gap-1" data-sortby="id">
+                                    <div class="flex flex-col sort-dir ">
 
-                                    </a>
+                                        <a data-sort-direction='asc'
+                                            class="hover:bg-stone-200 cursor-pointer duration-300 sort-direction">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="size-2.5">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                                            </svg>
 
+                                        </a>
+
+
+
+                                        <a data-sort-direction='desc'
+                                            class="hover:bg-stone-200 duration-300 cursor-pointer sort-direction">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="size-2.5">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                            </svg>
+
+                                        </a>
+
+                                    </div>
+                                    <span>
+
+                                        ID
+
+                                    </span>
                                 </div>
-                               <span>
-                                    ID
-                               </span>
-                              </div>
+
+
                             </th>
-                            <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500">
-                                <div class="flex items-center cursor-pointer">
-                                    <SortTable sort_by="brand_name">Brand Name</SortTable>
+                            <th data-sortby="id" scope="col"
+                                class="px-4 py-3 text-left text-sm font-medium text-gray-500">
+                                {{-- @include('components.admin.sortTable', [
+                                    'sortTitle' => 'Brand Name',
+                                ]) --}}
+
+                                <div class="flex items-center gap-1">
+                                    <div class="flex flex-col ">
+
+                                        <a data-sort-direction='asc'
+                                            class="hover:bg-stone-200 cursor-pointer duration-300 asc">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="size-2.5">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                                            </svg>
+
+                                        </a>
+
+
+
+                                        <a data-sort-direction='desc'
+                                            class="hover:bg-stone-200 duration-300 cursor-pointer ">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="size-2.5">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                            </svg>
+
+                                        </a>
+
+                                    </div>
+                                    <span>
+
+                                        Brand Name
+
+                                    </span>
                                 </div>
                             </th>
 
@@ -122,4 +170,50 @@
         @include('components.pagination', ['paginator' => $brands])
 
     </div>
+
+    {{-- <script>
+        const asc = document.querySelector('.asc');
+        const desc = document.querySelector('.desc');
+        const params = document.location.search;
+        const urlSearchParams = new URLSearchParams(params);
+        const currentParams = Object.fromEntries(urlSearchParams);
+
+
+        const sorting = (selector, sortBy, sortDirection) => {
+
+
+            const handleSort = (e) => {
+
+
+                const newParmsAsc = {
+                    ...currentParams,
+                    'sort_by': sortBy,
+                    'sort_direction': sortDirection
+
+                };
+
+
+                const newQueryStringAsc = new URLSearchParams(newParmsAsc).toString();
+
+                selector.href = location.origin + location.pathname + '?' + newQueryStringAsc;
+            }
+
+            selector.addEventListener('click', handleSort)
+        }
+
+
+        if (asc) {
+            sorting(asc, 'id', 'asc');
+        }
+
+        if (desc) {
+
+            sorting(desc, 'id', 'desc');
+        }
+
+    </script> --}}
 @endsection
+
+@push('scripts')
+    @vite(['resources/js/sorting.js'])
+@endpush
