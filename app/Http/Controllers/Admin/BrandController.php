@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
 use App\Models\Brand;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
@@ -71,6 +73,7 @@ class BrandController extends Controller
            $path =  $request->file('brand_image')->store('brand_images','public');
         }
 
+
          Brand::create([
 
             'brand_name' => $request->brand_name,
@@ -92,24 +95,94 @@ class BrandController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Brand $brand)
+    public function edit($id)
     {
-        //
+        $validator =  Validator::make(['id' => $id],[
+            'id' => 'required|numeric|exists:brands'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('brand.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $brand = Brand::find($id);
+        return view('admin.brands.brandEdit',['brand' => $brand]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBrandRequest $request, Brand $brand)
+    public function update(UpdateBrandRequest $request, $id)
     {
-        //
+
+
+
+        $validator =  Validator::make(['id' => $id],[
+            'id' => 'required|numeric|exists:brands'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('brand.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+
+        $brand = Brand::find($id);
+        $brand->brand_name = $request->brand_name;
+
+
+
+
+        $path = null;
+
+        if($request->hasFile('brand_image')) {
+            $path = $request->file('brand_image')->store('brand_images','public');
+            if($brand->brand_image) {
+                Storage::delete($request->brand_image);
+             }
+
+
+             $brand->brand_image = $path;
+
+        }else {
+           $start = strpos($request->old_brand_image, 'brand_images/');
+
+           $old_brand_image = substr($request->old_brand_image, $start);
+
+            $brand->brand_image = $old_brand_image;
+        }
+
+
+
+
+        $brand->save();
+        return redirect()->route('brand.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Brand $brand)
+    public function destroy($id)
     {
-        //
+
+
+
+       $validator =  Validator::make(['id' => $id],[
+            'id' => 'required|numeric|exists:brands'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('brand.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $brand = Brand::find($id);
+        $brand->delete();
+
+        return redirect()->route('brand.index');
     }
 }

@@ -6,8 +6,11 @@
                 d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
         </svg>
 
-        <input type="text" placeholder="search"
-            class="search border px-8 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 focus:outline-none border-stone-300 rounded ps-10 py-2 ">
+        <div class="relative">
+            <input type="text" placeholder="search"
+                class="search border px-8 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 focus:outline-none border-stone-300 rounded ps-10 py-2 ">
+        </div>
+
     </div>
     <div>
         <a href="{{ route('brand.create') }}"
