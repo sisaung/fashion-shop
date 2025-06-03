@@ -7,7 +7,7 @@
         </svg>
 
         <input type="text" placeholder="search"
-            class="border px-8 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 focus:outline-none border-stone-300 rounded ps-10 py-2 ">
+            class="search border px-8 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 focus:outline-none border-stone-300 rounded ps-10 py-2 ">
     </div>
     <div>
         <a href="{{ route('brand.create') }}"

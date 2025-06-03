@@ -147,4 +147,5 @@
 
 @push('scripts')
     @vite(['resources/js/sorting.js'])
+    @vite(['resources/js/search.js'])
 @endpush
