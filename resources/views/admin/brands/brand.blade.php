@@ -101,7 +101,7 @@
                                     <!-- Dropdown menu -->
                                     <div id="dropdown-{{ $brand->id }}"
                                         class="z-10 hidden bg-white menu-box-shadow -translate-x-6 divide-y divide-gray-100 rounded-lg w-40">
-                                        <div class="py-3 flex flex-col gap-y-2 justify-start items-start text-sm text-gray-600"
+                                        <div class="py-3 flex flex-col justify-start items-start text-sm text-gray-600"
                                             aria-labelledby="dropdownDefaultButton-{{ $brand->id }}">
 
                                             {{-- delete btn for modal --}}
