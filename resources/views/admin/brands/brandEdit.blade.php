@@ -8,6 +8,7 @@
     <h1 class="mt-10 text-xl px-5"> Edit Brand </h1>
     <div>
 
+
         <form action="{{ route('brand.update', ['brand' => $brand->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -26,8 +27,7 @@
                     <label for="brand_image" class="block leading-7 text-sm text-gray-600">Brand Image</label>
 
                     <input type="hidden" name="old_brand_image" value="{{ $brand->brand_image }}">
-                    <input type="file" name="brand_image"  class="file hidden"
-                        accept="image/*">
+                    <input type="file" name="brand_image" class="file hidden" accept="image/*">
                     <div class="cursor-pointer upload ">
                         @if ($brand->brand_image)
                             <img name="brand_image" src="{{ $brand->brand_image }}" alt="{{ $brand->brand_name }}"
