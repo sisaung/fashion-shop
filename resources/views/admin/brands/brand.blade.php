@@ -1,7 +1,7 @@
 @extends('layout.dashboard')
 
 @section('content')
-    <div>
+    <div class="pagination-wrapper">
 
 
         @include('components.admin.breadcrumb', [
@@ -262,4 +262,5 @@
     @vite(['resources/js/sorting.js'])
     @vite(['resources/js/search.js'])
     @vite(['resources/js/modalDelete.js'])
+    @vite(['resources/js/pagination.js'])
 @endpush
