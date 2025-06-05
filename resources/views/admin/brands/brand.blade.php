@@ -1,7 +1,7 @@
 @extends('layout.dashboard')
 
 @section('content')
-    <div class="pagination-wrapper">
+    <div class="pagination-wrapper sorting-wrapper">
 
 
         @include('components.admin.breadcrumb', [
