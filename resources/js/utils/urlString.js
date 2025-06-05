@@ -1,5 +1,5 @@
   const urlString = (sortBy,sortDirection,q) => {
-        
+
         const params = document.location.search;
         const urlSearchParams = new URLSearchParams(params);
         const currentParams = Object.fromEntries(urlSearchParams);
@@ -9,13 +9,15 @@
                     sort_by:sortBy,
                     sort_direction:sortDirection
                 }
-            
+
 
 
         const queryString = new URLSearchParams(newParams).toString();
-       
+
+        // console.log( location.origin + location.pathname + "?" + queryString);
+
         return  location.origin + location.pathname + "?" + queryString
-        
+
 
     }
 

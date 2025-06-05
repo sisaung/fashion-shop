@@ -1,36 +1,53 @@
+import ajax from "./utils/ajax";
 import urlString from "./utils/urlString";
 
-   
-const handleSorting = () => {
-    // Delegate to the container to handle all sort clicks
-    const headerSortBy = document.querySelectorAll("th[data-sortby]");
+// export const initializeSorting = () => {
+//     const wrapper = $(".sorting-wrapper");
 
-    headerSortBy.forEach((header) => {
-        const sortBy = header.dataset.sortby;
-        const ascBtn = header.querySelector('[data-sort-direction="asc"]');
-        const descBtn = header.querySelector('[data-sort-direction="desc"]');
+//     if (!wrapper.length) return;
 
-        if (ascBtn) {
-            ascBtn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                const url = urlString(sortBy, "asc");
-            //    ascBtn.href = url;
-                
-                window.location.href = url;
-            });
-        }
+//     wrapper.on("click", "th[data-sortby], [data-sort-direction]", function (e) {
+//         e.stopPropagation();
+//         e.preventDefault();
 
-        if (descBtn) {
-            descBtn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                const url = urlString(sortBy,"desc")
-                window.location.href = url;
-                // descBtn.href = url;
-            });
+//         // We get the closest th[data-sortby] and [data-sort-direction] relative to clicked element
+//         const sortBy = $(e.target).closest("th[data-sortby]");
+//         const sortDirection = $(e.target).closest("[data-sort-direction]");
+
+//         if (sortBy.length && sortDirection.length) {
+//             const url = urlString(
+//                 sortBy.data("sortby"),
+//                 sortDirection.data("sortDirection")
+//             );
+
+//             console.log("Sorting URL:", url);
+
+//             ajax(url, ".sorting-wrapper", wrapper);
+//         }
+//     });
+// };
+
+// $(document).ready(initializeSorting);
+
+const initializeSorting = () => {
+    const wrapper = document.querySelector(".sorting-wrapper");
+
+    if (!wrapper) return;
+    wrapper.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const sortBy = e.target.closest("th[data-sortby]");
+        const sortDirection = e.target.closest("[data-sort-direction]");
+
+        if (sortBy && sortDirection) {
+            const url = urlString(
+                sortBy.dataset.sortby,
+                sortDirection.dataset.sortDirection
+            );
+            ajax(url, ".sorting-wrapper", wrapper);
         }
     });
-
-  
 };
 
-document.addEventListener("DOMContentLoaded", handleSorting);
+document.addEventListener("DOMContentLoaded", initializeSorting);
+export default initializeSorting;

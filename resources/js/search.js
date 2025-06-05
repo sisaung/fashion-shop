@@ -1,4 +1,5 @@
-const handleSearch = () => {
+
+const initializeSearch = () => {
     const search = document.querySelector(".search");
     search.focus();
 
@@ -65,4 +66,6 @@ const handleSearch = () => {
     search.addEventListener("keyup", handleKeyUp);
 };
 
-document.addEventListener("DOMContentLoaded", handleSearch);
+// document.addEventListener("DOMContentLoaded", handleSearch);
+$(document).ready(initializeSearch);
+
