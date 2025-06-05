@@ -50,7 +50,7 @@ class BrandController extends Controller
         ]);
 
         if($request->ajax()) {
-            return view('admin.brands.brand',['brands'=> $brands]);
+            return view('admin.brands.brand',['brands'=> $brands])->render();
         }
 
 

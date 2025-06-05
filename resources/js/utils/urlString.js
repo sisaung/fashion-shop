@@ -14,7 +14,7 @@
 
         const queryString = new URLSearchParams(newParams).toString();
 
-        console.log( location.origin + location.pathname + "?" + queryString);
+        // console.log( location.origin + location.pathname + "?" + queryString);
 
         return  location.origin + location.pathname + "?" + queryString
 
