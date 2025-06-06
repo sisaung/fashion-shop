@@ -42,6 +42,8 @@
 
                 {{-- Page Numbers --}}
 
+
+
                 @foreach ($paginator->getUrlRange($paginator->currentPage() <= 3 ? 1 : $paginator->currentPage() - 3, $paginator->currentPage() >= $paginator->lastPage() - 2 ? $paginator->lastPage() : $paginator->currentPage() + 3) as $page => $url)
                     @if ($page == $paginator->currentPage())
                         <span

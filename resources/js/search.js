@@ -67,5 +67,3 @@ const initializeSearch = () => {
 };
 
 // document.addEventListener("DOMContentLoaded", handleSearch);
-$(document).ready(initializeSearch);
-

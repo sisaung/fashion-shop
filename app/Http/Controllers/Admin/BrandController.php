@@ -19,13 +19,13 @@ class BrandController extends Controller
     public function index(Request $request)
     {
 
-        $validSortColumns = ['brand_name','id'];
-        $sortBy = in_array($request->input('sort_by'),$validSortColumns) ? $request->input('sort_by') : 'id';
+        $validSortColumns = ['brand_name', 'id'];
+        $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'id';
 
-        $sortDirection = in_array($request->input('sort_direction'),['asc','desc']) ? $request->input('sort_direction') : 'desc';
+        $sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
 
 
-        $limit = $request->input('limit',5);
+        $limit = $request->input('limit', 5);
 
         $limit = is_numeric($limit) && $limit > 0 ? $limit : 5;
 
@@ -33,13 +33,12 @@ class BrandController extends Controller
 
         $query = Brand::query();
 
-        if($searchTerm) {
+        if ($searchTerm) {
 
-            $query->where('brand_name','like',"%$searchTerm%");
-
+            $query->where('brand_name', 'like', "%$searchTerm%");
         }
 
-        $query->orderBy($sortBy,$sortDirection);
+        $query->orderBy($sortBy, $sortDirection);
 
         $brands = $query->paginate($limit);
         $brands->appends([
@@ -49,12 +48,12 @@ class BrandController extends Controller
             'limit' => $limit
         ]);
 
-        if($request->ajax()) {
-            return view('admin.brands.brand',['brands'=> $brands])->render();
+        if ($request->ajax()) {
+            return view('admin.brands.brand', ['brands' => $brands])->render();
         }
 
 
-        return view('admin.brands.brand',['brands'=> $brands]);
+        return view('admin.brands.brand', ['brands' => $brands]);
     }
 
     /**
@@ -72,12 +71,12 @@ class BrandController extends Controller
     {
         $path = null;
 
-        if($request->hasFile('brand_image')) {
-           $path =  $request->file('brand_image')->store('brand_images','public');
+        if ($request->hasFile('brand_image')) {
+            $path =  $request->file('brand_image')->store('brand_images', 'public');
         }
 
 
-         Brand::create([
+        Brand::create([
 
             'brand_name' => $request->brand_name,
             'brand_image' => $path,
@@ -100,7 +99,7 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        $validator =  Validator::make(['id' => $id],[
+        $validator =  Validator::make(['id' => $id], [
             'id' => 'required|numeric|exists:brands'
         ]);
 
@@ -111,7 +110,7 @@ class BrandController extends Controller
         }
 
         $brand = Brand::find($id);
-        return view('admin.brands.brandEdit',['brand' => $brand]);
+        return view('admin.brands.brandEdit', ['brand' => $brand]);
     }
 
     /**
@@ -122,7 +121,7 @@ class BrandController extends Controller
 
 
 
-        $validator =  Validator::make(['id' => $id],[
+        $validator =  Validator::make(['id' => $id], [
             'id' => 'required|numeric|exists:brands'
         ]);
 
@@ -141,19 +140,18 @@ class BrandController extends Controller
 
         $path = null;
 
-        if($request->hasFile('brand_image')) {
-            $path = $request->file('brand_image')->store('brand_images','public');
-            if($brand->brand_image) {
+        if ($request->hasFile('brand_image')) {
+            $path = $request->file('brand_image')->store('brand_images', 'public');
+            if ($brand->brand_image) {
                 Storage::delete($request->brand_image);
-             }
+            }
 
 
-             $brand->brand_image = $path;
+            $brand->brand_image = $path;
+        } else {
+            $start = strpos($request->old_brand_image, 'brand_images/');
 
-        }else {
-           $start = strpos($request->old_brand_image, 'brand_images/');
-
-           $old_brand_image = substr($request->old_brand_image, $start);
+            $old_brand_image = substr($request->old_brand_image, $start);
 
             $brand->brand_image = $old_brand_image;
         }
@@ -173,7 +171,7 @@ class BrandController extends Controller
 
 
 
-       $validator =  Validator::make(['id' => $id],[
+        $validator =  Validator::make(['id' => $id], [
             'id' => 'required|numeric|exists:brands'
         ]);
 

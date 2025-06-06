@@ -1,5 +1,4 @@
-import reinitializeFlowbite from "../reinitializeFlowbite";
-import initializeSorting from "../sorting";
+import { initDropdowns, initModals, initFlowbite } from 'flowbite'
 
 const ajax = async (url, selector, renderSelector) => {
     try {
@@ -11,14 +10,25 @@ const ajax = async (url, selector, renderSelector) => {
 
         const htmlText = await res.text();
 
-        const newContent = new DOMParser()
+        const parsedHtml = new DOMParser()
             .parseFromString(htmlText, "text/html")
-            .querySelector(selector).innerHTML;
+        
+       
+        
+        const selectedElement = parsedHtml.querySelector(selector);
 
-        renderSelector.innerHTML = newContent;
+        console.log(selectedElement);
+        
+    
+        if (!selectedElement) {
+            console.warn(`Selector "${selector}" not found in the response HTML.`);
+            return;
+        }
 
-        reinitializeFlowbite();
-        initializeSorting();
+        renderSelector.innerHTML = selectedElement.innerHTML;
+
+        // initializePagination()
+        initFlowbite()
 
         window.history.pushState({}, "", url);
     } catch (error) {

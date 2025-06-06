@@ -12,22 +12,14 @@ const initializePagination = () => {
 
 
         const link = e.target.closest("a");
-        // console.log(first)
+      
+        
+       
 
         if (link && link.href.includes("page=")) {
             ajax(link.href, ".brand", wrapper);
         }
     });
-
-    // const handlePaginate = async (e) => {
-    //     e.preventDefault();
-
-    //     const link = e.target.closest("a");
-
-    //     if (link && link.href.includes("page=")) {
-    //         ajax(link.href, ".pagination-wrapper", wrapper);
-    //     }
-    // };
 
     // backward forward
 
@@ -51,7 +43,15 @@ const initializePagination = () => {
         }
     });
 
+    //edit form for band
+
+   
+
+//    wrapper.addEventListener('click',handleEditForm)
+
+
     // document.addEventListener("click", handlePaginate);
 };
 
 document.addEventListener("DOMContentLoaded", initializePagination);
+export default initializePagination

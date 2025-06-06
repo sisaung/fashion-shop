@@ -10,8 +10,8 @@
 
         @include('admin.brands.header')
 
-        <div class="brand brand-modal ">
-            <section class="mt-10 px-5 sorting-wrapper drop-down-modal ">
+        <div class="brand brand-modal sorting-wrapper ">
+            <section class="mt-10 px-5  drop-down-modal ">
                 <div class="w-full overflow-x-auto rounded-lg border border-gray-200 ">
                     <table class="w-full divide-y divide-gray-200">
                         <thead class="bg-stone-50">
@@ -112,9 +112,7 @@
                                                 <button data-modal-target="popup-modal-{{ $brand->id }}"
                                                     data-modal-toggle="popup-modal-{{ $brand->id }}"
                                                     class=" w-full px-5 hover:bg-gray-100 inline-flex py-2 items-center gap-x-3 cursor-pointer"
-                                                    type="button"
-                                                    data-confirm-delete
-                                                    >
+                                                    type="button" data-confirm-delete>
 
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -141,7 +139,7 @@
 
                                                     </button>
                                                 </form>
-                                                <form class="w-full"
+                                                <form class="w-full edit-link" id="form-edit"
                                                     action="{{ route('brand.edit', ['brand' => $brand->id]) }}">
                                                     <button
                                                         class="w-full px-5 hover:bg-gray-100 inline-flex py-2 items-center gap-x-3 cursor-pointer">
@@ -220,63 +218,20 @@
             </section>
 
 
-            <section class="pagination-wrapper">
+            <div class="pagination-wrapper">
                 @include('components.pagination', ['paginator' => $brands])
 
-            </section>
+            </div>
         </div>
     </div>
-
-    {{-- <script>
-        const asc = document.querySelector('.asc');
-        const desc = document.querySelector('.desc');
-        const params = document.location.search;
-        const urlSearchParams = new URLSearchParams(params);
-        const currentParams = Object.fromEntries(urlSearchParams);
-
-
-        const sorting = (selector, sortBy, sortDirection) => {
-
-
-            const handleSort = (e) => {
-
-
-                const newParmsAsc = {
-                    ...currentParams,
-                    'sort_by': sortBy,
-                    'sort_direction': sortDirection
-
-                };
-
-
-                const newQueryStringAsc = new URLSearchParams(newParmsAsc).toString();
-
-                selector.href = location.origin + location.pathname + '?' + newQueryStringAsc;
-            }
-
-            selector.addEventListener('click', handleSort)
-        }
-
-
-        if (asc) {
-            sorting(asc, 'id', 'asc');
-        }
-
-        if (desc) {
-
-            sorting(desc, 'id', 'desc');
-        }
-
-    </script> --}}
 @endsection
 
 @push('scripts')
     @vite(['resources/js/flowbite/flowbite.min.js'])
-    @vite(['resources/js/reinitializeFlowbite.js'])
+    {{-- @vite(['resources/js/reinitializeFlowbite.js']) --}}
     @vite(['resources/js/sorting.js'])
     @vite(['resources/js/search.js'])
-    @vite(['resources/js/brandModal.js'])
+    {{-- @vite(['resources/js/brandModal.js']) --}}
     @vite(['resources/js/pagination.js'])
-    @vite(['resources/js/modal.js'])
-
+    {{-- @vite(['resources/js/modal.js']) --}}
 @endpush
