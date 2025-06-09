@@ -258,8 +258,5 @@
     @vite(['resources/js/flowbite/flowbite.min.js'])
     @vite(['resources/js/sorting.js'])
     @vite(['resources/js/search.js'])
-    {{-- @vite(['resources/js/brandModal.js']) --}}
     @vite(['resources/js/pagination.js'])
-    {{-- @vite(['resources/js/editForm.js']) --}}
-    {{-- @vite(['resources/js/modal.js']) --}}
 @endpush
