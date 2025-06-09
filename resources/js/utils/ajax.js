@@ -34,7 +34,7 @@ const ajax = async (url, selector, renderSelector) => {
         renderSelector.innerHTML = selectedElement.innerHTML;
 
         // initializePagination()
-        initFlowbite();
+        // initFlowbite();
         // initializeEditForm();
 
 

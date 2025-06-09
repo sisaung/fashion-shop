@@ -48,9 +48,9 @@ class BrandController extends Controller
             'limit' => $limit
         ]);
 
-        if ($request->ajax()) {
-            return view('admin.brands.brand', ['brands' => $brands])->render();
-        }
+        // if ($request->ajax()) {
+        //     return view('admin.brands.brand', ['brands' => $brands])->render();
+        // }
 
 
         return view('admin.brands.brand', ['brands' => $brands]);
