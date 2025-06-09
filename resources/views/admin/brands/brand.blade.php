@@ -10,7 +10,7 @@
 
         @include('admin.brands.header')
 
-        <div class="brand brand-modal sorting-wrapper ">
+        <div id="brand-list-container">
             <section class="mt-10 px-5  drop-down-modal ">
                 <div class="w-full overflow-x-auto rounded-lg border border-gray-200 ">
                     <table class="w-full divide-y divide-gray-200">
@@ -123,6 +123,29 @@
                                                     Delete
                                                 </button>
 
+                                                {{-- <form method="GET" class="w-full"
+                                                    action="{{ route('brand.edit', ['brand' => $brand->id]) }}">
+                                                    <button type="submit"
+                                                        class="w-full px-5 hover:bg-gray-100 inline-flex py-2 items-center gap-x-3 cursor-pointer">
+
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                            class="size-4 text-gray-400">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                        </svg>
+                                                        Edit
+
+                                                    </button>
+                                                </form> --}}
+
+                                                <button type="button"
+                                                    class="edit-brand-btn w-full px-5 hover:bg-gray-100 inline-flex py-2 items-center gap-x-3 cursor-pointer"
+                                                    data-edit-url="{{ route('brand.edit', ['brand' => $brand->id]) }}">
+                                                    <!-- SVG icon -->
+                                                    Edit
+                                                </button>
+
                                                 <form id="delete-form-{{ $brand->id }}" class="hidden"
                                                     action="{{ route('brand.destroy', ['brand' => $brand]) }}"
                                                     method="POST">
@@ -139,21 +162,7 @@
 
                                                     </button>
                                                 </form>
-                                                <form class="w-full edit-link" id="form-edit"
-                                                    action="{{ route('brand.edit', ['brand' => $brand->id]) }}">
-                                                    <button
-                                                        class="w-full px-5 hover:bg-gray-100 inline-flex py-2 items-center gap-x-3 cursor-pointer">
 
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                            class="size-4 text-gray-400">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                                        </svg>
-                                                        Edit
-
-                                                    </button>
-                                                </form>
                                             </div>
                                         </div>
 
@@ -205,8 +214,6 @@
                                             </div>
                                         </div>
 
-
-
                                     </td>
                                 </tr>
                             @endforeach
@@ -223,15 +230,18 @@
 
             </div>
         </div>
+
+
+
     </div>
 @endsection
 
 @push('scripts')
     @vite(['resources/js/flowbite/flowbite.min.js'])
-    {{-- @vite(['resources/js/reinitializeFlowbite.js']) --}}
     @vite(['resources/js/sorting.js'])
     @vite(['resources/js/search.js'])
     {{-- @vite(['resources/js/brandModal.js']) --}}
     @vite(['resources/js/pagination.js'])
+    @vite(['resources/js/editForm.js'])
     {{-- @vite(['resources/js/modal.js']) --}}
 @endpush

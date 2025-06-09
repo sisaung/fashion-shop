@@ -2,22 +2,23 @@ import ajax from "./utils/ajax";
 
 const initializePagination = () => {
 
-    const wrapper = document.querySelector(".brand");
+    const container = document.getElementById("brand-list-container");
 
-    if (!wrapper) return;
 
-    wrapper.addEventListener("click", (e) => {
+    if (!container) return;
+
+    container.addEventListener("click", (e) => {
         e.preventDefault();
-        e.stopPropagation();
+        // e.stopPropagation();
 
 
         const link = e.target.closest("a");
-      
-        
-       
+
+
+
 
         if (link && link.href.includes("page=")) {
-            ajax(link.href, ".brand", wrapper);
+            ajax(link.href, "#brand-list-container", container);
         }
     });
 
@@ -37,7 +38,7 @@ const initializePagination = () => {
             const newContent = new DOMParser()
                 .parseFromString(html, "text/html")
                 .querySelector(".brand").innerHTML;
-            wrapper.innerHTML = newContent;
+            container.innerHTML = newContent;
         } catch (err) {
             console.error("Popstate error:", err);
         }
@@ -45,7 +46,7 @@ const initializePagination = () => {
 
     //edit form for band
 
-   
+
 
 //    wrapper.addEventListener('click',handleEditForm)
 

@@ -1,41 +1,15 @@
 import ajax from "./utils/ajax";
 import urlString from "./utils/urlString";
 
-// export const initializeSorting = () => {
-//     const wrapper = $(".sorting-wrapper");
 
-//     if (!wrapper.length) return;
-
-//     wrapper.on("click", "th[data-sortby], [data-sort-direction]", function (e) {
-//         e.stopPropagation();
-//         e.preventDefault();
-
-//         // We get the closest th[data-sortby] and [data-sort-direction] relative to clicked element
-//         const sortBy = $(e.target).closest("th[data-sortby]");
-//         const sortDirection = $(e.target).closest("[data-sort-direction]");
-
-//         if (sortBy.length && sortDirection.length) {
-//             const url = urlString(
-//                 sortBy.data("sortby"),
-//                 sortDirection.data("sortDirection")
-//             );
-
-//             console.log("Sorting URL:", url);
-
-//             ajax(url, ".sorting-wrapper", wrapper);
-//         }
-//     });
-// };
-
-// $(document).ready(initializeSorting);
 
 const initializeSorting = () => {
-    const wrapper = document.querySelector(".sorting-wrapper");
+    const container = document.getElementById("brand-list-container");
 
-    if (!wrapper) return;
-    wrapper.addEventListener("click", (e) => {
+    if (!container) return;
+    container.addEventListener("click", (e) => {
         e.preventDefault();
-        e.stopPropagation();
+        // e.stopPropagation();
         const sortBy = e.target.closest("th[data-sortby]");
         const sortDirection = e.target.closest("[data-sort-direction]");
 
@@ -44,7 +18,7 @@ const initializeSorting = () => {
                 sortBy.dataset.sortby,
                 sortDirection.dataset.sortDirection
             );
-            ajax(url, ".sorting-wrapper", wrapper);
+            ajax(url, "#brand-list-container", container);
         }
     });
 };
