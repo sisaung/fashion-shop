@@ -53,7 +53,7 @@ class BrandController extends Controller
         // }
 
 
-        return view('admin.brands.brand', ['brands' => $brands]);
+        return view('admin.brands.index', ['brands' => $brands]);
     }
 
     /**
@@ -61,7 +61,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('admin.brands.brandCreate');
+        return view('admin.brands.create');
     }
 
     /**
@@ -112,7 +112,7 @@ class BrandController extends Controller
         }
 
         $brand = Brand::find($id);
-        return view('admin.brands.brandEdit', ['brand' => $brand, 'sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
+        return view('admin.brands.edit', ['brand' => $brand, 'sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }
 
     /**
