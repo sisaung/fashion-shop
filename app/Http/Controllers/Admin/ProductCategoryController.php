@@ -67,6 +67,7 @@ class ProductCategoryController extends Controller
      */
     public function store(StoreProductCategoryRequest $request)
     {
+       
         ProductCategory::create([
             'category_name' => $request->category_name,
             'user_id' => Auth::id()
@@ -104,9 +105,26 @@ class ProductCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)
+    public function update(UpdateProductCategoryRequest $request, $id)
     {
-        //
+
+
+        $validator =  Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:brands'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('brand.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+
+        $productCategory = ProductCategory::find($id);
+        $productCategory->category_name = $request->category_name;
+
+        $productCategory->save();
+        return redirect()->route('product-category.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->search]);
     }
 
     /**
