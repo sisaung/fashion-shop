@@ -66,4 +66,4 @@ const initializeSearch = () => {
     search.addEventListener("keyup", handleKeyUp);
 };
 
-// document.addEventListener("DOMContentLoaded", handleSearch);
+document.addEventListener("DOMContentLoaded", initializeSearch);

@@ -25,8 +25,12 @@ class UpdateBrandRequest extends FormRequest
         return [
 
             'brand_name' => 'required|string|min:3|max:50|unique:brands,brand_name,' . $this->route('brand'),
-
             'brand_image' => 'nullable|image|mimes:png,jpg,jpeg',
+            // 'sort_by' => 'nullabel',
+            // 'sort_direction' => 'nullabel',
+            // 'limit' => 'nullabel',
+            // 'page' => 'nullabel',
+
 
         ];
     }
