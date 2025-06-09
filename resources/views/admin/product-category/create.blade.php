@@ -7,7 +7,7 @@
     ])
     <h1 class="mt-10 text-xl px-5"> Create Product Category </h1>
     <div>
-        <form action="{{ route('product-category.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('product-category.store') }}" method="POST">
             @csrf
 
             <div class="lg:w-2/6 md:w-1/2  rounded-lg p-8 flex flex-col w-full mt-10 md:mt-0">
@@ -33,5 +33,5 @@
     </div>
 @endsection
 @push('scripts')
-    @vite(['resources/js/fileUpload.js'])
+    {{-- @vite(['resources/js/fileUpload.js']) --}}
 @endpush
