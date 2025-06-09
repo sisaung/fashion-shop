@@ -13,9 +13,15 @@
             <div class="lg:w-2/6 md:w-1/2  rounded-lg p-8 flex flex-col w-full mt-10 md:mt-0">
 
                 <div class="relative mb-4">
-                    <label for="brand_name" class="leading-7 text-sm text-gray-600">Brand Name</label>
+                    <label for="brand_name"
+                        class="@error('brand_name')
+                        text-red-500
+                    @enderror leading-7 text-sm text-gray-600">Brand
+                        Name</label>
                     <input type="text" id="brand_name" name="brand_name" value="{{ old('brand_name') }}"
-                        class="w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                        class="w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out  @error('brand_name')
+                        is-invalid
+                        @enderror ">
                     @error('brand_name')
                         <p class="text-sm text-red-500"> {{ $message }}</p>
                     @enderror
@@ -47,6 +53,5 @@
     </div>
 @endsection
 @push('scripts')
-
-@vite(['resources/js/fileUpload.js'])
+    @vite(['resources/js/fileUpload.js'])
 @endpush

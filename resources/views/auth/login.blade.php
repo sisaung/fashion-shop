@@ -14,18 +14,26 @@
                     <h2 class="text-gray-900 text-lg font-medium title-font mb-5">Login</h2>
 
                     <div class="relative mb-4">
-                        <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
+                        <label for="email" class="leading-7  @error('email')
+                                text-red-500
+                            @enderror text-sm text-gray-600">Email</label>
                         <input type="email" id="email" name="email" value="{{ old('email') }}"
-                            class="w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            class="w-full @error('email')
+                                is-invalid
+                            @enderror bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                         @error('email')
                             <p class="text-sm text-red-500"> {{ $message }}</p>
                         @enderror
                     </div>
                     <div class="relative mb-4">
-                        <label for="password" class="leading-7 text-sm text-gray-600">Password</label>
+                        <label for="password" class="@error('password')
+                            text-red-500
+                        @enderror leading-7 text-sm text-gray-600">Password</label>
                         <input type="password" id="password" name="password"
-                            class="w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                        @error('email')
+                            class="w-full  @error('password')
+                                is-invalid
+                            @enderror bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                        @error('password')
                             <p class="text-sm text-red-500"> {{ $message }}</p>
                         @enderror
                     </div>

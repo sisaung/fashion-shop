@@ -24,10 +24,14 @@
                     <input type="hidden" name="page" value="{{ old('page', $page) }}">
                     <input type="hidden" name="search" value="{{ old('page', $q) }}">
 
-                    <label for="category_name" class="leading-7 text-sm text-gray-600">Product Category Name</label>
+                    <label for="category_name" class="@error('category_name')
+                        text-red-500
+                        @enderror leading-7 text-sm text-gray-600">Product Category Name</label>
                     <input type="text" id="category_name" name="category_name"
                         value="{{ old('category_name', $productCategory->category_name) }}"
-                        class="w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                        class="w-full @error('category_name')
+                        is-invalid
+                        @enderror bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                     @error('category_name')
                         <p class="text-sm text-red-500"> {{ $message }}</p>
                     @enderror

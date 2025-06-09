@@ -57,6 +57,10 @@
 /* --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji"; */
+
+.is-invalid {
+    @apply border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500
+}
 .clear-search {
     @apply bg-stone-200 size-4 text-gray-500 cursor-pointer rounded-full absolute  right-0 -translate-x-2/3 top-3 inline-flex justify-center items-center
 }
