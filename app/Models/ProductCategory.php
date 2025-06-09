@@ -12,6 +12,11 @@ class ProductCategory extends Model
 
     protected $fillable = ['category_name','user_id'];
 
+    public function productTypes() {
+
+        return $this->hasMany(ProductType::class);
+    }
+
     public function user()
     {
 
