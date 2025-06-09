@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\ProductCategory;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -23,8 +24,9 @@ class ProductCategorySeeder extends Seeder
             ["category_name" => "Bags"]
         ];
 
+        $now = Carbon::now();
 
-        $productCategories =  array_map(fn($category) => ["category_name" => $category['category_name'], 'user_id' => 1, 'created_at' => now(), 'updated_at' => now()], $productCategories);
+        $productCategories =  array_map(fn($category) => ["category_name" => $category['category_name'], 'user_id' => 1, 'created_at' => $now, 'updated_at' => $now], $productCategories);
 
 
         foreach ($productCategories as $category) {
