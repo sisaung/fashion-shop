@@ -97,8 +97,10 @@ class BrandController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
+
+
         $validator =  Validator::make(['id' => $id], [
             'id' => 'required|numeric|exists:brands'
         ]);
@@ -110,7 +112,7 @@ class BrandController extends Controller
         }
 
         $brand = Brand::find($id);
-        return view('admin.brands.brandEdit', ['brand' => $brand]);
+        return view('admin.brands.brandEdit', ['brand' => $brand, 'sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }
 
     /**
@@ -157,10 +159,8 @@ class BrandController extends Controller
         }
 
 
-
-
         $brand->save();
-        return redirect()->route('brand.index');
+        return redirect()->route('brand.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->search]);
     }
 
     /**

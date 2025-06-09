@@ -7,6 +7,7 @@ const initializeSorting = () => {
 
     if (!wrapper) return;
     wrapper.addEventListener("click", (e) => {
+        e.preventDefault();
         e.stopPropagation();
         const sortBy = e.target.closest("th[data-sortby]");
         const sortDirection = e.target.closest("[data-sort-direction]");
