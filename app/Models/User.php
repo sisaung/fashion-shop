@@ -47,10 +47,15 @@ class User extends Authenticatable
         ];
     }
 
-    public function brands() {
+    public function brands()
+    {
 
         return $this->hasMany(Brand::class);
     }
 
+    public function productCategoires()
+    {
 
+        return $this->hasMany(ProductCategory::class);
+    }
 }
