@@ -15,8 +15,7 @@ class ProductTypeSeeder extends Seeder
      */
     public function run()
     {
-        // Fallback user ID for seeding
-        $defaultUserId = 1; // Change this to match an existing user in your users table
+        
 
         $productTypes = [
             "Clothing" => [
@@ -59,9 +58,9 @@ class ProductTypeSeeder extends Seeder
             if ($category) {
                 foreach ($types as $typeName) {
                     ProductType::create([
-                        'type_name' => $typeName,
+                        'name' => $typeName,
                         'product_category_id' => $category->id,
-                        'user_id' => $defaultUserId,
+                        'user_id' => 1,
                         'created_at' => $now,
                         'updated_at' => $now,
                     ]);

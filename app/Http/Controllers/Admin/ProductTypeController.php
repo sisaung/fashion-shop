@@ -6,15 +6,58 @@ use App\Http\Controllers\Controller;
 use App\Models\ProductType;
 use App\Http\Requests\StoreProductTypeRequest;
 use App\Http\Requests\UpdateProductTypeRequest;
+use App\Models\ProductCategory;
+use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Http\Request;
 
 class ProductTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return 'product-type';
+
+        $validSortColumns = ['name', 'category_name', 'id'];
+        $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'id';
+
+        $sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
+
+
+        $limit = $request->input('limit', 5);
+
+        $limit = is_numeric($limit) && $limit > 0 ? $limit : 5;
+
+        $searchTerm = $request->input('q');
+
+        $query = ProductType::query();
+
+        if ($searchTerm) {
+
+            $query->where(function (Builder $q) use ($searchTerm) {
+
+                return $q->where('name', 'like', "%$searchTerm%")
+
+                    ->orWhereHas('productCategory', function (Builder $q) use ($searchTerm) {
+                        return $q->where('category_name', 'like', "%$searchTerm%");
+                    });
+            });
+        }
+
+        $query->join('product_categories', 'product_types.product_category_id', '=', 'product_categories.id')
+            ->select("product_types.*");
+
+        $query->orderBy($sortBy, $sortDirection);
+
+        $productType = $query->paginate($limit);
+        $productType->appends([
+            'q' => $searchTerm,
+            'sort_by' => $sortBy,
+            'sort_direction' => $sortDirection,
+            'limit' => $limit
+        ]);
+
+        return view('admin.product-type.index', ['productTypes' => $productType]);
     }
 
     /**
