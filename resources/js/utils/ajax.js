@@ -1,6 +1,12 @@
 import { initDropdowns, initModals, initFlowbite } from 'flowbite'
+import initializePagination from '../pagination';
+import initializeSorting from '../sorting';
+import { initializeEditForm } from '../editForm';
 
 const ajax = async (url, selector, renderSelector) => {
+    console.log('AJAX request started for URL:', url);
+    console.log('Targeting selector in response:', selector);
+    console.log('Rendering into DOM element:', renderSelector);
     try {
         const res = await fetch(url, {
             headers: {
@@ -12,14 +18,14 @@ const ajax = async (url, selector, renderSelector) => {
 
         const parsedHtml = new DOMParser()
             .parseFromString(htmlText, "text/html")
-        
-       
-        
+
+
+
         const selectedElement = parsedHtml.querySelector(selector);
 
         console.log(selectedElement);
-        
-    
+
+
         if (!selectedElement) {
             console.warn(`Selector "${selector}" not found in the response HTML.`);
             return;
@@ -28,12 +34,17 @@ const ajax = async (url, selector, renderSelector) => {
         renderSelector.innerHTML = selectedElement.innerHTML;
 
         // initializePagination()
-        initFlowbite()
+        initFlowbite();
+        // initializeEditForm();
+
 
         window.history.pushState({}, "", url);
     } catch (error) {
         console.log(error);
     }
+
+
+
 };
 
 export default ajax;
