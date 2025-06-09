@@ -20,7 +20,7 @@
 
     </div>
     <div>
-        <a href="{{ route('product-category.create') }}"
+        <a href="{{ route('product-type.create') }}"
             class="inline-flex items-center gap-x-2 text-sm bg-pearl-bush-400 text-white px-4 py-2 rounded-md cursor-pointer  hover:bg-pearl-bush-500 duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-5">
@@ -28,6 +28,6 @@
                     d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
 
-            Add Product Category </a>
+            Add Product Type </a>
     </div>
 </div>

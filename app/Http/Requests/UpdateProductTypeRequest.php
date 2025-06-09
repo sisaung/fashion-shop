@@ -11,7 +11,7 @@ class UpdateProductTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateProductTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+
+            'name' => 'required|string|min:3|max:50|unique:product_types,name,'.$this->route('product_type'),
+            'product_category_id' => 'required|numeric|exists:product_categories,id',
         ];
     }
 }

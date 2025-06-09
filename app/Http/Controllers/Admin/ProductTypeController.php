@@ -9,6 +9,8 @@ use App\Http\Requests\UpdateProductTypeRequest;
 use App\Models\ProductCategory;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ProductTypeController extends Controller
 {
@@ -65,7 +67,9 @@ class ProductTypeController extends Controller
      */
     public function create()
     {
-        //
+
+        $productCategory =ProductCategory::all();
+        return view('admin.product-type.create', ['productCategories' => $productCategory]);
     }
 
     /**
@@ -73,7 +77,14 @@ class ProductTypeController extends Controller
      */
     public function store(StoreProductTypeRequest $request)
     {
-        //
+        ProductType::create([
+
+            'name' => $request->name,
+            'product_category_id' => $request->product_category_id,
+            'user_id' => Auth::id()
+        ]);
+
+        return redirect()->route('product-type.index');
     }
 
     /**
@@ -87,24 +98,62 @@ class ProductTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ProductType $productType)
+    public function edit($id, Request $request)
     {
-        //
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:product_types']);
+
+        if ($validator->fails()) {
+            return redirect()->route('product-type.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $productCategory = ProductCategory::all();
+        $productType = ProductType::find($id);
+
+        return view('admin.product-type.edit', ['productType' => $productType,'productCategories' => $productCategory,'sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductTypeRequest $request, ProductType $productType)
+    public function update(UpdateProductTypeRequest $request, $id)
     {
-        //
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:product_types']);
+
+        if ($validator->fails()) {
+            return redirect()->route('product-type.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $productType = ProductType::find($id);
+        $productType->name = $request->name;
+        $productType->product_category_id = $request->product_category_id;
+        $productType->save();
+
+        return redirect()->route('product-type.index',['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProductType $productType)
+    public function destroy($id)
     {
-        //
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:product_types']);
+
+        if ($validator->fails()) {
+            return redirect()->route('product-type.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $productType = ProductType::find($id);
+        $productType->delete();
+
+        return redirect()->route('product-type.index');
     }
 }
