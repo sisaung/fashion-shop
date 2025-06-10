@@ -25,6 +25,7 @@ class StoreProductTypeRequest extends FormRequest
 
             'name' => 'required|string|min:3|max:50|unique:product_types,name',
             'product_category_id' => 'required|numeric|exists:product_categories,id',
+            'fit_id' => 'required|numeric|exists:fits,id'
         ];
     }
 }
