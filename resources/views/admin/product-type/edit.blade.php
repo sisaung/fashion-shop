@@ -39,7 +39,7 @@
                         <option selected class="text-sm text-gray-700">Choose product category</option>
                         @foreach ($productCategories as $productCategory)
                             <option value="{{ $productCategory->id }}"
-                                selected={{ $productCategory->id === $productType->product_category_id }}>
+                               {{ $productCategory->id === $productType->product_category_id ?  'selected' : false }}>
                                 {{ $productCategory->category_name }} </option>
                         @endforeach
                     </select>
