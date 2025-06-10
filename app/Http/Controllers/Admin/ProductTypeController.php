@@ -54,7 +54,7 @@ class ProductTypeController extends Controller
             ->join('fit_product_type', 'product_types.id', '=', 'fit_product_type.product_type_id')
             ->join('fits', 'fit_product_type.fit_id', '=', 'fits.id')
             ->select("product_types.*")
-            ->groupBy('product_types.id');
+            ->groupBy(['product_types.id', 'name', 'user_id', 'product_category_id','created_at', 'updated_at']);
 
         $query->orderBy($sortBy, $sortDirection);
 
@@ -88,8 +88,8 @@ class ProductTypeController extends Controller
         $fits =  explode(',', $request->fits);
 
         $fitIds = [];
-        foreach($fits as $fit ) {
-           $fitIds[] = Fit::query()->where('fit_name','=', $fit)->pluck('id')->first();
+        foreach ($fits as $fit) {
+            $fitIds[] = Fit::query()->where('fit_name', '=', $fit)->pluck('id')->first();
         }
 
 

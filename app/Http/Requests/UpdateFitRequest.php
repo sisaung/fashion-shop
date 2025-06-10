@@ -22,7 +22,7 @@ class UpdateFitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'fit_name' => 'required|string|min:3|max:40|unique:fits,fit_name',
+            'fit_name' => 'required|string|min:3|max:40|unique:fits,fit_name,'.$this->route('fit'),
             'product_type_id' => 'required|numeric|exists:product_types,id'
         ];
     }
