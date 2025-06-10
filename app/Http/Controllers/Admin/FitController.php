@@ -10,6 +10,7 @@ use App\Models\ProductType;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class FitController extends Controller
 {
@@ -98,24 +99,71 @@ class FitController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Fit $fit)
+    public function edit($id, Request $request)
     {
-        //
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:fits'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('fit.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $productTypes = ProductType::all();
+
+        $fit = Fit::with('productTypes')->find($id);
+
+        return view('admin.fit.edit', ['fit' => $fit, 'productTypes' => $productTypes, 'sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateFitRequest $request, Fit $fit)
+    public function update(UpdateFitRequest $request, $id)
     {
-        //
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:fits'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('fit.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $fit = Fit::with('productTypes')->find($id);
+
+        $productTypeIds = [];
+
+        foreach ($fit->productTypes as $productType) {
+            $productTypeIds[] = $productType->id;
+        }
+
+        $fit->fit_name = $request->fit_name;
+        $fit->productTypes()->sync($productTypeIds);
+        $fit->save();
+        return redirect()->route('fit.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Fit $fit)
+    public function destroy($id)
     {
-        //
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:fits'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('fit.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $fit = Fit::find($id);
+        $fit->delete();
+
+        return redirect()->route('fit.index');
     }
 }

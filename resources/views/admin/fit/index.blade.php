@@ -22,7 +22,7 @@
                                     @include('components.admin.sortTable', ['sortTitle' => 'ID'])
 
                                 </th>
-                                <th data-sortby="name" scope="col"
+                                <th data-sortby="fit_name" scope="col"
                                     class="px-4 py-3 text-left text-sm font-medium text-gray-500">
                                     @include('components.admin.sortTable', [
                                         'sortTitle' => 'Fit Name',
@@ -30,7 +30,7 @@
 
                                 </th>
 
-                                <th data-sortby="category_name" scope="col"
+                                <th data-sortby="name" scope="col"
                                     class="px-4 py-3 text-left text-sm font-medium text-gray-500">
                                     @include('components.admin.sortTable', [
                                         'sortTitle' => 'Product Type',
