@@ -28,8 +28,8 @@
                 </div>
 
 
-                <div class="relative mb-10">
-                    <label for="product_category" class="@error('name')
+                <div class="relative mb-4">
+                    <label for="product_category" class="@error('product_category_id')
                             text-red-500
                         @enderror leading-7 text-sm text-gray-600">Product Category </label>
 
@@ -43,6 +43,25 @@
                         @endforeach
                     </select>
                     @error('product_category_id')
+                        <p class="text-sm text-red-500"> {{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="relative mb-4">
+                    <label for="fit_id" class="@error('fit_id')
+                            text-red-500
+                        @enderror leading-7 text-sm text-gray-600">Product Category </label>
+
+                    <select id="product_category" name="fit_id"
+                        class=" @error('fit_id')
+                            is-invalid
+                        @enderror block w-full p-2.5 bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 ">
+                        <option selected class="text-sm text-gray-700">Choose product category</option>
+                        @foreach ($fits as $fit)
+                            <option value="{{ $fit->id }}"> {{ $fit->fit_name }} </option>
+                        @endforeach
+                    </select>
+                    @error('fit_id')
                         <p class="text-sm text-red-500"> {{ $message }}</p>
                     @enderror
                 </div>

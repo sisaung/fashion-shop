@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ProductType;
 use App\Http\Requests\StoreProductTypeRequest;
 use App\Http\Requests\UpdateProductTypeRequest;
+use App\Models\Fit;
 use App\Models\ProductCategory;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class ProductTypeController extends Controller
     public function index(Request $request)
     {
 
-        $validSortColumns = ['name', 'category_name', 'id'];
+        $validSortColumns = ['name', 'category_name', 'fit_name', 'id'];
         $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'id';
 
         $sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
@@ -32,7 +33,7 @@ class ProductTypeController extends Controller
 
         $searchTerm = $request->input('q');
 
-        $query = ProductType::query();
+        $query = ProductType::with(['productCategory', 'fits']);
 
         if ($searchTerm) {
 
@@ -42,11 +43,16 @@ class ProductTypeController extends Controller
 
                     ->orWhereHas('productCategory', function (Builder $q) use ($searchTerm) {
                         return $q->where('category_name', 'like', "%$searchTerm%");
+                    })
+                    ->orWhereHas('fits', function (Builder $q) use ($searchTerm) {
+                        return $q->where('fit_name', 'like', "%$searchTerm%");
                     });
             });
         }
 
         $query->join('product_categories', 'product_types.product_category_id', '=', 'product_categories.id')
+            ->join('fit_product_type', 'product_types.id', '=', 'fit_product_type.product_type_id')
+            ->join('fits', 'fit_product_type.fit_id', '=', 'fits.id')
             ->select("product_types.*");
 
         $query->orderBy($sortBy, $sortDirection);
@@ -58,7 +64,6 @@ class ProductTypeController extends Controller
             'sort_direction' => $sortDirection,
             'limit' => $limit
         ]);
-
         return view('admin.product-type.index', ['productTypes' => $productType]);
     }
 
@@ -68,8 +73,9 @@ class ProductTypeController extends Controller
     public function create()
     {
 
-        $productCategory =ProductCategory::all();
-        return view('admin.product-type.create', ['productCategories' => $productCategory]);
+        $productCategory = ProductCategory::all();
+        $fit = Fit::all();
+        return view('admin.product-type.create', ['productCategories' => $productCategory, 'fits' => $fit]);
     }
 
     /**
@@ -77,12 +83,14 @@ class ProductTypeController extends Controller
      */
     public function store(StoreProductTypeRequest $request)
     {
-        ProductType::create([
+        $productType =  ProductType::create([
 
             'name' => $request->name,
             'product_category_id' => $request->product_category_id,
             'user_id' => Auth::id()
         ]);
+
+        $productType->fits()->attach($request->fit_id);
 
         return redirect()->route('product-type.index');
     }
@@ -101,7 +109,8 @@ class ProductTypeController extends Controller
     public function edit($id, Request $request)
     {
         $validator = Validator::make(['id' => $id], [
-            'id' => 'required|numeric|exists:product_types']);
+            'id' => 'required|numeric|exists:product_types'
+        ]);
 
         if ($validator->fails()) {
             return redirect()->route('product-type.index')
@@ -112,7 +121,7 @@ class ProductTypeController extends Controller
         $productCategory = ProductCategory::all();
         $productType = ProductType::find($id);
 
-        return view('admin.product-type.edit', ['productType' => $productType,'productCategories' => $productCategory,'sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
+        return view('admin.product-type.edit', ['productType' => $productType, 'productCategories' => $productCategory, 'sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }
 
     /**
@@ -121,7 +130,8 @@ class ProductTypeController extends Controller
     public function update(UpdateProductTypeRequest $request, $id)
     {
         $validator = Validator::make(['id' => $id], [
-            'id' => 'required|numeric|exists:product_types']);
+            'id' => 'required|numeric|exists:product_types'
+        ]);
 
         if ($validator->fails()) {
             return redirect()->route('product-type.index')
@@ -134,7 +144,7 @@ class ProductTypeController extends Controller
         $productType->product_category_id = $request->product_category_id;
         $productType->save();
 
-        return redirect()->route('product-type.index',['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
+        return redirect()->route('product-type.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }
 
     /**
@@ -143,7 +153,8 @@ class ProductTypeController extends Controller
     public function destroy($id)
     {
         $validator = Validator::make(['id' => $id], [
-            'id' => 'required|numeric|exists:product_types']);
+            'id' => 'required|numeric|exists:product_types'
+        ]);
 
         if ($validator->fails()) {
             return redirect()->route('product-type.index')

@@ -1,20 +1,80 @@
-<?php
+// database/seeders/FitSeeder.php
 
-namespace Database\Seeders;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;k
 
+class FitSeeder extends Seeder
+{
+    public function run()
+    {
+        // Define fits
+        $fits = [
+            'Slim Fit',
+            'Regular Fit',
+            'Oversized Fit',
+            'Relaxed Fit',
+            'Straight Fit',
+            'Tailored Fit',
+            'Bodycon Fit',
+            'A-Line Fit',
+            'Wrap Fit',
+            'Boxy Fit',
+        ];
+
+        // Insert fits and store their IDs
+        $fitIds = [];
+        foreach ($fits as $fit) {
+            $fitId = DB::table('fits')->updateOrInsert(
+                ['name' => $fit],
+                ['created_at' => now(), 'updated_at' => now()]
+            );
+
+            $fitIds[$fit] = DB::table('fits')->where('name', $fit)->value('id');
+        }
+
+        // Define product types and their related fits
+        $productFits = [
+            'T-Shirt' => ['Slim Fit', 'Regular Fit', 'Oversized Fit'],
+            'Jeans' => ['Slim Fit', 'Relaxed Fit', 'Straight Fit'],
+            'Shirt' => ['Regular Fit', 'Tailored Fit', 'Slim Fit'],
+            'Jacket' => ['Regular Fit', 'Boxy Fit', 'Oversized Fit'],
+            'Dress' => ['Bodycon Fit', 'A-Line Fit', 'Wrap Fit'],
+            'Hoodie' => ['Relaxed Fit', 'Oversized Fit'],
+        ];
+
+        foreach ($productFits as $productType => $fits) {
+            // Find product_type ID (assumes already seeded)
+            $productTypeId = DB::table('product_types')->where('name', $productType)->value('id');
+
+            if ($productTypeId) {
+                foreach ($fits as $fitName) {
+                    $fitId = $fitIds[$fitName] ?? null;
+
+                    if ($fitId) {
+                        // Insert relation into pivot table
+                        DB::table('fit_product_type')->updateOrInsert([
+                            'fit_id' => $fitId,
+                            'product_type_id' => $productTypeId
+                        ]);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+product type seeders
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 use App\Models\ProductCategory;
 use App\Models\ProductType;
-use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class ProductTypeSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-     public function run()
+    public function run()
     {
         $productTypes = [
             "Clothing" => [
@@ -76,7 +136,7 @@ class ProductTypeSeeder extends Seeder
                     // Attach related fits if defined
                     if (isset($relatedFits[$typeName])) {
                         $fitIds = DB::table('fits')
-                            ->whereIn('fit_name', $relatedFits[$typeName])
+                            ->whereIn('name', $relatedFits[$typeName])
                             ->pluck('id');
 
                         foreach ($fitIds as $fitId) {
