@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('fits', function (Blueprint $table) {
             $table->id();
-            $table->string('fit_name')->unique();
+            $table->string('fit_name');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
             

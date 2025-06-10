@@ -68,7 +68,9 @@
                                         {{ $fit->fit_name }}
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
-                                        {{-- {{ $fit->productTypes()->name }} --}}
+                                       @foreach ($fit->productTypes as $productType )
+                                           {{ $productType->name  }}
+                                       @endforeach
                                     </td>
 
 
