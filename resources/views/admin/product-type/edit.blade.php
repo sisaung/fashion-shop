@@ -39,7 +39,8 @@
                         <option selected class="text-sm text-gray-700">Choose product category</option>
                         @foreach ($productCategories as $productCategory)
                             <option value="{{ $productCategory->id }}"
-                               {{ $productCategory->id === $productType->product_category_id ?  'selected' : false }}>
+                                class="{{ $productCategory->id === $productType->product_category_id ? '' : 'hidden'}}"
+                                {{ $productCategory->id === $productType->product_category_id ? 'selected' : false }}>
                                 {{ $productCategory->category_name }} </option>
                         @endforeach
                     </select>
@@ -58,6 +59,3 @@
         </form>
     </div>
 @endsection
-@push('scripts')
-    @vite(['resources/js/fileUpload.js'])
-@endpush

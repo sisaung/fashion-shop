@@ -79,7 +79,7 @@
                                         {{ $productType->productCategory->category_name }}
                                     </td>
 
-                                    <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 flex flex-wrap items-center gap-x-2">
+                                    <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 flex flex-wrap items-center gap-2">
                                         @foreach ($productType->fits as $fit )
                                             <p class="bg-gray-200 px-4 py-1 rounded-lg text-xs text-gray-700"> {{ $fit->fit_name  }} </p>
                                         @endforeach

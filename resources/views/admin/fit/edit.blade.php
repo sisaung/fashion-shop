@@ -59,6 +59,4 @@
         </form>
     </div>
 @endsection
-@push('scripts')
-    @vite(['resources/js/fileUpload.js'])
-@endpush
+
