@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('brands', function (Blueprint $table) {
             $table->id();
-            $table->string('brand_name')->unique();
+            $table->string('brand_name')->unique()->index();
             $table->string('brand_image')->nullable();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
+           
         });
     }
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FitController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductTypeController;
 use App\Http\Controllers\AuthController;
@@ -33,6 +34,7 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         Route::resource('brand', BrandController::class);
         Route::resource('product-category', ProductCategoryController::class);
         Route::resource('product-type', ProductTypeController::class);
+        Route::resource('fit',FitController::class);
     });
 });
 

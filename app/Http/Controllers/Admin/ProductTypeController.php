@@ -32,7 +32,7 @@ class ProductTypeController extends Controller
 
         $searchTerm = $request->input('q');
 
-        $query = ProductType::query();
+        $query = ProductType::with('productCategory');
 
         if ($searchTerm) {
 

@@ -1,0 +1,153 @@
+// database/seeders/FitSeeder.php
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;k
+
+class FitSeeder extends Seeder
+{
+    public function run()
+    {
+        // Define fits
+        $fits = [
+            'Slim Fit',
+            'Regular Fit',
+            'Oversized Fit',
+            'Relaxed Fit',
+            'Straight Fit',
+            'Tailored Fit',
+            'Bodycon Fit',
+            'A-Line Fit',
+            'Wrap Fit',
+            'Boxy Fit',
+        ];
+
+        // Insert fits and store their IDs
+        $fitIds = [];
+        foreach ($fits as $fit) {
+            $fitId = DB::table('fits')->updateOrInsert(
+                ['name' => $fit],
+                ['created_at' => now(), 'updated_at' => now()]
+            );
+
+            $fitIds[$fit] = DB::table('fits')->where('name', $fit)->value('id');
+        }
+
+        // Define product types and their related fits
+        $productFits = [
+            'T-Shirt' => ['Slim Fit', 'Regular Fit', 'Oversized Fit'],
+            'Jeans' => ['Slim Fit', 'Relaxed Fit', 'Straight Fit'],
+            'Shirt' => ['Regular Fit', 'Tailored Fit', 'Slim Fit'],
+            'Jacket' => ['Regular Fit', 'Boxy Fit', 'Oversized Fit'],
+            'Dress' => ['Bodycon Fit', 'A-Line Fit', 'Wrap Fit'],
+            'Hoodie' => ['Relaxed Fit', 'Oversized Fit'],
+        ];
+
+        foreach ($productFits as $productType => $fits) {
+            // Find product_type ID (assumes already seeded)
+            $productTypeId = DB::table('product_types')->where('name', $productType)->value('id');
+
+            if ($productTypeId) {
+                foreach ($fits as $fitName) {
+                    $fitId = $fitIds[$fitName] ?? null;
+
+                    if ($fitId) {
+                        // Insert relation into pivot table
+                        DB::table('fit_product_type')->updateOrInsert([
+                            'fit_id' => $fitId,
+                            'product_type_id' => $productTypeId
+                        ]);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+product type seeders
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
+use App\Models\ProductCategory;
+use App\Models\ProductType;
+use Illuminate\Support\Facades\DB;
+
+class ProductTypeSeeder extends Seeder
+{
+    public function run()
+    {
+        $productTypes = [
+            "Clothing" => [
+                "T-Shirts",
+                "Jeans",
+                "Dresses",
+                "Shirts"
+            ],
+            "Footwear" => [
+                "Sneakers",
+                "Boots",
+                "Sandals",
+                "Formal Shoes"
+            ],
+            "Accessories" => [
+                "Watches",
+                "Belts",
+                "Jewelry",
+                "Hats"
+            ],
+            "Outerwear" => [
+                "Jackets",
+                "Coats",
+                "Hoodies",
+                "Raincoats"
+            ],
+            "Bags" => [
+                "Backpacks",
+                "Handbags",
+                "Messenger Bags",
+                "Suitcases"
+            ],
+        ];
+
+        $relatedFits = [
+            "T-Shirts" => ['Slim Fit', 'Regular Fit', 'Oversized Fit'],
+            "Jeans" => ['Slim Fit', 'Relaxed Fit', 'Straight Fit'],
+            "Dresses" => ['Bodycon Fit', 'A-Line Fit', 'Wrap Fit'],
+            "Shirts" => ['Slim Fit', 'Regular Fit', 'Tailored Fit'],
+            "Jackets" => ['Boxy Fit', 'Oversized Fit', 'Regular Fit'],
+            "Hoodies" => ['Relaxed Fit', 'Oversized Fit'],
+        ];
+
+        $now = Carbon::now();
+
+        foreach ($productTypes as $categoryName => $types) {
+            $category = ProductCategory::where('category_name', $categoryName)->first();
+
+            if ($category) {
+                foreach ($types as $typeName) {
+                    $productType = ProductType::create([
+                        'name' => $typeName,
+                        'product_category_id' => $category->id,
+                        'user_id' => 1,
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ]);
+
+                    // Attach related fits if defined
+                    if (isset($relatedFits[$typeName])) {
+                        $fitIds = DB::table('fits')
+                            ->whereIn('name', $relatedFits[$typeName])
+                            ->pluck('id');
+
+                        foreach ($fitIds as $fitId) {
+                            DB::table('fit_product_type')->updateOrInsert([
+                                'fit_id' => $fitId,
+                                'product_type_id' => $productType->id,
+                            ]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
