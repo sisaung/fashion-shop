@@ -132,16 +132,18 @@ class FitController extends Controller
                 ->withInput();
         }
 
+
         $fit = Fit::with('productTypes')->find($id);
 
-        $productTypeIds = [];
+        // $productTypeIds = [];
 
-        foreach ($fit->productTypes as $productType) {
-            $productTypeIds[] = $productType->id;
-        }
+        // foreach ($fit->productTypes as $productType) {
+        //     $productTypeIds[] = $productType->id;
+        // }
+
 
         $fit->fit_name = $request->fit_name;
-        $fit->productTypes()->sync($productTypeIds);
+        $fit->productTypes()->sync($request->product_type_id);
         $fit->save();
         return redirect()->route('fit.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }

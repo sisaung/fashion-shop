@@ -35,7 +35,7 @@
                     <label for="fit" class="leading-7 text-sm text-gray-600">Product type </label>
 
 
-                    <select id="fit" name="fit_id"
+                    <select id="fit" name="product_type_id"
                         class=" block w-full p-2.5 bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 ">
                         <option selected class="text-sm text-gray-700">Choose product type</option>
                         @foreach ($productTypes as $productType)
