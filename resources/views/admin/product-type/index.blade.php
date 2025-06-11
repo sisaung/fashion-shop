@@ -41,7 +41,15 @@
                                 <th data-sortby="fit_name" scope="col"
                                     class="px-4 py-3 text-left text-sm font-medium text-gray-500">
                                     @include('components.admin.sortTable', [
-                                        'sortTitle' => 'Fit Name',
+                                        'sortTitle' => 'Fit Type',
+                                    ])
+
+                                </th>
+
+                                <th data-sortby="size_name" scope="col"
+                                    class="px-4 py-3  text-left text-sm font-medium text-gray-500">
+                                    @include('components.admin.sortTable', [
+                                        'sortTitle' => 'Size',
                                     ])
 
                                 </th>
@@ -79,10 +87,22 @@
                                         {{ $productType->productCategory->category_name }}
                                     </td>
 
-                                    <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 flex flex-wrap items-center gap-2">
-                                        @foreach ($productType->fits as $fit )
-                                            <p class="bg-gray-200 px-4 py-1 rounded-lg text-xs text-gray-700"> {{ $fit->fit_name  }} </p>
-                                        @endforeach
+                                    <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 ">
+                                        <div class=" flex flex-wrap gap-2 items-center ">
+                                            @foreach ($productType->fits as $fit)
+                                                <p class="bg-gray-200 px-4 py-1 rounded-lg text-xs text-gray-700">
+                                                    {{ $fit->fit_name }} </p>
+                                            @endforeach
+                                        </div>
+                                    </td>
+
+                                    <td class="whitespace-nowrap px-4 py-4  text-sm text-gray-900">
+                                        <div class="flex justify-end items-end gap-2">
+                                            @foreach ($productType->sizes as $size)
+                                                <p class="bg-gray-200 px-4 py-1 rounded-lg text-xs text-gray-700">
+                                                    {{ $size->size_name }} </p>
+                                            @endforeach
+                                        </div>
                                     </td>
 
 

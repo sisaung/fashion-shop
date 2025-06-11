@@ -3,23 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Fit;
-use App\Http\Requests\StoreFitRequest;
-use App\Http\Requests\UpdateFitRequest;
+use App\Models\Size;
+use App\Http\Requests\StoreSizeRequest;
+use App\Http\Requests\UpdateSizeRequest;
 use App\Models\ProductType;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class FitController extends Controller
+class SizeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $validSortColumns = ['fit_name', 'name', 'id'];
+        $validSortColumns = ['size_name', 'name', 'id'];
         $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'id';
 
         $sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
@@ -31,13 +31,13 @@ class FitController extends Controller
 
         $searchTerm = $request->input('q');
 
-        $query = Fit::with('productTypes');
+        $query = Size::with('productTypes');
 
         if ($searchTerm) {
 
             $query->where(function (Builder $q) use ($searchTerm) {
 
-                return $q->where('fit_name', 'like', "%$searchTerm%")
+                return $q->where('size_name', 'like', "%$searchTerm%")
 
                     ->orWhereHas('productTypes', function (Builder $q) use ($searchTerm) {
                         return $q->where('name', 'like', "%$searchTerm%");
@@ -45,24 +45,21 @@ class FitController extends Controller
             });
         }
 
-        $query->leftJoin('fit_product_type', 'fits.id', '=', 'fit_product_type.fit_id')
-            ->leftJoin('product_types', 'fit_product_type.product_type_id', '=', 'product_types.id')
-            ->select("fits.*")
-            ->groupBy(['fits.id', 'fit_name', 'user_id', 'created_at', 'updated_at']);
+        $query->leftJoin('product_type_size', 'sizes.id', '=', 'product_type_size.size_id')
+            ->leftJoin('product_types', 'product_type_size.product_type_id', '=', 'product_types.id')
+            ->select("sizes.*")
+            ->groupBy(['sizes.id', 'size_name', 'user_id', 'created_at', 'updated_at']);
 
         $query->orderBy($sortBy, $sortDirection);
 
-        $fit = $query->paginate($limit);
-        $fit->appends([
+        $size = $query->paginate($limit);
+        $size->appends([
             'q' => $searchTerm,
             'sort_by' => $sortBy,
             'sort_direction' => $sortDirection,
             'limit' => $limit
         ]);
-
-        
-
-        return view('admin.fit.index', ['fits' => $fit]);
+        return view('admin.size.index', ['sizes' => $size]);
     }
 
     /**
@@ -70,32 +67,28 @@ class FitController extends Controller
      */
     public function create()
     {
-
         $productType = ProductType::all();
-        return view('admin.fit.create', ['productTypes' => $productType]);
+        return view('admin.size.create', ['productTypes' => $productType]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFitRequest $request)
+    public function store(StoreSizeRequest $request)
     {
-
-        $fit =  Fit::create([
-            'fit_name' => $request->fit_name,
+        $size = Size::create([
+            'size_name' => $request->size_name,
             'user_id' => Auth::id()
         ]);
 
-        // $fit->productTypes()->attach($request->product_type_id);
-
-
-        return redirect()->route('fit.index');
+        // $size->productTypes()->attach($request->product_type_id);
+        return redirect()->route('size.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Fit $fit)
+    public function show(Size $size)
     {
         //
     }
@@ -103,49 +96,46 @@ class FitController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id, Request $request)
+    public function edit(Request $request, $id)
     {
         $validator = Validator::make(['id' => $id], [
-            'id' => 'required|numeric|exists:fits'
+            'id' => 'required|numeric|exists:sizes'
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('fit.index')
+            return redirect()->route('size.index')
                 ->withErrors($validator)
                 ->withInput();
         }
         $productTypes = ProductType::all();
 
-        $fit = Fit::with('productTypes')->find($id);
+        $size = Size::with('productTypes')->find($id);
 
-        return view('admin.fit.edit', ['fit' => $fit, 'productTypes' => $productTypes, 'sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
+        return view('admin.size.edit', ['size' => $size, 'productTypes' => $productTypes, 'sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateFitRequest $request, $id)
+    public function update(UpdateSizeRequest $request, $id)
     {
         $validator = Validator::make(['id' => $id], [
-            'id' => 'required|numeric|exists:fits'
+            'id' => 'required|numeric|exists:sizes'
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('fit.index')
+            return redirect()->route('size.index')
                 ->withErrors($validator)
                 ->withInput();
         }
 
 
-        $fit = Fit::with('productTypes')->find($id);
+        $size = Size::with('productTypes')->find($id);
 
-
-
-
-        $fit->fit_name = $request->fit_name;
-        // $fit->productTypes()->sync($request->product_type_id);
-        $fit->save();
-        return redirect()->route('fit.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
+        $size->size_name = $request->size_name;
+        // $size->productTypes()->sync($request->product_type_id);
+        $size->save();
+        return redirect()->route('size.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }
 
     /**
@@ -154,18 +144,18 @@ class FitController extends Controller
     public function destroy($id)
     {
         $validator = Validator::make(['id' => $id], [
-            'id' => 'required|numeric|exists:fits'
+            'id' => 'required|numeric|exists:sizes'
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('fit.index')
+            return redirect()->route('size.index')
                 ->withErrors($validator)
                 ->withInput();
         }
 
-        $fit = Fit::find($id);
-        $fit->delete();
+        $size = Size::find($id);
+        $size->delete();
 
-        return redirect()->route('fit.index');
+        return redirect()->route('size.index');
     }
 }

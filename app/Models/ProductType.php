@@ -9,7 +9,7 @@ class ProductType extends Model
 {
     /** @use HasFactory<\Database\Factories\ProductTypeFactory> */
     use HasFactory;
-    protected $fillable = ['name', 'product_category_id', 'fits', 'user_id'];
+    protected $fillable = ['name', 'product_category_id', 'fits', 'sizes', 'user_id'];
 
     public function productCategory()
     {
@@ -26,5 +26,11 @@ class ProductType extends Model
     public function fits()
     {
         return $this->belongsToMany(Fit::class, 'fit_product_type');
+    }
+
+    public function sizes()
+    {
+
+        return $this->belongsToMany(Size::class, 'product_type_size');
     }
 }

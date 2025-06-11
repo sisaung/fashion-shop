@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fit_product_type', function (Blueprint $table) {
+        Schema::create('product_type_size', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('fit_id')->constrained('fits')->onDelete('cascade');
+            $table->foreignId('size_id')->constrained('sizes')->onDelete('cascade');
             $table->foreignId('product_type_id')->constrained('product_types')->onDelete('cascade');
             $table->timestamps();
-            $table->unique(['fit_id', 'product_type_id'])->index();
+
+            $table->unique(['size_id', 'product_type_id'])->index();
         });
     }
 
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fit_product_type');
+        Schema::dropIfExists('product_type_size');
     }
 };

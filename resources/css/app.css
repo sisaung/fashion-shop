@@ -11,8 +11,7 @@
 @source '../**/*.js';
 
 @theme {
-
-    --font-heading:"serif";
+    --font-heading: "serif";
     --font-sans: "Poppins", sans-serif;
     --color-pearl-bush-50: #f9f6f3;
     --color-pearl-bush-100: #ebe3db;
@@ -59,20 +58,26 @@
         "Noto Color Emoji"; */
 
 .is-invalid {
-    @apply border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500
+    @apply border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500;
 }
 .clear-search {
-    @apply bg-stone-200 size-4 text-gray-500 cursor-pointer rounded-full absolute  right-0 -translate-x-2/3 top-3 inline-flex justify-center items-center
+    @apply bg-stone-200 size-4 text-gray-500 cursor-pointer rounded-full absolute  right-0 -translate-x-2/3 top-3 inline-flex justify-center items-center;
 }
 
 .uploaded-image {
-    @apply  border-pearl-bush-400 border-2 size-24 object-cover object-center rounded-md hover:bg-gray-200 z-20
+    @apply border-pearl-bush-400 border-2 size-24 object-cover object-center rounded-md hover:bg-gray-200 z-20;
 }
 
 .remove-image-btn {
-    @apply bg-gray-400 size-3.5 text-gray-500 cursor-pointer rounded-full absolute top-9 left-19 inline-flex justify-center items-center
+    @apply bg-gray-400 size-3.5 text-gray-500 cursor-pointer rounded-full absolute top-9 left-19 inline-flex justify-center items-center;
 }
 
 .menu-box-shadow {
-    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+        rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+
+
+.selected {
+    @apply bg-pearl-bush-500 text-white rounded-lg
 }
