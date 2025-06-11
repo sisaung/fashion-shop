@@ -12,9 +12,9 @@
         <form id="edit-form" action="{{ route('product-type.update', ['product_type' => $productType->id]) }}" method="POST">
             @csrf
             @method('PUT')
-            <div class="lg:w-2/6 md:w-1/2  rounded-lg p-8 flex flex-col w-full mt-10 md:mt-0">
+            <div class="px-5 grid grid-cols-6 gap-5">
 
-                <div class="relative mb-4">
+                <div class="relative mb-4 col-span-2">
                     {{-- save current param --}}
 
                     <input type="hidden" name="sort_by" value="{{ old('sort_by', $sort_by) }}">
@@ -31,7 +31,7 @@
                     @enderror
                 </div>
 
-                <div class="relative mb-4 w-full">
+                <div class="relative mb-4 w-full col-span-2">
                     <label for="product_category"
                         class="@error('product_category_id')
                             text-red-500
@@ -53,7 +53,9 @@
                     @enderror
                 </div>
 
-                <div class="relative mb-4 fit-tags">
+                <div class="col-span-2"></div>
+
+                <div class="relative mb-4 fit-tags col-span-3">
                     <label for="fits"
                         class="@error('fits')
                             text-red-500
@@ -90,7 +92,7 @@
 
 
 
-                <div class="relative mb-4 size-tags ">
+                <div class="relative mb-4 size-tags col-span-3">
                     <label for="sizes"
                         class="@error('sizes')
                             text-red-500
@@ -122,12 +124,15 @@
                         <p class="text-sm text-red-500"> {{ $message }}</p>
                     @enderror
                 </div>
-                <div class="flex items-center gap-x-5 w-full">
-                    <a href="{{ route('product-type.index', ['sort_by' => $sort_by, 'sort_direction' => $sort_direction, 'limit' => $limit, 'page' => $page, 'q' => $q]) }}"
-                        class="text-stone-500 inline-flex justify-center items-center bg-white py-2 px-8 focus:outline-none hover:bg-pearl-bush-500 hover:text-white border w-1/2 border-pearl-bush-300 rounded text-sm cursor-pointer duration-300">Cancel</a>
-                    <button
-                        class="text-white bg-pearl-bush-400 border-0 py-2 px-8 focus:outline-none hover:bg-pearl-bush-600 rounded text-sm w-1/2 cursor-pointer duration-300">Update</button>
+                <div class="col-span-2">
+                    <div class="flex items-center gap-x-5 w-full">
+                        <a href="{{ route('product-type.index', ['sort_by' => $sort_by, 'sort_direction' => $sort_direction, 'limit' => $limit, 'page' => $page, 'q' => $q]) }}"
+                            class="text-stone-500 inline-flex justify-center items-center bg-white py-2 px-8 focus:outline-none hover:bg-pearl-bush-500 hover:text-white border w-1/2 border-pearl-bush-300 rounded text-sm cursor-pointer duration-300">Cancel</a>
+                        <button
+                            class="text-white bg-pearl-bush-400 border-0 py-2 px-8 focus:outline-none hover:bg-pearl-bush-600 rounded text-sm w-1/2 cursor-pointer duration-300">Update</button>
+                    </div>
                 </div>
+
             </div>
         </form>
     </div>

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -27,48 +28,15 @@ class FitSeeder extends Seeder
             'Boxy Fit',
         ];
 
-        // Insert fits and store their IDs
-        $fitIds = [];
+        $now = Carbon::now();
+
+        // Insert fits
         foreach ($fits as $fit) {
-            $fitId = DB::table('fits')->updateOrInsert(
-                ['fit_name' => $fit],
-                [
-                    'user_id' => 1,
-                    'created_at' => now(),
-                    'updated_at' => now()
-                ]
-            );
-
-            $fitIds[$fit] = DB::table('fits')->where('fit_name', $fit)->value('id');
-        }
-
-        // Define product types and their related fits
-        $productFits = [
-            'T-Shirts' => ['Slim Fit', 'Regular Fit', 'Oversized Fit'],
-            'Jeans' => ['Slim Fit', 'Relaxed Fit', 'Straight Fit'],
-            'Shirts' => ['Regular Fit', 'Tailored Fit', 'Slim Fit'],
-            'Jackets' => ['Regular Fit', 'Boxy Fit', 'Oversized Fit'],
-            'Dresses' => ['Bodycon Fit', 'A-Line Fit', 'Wrap Fit'],
-            'Hoodies' => ['Relaxed Fit', 'Oversized Fit'],
-        ];
-
-        foreach ($productFits as $productType => $fits) {
-            // Find product_type ID (assumes already seeded)
-            $productTypeId = DB::table('product_types')->where('name', $productType)->value('id');
-
-            if ($productTypeId) {
-                foreach ($fits as $fitName) {
-                    $fitId = $fitIds[$fitName] ?? null;
-
-                    if ($fitId) {
-                        // Insert relation into pivot table
-                        DB::table('fit_product_type')->updateOrInsert([
-                            'fit_id' => $fitId,
-                            'product_type_id' => $productTypeId
-                        ]);
-                    }
-                }
-            }
-        }
-    }
+            DB::table('fits')->insert([
+                'fit_name' => $fit,
+                'user_id' => 1,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+        }}
 }

@@ -10,9 +10,9 @@
         <form action="{{ route('product-type.store') }}" method="POST">
             @csrf
 
-            <div class="lg:w-2/6 md:w-1/2  rounded-lg p-8 flex flex-col w-full mt-10 md:mt-0 items-start">
+            <div class="grid grid-cols-6 gap-5 px-5">
 
-                <div class="relative mb-4">
+                <div class="relative mb-4 col-span-2">
                     <label for="name"
                         class="@error('name')
                             text-red-500
@@ -28,7 +28,7 @@
                 </div>
 
 
-                <div class="relative mb-4 w-full">
+                <div class="relative mb-4 w-full col-span-2">
                     <label for="product_category"
                         class="@error('product_category_id')
                             text-red-500
@@ -49,8 +49,10 @@
                     @enderror
                 </div>
 
+                <div class="col-span-2"></div>
 
-                <div class="relative mb-4 fit-tags">
+
+                <div class="relative mb-4 fit-tags col-span-3">
                     <label for="fits"
                         class="@error('fits')
                             text-red-500
@@ -86,7 +88,7 @@
 
 
 
-                <div class="relative mb-4 size-tags ">
+                <div class="relative mb-4 size-tags col-span-3">
                     <label for="sizes"
                         class="@error('sizes')
                             text-red-500
@@ -118,11 +120,13 @@
                     @enderror
                 </div>
 
-                <div class="flex items-center gap-x-5  w-full ">
-                    <a href="{{ route('product-type.index') }}"
-                        class="text-stone-500 inline-flex justify-center items-center bg-white py-2 px-8 focus:outline-none hover:bg-pearl-bush-500 w-1/2 hover:text-white border  border-pearl-bush-300 rounded text-sm cursor-pointer duration-300">Cancel</a>
-                    <button
-                        class="text-white bg-pearl-bush-400 border-0 py-2 px-8 focus:outline-none hover:bg-pearl-bush-600 rounded text-sm  cursor-pointer w-1/2 duration-300">Create</button>
+                <div class="col-span-2">
+                    <div class="flex  gap-x-5  w-full ">
+                        <a href="{{ route('product-type.index') }}"
+                            class="text-stone-500 inline-flex justify-center items-center bg-white py-2 px-8 focus:outline-none hover:bg-pearl-bush-500 w-1/2 hover:text-white border  border-pearl-bush-300 rounded text-sm cursor-pointer duration-300">Cancel</a>
+                        <button
+                            class="text-white bg-pearl-bush-400 border-0 py-2 px-8 focus:outline-none hover:bg-pearl-bush-600 rounded text-sm  cursor-pointer w-1/2 duration-300">Create</button>
+                    </div>
                 </div>
             </div>
     </div>
