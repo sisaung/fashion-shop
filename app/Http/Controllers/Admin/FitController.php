@@ -47,7 +47,8 @@ class FitController extends Controller
 
         $query->join('fit_product_type', 'fits.id', '=', 'fit_product_type.fit_id')
             ->join('product_types', 'fit_product_type.product_type_id', '=', 'product_types.id')
-            ->select("fits.*");
+            ->select("fits.*")
+            ->groupBy('fits.id');
 
         $query->orderBy($sortBy, $sortDirection);
 

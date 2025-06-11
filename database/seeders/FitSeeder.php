@@ -11,7 +11,7 @@ class FitSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-   public function run()
+    public function run()
     {
         // Define fits
         $fits = [
@@ -32,8 +32,11 @@ class FitSeeder extends Seeder
         foreach ($fits as $fit) {
             $fitId = DB::table('fits')->updateOrInsert(
                 ['fit_name' => $fit],
-                ['user_id' => 1 ],
-                ['created_at' => now(), 'updated_at' => now()]
+                [
+                    'user_id' => 1,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]
             );
 
             $fitIds[$fit] = DB::table('fits')->where('fit_name', $fit)->value('id');
@@ -41,12 +44,12 @@ class FitSeeder extends Seeder
 
         // Define product types and their related fits
         $productFits = [
-            'T-Shirt' => ['Slim Fit', 'Regular Fit', 'Oversized Fit'],
+            'T-Shirts' => ['Slim Fit', 'Regular Fit', 'Oversized Fit'],
             'Jeans' => ['Slim Fit', 'Relaxed Fit', 'Straight Fit'],
-            'Shirt' => ['Regular Fit', 'Tailored Fit', 'Slim Fit'],
-            'Jacket' => ['Regular Fit', 'Boxy Fit', 'Oversized Fit'],
-            'Dress' => ['Bodycon Fit', 'A-Line Fit', 'Wrap Fit'],
-            'Hoodie' => ['Relaxed Fit', 'Oversized Fit'],
+            'Shirts' => ['Regular Fit', 'Tailored Fit', 'Slim Fit'],
+            'Jackets' => ['Regular Fit', 'Boxy Fit', 'Oversized Fit'],
+            'Dresses' => ['Bodycon Fit', 'A-Line Fit', 'Wrap Fit'],
+            'Hoodies' => ['Relaxed Fit', 'Oversized Fit'],
         ];
 
         foreach ($productFits as $productType => $fits) {

@@ -53,7 +53,8 @@ class ProductTypeController extends Controller
         $query->join('product_categories', 'product_types.product_category_id', '=', 'product_categories.id')
             ->join('fit_product_type', 'product_types.id', '=', 'fit_product_type.product_type_id')
             ->join('fits', 'fit_product_type.fit_id', '=', 'fits.id')
-            ->select("product_types.*");
+            ->select("product_types.*")
+            ->groupBy('product_types.id');
 
         $query->orderBy($sortBy, $sortDirection);
 
@@ -83,6 +84,16 @@ class ProductTypeController extends Controller
      */
     public function store(StoreProductTypeRequest $request)
     {
+
+        $fits =  explode(',', $request->fits);
+
+        $fitIds = [];
+        foreach($fits as $fit ) {
+           $fitIds[] = Fit::query()->where('fit_name','=', $fit)->pluck('id')->first();
+        }
+
+
+
         $productType =  ProductType::create([
 
             'name' => $request->name,
@@ -90,7 +101,7 @@ class ProductTypeController extends Controller
             'user_id' => Auth::id()
         ]);
 
-        $productType->fits()->attach($request->fit_id);
+        $productType->fits()->attach($fitIds);
 
         return redirect()->route('product-type.index');
     }
