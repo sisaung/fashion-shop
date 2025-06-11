@@ -64,7 +64,7 @@
                                     <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
                                         {{ $size->id }}
                                     </td>
-                                    <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
+                                    <td class="whitespace-nowrap px-4 uppercase py-4 text-sm text-gray-900">
                                         {{ $size->size_name }}
                                     </td>
                                     <td

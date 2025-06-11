@@ -72,7 +72,9 @@
                                     {{ $fit->fit_name }} </p>
                             @endforeach
                         @else
-                            <p> There are no fits. <a href="{{ route('fit.create') }}">add fit</a> </p>
+                            <p class="text-gray-500"> There are no fits. <a href="{{ route('fit.create') }}"
+                                    class="text-pearl-bush-500 underline underline-offset-4 hover:text-pearl-bush-600">Add
+                                    fit</a> </p>
                         @endif
 
                     </div>
@@ -88,7 +90,7 @@
                     <label for="sizes"
                         class="@error('sizes')
                             text-red-500
-                        @enderror  leading-7 text-sm text-gray-600">Size
+                        @enderror  leading-7 block text-sm text-gray-600">Size
                     </label>
 
                     <input type="hidden" name="sizes" class="size-hidden">
@@ -96,11 +98,14 @@
                         @if ($sizes->count())
                             @foreach ($sizes as $size)
                                 <p data-id="{{ $size->id }}"
-                                    class="text-sm text-nowrap border select-none border-pearl-bush-300 size-tag px-4 py-1.5 rounded-lg">
+                                    class="text-sm uppercase text-nowrap border select-none border-pearl-bush-300 size-tag px-4 py-1.5 rounded-lg">
                                     {{ $size->size_name }} </p>
                             @endforeach
                         @else
-                            <p> There are no sizes. <a href="{{ route('size.create') }}">add size</a> </p>
+                            <p class="text-gray-500"> There are no sizes. <a href="{{ route('size.create') }}"
+                                    class="text-pearl-bush-500 underline underline-offset-4 hover:text-pearl-bush-600">Add
+                                    size</a>
+                            </p>
                         @endif
                     </div>
 
