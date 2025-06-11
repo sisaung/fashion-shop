@@ -94,22 +94,21 @@ class ProductTypeController extends Controller
 
         $fits =  explode(',', $request->fits);
         $sizes = explode(',', $request->sizes);
-        return $fits;
 
         $fitIds = [];
         $sizeIds = [];
 
         foreach ($fits as $fit) {
-            $fitIds[] = Fit::query()->where('fit_name', '=', $fit)->pluck('id')->first();
-            return Fit::query()->where('fit_name', '=', $fit)->pluck('id')->first();
+            // $fitIds[] = Fit::query()->where('fit_name', '=', $fit)->pluck('id')->first();
+
+            $fitIds[] = $fit;
         }
 
         foreach ($sizes as $size) {
 
-            $sizeIds[] = Size::query()->where('size_name', '=', $size)->pluck('id')->first();
+            $sizeIds[] = $size;
+            // $sizeIds[] = Size::query()->where('size_name', '=', $size)->pluck('id')->first();
         }
-        return $fitIds;
-        return $sizeIds;
 
         $productType =  ProductType::create([
 
