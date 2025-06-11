@@ -8,6 +8,7 @@ use App\Http\Requests\StoreProductTypeRequest;
 use App\Http\Requests\UpdateProductTypeRequest;
 use App\Models\Fit;
 use App\Models\ProductCategory;
+use App\Models\Size;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,7 @@ class ProductTypeController extends Controller
     public function index(Request $request)
     {
 
-        $validSortColumns = ['name', 'category_name', 'fit_name', 'id'];
+        $validSortColumns = ['name', 'category_name', 'fit_name', 'size_name', 'id'];
         $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'id';
 
         $sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
@@ -33,7 +34,7 @@ class ProductTypeController extends Controller
 
         $searchTerm = $request->input('q');
 
-        $query = ProductType::with(['productCategory', 'fits']);
+        $query = ProductType::with(['productCategory', 'fits', 'sizes']);
 
         if ($searchTerm) {
 
@@ -46,6 +47,9 @@ class ProductTypeController extends Controller
                     })
                     ->orWhereHas('fits', function (Builder $q) use ($searchTerm) {
                         return $q->where('fit_name', 'like', "%$searchTerm%");
+                    })
+                    ->orWhereHas('sizes', function (Builder $q) use ($searchTerm) {
+                        return $q->where('size_name', 'like', "%$searchTerm%");
                     });
             });
         }
@@ -53,8 +57,10 @@ class ProductTypeController extends Controller
         $query->join('product_categories', 'product_types.product_category_id', '=', 'product_categories.id')
             ->join('fit_product_type', 'product_types.id', '=', 'fit_product_type.product_type_id')
             ->join('fits', 'fit_product_type.fit_id', '=', 'fits.id')
+            ->join('product_type_size', 'product_types.id', '=', 'product_type_size.product_type_id')
+            ->join('sizes', 'product_type_size.size_id', '=', 'sizes.id')
             ->select("product_types.*")
-            ->groupBy(['product_types.id', 'name', 'user_id', 'product_category_id','created_at', 'updated_at']);
+            ->groupBy(['product_types.id', 'name', 'user_id', 'product_category_id', 'created_at', 'updated_at']);
 
         $query->orderBy($sortBy, $sortDirection);
 
@@ -86,12 +92,24 @@ class ProductTypeController extends Controller
     {
 
         $fits =  explode(',', $request->fits);
+        $sizes = explode(',', $request->sizes);
+
+
 
         $fitIds = [];
+        $sizeIds = [];
         foreach ($fits as $fit) {
             $fitIds[] = Fit::query()->where('fit_name', '=', $fit)->pluck('id')->first();
         }
 
+        foreach ($sizes as $size) {
+
+            $sizeIds[] = Size::query()->where('size_name', '=', $size)->pluck('id')->first();
+            
+        }
+
+
+       
 
 
         $productType =  ProductType::create([
@@ -102,6 +120,7 @@ class ProductTypeController extends Controller
         ]);
 
         $productType->fits()->attach($fitIds);
+        $productType->sizes()->attach($sizeIds);
 
         return redirect()->route('product-type.index');
     }

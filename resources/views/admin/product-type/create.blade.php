@@ -55,12 +55,27 @@
                         class="@error('fits')
                             text-red-500
                         @enderror leading-7 text-sm text-gray-600">Fit
-                         Name</label>
+                        Name</label>
                     <input type="text" id="fits" name="fits" value="{{ old('fits') }}"
                         class="@error('fits')
                             is-invalid
                         @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                    @error('fit_id')
+                    @error('fits')
+                        <p class="text-sm text-red-500"> {{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="relative mb-4">
+                    <label for="sizes"
+                        class="@error('sizes')
+                            text-red-500
+                        @enderror leading-7 text-sm text-gray-600">Size
+                    </label>
+                    <input type="text" id="sizes" name="sizes" value="{{ old('sizes') }}"
+                        class="@error('sizes')
+                            is-invalid
+                        @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    @error('sizes')
                         <p class="text-sm text-red-500"> {{ $message }}</p>
                     @enderror
                 </div>

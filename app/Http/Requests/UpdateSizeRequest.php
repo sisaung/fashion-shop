@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProductTypeRequest extends FormRequest
+class UpdateSizeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,8 @@ class StoreProductTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-
-            'name' => 'required|string|min:3|max:50|unique:product_types,name',
-            'product_category_id' => 'required|numeric|exists:product_categories,id',
-            'fits' => 'nullable',
-            'sizes' => 'required'
+            'size_name' => 'required|string|unique:sizes,size_name,'.$this->route('size'),
+            'product_type_id' => 'required|numeric|exists:product_types,id'
         ];
     }
 }

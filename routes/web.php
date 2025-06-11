@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FitController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductTypeController;
+use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TestController;
 use App\Http\Middleware\MustBeAdmin;
@@ -35,6 +36,7 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         Route::resource('product-category', ProductCategoryController::class);
         Route::resource('product-type', ProductTypeController::class);
         Route::resource('fit',FitController::class);
+        Route::resource('size',SizeController::class);
     });
 });
 
