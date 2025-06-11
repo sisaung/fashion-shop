@@ -23,7 +23,7 @@ class UpdateSizeRequest extends FormRequest
     {
         return [
             'size_name' => 'required|string|unique:sizes,size_name,'.$this->route('size'),
-            'product_type_id' => 'required|numeric|exists:product_types,id'
+            // 'product_type_id' => 'required|numeric|exists:product_types,id'
         ];
     }
 }

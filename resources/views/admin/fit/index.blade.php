@@ -67,11 +67,16 @@
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
                                         {{ $fit->fit_name }}
                                     </td>
-                                    <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 flex flex-wrap items-center gap-x-2">
-                                        @foreach ($fit->productTypes as $productType)
-                                            <p class="bg-gray-200 px-4 py-1 rounded-lg text-xs text-gray-700">
-                                                {{ $productType->name }} </p>
-                                        @endforeach
+                                    <td
+                                        class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 flex flex-wrap items-center gap-x-2">
+                                        @if ($fit->productTypes->count())
+                                            @foreach ($fit->productTypes as $productType)
+                                                <p class="bg-gray-200 px-4 py-1 rounded-lg text-xs text-gray-700">
+                                                    {{ $productType->name }} </p>
+                                            @endforeach
+                                        @else
+                                            <p class="text-gray-600"> No Product used. </p>
+                                        @endif
                                     </td>
 
 
@@ -212,6 +217,14 @@
                                     </td>
                                 </tr>
                             @endforeach
+
+                            @empty($fits)
+                                <tr>
+                                    <td colspan="5" class="text-center text-gray-700"> There are no fits.
+                                        <a href="{{ route('fit.index') }}"> Add Fit </a>
+                                    </td>
+                                </tr>
+                            @endempty
 
                         </tbody>
                     </table>

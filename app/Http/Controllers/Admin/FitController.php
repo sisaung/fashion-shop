@@ -45,10 +45,10 @@ class FitController extends Controller
             });
         }
 
-        $query->join('fit_product_type', 'fits.id', '=', 'fit_product_type.fit_id')
-            ->join('product_types', 'fit_product_type.product_type_id', '=', 'product_types.id')
+        $query->leftJoin('fit_product_type', 'fits.id', '=', 'fit_product_type.fit_id')
+            ->leftJoin('product_types', 'fit_product_type.product_type_id', '=', 'product_types.id')
             ->select("fits.*")
-            ->groupBy(['fits.id','fit_name','user_id','created_at','updated_at']);
+            ->groupBy(['fits.id', 'fit_name', 'user_id', 'created_at', 'updated_at']);
 
         $query->orderBy($sortBy, $sortDirection);
 
@@ -59,6 +59,8 @@ class FitController extends Controller
             'sort_direction' => $sortDirection,
             'limit' => $limit
         ]);
+
+        
 
         return view('admin.fit.index', ['fits' => $fit]);
     }
@@ -78,12 +80,13 @@ class FitController extends Controller
      */
     public function store(StoreFitRequest $request)
     {
+
         $fit =  Fit::create([
             'fit_name' => $request->fit_name,
             'user_id' => Auth::id()
         ]);
 
-        $fit->productTypes()->attach($request->product_type_id);
+        // $fit->productTypes()->attach($request->product_type_id);
 
 
         return redirect()->route('fit.index');
@@ -135,17 +138,12 @@ class FitController extends Controller
 
 
         $fit = Fit::with('productTypes')->find($id);
-       
 
-        // $productTypeIds = [];
 
-        // foreach ($fit->productTypes as $productType) {
-        //     $productTypeIds[] = $productType->id;
-        // }
 
 
         $fit->fit_name = $request->fit_name;
-        $fit->productTypes()->sync($request->product_type_id);
+        // $fit->productTypes()->sync($request->product_type_id);
         $fit->save();
         return redirect()->route('fit.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }

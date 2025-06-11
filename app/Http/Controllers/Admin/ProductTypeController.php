@@ -82,7 +82,8 @@ class ProductTypeController extends Controller
 
         $productCategory = ProductCategory::all();
         $fit = Fit::all();
-        return view('admin.product-type.create', ['productCategories' => $productCategory, 'fits' => $fit]);
+        $size = Size::all();
+        return view('admin.product-type.create', ['productCategories' => $productCategory, 'fits' => $fit, 'sizes' => $size]);
     }
 
     /**
@@ -93,24 +94,22 @@ class ProductTypeController extends Controller
 
         $fits =  explode(',', $request->fits);
         $sizes = explode(',', $request->sizes);
-
-
+        return $fits;
 
         $fitIds = [];
         $sizeIds = [];
+
         foreach ($fits as $fit) {
             $fitIds[] = Fit::query()->where('fit_name', '=', $fit)->pluck('id')->first();
+            return Fit::query()->where('fit_name', '=', $fit)->pluck('id')->first();
         }
 
         foreach ($sizes as $size) {
 
             $sizeIds[] = Size::query()->where('size_name', '=', $size)->pluck('id')->first();
-            
         }
-
-
-       
-
+        return $fitIds;
+        return $sizeIds;
 
         $productType =  ProductType::create([
 

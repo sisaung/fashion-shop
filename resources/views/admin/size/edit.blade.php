@@ -31,7 +31,7 @@
                     @enderror
                 </div>
 
-                <div class="relative mb-10">
+                {{-- <div class="relative mb-10">
                     <label for="size" class="leading-7 text-sm text-gray-600">Product type </label>
 
 
@@ -47,7 +47,7 @@
                     @error('product_category_id')
                         <p class="text-sm text-red-500"> {{ $message }}</p>
                     @enderror
-                </div>
+                </div> --}}
 
                 <div class="flex items-center gap-x-5 w-full">
                     <a href="{{ route('size.index', ['sort_by' => $sort_by, 'sort_direction' => $sort_direction, 'limit' => $limit, 'page' => $page, 'q' => $q]) }}"

@@ -45,8 +45,8 @@ class SizeController extends Controller
             });
         }
 
-        $query->join('product_type_size', 'sizes.id', '=', 'product_type_size.size_id')
-            ->join('product_types', 'product_type_size.product_type_id', '=', 'product_types.id')
+        $query->leftJoin('product_type_size', 'sizes.id', '=', 'product_type_size.size_id')
+            ->leftJoin('product_types', 'product_type_size.product_type_id', '=', 'product_types.id')
             ->select("sizes.*")
             ->groupBy(['sizes.id', 'size_name', 'user_id', 'created_at', 'updated_at']);
 
@@ -81,7 +81,7 @@ class SizeController extends Controller
             'user_id' => Auth::id()
         ]);
 
-        $size->productTypes()->attach($request->product_type_id);
+        // $size->productTypes()->attach($request->product_type_id);
         return redirect()->route('size.index');
     }
 
@@ -132,16 +132,8 @@ class SizeController extends Controller
 
         $size = Size::with('productTypes')->find($id);
 
-
-        // $productTypeIds = [];
-
-        // foreach ($size->productTypes as $productType) {
-        //     $productTypeIds[] = $productType->id;
-        // }
-
-
         $size->size_name = $request->size_name;
-        $size->productTypes()->sync($request->product_type_id);
+        // $size->productTypes()->sync($request->product_type_id);
         $size->save();
         return redirect()->route('size.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }

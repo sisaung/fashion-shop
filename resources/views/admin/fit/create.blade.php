@@ -28,7 +28,7 @@
                 </div>
 
 
-                <div class="relative mb-10">
+                {{-- <div class="relative mb-10">
                     <label for="product_type"
                         class="@error('product_type_id')
                             text-red-500
@@ -47,7 +47,7 @@
                     @error('product_type_id')
                         <p class="text-sm text-red-500"> {{ $message }}</p>
                     @enderror
-                </div>
+                </div> --}}
 
                 <div class="flex items-center gap-x-5 w-full">
                     <a href="{{ route('fit.index') }}"
