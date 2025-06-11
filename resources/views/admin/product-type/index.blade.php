@@ -83,7 +83,7 @@
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
                                         {{ $productType->name }}
                                     </td>
-                                    <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
+                                    <td class="whitespace-nowrap  px-4 py-4 text-sm text-gray-900">
                                         {{ $productType->productCategory->category_name }}
                                     </td>
 
@@ -97,7 +97,7 @@
                                     </td>
 
                                     <td class="whitespace-nowrap px-4 py-4  text-sm text-gray-900">
-                                        <div class="flex justify-end items-end gap-2">
+                                        <div class="flex flex-wrap uppercase gap-2">
                                             @foreach ($productType->sizes as $size)
                                                 <p class="bg-gray-200 px-4 py-1 rounded-lg text-xs text-gray-700">
                                                     {{ $size->size_name }} </p>

@@ -1,45 +1,45 @@
-
 const initializeTagActive = () => {
-    const fitTag = document.querySelector('.fit-tags');
-    const fitHidden = document.querySelector('.fit-hidden');
+    const fitTag = document.querySelector(".fit-tags");
+    const fitHidden = document.querySelector(".fit-hidden");
 
-    let selectedIds = fitHidden.value ? fitHidden.value.split(',').map(id => parseInt(id)) : [];
-    
-    
-   
-    const updateHiddenInput = () => {
-        fitHidden.value = selectedIds.join(',');
+    let selectedIds = fitHidden.value
+        ? fitHidden.value.split(",").map((id) => parseInt(id))
+        : [];
+
+    if (selectedIds) {
+        fitTag.querySelectorAll(".fit-tag").forEach((tag) => {
+            tag.classList.remove("selected");
+            if (selectedIds.includes(parseInt(tag.dataset.id))) {
+                tag.classList.add("selected");
+            }
+        });
     }
+
+    const updateHiddenInput = () => {
+        fitHidden.value = selectedIds.join(",");
+    };
 
     const handleFitTag = (e) => {
-        const tag = e.target.closest('.fit-tag')
+        const tag = e.target.closest(".fit-tag");
 
-        if(!tag) return;
-       const id = tag.dataset.id
-
-       if(selectedIds) {
-        tag.classList.add('selected');
-    }
-        
-
-        if(selectedIds.includes(id)) {
-        
-            selectedIds = selectedIds.filter(el => el !== id )
-            tag.classList.remove('selected')
+        if (!tag) return;
+        const id = parseInt(tag.dataset.id);
 
 
-        }
-        else {
+
+        if (selectedIds.includes(id)) {
+            selectedIds = selectedIds.filter((el) => el !== id);
+            tag.classList.remove("selected");
+        } else {
             selectedIds.push(id);
-            tag.classList.add('selected');
-
+            tag.classList.add("selected");
         }
-        
+
         console.log(selectedIds);
         updateHiddenInput();
-    }
+    };
 
-    fitTag.addEventListener('click',handleFitTag) 
-}
+    fitTag.addEventListener("click", handleFitTag);
+};
 
-document.addEventListener('DOMContentLoaded',initializeTagActive)
+document.addEventListener("DOMContentLoaded", initializeTagActive);

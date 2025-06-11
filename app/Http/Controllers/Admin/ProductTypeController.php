@@ -147,9 +147,11 @@ class ProductTypeController extends Controller
         }
 
         $productCategory = ProductCategory::all();
-        $productType = ProductType::find($id);
+        $fits = Fit::all();
+        $sizes = Size::all();
+        $productType = ProductType::with(['productCategory', 'fits', 'sizes'])->find($id);
 
-        return view('admin.product-type.edit', ['productType' => $productType, 'productCategories' => $productCategory, 'sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
+        return view('admin.product-type.edit', ['productType' => $productType, 'productCategories' => $productCategory, 'fits' => $fits, 'sizes' => $sizes, 'sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }
 
     /**
@@ -167,9 +169,16 @@ class ProductTypeController extends Controller
                 ->withInput();
         }
 
+        $fitIds =  explode(',', $request->fits);
+        $sizeIds = explode(',', $request->sizes);
+        // return $fitIds;
+
+
         $productType = ProductType::find($id);
         $productType->name = $request->name;
         $productType->product_category_id = $request->product_category_id;
+        $productType->fits()->sync($fitIds);
+        $productType->sizes()->sync($sizeIds);
         $productType->save();
 
         return redirect()->route('product-type.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
