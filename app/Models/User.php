@@ -67,4 +67,8 @@ class User extends Authenticatable
     public function sizes() {
         return $this->hasMany(Size::class);
     }
+
+    public function products() {
+        $this->hasMany(Product::class);
+    }
 }

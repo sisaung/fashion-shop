@@ -60,7 +60,7 @@ class FitController extends Controller
             'limit' => $limit
         ]);
 
-        
+
 
         return view('admin.fit.index', ['fits' => $fit]);
     }
@@ -167,5 +167,25 @@ class FitController extends Controller
         $fit->delete();
 
         return redirect()->route('fit.index');
+    }
+
+    public function getFits($id) {
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:product_types'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('product-type.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+      $fits =  Fit::with('productTypes')->get();
+
+    //   foreach($fits->productTypes as $productType) {
+    //     return $productType;
+    //   }
+     return $fits;
+
     }
 }

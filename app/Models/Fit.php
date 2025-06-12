@@ -22,4 +22,9 @@ class Fit extends Model
 
         return $this->belongsToMany(ProductType::class,'fit_product_type');
     }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }

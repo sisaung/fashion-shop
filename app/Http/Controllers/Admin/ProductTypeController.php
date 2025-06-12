@@ -55,8 +55,8 @@ class ProductTypeController extends Controller
         }
 
         $query->join('product_categories', 'product_types.product_category_id', '=', 'product_categories.id')
-            ->join('fit_product_type', 'product_types.id', '=', 'fit_product_type.product_type_id')
-            ->join('fits', 'fit_product_type.fit_id', '=', 'fits.id')
+            ->leftjoin('fit_product_type', 'product_types.id', '=', 'fit_product_type.product_type_id')
+            ->leftJoin('fits', 'fit_product_type.fit_id', '=', 'fits.id')
             ->join('product_type_size', 'product_types.id', '=', 'product_type_size.product_type_id')
             ->join('sizes', 'product_type_size.size_id', '=', 'sizes.id')
             ->select("product_types.*")
@@ -92,10 +92,13 @@ class ProductTypeController extends Controller
     public function store(StoreProductTypeRequest $request)
     {
 
-        $fits =  explode(',', $request->fits);
+
+
+        $fits =  explode(',', $request->fits ?? 0);
         $sizes = explode(',', $request->sizes);
 
         $fitIds = [];
+
         $sizeIds = [];
 
         foreach ($fits as $fit) {
@@ -117,7 +120,10 @@ class ProductTypeController extends Controller
             'user_id' => Auth::id()
         ]);
 
+       if($fitIds[0] !== '0') {
+
         $productType->fits()->attach($fitIds);
+       }
         $productType->sizes()->attach($sizeIds);
 
         return redirect()->route('product-type.index');
@@ -203,5 +209,21 @@ class ProductTypeController extends Controller
         $productType->delete();
 
         return redirect()->route('product-type.index');
+    }
+
+    public function getProductTypes($id) {
+
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:product_categories'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('product-categories.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $productType = ProductType::where('product_category_id', '=', $id)->get();
+        return response()->json($productType);
     }
 }

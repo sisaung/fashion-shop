@@ -17,6 +17,10 @@ class ProductCategory extends Model
         return $this->hasMany(ProductType::class);
     }
 
+    public function products() {
+
+        return $this->hasMany(Product::class);
+    }
     public function user()
     {
 
