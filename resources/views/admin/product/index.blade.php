@@ -5,70 +5,82 @@
 
 
         @include('components.admin.breadcrumb', [
-            'currentPageTitle' => 'Manage Product Type',
+            'currentPageTitle' => 'Manage Product',
         ])
 
-        @include('admin.product-type.header')
+        @include('admin.product.header')
 
-        <div id="product-type-list-container">
+        <div id="product-list-container">
             <section class="mt-10 px-5  drop-down-modal ">
                 <div class="w-full overflow-x-auto rounded-lg border border-gray-200 ">
                     <table class="w-full divide-y divide-gray-200">
                         <thead class="bg-stone-50 sorting-wrapper">
                             <tr>
                                 <th data-sortby="id" scope="col"
-                                    class="px-4 py-3 text-left text-sm font-medium text-gray-500">
+                                    class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
 
                                     @include('components.admin.sortTable', ['sortTitle' => 'ID'])
 
                                 </th>
-                                <th data-sortby="name" scope="col"
-                                    class="px-4 py-3 text-left text-sm font-medium text-gray-500">
+
+                                <th data-sortby="product_name" scope="col"
+                                    class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
+                                    Product Image
+                                </th>
+                                <th data-sortby="product_name" scope="col"
+                                    class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
                                     @include('components.admin.sortTable', [
-                                        'sortTitle' => 'Product Type Name',
+                                        'sortTitle' => 'Product',
                                     ])
 
                                 </th>
 
                                 <th data-sortby="category_name" scope="col"
-                                    class="px-4 py-3 text-left text-sm font-medium text-gray-500">
+                                    class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
                                     @include('components.admin.sortTable', [
                                         'sortTitle' => 'Product Category',
                                     ])
 
                                 </th>
 
-
-
-                                <th data-sortby="size_name" scope="col"
-                                    class="px-4 py-3  text-left text-sm font-medium text-gray-500">
-                                    {{-- @include('components.admin.sortTable', [
-                                        'sortTitle' => 'Size',
-                                    ]) --}}
-                                    Size
-                                </th>
-
-                                <th data-sortby="fit_name" scope="col"
-                                    class="px-4 py-3 text-left text-sm font-medium text-gray-500">
-                                    {{-- @include('components.admin.sortTable', [
-                                        'sortTitle' => 'Fit Type',
-                                    ]) --}}
-
-                                    Fit type
+                                <th data-sortby="name" scope="col"
+                                    class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
+                                    @include('components.admin.sortTable', [
+                                        'sortTitle' => 'Product Type',
+                                    ])
 
                                 </th>
 
-                                <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500">
+
+
+                                <th data-sortby="display_price" scope="col"
+                                    class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
+                                    @include('components.admin.sortTable', [
+                                        'sortTitle' => 'Price',
+                                    ])
+
+                                </th>
+
+                                <th data-sortby="is_new_arrival" scope="col"
+                                    class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
+                                    @include('components.admin.sortTable', [
+                                        'sortTitle' => 'New Arrival',
+                                    ])
+
+                                </th>
+
+
+                                <th scope="col" class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
                                     <div class="flex items-center justify-end cursor-pointer">
                                         Created
                                     </div>
                                 </th>
-                                <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500">
+                                <th scope="col" class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
                                     <div class="flex items-center justify-end cursor-pointer">
                                         Updated
                                     </div>
                                 </th>
-                                <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500">
+                                <th scope="col" class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
                                     <div class="flex items-center justify-center cursor-pointer">
                                         Action
                                     </div>
@@ -78,49 +90,68 @@
                         <tbody class="divide-y divide-gray-200 bg-white body-container">
 
 
-                            @foreach ($productTypes as $productType)
+                            @foreach ($products as $product)
                                 <tr>
                                     <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                        {{ $productType->id }}
+                                        {{ $product->id }}
                                     </td>
+                                    <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                        <div>
+                                            <img src="https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="
+                                                class="size-12 rounded-md" alt="">
+                                        </div>
+                                    </td>
+
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
-                                        {{ $productType->name }}
+
+                                        <div class="flex flex-col gap-3">
+                                            <p>{{ $product->product_name }}</p>
+                                            <div class="flex gap-2">
+                                                <p
+                                                    class="bg-pearl-bush-300 text-white text-xs inline-block px-2 py-1 rounded-md">
+                                                    {{ $product->brand->brand_name }}</p>
+                                                @foreach ($product->fits as $fit)
+                                                    <p class="bg-pearl-bush-300 text-white text-xs inline-block px-2 py-1 rounded-md"> {{ $fit->fit_name }} </p>
+                                                @endforeach
+                                                <p class="bg-pearl-bush-300 text-white text-xs inline-block px-2 py-1 rounded-md"> {{$product->gender}} </p>
+                                            </div>
+                                        </div>
+
                                     </td>
+                                    <td class="whitespace-nowrap text-center  px-4 py-4 text-sm text-gray-900">
+                                        {{ $product->productCategory->category_name }}
+                                    </td>
+
+                                    <td class="whitespace-nowrap  text-center px-4 py-4 text-sm text-gray-900">
+                                        {{ $product->productType->name }}
+                                    </td>
+
                                     <td class="whitespace-nowrap  px-4 py-4 text-sm text-gray-900">
-                                        {{ $productType->productCategory->category_name }}
+                                        {{ $product->display_price }}
                                     </td>
 
+                                    <td class="whitespace-nowrap text-center px-4 py-4 text-sm text-gray-900">
+                                        <label class="inline-flex items-center mb-5 cursor-pointer">
+                                            <input type="checkbox" value="" class="sr-only peer"
+                                                {{ $product->is_new_arrival ? 'checked' : '' }}>
+                                            <div
+                                                class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300  rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all peer-checked:bg-blue-600 ">
+                                            </div>
 
-
-                                    <td class="whitespace-nowrap px-4 py-4  text-sm text-gray-900">
-                                        <div class="flex flex-wrap uppercase gap-2">
-                                            @foreach ($productType->sizes as $size)
-                                                <p class="bg-gray-200 px-4 py-1 rounded-lg text-xs text-gray-700">
-                                                    {{ $size->size_name }} </p>
-                                            @endforeach
-                                        </div>
-                                    </td>
-
-                                    <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 ">
-                                        <div class=" flex flex-wrap gap-2 items-center ">
-                                            @foreach ($productType->fits as $fit)
-                                                <p class="bg-gray-200 px-4 py-1 rounded-lg text-xs text-gray-700">
-                                                    {{ $fit->fit_name }} </p>
-                                            @endforeach
-                                        </div>
+                                        </label>
                                     </td>
 
 
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 text-end">
                                         <div class="">
-                                            <p> {{ date('j M Y', strtotime($productType->created_at)) }} </p>
-                                            <p> {{ date('g:i A', strtotime($productType->created_at)) }} </p>
+                                            <p> {{ date('j M Y', strtotime($product->created_at)) }} </p>
+                                            <p> {{ date('g:i A', strtotime($product->created_at)) }} </p>
                                         </div>
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 text-end">
                                         <div class="">
-                                            <p> {{ date('j M Y', strtotime($productType->created_at)) }} </p>
-                                            <p> {{ date('h:i A', strtotime($productType->created_at)) }} </p>
+                                            <p> {{ date('j M Y', strtotime($product->created_at)) }} </p>
+                                            <p> {{ date('h:i A', strtotime($product->created_at)) }} </p>
                                         </div>
                                     </td>
 
@@ -129,8 +160,8 @@
 
 
 
-                                        <button id="dropdownDefaultButton-{{ $productType->id }}"
-                                            data-dropdown-toggle="dropdown-{{ $productType->id }}" class="cursor-pointer"
+                                        <button id="dropdownDefaultButton-{{ $product->id }}"
+                                            data-dropdown-toggle="dropdown-{{ $product->id }}" class="cursor-pointer"
                                             type="button">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -141,14 +172,14 @@
                                         </button>
 
                                         <!-- Dropdown menu -->
-                                        <div id="dropdown-{{ $productType->id }}"
+                                        <div id="dropdown-{{ $product->id }}"
                                             class="z-10 hidden bg-white menu-box-shadow -translate-x-6 divide-y divide-gray-100 rounded-lg w-40">
                                             <div class="py-3 flex flex-col justify-start items-start text-sm text-gray-600"
-                                                aria-labelledby="dropdownDefaultButton-{{ $productType->id }}">
+                                                aria-labelledby="dropdownDefaultButton-{{ $product->id }}">
 
                                                 {{-- delete btn for modal --}}
-                                                <button data-modal-target="popup-modal-{{ $productType->id }}"
-                                                    data-modal-toggle="popup-modal-{{ $productType->id }}"
+                                                <button data-modal-target="popup-modal-{{ $product->id }}"
+                                                    data-modal-toggle="popup-modal-{{ $product->id }}"
                                                     class=" w-full px-5 hover:bg-gray-100 inline-flex py-2 items-center gap-x-3 cursor-pointer"
                                                     type="button" data-confirm-delete>
 
@@ -164,8 +195,8 @@
 
 
                                                 <button type="button"
-                                                    class="edit-product-type-btn w-full px-5 hover:bg-gray-100 inline-flex py-2 items-center gap-x-3 cursor-pointer"
-                                                    data-edit-url="{{ route('product-type.edit', ['product_type' => $productType->id]) }}">
+                                                    class="edit-product-btn w-full px-5 hover:bg-gray-100 inline-flex py-2 items-center gap-x-3 cursor-pointer"
+                                                    data-edit-url="{{ route('product.edit', ['product' => $product->id]) }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="size-4 text-gray-400">
@@ -175,8 +206,8 @@
                                                     Edit
                                                 </button>
 
-                                                <form id="delete-form-{{ $productType->id }}" class="hidden"
-                                                    action="{{ route('product-type.destroy', ['product_type' => $productType->id]) }}"
+                                                <form id="delete-form-{{ $product->id }}" class="hidden"
+                                                    action="{{ route('product.destroy', ['product' => $product->id]) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
@@ -197,13 +228,13 @@
 
 
                                         {{-- delete modal box --}}
-                                        <div id="popup-modal-{{ $productType->id }}" tabindex="-1"
+                                        <div id="popup-modal-{{ $product->id }}" tabindex="-1"
                                             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                             <div class="relative p-4 w-full max-w-md max-h-full">
                                                 <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-100">
                                                     <button type="button"
                                                         class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-full cursor-pointer text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-400 duration-300 dark:hover:text-white"
-                                                        data-modal-hide="popup-modal-{{ $productType->id }}">
+                                                        data-modal-hide="popup-modal-{{ $product->id }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                             class="size-5">
@@ -223,19 +254,19 @@
                                                                 d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                         </svg>
                                                         <h3 class="mb-5   text-gray-500 dark:text-gray-400">
-                                                            Are you sure you want to delete this productType <span
-                                                                class="text-pearl-bush-500">{{ $productType->category_name }}
+                                                            Are you sure you want to delete this product <span
+                                                                class="text-pearl-bush-500">{{ $product->category_name }}
                                                                 ?
                                                             </span>
                                                         </h3>
                                                         <button
-                                                            onclick="document.getElementById('delete-form-{{ $productType->id }}').submit()"
-                                                            data-modal-hide="popup-modal-{{ $productType->id }}"
+                                                            onclick="document.getElementById('delete-form-{{ $product->id }}').submit()"
+                                                            data-modal-hide="popup-modal-{{ $product->id }}"
                                                             type="button"
                                                             class="delete-form-btn text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 cursor-pointer dark:focus:ring-red-600 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                             Yes, I'm sure
                                                         </button>
-                                                        <button data-modal-hide="popup-modal-{{ $productType->id }}"
+                                                        <button data-modal-hide="popup-modal-{{ $product->id }}"
                                                             type="button"
                                                             class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-600 focus:outline-none bg-white rounded-lg border cursor-pointer border-pearl-bush-200 hover:bg-pearl-bush-500 hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-100 ">No,
                                                             cancel</button>
@@ -256,7 +287,7 @@
 
 
             <div class="pagination-wrapper">
-                @include('components.pagination', ['paginator' => $productTypes])
+                @include('components.pagination', ['paginator' => $products])
 
             </div>
         </div>

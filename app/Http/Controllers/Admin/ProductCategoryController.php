@@ -30,7 +30,7 @@ class ProductCategoryController extends Controller
 
         $searchTerm = $request->input('q');
 
-        $query = ProductCategory::query();
+        $query = ProductCategory::with('productTypes');
 
         if ($searchTerm) {
 
@@ -46,8 +46,6 @@ class ProductCategoryController extends Controller
             'sort_direction' => $sortDirection,
             'limit' => $limit
         ]);
-
-
 
 
         return view('admin.product-category.index', ['productCategories' => $productCategory]);
@@ -67,7 +65,7 @@ class ProductCategoryController extends Controller
      */
     public function store(StoreProductCategoryRequest $request)
     {
-       
+
         ProductCategory::create([
             'category_name' => $request->category_name,
             'user_id' => Auth::id()

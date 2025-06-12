@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FitController;
 use App\Http\Controllers\Admin\ProductCategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductTypeController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\AuthController;
@@ -35,8 +36,14 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         Route::resource('brand', BrandController::class);
         Route::resource('product-category', ProductCategoryController::class);
         Route::resource('product-type', ProductTypeController::class);
+        Route::get('/get-product-types/{id}', [ProductTypeController::class, 'getProductTypes']);
         Route::resource('fit',FitController::class);
+        Route::get('/get-fits/{id}', [FitController::class, 'getFits']);
+
         Route::resource('size',SizeController::class);
+        Route::resource('product',ProductController::class);
+
+
     });
 });
 
