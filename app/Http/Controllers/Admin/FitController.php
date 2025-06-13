@@ -169,7 +169,8 @@ class FitController extends Controller
         return redirect()->route('fit.index');
     }
 
-    public function getFits($id) {
+    public function getFits($id)
+    {
         $validator = Validator::make(['id' => $id], [
             'id' => 'required|numeric|exists:product_types'
         ]);
@@ -180,12 +181,10 @@ class FitController extends Controller
                 ->withInput();
         }
 
-      $fits =  Fit::with('productTypes')->get();
+        $fits = Fit::whereHas('productTypes', function ($query) use ($id) {
+            $query->where('product_types.id', $id);
+        })->get();
 
-    //   foreach($fits->productTypes as $productType) {
-    //     return $productType;
-    //   }
-     return $fits;
-
+        return response()->json($fits);
     }
 }

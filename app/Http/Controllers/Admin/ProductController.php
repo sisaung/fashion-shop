@@ -13,6 +13,7 @@ use App\Models\ProductType;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 
@@ -25,7 +26,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $validSortColumns = ['product_name', 'display_price' ,'brand_name', 'name', 'category_name',  'id'];
+        $validSortColumns = ['product_name', 'display_price', 'brand_name', 'name', 'category_name',  'id'];
         $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'id';
 
         $sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
@@ -37,7 +38,7 @@ class ProductController extends Controller
 
         $searchTerm = $request->input('q');
 
-        $query = Product::with(['brand','productCategory', 'productType','fits']);
+        $query = Product::with(['brand', 'productCategory', 'productType', 'fits']);
 
         if ($searchTerm) {
 
@@ -57,14 +58,13 @@ class ProductController extends Controller
                     ->orWhereHas('fits', function (Builder $q) use ($searchTerm) {
                         return $q->where('fit_name', 'like', "%$searchTerm%");
                     });
-
             });
         }
 
-        $query->join('brands','products.brand_id','=','brands.id')
-        ->join('product_categories','products.product_category_id','=','product_categories.id')
-        ->join('product_types','products.product_type_id','=','product_types.id')
-        ->select('products.*');
+        $query->join('brands', 'products.brand_id', '=', 'brands.id')
+            ->join('product_categories', 'products.product_category_id', '=', 'product_categories.id')
+            ->join('product_types', 'products.product_type_id', '=', 'product_types.id')
+            ->select('products.*');
 
         // $query->join('product_categories', 'product_types.product_category_id', '=', 'product_categories.id')
         //     ->join('fit_product_type', 'product_types.id', '=', 'fit_product_type.product_type_id')
@@ -106,15 +106,14 @@ class ProductController extends Controller
     {
 
         $newArrival = 1;
-        if(!$request->is_new_arrival) {
+        if (!$request->is_new_arrival) {
 
             $newArrival = 0;
-
         }
-      $product = Product::create([
+        $product = Product::create([
             'product_code' => $request->product_code,
             'product_name' => $request->product_name,
-            'slug' => Str::slug($request->product_name,'-'),
+            'slug' => Str::slug($request->product_name, '-'),
             'original_price' => $request->original_price,
             'sale_price' => $request->sale_price,
             'discount_percentage' => $request->discount_percentage,
@@ -158,9 +157,22 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $validator =  Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:products'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('product.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $product = Product::find($id);
+        $product->delete();
+
+        return redirect()->route('product.index');
     }
 }
 

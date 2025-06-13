@@ -104,7 +104,7 @@
                 <input type="hidden" class="select-product-category-id">
 
                 {{-- product type --}}
-                <div class="relative mb-4 w-full col-span-2">
+                <div id="product-type-container" class="relative mb-4 w-full col-span-2 ">
                     <label for="product_type"
                         class="@error('product_type_id')
                             text-red-500
@@ -127,28 +127,29 @@
 
                 {{-- fit --}}
 
-                <div class="relative mb-4 w-full col-span-2 fit-container">
-                    <label for="fit"
-                        class="@error('fit_id')
+                <div id="fit-container" class="relative mb-4 w-full col-span-2">
+                    <div id="fit-group">
+                        <label for="fit"
+                            class="@error('fit_id')
                             text-red-500
                         @enderror leading-7 text-sm text-gray-600">Fit
-                        type
-                    </label>
-                    <span class="text-red-500">*</span>
+                            type
+                        </label>
+                        <span class="text-red-500">*</span>
 
-                    <select id="fit" name="fit_id"
-                        class=" @error('fit_id')
+                        <select id="fit" name="fit_id"
+                            class=" @error('fit_id')
                             is-invalid
                         @enderror block w-full  p-2.5  rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 ">
-                        <option selected class="text-sm text-gray-700">Choose fit</option>
-                        {{-- @foreach ($fits as $fit)
-                            <option value="{{ $fit->id }}"> {{ $fit->fit_name }} </option>
-                        @endforeach --}}
-                    </select>
-                    @error('fit_id')
-                        <p class="text-sm text-red-500"> {{ $message }}</p>
-                    @enderror
+                            <option selected class="text-sm text-gray-700">Choose fit</option>
+                        </select>
+                        @error('fit_id')
+                            <p class="text-sm text-red-500"> {{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
+
+
 
                 {{-- original price --}}
                 <div class="relative mb-4 col-span-2">
@@ -305,4 +306,5 @@
 @push('scripts')
     {{-- @vite(['resources/js/fileUpload.js']) --}}
     @vite(['resources/js/filterProductType.js'])
+    @vite(['resources/js/filterFit.js'])
 @endpush
