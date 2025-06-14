@@ -160,7 +160,7 @@
                         Price</label>
                     <span class="text-red-500">*</span>
 
-                    <input type="text" id="original-price" name="original_price" value="{{ old('original_price') }}"
+                    <input type="number" id="original-price" name="original_price" value="{{ old('original_price') }}"
                         class="@error('original_price')
                             is-invalid
                         @enderror w-full original-price bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
@@ -178,7 +178,7 @@
                         Price</label>
                     <span class="text-red-500">*</span>
 
-                    <input type="text" id="sale-price" name="sale_price" value="{{ old('sale_price') }}"
+                    <input type="number" id="sale-price" name="sale_price" value="{{ old('sale_price') }}"
                         class="@error('sale_price')
                             is-invalid
                         @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
@@ -193,7 +193,7 @@
                         class="@error('discount_percentage')
                             text-red-500
                         @enderror leading-7 text-sm text-gray-600">Discount</label>
-                    <input type="text" id="discount-percentage " name="discount_percentage"
+                    <input type="number" id="discount-percentage" name="discount_percentage"
                         value="{{ old('discount_percentage') }}"
                         class="@error('discount_percentage')
                             is-invalid
@@ -213,7 +213,7 @@
 
                     <span class="profit text-green-500 text-sm ml-2"> </span>
 
-                    <input type="text" id="display-price" name="display_price" value="{{ old('display_price') }}"
+                    <input readonly type="text" id="display-price" name="display_price" value="{{ old('display_price') }}"
                         class="@error('display_price')
                             is-invalid
                         @enderror w-full  bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">

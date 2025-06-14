@@ -111,7 +111,7 @@ class ProductController extends Controller
             $newArrival = 0;
         }
 
-        
+
         $product = Product::create([
             'product_code' => $request->product_code,
             'product_name' => $request->product_name,
