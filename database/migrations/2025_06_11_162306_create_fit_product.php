@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('fit_product', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('fit_id')->constrained('fits')->onDelete('cascade');
+            $table->foreignId('fit_id')->constrained('fits')->onDelete('cascade')->nullable();
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->timestamps();
         });

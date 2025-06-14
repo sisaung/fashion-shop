@@ -104,7 +104,7 @@
                 <input type="hidden" class="select-product-category-id">
 
                 {{-- product type --}}
-                <div class="relative mb-4 w-full col-span-2">
+                <div id="product-type-container" class="relative mb-4 w-full col-span-2 ">
                     <label for="product_type"
                         class="@error('product_type_id')
                             text-red-500
@@ -127,28 +127,29 @@
 
                 {{-- fit --}}
 
-                <div class="relative mb-4 w-full col-span-2 fit-container">
-                    <label for="fit"
-                        class="@error('fit_id')
+                <div id="fit-container" class="relative mb-4 w-full col-span-2">
+                    <div id="fit-group">
+                        <label for="fit"
+                            class="@error('fit_id')
                             text-red-500
                         @enderror leading-7 text-sm text-gray-600">Fit
-                        type
-                    </label>
-                    <span class="text-red-500">*</span>
+                            type
+                        </label>
+                        <span class="text-red-500">*</span>
 
-                    <select id="fit" name="fit_id"
-                        class=" @error('fit_id')
+                        <select id="fit" name="fit_id"
+                            class=" @error('fit_id')
                             is-invalid
                         @enderror block w-full  p-2.5  rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 ">
-                        <option selected class="text-sm text-gray-700">Choose fit</option>
-                        {{-- @foreach ($fits as $fit)
-                            <option value="{{ $fit->id }}"> {{ $fit->fit_name }} </option>
-                        @endforeach --}}
-                    </select>
-                    @error('fit_id')
-                        <p class="text-sm text-red-500"> {{ $message }}</p>
-                    @enderror
+                            <option selected class="text-sm text-gray-700">Choose fit</option>
+                        </select>
+                        @error('fit_id')
+                            <p class="text-sm text-red-500"> {{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
+
+
 
                 {{-- original price --}}
                 <div class="relative mb-4 col-span-2">
@@ -159,10 +160,10 @@
                         Price</label>
                     <span class="text-red-500">*</span>
 
-                    <input type="text" id="original_price" name="original_price" value="{{ old('original_price') }}"
+                    <input type="text" id="original-price" name="original_price" value="{{ old('original_price') }}"
                         class="@error('original_price')
                             is-invalid
-                        @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                        @enderror w-full original-price bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                     @error('original_price')
                         <p class="text-sm text-red-500"> {{ $message }}</p>
                     @enderror
@@ -177,7 +178,7 @@
                         Price</label>
                     <span class="text-red-500">*</span>
 
-                    <input type="text" id="sale_price" name="sale_price" value="{{ old('sale_price') }}"
+                    <input type="text" id="sale-price" name="sale_price" value="{{ old('sale_price') }}"
                         class="@error('sale_price')
                             is-invalid
                         @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
@@ -192,11 +193,11 @@
                         class="@error('discount_percentage')
                             text-red-500
                         @enderror leading-7 text-sm text-gray-600">Discount</label>
-                    <input type="text" id="discount_percentage" name="discount_percentage"
+                    <input type="text" id="discount-percentage " name="discount_percentage"
                         value="{{ old('discount_percentage') }}"
                         class="@error('discount_percentage')
                             is-invalid
-                        @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                        @enderror  w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                     @error('discount_percentage')
                         <p class="text-sm text-red-500"> {{ $message }}</p>
                     @enderror
@@ -209,12 +210,13 @@
                             text-red-500
                         @enderror leading-7 text-sm text-gray-600">Display
                         Price</label>
-                    <span class="text-red-500">*</span>
 
-                    <input type="text" id="display_price" name="display_price" value="{{ old('display_price') }}"
+                    <span class="profit text-green-500 text-sm ml-2"> </span>
+
+                    <input type="text" id="display-price" name="display_price" value="{{ old('display_price') }}"
                         class="@error('display_price')
                             is-invalid
-                        @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                        @enderror w-full  bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                     @error('display_price')
                         <p class="text-sm text-red-500"> {{ $message }}</p>
                     @enderror
@@ -305,4 +307,6 @@
 @push('scripts')
     {{-- @vite(['resources/js/fileUpload.js']) --}}
     @vite(['resources/js/filterProductType.js'])
+    @vite(['resources/js/filterFit.js'])
+    @vite(['resources/js/calculateProFit.js'])
 @endpush
