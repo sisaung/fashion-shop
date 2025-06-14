@@ -43,7 +43,7 @@
 
             {{-- manage stock --}}
             <div>
-                <p
+                <a href="{{ route('manage-stock.create', ['id' => $product->id]) }}"
                     class="size-12 inline-flex justify-center items-center border border-dashed border-pearl-bush-600 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-5 stroke-pearl-bush-400">
@@ -51,7 +51,7 @@
                             d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3" />
                     </svg>
 
-                </p>
+                </a>
             </div>
 
             <div class="border-t border-t-pearl-bush-500 w-10"></div>
@@ -99,8 +99,6 @@
 
         <input type="file" class="hidden file" multiple>
 
-
-
         <div>
 
         </div>
@@ -110,20 +108,23 @@
         <div class="grid grid-cols-8 gap-5">
             @foreach ($product->productImages as $image)
                 <div class="col-span-1 relative group ">
-                    <div class="bg-black/10 absolute top-0 left-0 w-full h-full hidden group-hover:block  duration-500" ></div>
-                   <form method="POST" action="{{route('manage-image.destroy',['id' => $image->id])}}">
-                    @csrf
-                    @method('DELETE')
-                    <button class="absolute top-2 scale-0 group-hover:scale-100 duration-500  right-2 inline-flex justify-center items-center cursor-pointer size-5 bg-pearl-bush-400 hover:bg-pearl-bush-600 text-white rounded-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
-                            <path
-                                d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
-                        </svg>
+                    <div class="bg-black/10 absolute top-0 left-0 w-full h-full hidden group-hover:block  duration-500">
+                    </div>
+                    <form method="POST" action="{{ route('manage-image.destroy', ['id' => $image->id]) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button
+                            class="absolute top-2 scale-0 group-hover:scale-100 duration-500  right-2 inline-flex justify-center items-center cursor-pointer size-5 bg-pearl-bush-400 hover:bg-pearl-bush-600 text-white rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
+                                <path
+                                    d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+                            </svg>
 
-                    </button>
-                   </form>
-                    <img src="{{ $image->preview }}" class="object-cover object-center aspect-ratio border border-pearl-bush-400 rounded-md"
-                        alt="{{$product->product_name}}">
+                        </button>
+                    </form>
+                    <img src="{{ $image->preview }}"
+                        class="object-cover object-center aspect-ratio border border-pearl-bush-400 rounded-md"
+                        alt="{{ $product->product_name }}">
                 </div>
             @endforeach
         </div>

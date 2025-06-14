@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStockRequest;
 use App\Http\Requests\UpdateStockRequest;
+use App\Models\Product;
+use App\Models\Size;
 use App\Models\Stock;
+use Illuminate\Support\Facades\Validator;
 
 class StockController extends Controller
 {
@@ -20,17 +23,64 @@ class StockController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($id)
+
     {
-        //
+        $validator =  Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:products'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('product.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+            $product = Product::find($id);
+            $stock = Stock::where('product_id', $id)->orderBy('id', 'desc')->get();
+
+            return view('admin.product.product-stock.create',['product' => $product,'stocks' => $stock]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreStockRequest $request)
+    public function store(StoreStockRequest $request,$id)
     {
-        //
+        $validator =  Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:products'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('product.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $product = Product::find($id);
+
+        $existingStock = Stock::where('product_id', $id)
+        ->where('size_id', $request->size_id)
+        ->first();
+
+
+    if ($existingStock) {
+        $existingStock->increment('stock_quantity', $request->stock_quantity);
+        $product->stock_count = $product->stock_count + $request->stock_quantity;
+        $product->save();
+    } else {
+        // ✅ If not, create new stock row
+      $stock =  Stock::create([
+            'product_id' => $id,
+            'stock_quantity' => $request->stock_quantity,
+            'size_id' => $request->size_id
+        ]);
+
+        $product->stock_count = $product->stock_count + $stock->stock_quantity;
+        $product->save();
+    }
+
+
+        return redirect()->route('manage-stock.create',['id' => $id]);
     }
 
     /**

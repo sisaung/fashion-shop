@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('is_feature')->default(0);
             $table->string('is_discount')->default(0);
             $table->string('is_flash_sale')->default(0);
+            $table->string('stock_count')->default(0);
             $table->string('is_out_of_stock')->default(0);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('brand_id')->constrained('brands')->onDelete('cascade');

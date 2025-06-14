@@ -139,7 +139,7 @@
                                     </td>
 
                                     <td class="whitespace-nowrap text-end  px-4 py-4 text-sm text-gray-900">
-                                        0
+                                        {{ $product->stock_count }}
                                     </td>
 
                                     <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">

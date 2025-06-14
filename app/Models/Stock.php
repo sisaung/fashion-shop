@@ -9,4 +9,18 @@ class Stock extends Model
 {
     /** @use HasFactory<\Database\Factories\StockFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'product_id',
+        'size_id',
+        'stock_quantity',
+    ];
+
+    public function product() {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function size() {
+        return $this->belongsTo(Size::class);
+    }
 }
