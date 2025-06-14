@@ -112,6 +112,8 @@ class ProductController extends Controller
         }
 
 
+
+
         $product = Product::create([
             'product_code' => $request->product_code,
             'product_name' => $request->product_name,
@@ -143,17 +145,64 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+
+       $validator = Validator::make(['id' => $id], [
+           'id' => 'required|numeric|exists:products'
+       ]);
+
+       if ($validator->fails()) {
+           return redirect()->route('product.index')
+               ->withErrors($validator)
+               ->withInput();
+       }
+
+       $brands = Brand::all();
+       $productCategory = ProductCategory::all();
+       $productType = ProductType::all();
+       $fits = Fit::all();
+       $product = Product::find($id);
+
+
+       return view('admin.product.edit', ['product' => $product, 'brands' => $brands, 'productCategories' => $productCategory, 'productTypes' => $productType, 'fits' => $fits]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request,$id)
     {
-        //
+        $validator =  Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:products'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('product.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $newArrival = 1;
+        if(!$request->is_new_arrival){
+            $newArrival = 0;
+        }
+
+        $product = Product::find($id);
+        $product->product_code = $request->product_code;
+        $product->product_name = $request->product_name;
+        $product->original_price = $request->original_price;
+        $product->sale_price = $request->sale_price;
+        $product->discount_percentage = $request->discount_percentage;
+        $product->display_price = $request->display_price;
+        $product->gender = $request->gender;
+        $product->is_new_arrival = $newArrival;
+        $product->brand_id = $request->brand_id;
+        $product->product_category_id = $request->product_category_id;
+        $product->product_type_id = $request->product_type_id;
+        $product->fits()->sync($request->fit_id);
+        $product->save();
+        return redirect()->route('product.index');
     }
 
     /**

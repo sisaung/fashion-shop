@@ -12,6 +12,7 @@ const initializeCalculateProfit = () => {
     let salePrice = 0;
     let discountPercentage = 0;
 
+
     const calculateProfit = () => {
         if (discountPercentage > 0 && salePrice > 0 && originalPrice > 0) {
             const discountPrice = (discountPercentage / 100) * salePrice;
@@ -28,9 +29,29 @@ const initializeCalculateProfit = () => {
         profitSelector.textContent = `Profit ( ${profit} ) `;
     };
 
+    if(originalPriceSelector.value || salePriceSelector.value || discountPercentageSelector.value) {
+        originalPrice = originalPriceSelector.value;
+        salePrice = salePriceSelector.value;
+        discountPercentage = discountPercentageSelector.value;
+        console.log(salePrice)
+        calculateProfit();
+    }
+
+    // if(discountPercentageSelector.value) {
+    //     discountPercentage = discountPercentageSelector.value;
+    //     calculateProfit();
+    // }
+
+
+
     const handleOriginalPriceChange = (e) => {
         if (e.target.value) {
             originalPrice = e.target.value;
+
+            if(salePriceSelector.value) {
+                // salePrice = salePriceSelector.value;
+                calculateProfit();
+            }
         } else {
             originalPrice = 0;
             calculateProfit();
