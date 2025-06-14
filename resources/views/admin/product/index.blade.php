@@ -100,10 +100,10 @@
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
 
                                         <div class="flex gap-x-3">
-                                            <div class="size-12">
+                                            <div class="size-12 ">
                                                 @if ($product->productImages->first())
                                                     <img src="{{ $product->productImages->first()->thumbnail }}"
-                                                        class=" object-cover object-center rounded-md" alt="">
+                                                        class="object-cover object-center " alt="">
                                                 @else
                                                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1362px-Placeholder_view_vector.svg.png?20220519031949"
                                                         class="w-full h-full object-cover object-center rounded-md"
@@ -181,7 +181,7 @@
 
 
                                         <button id="dropdownDefaultButton-{{ $product->id }}"
-                                            data-dropdown-toggle="dropdown-{{ $product->id }}" class="cursor-pointer"
+                                            data-dropdown-toggle="dropdown-{{ $product->id }}" class="cursor-pointer hover:bg-gray-100"
                                             type="button">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -190,6 +190,8 @@
                                             </svg>
 
                                         </button>
+
+
 
                                         <!-- Dropdown menu -->
                                         <div id="dropdown-{{ $product->id }}"
@@ -227,19 +229,6 @@
                                                 </button>
 
 
-                                                {{-- manage product image --}}
-
-                                                <button type="button"
-                                                    data-manage-image="{{ route('manage-image.edit', ['id' => $product->id]) }}"
-                                                    class="manage-produdt-image-btn w-full px-5 hover:bg-gray-100 inline-flex py-2 items-center gap-x-3 cursor-pointer">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="size-4 text-gray-400">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                                                    </svg>
-                                                    Image
-                                                </button>
 
                                                 <form id="delete-form-{{ $product->id }}" class="hidden"
                                                     action="{{ route('product.destroy', ['product' => $product->id]) }}"
@@ -310,6 +299,32 @@
                                             </div>
                                         </div>
 
+                                        {{-- manage product image --}}
+
+                                        <button type="button"
+                                            data-manage-image="{{ route('manage-image.edit', ['id' => $product->id]) }}"
+                                            class="manage-produdt-image-btn w-full hover:bg-gray-100 inline-flex py-2 items-center px-3 cursor-pointer">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="size-5 text-gray-600">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                                            </svg>
+
+                                        </button>
+
+
+                                        {{-- manage stock --}}
+
+                                        <button class="cursor-pointer px-1 hover:bg-gray-100"
+                                            data-manage-stock="{{ route('manage-stock.create', ['id' => $product->id]) }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="size-5 text-gray-500">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3" />
+                                            </svg>
+
+                                        </button>
+
                                     </td>
                                 </tr>
                             @endforeach
@@ -343,4 +358,5 @@
     {{-- @vite(['resources/js/pagination.js']) --}}
     @vite(['resources/js/saveCurrentParam'])
     @vite(['resources/js/manageProductImage'])
+    @vite(['resources/js/manageProductStock'])
 @endpush
