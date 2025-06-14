@@ -38,7 +38,7 @@ class ProductController extends Controller
 
         $searchTerm = $request->input('q');
 
-        $query = Product::with(['brand', 'productCategory', 'productType', 'fits']);
+        $query = Product::with(['brand', 'productCategory', 'productType', 'fits','productImages']);
 
         if ($searchTerm) {
 
@@ -83,6 +83,7 @@ class ProductController extends Controller
             'sort_direction' => $sortDirection,
             'limit' => $limit
         ]);
+        
         return view('admin.product.index', ['products' => $product]);
     }
 
@@ -131,7 +132,7 @@ class ProductController extends Controller
         ]);
 
         $product->fits()->attach($request->fit_id);
-        return redirect()->route('product.index');
+        return redirect()->route('manage-image.edit', ['id' => $product->id]);
     }
 
     /**
@@ -224,6 +225,27 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('product.index');
+    }
+
+    public function uploadProductImage($id)
+    {
+
+    }
+
+    public function storeUploadedProductImage($id) {
+        $validator =  Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:products'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('product.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $product = Product::find($id);
+
+
     }
 }
 

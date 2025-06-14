@@ -23,10 +23,7 @@
 
                                 </th>
 
-                                <th data-sortby="product_name" scope="col"
-                                    class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
-                                    Product Image
-                                </th>
+
                                 <th data-sortby="product_name" scope="col"
                                     class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
                                     @include('components.admin.sortTable', [
@@ -35,28 +32,28 @@
 
                                 </th>
 
-                                <th data-sortby="category_name" scope="col"
-                                    class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
-                                    @include('components.admin.sortTable', [
-                                        'sortTitle' => 'Product Category',
-                                    ])
-
-                                </th>
-
-                                <th data-sortby="name" scope="col"
-                                    class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
-                                    @include('components.admin.sortTable', [
-                                        'sortTitle' => 'Product Type',
-                                    ])
-
-                                </th>
-
-
-
                                 <th data-sortby="display_price" scope="col"
                                     class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
                                     @include('components.admin.sortTable', [
-                                        'sortTitle' => 'Price',
+                                        'sortTitle' => 'Sale Price',
+                                    ])
+
+                                </th>
+
+
+
+                                <th data-sortby="stock_count" scope="col"
+                                    class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
+                                    @include('components.admin.sortTable', [
+                                        'sortTitle' => 'Stock Count',
+                                    ])
+
+                                </th>
+
+                                <th data-sortby="stock_count" scope="col"
+                                    class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
+                                    @include('components.admin.sortTable', [
+                                        'sortTitle' => 'Discount',
                                     ])
 
                                 </th>
@@ -98,46 +95,60 @@
                                     <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
                                         {{ $product->id }}
                                     </td>
-                                    <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                        <div>
-                                            <img src="https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="
-                                                class="size-12 rounded-md" alt="">
-                                        </div>
-                                    </td>
+
 
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
 
-                                        <div class="flex flex-col gap-3">
-                                            <p>{{ $product->product_name }}</p>
-                                            <div class="flex gap-2">
-                                                <p
-                                                    class="bg-pearl-bush-300 text-white text-xs inline-block px-2 py-1 rounded-md">
-                                                    {{ $product->brand->brand_name }}</p>
-                                                @foreach ($product->fits as $fit)
+                                        <div class="flex gap-x-3">
+                                            <div class="size-12">
+                                                @if ($product->productImages->first())
+                                                    <img src="{{ $product->productImages->first()->thumbnail }}"
+                                                        class=" object-cover object-center rounded-md" alt="">
+                                                @else
+                                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1362px-Placeholder_view_vector.svg.png?20220519031949"
+                                                        class="w-full h-full object-cover object-center rounded-md"
+                                                        alt="">
+                                                @endif
+                                            </div>
+                                            <div class="flex flex-col gap-y-1">
+                                                <span>{{ $product->product_name }} - {{ $product->brand->brand_name }}
+                                                </span>
+                                                <div class="flex gap-2">
                                                     <p
                                                         class="bg-pearl-bush-300 text-white text-xs inline-block px-2 py-1 rounded-md">
-                                                        {{ $fit->fit_name }} </p>
-                                                @endforeach
-                                                <p
-                                                    class="bg-pearl-bush-300 text-white text-xs inline-block px-2 py-1 rounded-md">
-                                                    {{ $product->gender }} </p>
+                                                        {{ $product->gender }} </p>
+                                                    <p
+                                                        class=" bg-pearl-bush-300 text-white text-xs inline-block px-2 py-1 rounded-md">
+                                                        {{ $product->productType->name }}</p>
+                                                    <p
+                                                        class=" bg-pearl-bush-300 text-white text-xs inline-block px-2 py-1 rounded-md">
+                                                        {{ $product->productCategory->category_name }}</p>
+                                                    @foreach ($product->fits as $fit)
+                                                        <p
+                                                            class="bg-pearl-bush-300 text-white text-xs inline-block px-2 py-1 rounded-md">
+                                                            {{ $fit->fit_name }} </p>
+                                                    @endforeach
+
+                                                </div>
                                             </div>
                                         </div>
 
                                     </td>
-                                    <td class="whitespace-nowrap text-center  px-4 py-4 text-sm text-gray-900">
-                                        {{ $product->productCategory->category_name }}
+                                    <td class="whitespace-nowrap text-end  px-4 py-4 text-sm text-gray-900">
+                                        {{ $product->sale_price }}
                                     </td>
 
-                                    <td class="whitespace-nowrap  text-center px-4 py-4 text-sm text-gray-900">
-                                        {{ $product->productType->name }}
+                                    <td class="whitespace-nowrap text-end  px-4 py-4 text-sm text-gray-900">
+                                        0
                                     </td>
 
-                                    <td class="whitespace-nowrap  px-4 py-4 text-sm text-gray-900">
-                                        {{ $product->display_price }}
+                                    <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
+                                        {{ $product->discount_percentage ? $product->discount_percentage . '%' : 0 }}
                                     </td>
 
-                                    <td class="whitespace-nowrap text-center px-4 py-4  text-sm text-gray-900">
+                                    <td data-new-arrival-id="{{ $product->id }}"
+                                        data-new-arrival="{{ $product->is_new_arrival }}"
+                                        class="whitespace-nowrap text-center px-4 py-4  text-sm text-gray-900">
                                         <div class="mt-3">
                                             <label class="inline-flex items-center mb-5 cursor-pointer">
                                                 <input type="checkbox" value="" class="sr-only peer"
@@ -201,7 +212,7 @@
                                                     Delete
                                                 </button>
 
-
+                                                {{-- edit --}}
 
                                                 <button type="button"
                                                     class="edit-product-btn w-full px-5 hover:bg-gray-100 inline-flex py-2 items-center gap-x-3 cursor-pointer"
@@ -213,6 +224,21 @@
                                                             d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                                     </svg>
                                                     Edit
+                                                </button>
+
+
+                                                {{-- manage product image --}}
+
+                                                <button type="button"
+                                                    data-manage-image="{{ route('manage-image.edit', ['id' => $product->id]) }}"
+                                                    class="manage-produdt-image-btn w-full px-5 hover:bg-gray-100 inline-flex py-2 items-center gap-x-3 cursor-pointer">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="size-4 text-gray-400">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                                                    </svg>
+                                                    Image
                                                 </button>
 
                                                 <form id="delete-form-{{ $product->id }}" class="hidden"
@@ -288,7 +314,11 @@
                                 </tr>
                             @endforeach
 
+
+
                         </tbody>
+
+
                     </table>
                 </div>
 
@@ -312,4 +342,5 @@
     @vite(['resources/js/search.js'])
     {{-- @vite(['resources/js/pagination.js']) --}}
     @vite(['resources/js/saveCurrentParam'])
+    @vite(['resources/js/manageProductImage'])
 @endpush

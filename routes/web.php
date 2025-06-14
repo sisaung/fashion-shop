@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FitController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\ProductTypeController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\AuthController;
@@ -41,8 +42,19 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         Route::get('/get-fits/{id}', [FitController::class, 'getFits']);
 
         Route::resource('size',SizeController::class);
-        Route::resource('product',ProductController::class);
+        // Route::controller(ProductController::class)->group(function () {
 
+        //     Route::resource('product',ProductController::class);
+        //     Route::get('/product/{id}/edit/manage-image','uploadProductImage')->name('product.manage-image');
+        // });
+
+        Route::resource('product', ProductController::class);
+        Route::get('/product/{id}/show/manage-image',[ProductImageController::class,'index'])->name('manage-image.index');
+        Route::get('/product/{id}/edit/manage-image',[ProductImageController::class,'edit'])->name('manage-image.edit');
+
+        Route::post('/product/{id}/edit/manage-image',[ProductImageController::class,'store'])->name('manage-image.store');
+
+        Route::delete('/product/{id}/edit/manage-image',[ProductImageController::class,'destroy'])->name('manage-image.destroy');
 
     });
 });

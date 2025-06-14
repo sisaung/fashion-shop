@@ -14,6 +14,7 @@
 
         @if (isset($links))
             @foreach ($links as $link)
+
                 <li>
                     <div class="flex items-center">
                         <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
@@ -21,7 +22,8 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m1 9 4-4-4-4" />
                         </svg>
-                        <a href="{{ route($link['path']) }}"
+
+                        <a href="{{ route($link['path']) }}
                             class="ms-1 text-sm font-medium text-gray-500 hover:text-gray-600 md:ms-2  ite">
                             {{ $link['name'] }} </a>
                     </div>

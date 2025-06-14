@@ -3,7 +3,8 @@
 @section('content')
     @include('components.admin.breadcrumb', [
         'currentPageTitle' => 'Create Brand',
-        'links' => [['name' => 'Manage Brands', 'path' => 'brand.index']],
+        'links' => [['name' => 'Manage Brands', 'path' => 'brand.index','pathValue' => '']],
+        'pathKey' => ''
     ])
     <h1 class="mt-10 text-xl px-5"> Create Brand </h1>
     <div>
