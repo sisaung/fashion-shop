@@ -149,8 +149,8 @@
                                     <td data-new-arrival-id="{{ $product->id }}"
                                         data-new-arrival="{{ $product->is_new_arrival }}"
                                         class="whitespace-nowrap text-center px-4 py-4  text-sm text-gray-900">
-                                        <div class="mt-3">
-                                            <label class="inline-flex items-center mb-5 cursor-pointer">
+                                        <div>
+                                            <label class="inline-flex items-center cursor-pointer">
                                                 <input type="checkbox" value="" class="sr-only peer"
                                                     {{ $product->is_new_arrival ? 'checked' : '' }}>
                                                 <div

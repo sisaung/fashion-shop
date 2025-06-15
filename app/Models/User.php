@@ -75,4 +75,8 @@ class User extends Authenticatable
     public function coupons() {
         $this->hasMany(Coupon::class);
     }
+
+    public function reviews() {
+        $this->hasMany(Review::class);
+    }
 }
