@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FitController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductImageController;
@@ -67,6 +68,8 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
 
         Route::resource('coupon',CouponController::class);
         Route::resource('customer',CustomerController::class)->only(['index','show']);
+        Route::resource('order',OrderController::class)->only(['index','show']);
+
 
 
     });

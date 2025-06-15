@@ -64,7 +64,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white body-container">
+                        <tbody class="divide-y divide-gray-200 bg-white">
 
 
                             @foreach ($customers as $customer)
@@ -120,7 +120,7 @@
                                     <td
                                         class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 text-end flex items-center justify-center">
 
-                                        <button data-customer-detail="{{ route('customer.show', $customer->id) }}"
+                                        <a href="{{ route('customer.show', $customer->id) }}"
                                             class="px-2 py-1 hover:bg-gray-100 inline-flex justify-center items-center"
                                             href="{{ route('customer.show', $customer->id) }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
@@ -131,7 +131,7 @@
                                             </svg>
 
 
-                                        </button>
+                                        </a>
 
 
                                     </td>
@@ -169,5 +169,5 @@
     @vite(['resources/js/sorting.js'])
     @vite(['resources/js/search.js'])
     {{-- @vite(['resources/js/pagination.js']) --}}
-    @vite(['resources/js/customerDetail.js'])
+    {{-- @vite(['resources/js/redirectToDetail.js']) --}}
 @endpush
