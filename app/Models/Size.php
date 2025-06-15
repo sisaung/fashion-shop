@@ -9,7 +9,7 @@ class Size extends Model
 {
     /** @use HasFactory<\Database\Factories\SizeFactory> */
     use HasFactory;
-    protected $fillable = ['size_name', 'user_id', 'product_type_id'];
+    protected $fillable = ['size_name', 'user_id', 'product_type_id','stock_id'];
 
     public function user()
     {
@@ -25,5 +25,9 @@ class Size extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class);
+    }
+
+    public function stocks() {
+        return $this->hasMany(Stock::class);
     }
 }

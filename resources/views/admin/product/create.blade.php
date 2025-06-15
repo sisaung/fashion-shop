@@ -13,7 +13,7 @@
             <div class="grid grid-cols-8 gap-5 px-5">
 
                 {{-- product code --}}
-                <div class="relative mb-4 col-span-2">
+                {{-- <div class="relative mb-4 col-span-2">
                     <label for="product_code"
                         class="@error('product_code')
                             text-red-500
@@ -27,10 +27,10 @@
                     @error('product_code')
                         <p class="text-sm text-red-500"> {{ $message }}</p>
                     @enderror
-                </div>
+                </div> --}}
 
                 {{-- product name --}}
-                <div class="relative mb-4 col-span-2">
+                <div class="relative  col-span-2">
                     <label for="product_name"
                         class="@error('product_name')
                             text-red-500
@@ -49,6 +49,7 @@
 
 
 
+                <div class="col-span-2"></div>
                 <div class="col-span-2"></div>
                 <div class="col-span-2"></div>
 
@@ -141,7 +142,7 @@
                             class=" @error('fit_id')
                             is-invalid
                         @enderror block w-full  p-2.5  rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 ">
-                            <option selected class="text-sm text-gray-700">Choose fit</option>
+                            <option selected class="text-sm text-gray-700" value="">Choose fit</option>
                         </select>
                         @error('fit_id')
                             <p class="text-sm text-red-500"> {{ $message }}</p>
@@ -160,7 +161,7 @@
                         Price</label>
                     <span class="text-red-500">*</span>
 
-                    <input type="text" id="original-price" name="original_price" value="{{ old('original_price') }}"
+                    <input type="number" id="original-price" name="original_price" value="{{ old('original_price') }}"
                         class="@error('original_price')
                             is-invalid
                         @enderror w-full original-price bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
@@ -178,7 +179,7 @@
                         Price</label>
                     <span class="text-red-500">*</span>
 
-                    <input type="text" id="sale-price" name="sale_price" value="{{ old('sale_price') }}"
+                    <input type="number" id="sale-price" name="sale_price" value="{{ old('sale_price') }}"
                         class="@error('sale_price')
                             is-invalid
                         @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
@@ -193,7 +194,7 @@
                         class="@error('discount_percentage')
                             text-red-500
                         @enderror leading-7 text-sm text-gray-600">Discount</label>
-                    <input type="text" id="discount-percentage " name="discount_percentage"
+                    <input type="number" id="discount-percentage" name="discount_percentage"
                         value="{{ old('discount_percentage') }}"
                         class="@error('discount_percentage')
                             is-invalid
@@ -213,7 +214,8 @@
 
                     <span class="profit text-green-500 text-sm ml-2"> </span>
 
-                    <input type="text" id="display-price" name="display_price" value="{{ old('display_price') }}"
+                    <input readonly type="text" id="display-price" name="display_price"
+                        value="{{ old('display_price') }}"
                         class="@error('display_price')
                             is-invalid
                         @enderror w-full  bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">

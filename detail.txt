@@ -1,0 +1,220 @@
+<section>
+            <div class="grid grid-cols-2">
+                <div class="col-span-1">
+                    <h1 class="text-3xl font-bold mb-3">Product Detail</h1>
+                    <p class="mb-10 text-stone-500">
+                        This is a demo product detail page.
+                    </p>
+                </div>
+                <div class="col-span-1">
+                    <div class="grid grid-cols-7">
+                        <div class="col-span-1">
+                            <div
+                                class="size-14 rounded-full border-2 mx-auto bg-primary-500 border-primary-500 flex justify-center items-center">
+                                <HiOutlinePencilSquare size={20} class="stroke-primary-50" />
+                            </div>
+                        </div>
+                        <div class="col-span-1 flex items-center">
+                            <div class="border-t-2 border-dashed border-primary-500 h-0 w-full"></div>
+                        </div>
+                        <div class="col-span-1">
+                            <div
+                                class="size-14 rounded-full border-2 mx-auto bg-primary-500 border-primary-500 flex justify-center items-center">
+                                <HiOutlinePhoto size={20} class="stroke-primary-50" />
+                            </div>
+                        </div>
+                        <div class="col-span-1 flex items-center">
+                            <div class="border-t-2 border-dashed border-primary-500 h-0 w-full"></div>
+                        </div>
+                        <div class="col-span-1">
+                            <div
+                                class="size-14 rounded-full border-2 mx-auto bg-primary-500 border-primary-500 flex justify-center items-center">
+                                <HiOutlineSquare3Stack3D size={20} class="stroke-primary-50" />
+                            </div>
+                        </div>
+                        <div class="col-span-1 flex items-center">
+                            <div class="border-t-2 border-dashed border-primary-500 h-0 w-full"></div>
+                        </div>
+                        <div class="col-span-1">
+                            <div
+                                class="size-14 rounded-full border-2 mx-auto bg-primary-500 border-primary-500 flex justify-center items-center">
+                                <HiOutlineDocumentText size={20} class="stroke-primary-50" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6 gap-6">
+                <div class="col-span-1 md:col-span-2 lg:col-span-3">
+                    <table class="table-auto border-collapse w-full">
+                        <tbody>
+                            {/* Product Name, Code */}
+                            <tr class="bg-stone-100">
+                                <td colSpan="3" class="border px-4 py-4 text-start text-sm text-stone-600">
+                                    Product Title
+                                </td>
+                                <td class="border px-4 py-4 text-sm text-stone-600">Product Code</td>
+                            </tr>
+                            <tr>
+                                <td colSpan="3" class="border px-4 py-4 text-start">
+                                    Demo T-shirt
+                                </td>
+                                <td class="border px-4 py-4">
+                                    <a href="https://www.google.com/search?q=DEMO-12345" target="_blank"
+                                        class="font-mono underline">
+                                        DEMO-12345
+                                    </a>
+                                </td>
+                            </tr>
+
+                            {/* Brand, Type, Category, Fitting */}
+                            <tr class="bg-stone-100">
+                                <td class="border px-4 py-4 text-sm text-stone-600">Brand</td>
+                                <td class="border px-4 py-4 text-sm text-stone-600">Product Type</td>
+                                <td class="border px-4 py-4 text-sm text-stone-600">Category</td>
+                                <td class="border px-4 py-4 text-sm text-stone-600">Fitting</td>
+                            </tr>
+                            <tr>
+                                <td class="border px-4 py-4">
+                                    <span class="border px-2 rounded-md bg-slate-100">DemoBrand</span>
+                                </td>
+                                <td class="border px-4 py-4">
+                                    <span class="border px-2 rounded-md bg-slate-100">T-Shirt</span>
+                                </td>
+                                <td class="border px-4 py-4">
+                                    <span class="border px-2 rounded-md bg-slate-100">Topwear</span>
+                                </td>
+                                <td class="border px-4 py-4">
+                                    <span class="border px-2 rounded-md bg-slate-100">Slim Fit</span>
+                                </td>
+                            </tr>
+
+                            {/* Price, Sale, Discount */}
+                            <tr class="bg-stone-100">
+                                <td class="border px-4 py-4 text-sm text-stone-600">Original Price</td>
+                                <td class="border px-4 py-4 text-sm text-stone-600" colSpan={2}>
+                                    Sale Price <span class="text-green-500">(Profit 2000)</span>
+                                </td>
+                                <td class="border px-4 py-4 text-sm text-stone-600">Discount</td>
+                            </tr>
+                            <tr>
+                                <td class="border px-4 py-4">10000 MMK</td>
+                                <td class="border px-4 py-4" colSpan={2}>
+                                    <p class="inline-flex gap-2">
+                                        <span class="line-through">12000 MMK</span>
+                                        <span>12000 MMK</span>
+                                    </p>
+                                </td>
+                                <td class="border px-4 py-4">2000 MMK</td>
+                            </tr>
+
+                            <tr class="bg-stone-100">
+                                <td class="border px-4 py-4 text-sm text-stone-600">Gender</td>
+                                <td class="border px-4 py-4 text-sm text-stone-600">E-commerce</td>
+                                <td class="border px-4 py-4 text-sm text-stone-600">Created By</td>
+                                <td class="border px-4 py-4 text-sm text-stone-600">Created At</td>
+                            </tr>
+                            <tr>
+                                <td class="border px-4 py-4">Unisex</td>
+                                <td class="border px-4 py-4">Yes</td>
+                                <td class="border px-4 py-4">Admin Demo</td>
+                                <td class="border px-4 py-4">2025-06-15 10:00 AM</td>
+                            </tr>
+
+                            {/* Product Description */}
+                            <tr class="bg-stone-100">
+                                <td colSpan="4" class="border px-4 py-4 text-sm text-stone-600">
+                                    Product Description
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colSpan="4" class="border px-4 py-4">
+                                    <p class="text-sm text-gray-700">
+                                        This is a comfortable slim-fit cotton t-shirt perfect for casual wear.
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-span-1 lg:col-span-2">
+                    <div class="mb-7">
+                        <div class="flex items-center mb-3">
+                            <h3 class="text-sm font-semibold me-3 text-stone-600">
+                                Product Image <span>(2)</span>
+                            </h3>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <a href="https://via.placeholder.com/600"
+                                class="border border-primary-300 rounded-lg overflow-hidden">
+                                <img class="h-20" src="https://via.placeholder.com/150" alt="Demo Image 1" />
+                            </a>
+                            <a href="https://via.placeholder.com/600"
+                                class="border border-primary-300 rounded-lg overflow-hidden">
+                                <img class="h-20" src="https://via.placeholder.com/150" alt="Demo Image 2" />
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="w-full mb-7">
+                        <div class="col-span-full">
+                            <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                                <div class="flex items-center mb-3">
+                                    <h3 class="text-sm font-semibold me-3 text-stone-600">
+                                        Product Stock (<span>3</span>)
+                                    </h3>
+                                </div>
+                                <table class="w-full text-sm text-left text-stone-500">
+                                    <thead class="border">
+                                        <tr>
+                                            <th scope="col" class="p-3">Size</th>
+                                            <th scope="col" class="p-3">Barcode</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="px-6 py-3 text-start border">
+                                                <span>S</span>
+                                            </td>
+                                            <td class="px-6 py-3 border">
+                                                <span>1111111111111</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-3 text-start border">
+                                                <span>M</span>
+                                            </td>
+                                            <td class="px-6 py-3 border">
+                                                <span>2222222222222</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-3 text-start border">
+                                                <span>L</span>
+                                            </td>
+                                            <td class="px-6 py-3 border">
+                                                <span>3333333333333</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button
+                            class="text-white flex justify-center items-center gap-3 bg-primary-400 hover:bg-primary-600 font-medium rounded-lg text-sm px-5 py-2.5">
+                            Add New Product
+                            <HiPlus />
+                        </button>
+                        <button
+                            class="text-white flex justify-center items-center gap-3 bg-primary-400 hover:bg-primary-600 font-medium rounded-lg text-sm px-5 py-2.5">
+                            Manage Product
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
