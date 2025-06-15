@@ -1,6 +1,7 @@
 @extends('layout.dashboard')
 
 @section('content')
+
     <div class="flex justify-between items-center">
         <div>
             @include('components.admin.breadcrumb', [
@@ -16,7 +17,7 @@
             {{-- edit product --}}
             <div>
                 <p
-                    class="size-12 inline-flex justify-center items-center border-2 border-dashed border-pearl-bush-400 bg-pearl-bush-500 rounded-full">
+                    class="size-12 inline-flex justify-center items-center border-2 border-pearl-bush-300 bg-pearl-bush-500 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-5 text-white">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -25,12 +26,12 @@
                 </p>
             </div>
 
-            <div class="border-t border-t-pearl-bush-500 w-10"></div>
+            <div class="border-t-2 border-dashed border-t-pearl-bush-500 w-10"></div>
 
             {{-- manage product image --}}
             <div>
                 <a href="{{ route('manage-image.edit', ['id' => $product->id]) }}"
-                    class="size-12 inline-flex justify-center items-center border border-dashed border-pearl-bush-600  rounded-full">
+                    class="size-12 inline-flex justify-center items-center border border-pearl-bush-600  rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-5 stroke-pearl-bush-500">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -40,12 +41,12 @@
                 </a>
             </div>
 
-            <div class="border-t border-t-pearl-bush-500 w-10"></div>
+            <div class="border-t-2 border-dashed border-t-pearl-bush-500 w-10"></div>
 
             {{-- manage stock --}}
             <div>
                 <a href="{{ route('manage-stock.create', ['id' => $product->id]) }}"
-                    class="size-12 inline-flex justify-center items-center border border-dashed border-pearl-bush-600 rounded-full">
+                    class="size-12 inline-flex justify-center items-center border border-pearl-bush-600 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-5 stroke-pearl-bush-400">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -55,14 +56,13 @@
                 </a>
             </div>
 
-            <div class="border-t border-t-pearl-bush-500 w-10"></div>
+            <div class="border-t-2 border-dashed border-t-pearl-bush-500 w-10"></div>
 
 
             {{-- product detail --}}
 
             <div>
-                <p
-                    class="size-12 inline-flex justify-center items-center border border-dashed border-pearl-bush-600 rounded-full">
+                <p class="size-12 inline-flex justify-center items-center border border-pearl-bush-600 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-5 stroke-pearl-bush-400">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -224,7 +224,8 @@
                             <option selected class="text-sm text-gray-700">Choose fit</option>
                             @if ($product->fits)
                                 @foreach ($product->fits as $fit)
-                                    <option value="{{ $fit->id }}" selected> {{ $fit->fit_name }}
+                                    <option value="{{ $fit->id }}" selected>
+                                        {{ $fit->fit_name }}
                                     </option>
                                 @endforeach
                             @endif

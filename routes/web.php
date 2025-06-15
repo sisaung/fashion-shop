@@ -50,10 +50,12 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         // });
 
         Route::resource('product', ProductController::class);
+
         // Route::get('/product/{id}/show/manage-image',[ProductImageController::class,'index'])->name('manage-image.index');
         Route::get('/product/{id}/edit/manage-image',[ProductImageController::class,'edit'])->name('manage-image.edit');
         Route::post('/product/{id}/edit/manage-image',[ProductImageController::class,'store'])->name('manage-image.store');
         Route::delete('/product/{id}/edit/manage-image',[ProductImageController::class,'destroy'])->name('manage-image.destroy');
+
 
         // stock
 

@@ -3,10 +3,9 @@ const initializeFit = () => {
     const fitGroup = document.querySelector("#fit-group");
     const fitSelect = document.querySelector("#fit");
 
-    fitSelect.innerHTML = "<option selected value=''>Choose fit</option>";
-
     productTypeSelect.addEventListener("change", async (e) => {
         const productTypeId = e.target.value;
+        fitSelect.innerHTML = "<option selected value=''>Choose fit</option>";
 
         // fitSelect.innerHTML = "<option selected value=''>Choose fit</option>";
 

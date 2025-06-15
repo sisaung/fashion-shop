@@ -10,7 +10,7 @@ class Fit extends Model
     /** @use HasFactory<\Database\Factories\FitFactory> */
     use HasFactory;
 
-    protected $fillable = ['fit_name', 'product_type_id','user_id'];
+    protected $fillable = ['fit_name' ,'product_type_id','user_id'];
 
     public function user()
     {

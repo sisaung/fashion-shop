@@ -24,7 +24,7 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_code' => 'required|string|min:5|max:60|unique:products,product_code',
+            // 'product_code' => 'required|string|min:5|max:60|unique:products,product_code',
             'product_name' => 'required|string|min:3|max:50|unique:products,product_name',
             'original_price' => 'required|string|min:1|max:999999999',
             'sale_price' => 'required|string|min:1|max:999999999',

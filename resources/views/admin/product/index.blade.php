@@ -181,8 +181,8 @@
 
 
                                         <button id="dropdownDefaultButton-{{ $product->id }}"
-                                            data-dropdown-toggle="dropdown-{{ $product->id }}" class="cursor-pointer hover:bg-gray-100"
-                                            type="button">
+                                            data-dropdown-toggle="dropdown-{{ $product->id }}"
+                                            class="cursor-pointer hover:bg-gray-100" type="button">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke-width="1.5" stroke="currentColor" class="size-6">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -322,6 +322,15 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                     d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3" />
                                             </svg>
+
+                                        </button>
+
+                                        <button class="cursor-pointer px-1 hover:bg-gray-100"
+                                            data-manage-stock="{{ route('product.show', ['product' => $product->id]) }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-gray-500">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                              </svg>
+
 
                                         </button>
 

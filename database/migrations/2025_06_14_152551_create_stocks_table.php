@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('size_id')->constrained('sizes')->onDelete('cascade');
             // $table->foreignId('color_id')->nullable()->constrained();
             $table->string('stock_quantity');
+            $table->string('sku')->unique()->index();
             $table->timestamps();
         });
     }
