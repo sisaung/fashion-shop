@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FitController;
 use App\Http\Controllers\Admin\ProductCategoryController;
@@ -62,6 +63,8 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         Route::get('/product/{id}/edit/manage-stock',[StockController::class,'create'])->name('manage-stock.create');
         Route::post('/product/{id}/edit/manage-stock',[StockController::class,'store'])->name('manage-stock.store');
 
+
+        Route::resource('coupon',CouponController::class);
 
 
     });

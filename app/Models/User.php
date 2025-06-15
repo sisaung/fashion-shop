@@ -71,4 +71,8 @@ class User extends Authenticatable
     public function products() {
         $this->hasMany(Product::class);
     }
+
+    public function coupons() {
+        $this->hasMany(Coupon::class);
+    }
 }
