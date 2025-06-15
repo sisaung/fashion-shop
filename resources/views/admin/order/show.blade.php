@@ -14,85 +14,47 @@
 
     </div>
 
-    <h1 class="mt-10 text-xl px-5"> Customer Detail </h1>
-    <section class="px-5 grid grid-cols-2 gap-x-5">
+    <h1 class="mt-10 text-xl px-5"> Order Detail </h1>
+    <section class="grid grid-cols-6 gap-x-5 mb-10">
 
-
-        <div class="col-span-1 mt-5">
-            <h3 class="text-sm font-semibold me-3 text-stone-600 mb-3">
-                Customer Information
-            </h3>
-            <table class="w-full text-sm text-left rtl:text-right text-stone-600 mb-10">
-                <tbody>
-                    <tr>
-                        <td class="px-6 py-3 font-bold border border-stone-200 text-start">Image</td>
-                        <td class="px-6 py-3 border border-stone-200 text-start">
-                            @if ($customer->profile_image)
-                                <img src="{{ $customer->profile_image }}" alt="{{ $customer->customer_name }}">
-                            @else
-                                <img class="w-20 rounded-full"
-                                    src="https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1"
-                                    alt="Demo" />
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-6 py-3 font-bold border border-stone-200 text-start">User Name</td>
-                        <td class="px-6 py-3 border border-stone-200 text-start">{{ $customer->customer_name }} </td>
-                    </tr>
-                    <tr>
-                        <td class="px-6 py-3 font-bold border border-stone-200 text-start">User Email</td>
-                        <td class="px-6 py-3 border border-stone-200 text-start"> {{ $customer->customer_email }} </td>
-                    </tr>
-                    <tr>
-                        <td class="px-6 py-3 font-bold border border-stone-200 text-start">Created</td>
-                        <td class="px-6 py-3 border border-stone-200 text-start"> {{ $customer->created_at }} </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="col-span-1"></div>
-
-        <div class="col-span-full">
-            <h3 class="text-sm font-semibold me-3 text-stone-600 mb-3">
-                Customer Addresses
-            </h3>
-            <table class="w-full text-sm text-left rtl:text-right text-stone-500 dark:text-stone-600">
-                <thead>
-                    <tr>
-                        <th class="px-6 py-3 font-bold border border-stone-300 text-start">#</th>
-                        <th class="px-6 py-3 font-bold border border-stone-300 text-start">Phone</th>
-                        <th class="px-6 py-3 font-bold border border-stone-300 text-start">Full Address</th>
-                        <th class="px-6 py-3 font-bold border border-stone-300 text-start">City</th>
-                        <th class="px-6 py-3 font-bold border border-stone-300 text-start">Township</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-
-                    @foreach ($customer->addresses as $address)
+        <div class="col-span-4">
+            <div class="w-full overflow-x-auto rounded-lg border border-gray-200">
+                <table class="w-full divide-y divide-gray-200">
+                    <thead class="bg-stone-50">
                         <tr>
-                            <td class="px-6 py-3 border border-stone-300 text-start"> {{ $address->id }} </td>
-                            <td class="px-6 py-3 border border-stone-300 text-start">
-                                {{ $address->phone_number }}
+                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Product Name</th>
+                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Size</th>
+                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Price</th>
+                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-500 w-[350px] "></th>
+
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 bg-white">
+                           @foreach ($order->orderItems as $item )
+                           <tr>
+
+                            <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                {{ $item->product->product_name }}
                             </td>
-                            <td class="px-6 py-3 border border-stone-300 text-start">
-                                {{ $address->address_detail }}
+                            <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                {{-- {{ $item->product->productType }} --}}
                             </td>
 
-                            <td class="px-6 py-3 border border-stone-300 text-start">
-                                {{ $address->city }}
+                            <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                {{ $item->city }}
                             </td>
-                            <td class="px-6 py-3 border border-stone-300 text-start">
-                                {{ $address->township }}
+                            <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                {{ $item->township }}
                             </td>
                         </tr>
-                    @endforeach
+                           @endforeach
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
+        <div></div>
+
     </section>
 @endsection
 @push('scripts')

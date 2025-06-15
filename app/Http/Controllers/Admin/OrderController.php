@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
@@ -91,9 +93,27 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:orders'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('order.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $order = Order::with(['orderItems','customer','coupon'])->find($id);
+        foreach($order->orderItems as $item){
+            $productId = $item->product_id;
+            $product = Product::find($productId);
+          
+        }
+
+        return view('admin.order.show',['order' => $order]);
     }
 
     /**

@@ -58,40 +58,42 @@
             <h3 class="text-sm font-semibold me-3 text-stone-600 mb-3">
                 Customer Addresses
             </h3>
-            <table class="w-full text-sm text-left rtl:text-right text-stone-500 dark:text-stone-600">
-                <thead>
-                    <tr>
-                        <th class="px-6 py-3 font-bold border border-stone-300 text-start">#</th>
-                        <th class="px-6 py-3 font-bold border border-stone-300 text-start">Phone</th>
-                        <th class="px-6 py-3 font-bold border border-stone-300 text-start">Full Address</th>
-                        <th class="px-6 py-3 font-bold border border-stone-300 text-start">City</th>
-                        <th class="px-6 py-3 font-bold border border-stone-300 text-start">Township</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-
-                    @foreach ($customer->addresses as $address)
+            <div class="w-full overflow-x-auto rounded-lg border border-gray-200">
+                <table class="w-full divide-y divide-gray-200">
+                    <thead class="bg-stone-50">
                         <tr>
-                            <td class="px-6 py-3 border border-stone-300 text-start"> {{ $address->id }} </td>
-                            <td class="px-6 py-3 border border-stone-300 text-start">
-                                {{ $address->phone_number }}
-                            </td>
-                            <td class="px-6 py-3 border border-stone-300 text-start">
-                                {{ $address->address_detail }}
-                            </td>
-
-                            <td class="px-6 py-3 border border-stone-300 text-start">
-                                {{ $address->city }}
-                            </td>
-                            <td class="px-6 py-3 border border-stone-300 text-start">
-                                {{ $address->township }}
-                            </td>
+                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">#</th>
+                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Phone</th>
+                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Full Address</th>
+                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">City</th>
+                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Township</th>
                         </tr>
-                    @endforeach
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 bg-white">
 
-                </tbody>
-            </table>
+
+                        @foreach ($customer->addresses as $address)
+                            <tr>
+                                <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900"> {{ $address->id }} </td>
+                                <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                    {{ $address->phone_number }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                    {{ $address->address_detail }}
+                                </td>
+
+                                <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                    {{ $address->city }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                    {{ $address->township }}
+                                </td>
+                            </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 @endsection
