@@ -62,6 +62,9 @@ class StockController extends Controller
         ->where('size_id', $request->size_id)
         ->first();
 
+        $size = Size::find($request->size_id);
+
+        $sku = $product->product_code . '-' . $size->size_name;
 
     if ($existingStock) {
         $existingStock->increment('stock_quantity', $request->stock_quantity);
@@ -71,6 +74,7 @@ class StockController extends Controller
         // ✅ If not, create new stock row
       $stock =  Stock::create([
             'product_id' => $id,
+            'sku' => $sku,
             'stock_quantity' => $request->stock_quantity,
             'size_id' => $request->size_id
         ]);

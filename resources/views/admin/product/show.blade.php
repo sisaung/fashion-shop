@@ -11,7 +11,7 @@
             ])
         </div>
 
-        <div>
+        <div class="px-5">
             <div class="flex gap-x-3 justify-center items-center">
 
                 {{-- edit product --}}
@@ -234,7 +234,7 @@
                                 <thead class="border">
                                     <tr>
                                         <th scope="col" class="p-3">Size</th>
-                                        <th scope="col" class="p-3">Barcode</th>
+                                        <th scope="col" class="p-3">SKU</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -242,7 +242,7 @@
                                         @foreach ($product->stocks as $stock)
                                             <tr>
                                                 <td class="px-6 py-3 border"> {{ $stock->size->size_name }} </td>
-                                                <td class="px-6 py-3 border"> 222 </td>
+                                                <td class="px-6 py-3 border"> {{ $stock->sku }} </td>
                                             </tr>
                                         @endforeach
                                     @endif

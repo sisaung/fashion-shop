@@ -14,6 +14,7 @@ class Stock extends Model
         'product_id',
         'size_id',
         'stock_quantity',
+        'sku'
     ];
 
     public function product() {

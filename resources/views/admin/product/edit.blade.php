@@ -12,7 +12,7 @@
         </div>
 
 
-        <div class="flex gap-x-3 justify-center items-center">
+        <div class="px-5 flex gap-x-3 justify-center items-center">
 
             {{-- edit product --}}
             <div>
