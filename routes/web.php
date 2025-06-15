@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\ProductTypeController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StockController;
 use App\Http\Controllers\AuthController;
@@ -69,6 +70,9 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         Route::resource('coupon',CouponController::class);
         Route::resource('customer',CustomerController::class)->only(['index','show']);
         Route::resource('order',OrderController::class)->only(['index','show']);
+
+        Route::resource('review',ReviewController::class)->only(['index','show','destroy']);
+        Route::patch('/review/{id}/show', [ReviewController::class, 'showReview'])->name('review.show-review');
 
 
 

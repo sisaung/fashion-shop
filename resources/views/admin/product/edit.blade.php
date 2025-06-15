@@ -62,7 +62,8 @@
             {{-- product detail --}}
 
             <div>
-                <p class="size-12 inline-flex justify-center items-center border border-pearl-bush-600 rounded-full">
+                <a href="{{ route('product.show', ['product' => $product->id]) }}"
+                    class="size-12 inline-flex justify-center items-center border border-pearl-bush-600 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-5 stroke-pearl-bush-400">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -70,7 +71,7 @@
                     </svg>
 
 
-                </p>
+                </a>
             </div>
 
         </div>
