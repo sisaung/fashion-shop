@@ -157,7 +157,7 @@
     $orderOpen = isDropdownOpen($orderRoutes);
 @endphp
 
-<aside class="w-64 h-screen bg-white  flex-shrink-0 overflow-y-auto">
+<aside class="w-64 h-screen bg-white flex flex-col  flex-shrink-0 overflow-y-auto">
     <div class="p-4 text-2xl font-bold">Admin Panel</div>
     <nav class="px-4 space-y-2">
 
@@ -237,6 +237,22 @@
             </div>
         </div>
     </nav>
+     <div class="mt-auto border-t  border-pearl-bush-100 p-4">
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit"
+                class="cursor-pointer hover:bg-pearl-bush-500 hover:text-white duration-300 inline-flex justify-center items-center gap-x-1 border border-pearl-bush-200 rounded-md text-stone-600 py-2 px-4">
+
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                </svg>
+
+                Logout
+            </button>
+        </form>
+    </div>
 </aside>
 
 <script>
