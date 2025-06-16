@@ -17,7 +17,7 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $validSortColumns = ['customer_name','customer_email','city','township', 'id'];
+        $validSortColumns = ['customer_name', 'customer_email', 'city', 'township', 'id'];
         $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'id';
 
         $sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
@@ -34,19 +34,19 @@ class CustomerController extends Controller
         if ($searchTerm) {
 
             $query->where('customer_name', 'like', "%$searchTerm%")
-            ->where('customer_email','like',"%$searchTerm%")
-            ->orwhereHas('addresses',function(Builder $q) use ($searchTerm){
+                ->where('customer_email', 'like', "%$searchTerm%")
+                ->orwhereHas('addresses', function (Builder $q) use ($searchTerm) {
 
-                $q->where('city','like',"%$searchTerm%")
-                ->where('township','like',"%$searchTerm%")
-                ->where('address_detail')
-                ->where('phone_number','like',"%$searchTerm%");
-            });
+                    $q->where('city', 'like', "%$searchTerm%")
+                        ->where('township', 'like', "%$searchTerm%")
+                        ->where('address_detail')
+                        ->where('phone_number', 'like', "%$searchTerm%");
+                });
         }
 
-        $query->join('customer_addresses','customers.id','=','customer_addresses.customer_id')
-        ->select('customers.*')
-        ->groupBy('customers.id');
+        $query->join('customer_addresses', 'customers.id', '=', 'customer_addresses.customer_id')
+            ->select('customers.*')
+            ->groupBy('customers.id', 'customers.customer_name', 'customers.customer_email', 'customers.profile_image', 'customers.created_at', 'customers.updated_at');
 
         $query->orderBy($sortBy, $sortDirection);
 

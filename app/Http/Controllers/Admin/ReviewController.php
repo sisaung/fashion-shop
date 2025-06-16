@@ -17,7 +17,7 @@ class ReviewController extends Controller
      */
     public function index(Request $request)
     {
-        $validSortColumns = ['name','product_name', 'rating',  'id'];
+        $validSortColumns = ['name', 'product_name', 'rating',  'id'];
         $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'id';
 
         $sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
@@ -35,20 +35,19 @@ class ReviewController extends Controller
 
             $query->where(function (Builder $q) use ($searchTerm) {
 
-                $q->whereHas('product',function(Builder $q) use($searchTerm) {
+                $q->whereHas('product', function (Builder $q) use ($searchTerm) {
                     $q->where('product_name', 'like', "%$searchTerm%");
-
-               })
-               ->orWhereHas('user',function(Builder $q) use($searchTerm) {
-                    $q->where('name', 'like', "%$searchTerm%");
-               });
+                })
+                    ->orWhereHas('user', function (Builder $q) use ($searchTerm) {
+                        $q->where('name', 'like', "%$searchTerm%");
+                    });
             });
         }
 
         $query->join('products', 'reviews.product_id', '=', 'products.id')
             ->join('users', 'reviews.user_id', '=', 'users.id')
             ->select('reviews.*')
-            ->groupBy('reviews.id');
+            ->groupBy('reviews.id', 'reviews.product_id', 'reviews.rating', 'reviews.review', 'reviews.user_id', 'reviews.is_show', 'reviews.created_at','reviews.updated_at');
 
         $query->orderBy($sortBy, $sortDirection);
 
@@ -135,7 +134,8 @@ class ReviewController extends Controller
         return redirect()->route('review.index');
     }
 
-    public function showReview($id, Request $request) {
+    public function showReview($id, Request $request)
+    {
         $validator = Validator::make(['id' => $id], [
             'id' => 'required|numeric|exists:reviews'
         ]);
