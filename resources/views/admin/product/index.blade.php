@@ -161,9 +161,8 @@
                                         </div>
                                     </td>
 
-
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 text-end">
-                                        <div class="">
+                                        <div>
                                             <p> {{ date('j M Y', strtotime($product->created_at)) }} </p>
                                             <p> {{ date('g:i A', strtotime($product->created_at)) }} </p>
                                         </div>

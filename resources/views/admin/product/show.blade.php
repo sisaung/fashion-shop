@@ -87,50 +87,50 @@
     <section class="mt-10 px-5">
 
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6 gap-6">
-            <div class="col-span-1 md:col-span-2 lg:col-span-3">
-                <table class="table-auto border-collapse w-full">
-                    <tbody>
+            <div class="col-span-1 md:col-span-2 lg:col-span-3 w-full overflow-x-auto rounded-lg border border-gray-200">
+                <table class="w-full divide-y divide-gray-200">
+                    <tbody class="divide-y divide-gray-200 bg-white ">
 
                         <tr class="bg-stone-100">
-                            <td colSpan="3" class="border px-4 py-4 text-start text-sm text-stone-600">
+                            <td colSpan="3" class=" px-4 py-4 text-start text-sm text-stone-600">
                                 Product Title
                             </td>
-                            <td class="border  px-4 py-4 text-sm text-stone-600">Product Code</td>
+                            <td class="  px-4 py-4 text-sm text-stone-600">Product Code</td>
                         </tr>
                         <tr>
-                            <td colSpan="3" class="border px-4 py-4 text-start">
+                            <td colSpan="3" class=" px-4 py-4 text-start">
                                 {{ $product->product_name }}
                             </td>
-                            <td class="border px-4 py-4">
+                            <td class=" px-4 py-4">
                                 {{ $product->product_code }}
                             </td>
                         </tr>
 
                         {{-- Brand, Type, Category, Fitting } --}}
                         <tr class="bg-stone-100">
-                            <td class="border px-4 py-4 text-sm text-stone-600">Brand</td>
-                            <td class="border px-4 py-4 text-sm text-stone-600">Product Type</td>
-                            <td class="border px-4 py-4 text-sm text-stone-600">Category</td>
-                            <td class="border px-4 py-4 text-sm text-stone-600">Fitting</td>
+                            <td class=" px-4 py-4 text-sm text-stone-600">Brand</td>
+                            <td class=" px-4 py-4 text-sm text-stone-600">Product Type</td>
+                            <td class=" px-4 py-4 text-sm text-stone-600">Category</td>
+                            <td class=" px-4 py-4 text-sm text-stone-600">Fitting</td>
                         </tr>
                         <tr>
-                            <td class="border px-4 py-4">
+                            <td class=" px-4 py-4">
                                 <span class=" px-2 rounded-lg bg-pearl-bush-400 text-white py-2 text-sm">
                                     {{ $product->brand->brand_name }} </span>
                             </td>
-                            <td class="border px-4 py-4">
+                            <td class=" px-4 py-4">
                                 <span class=" px-2 bg-pearl-bush-400 text-white py-2 text-sm rounded-lg ">
 
                                     {{ $product->productType->name }}
                                 </span>
                             </td>
-                            <td class="border px-4 py-4">
+                            <td class=" px-4 py-4">
                                 <span class=" px-2 rounded-lg bg-pearl-bush-400 text-white py-2 text-sm">
 
                                     {{ $product->productCategory->category_name }}
                                 </span>
                             </td>
-                            <td class="border px-4 py-4">
+                            <td class=" px-4 py-4">
                                 <span class=" px-2 rounded-lg bg-pearl-bush-400 text-white py-2 text-sm">
 
                                     @if ($product->fits->count())
@@ -147,49 +147,52 @@
 
                         {{-- Price,sale,discount --}}
                         <tr class="bg-stone-100">
-                            <td class="border px-4 py-4 text-sm text-stone-600">Original Price</td>
-                            <td class="border px-4 py-4 text-sm text-stone-600" colSpan={2}>
-                                Sale Price <span class="text-green-500"> Profit (
+                            <td class=" px-4 py-4 text-sm text-stone-600">Original Price</td>
+
+                            <td class=" px-4 py-4 text-sm text-stone-600" colSpan={2}>
+                                Sale Price <span class="text-green-500 pl-1 "> Profit (
                                     {{ $product->sale_price - $product->original_price }} ) </span>
                             </td>
-                            <td class="border px-4 py-4 text-sm text-stone-600">Discount</td>
+                            <td class=" px-4 py-4 text-sm text-stone-600">Discount</td>
+                            <td class=" px-4 py-4 text-sm text-stone-600"></td>
+
                         </tr>
                         <tr>
-                            <td class="border px-4 py-4"> {{ $product->original_price }} MMK</td>
-                            <td class="border px-4 py-4" colSpan={2}>
+                            <td class=" px-4 py-4 "> {{ $product->original_price }} MMK</td>
+                            <td class=" px-4 py-4" colSpan={2}>
                                 <p class="inline-flex gap-2">
                                     @if ($product->discount_percentage != 0)
-                                        <span> {{ $product->display_price }} </span>
+                                        <span> {{ $product->display_price }} MMK </span>
                                     @endif
-                                    <span class="text-nowrap {{ $product->discount_percentage ? 'line-through' : '' }}">
+                                    <span class="{{ $product->discount_percentage ? 'line-through' : '' }}">
                                         {{ $product->sale_price }} MMK</span>
                                 </p>
                             </td>
-                            <td class="border px-4 py-4"> {{ $product->discount_percentage ?? 0 }} % </td>
+                            <td class=" px-4 py-4"> {{ $product->discount_percentage ?? 0 }} % </td>
                         </tr>
 
                         <tr class="bg-stone-100">
-                            <td class="border px-4 py-4 text-sm text-stone-600">Gender</td>
-                            <td class="border px-4 py-4 text-sm text-stone-600">New Arrival</td>
-                            <td class="border px-4 py-4 text-sm text-stone-600">Created By</td>
-                            <td class="border px-4 py-4 text-sm text-stone-600">Created At</td>
+                            <td class=" px-4 py-4 text-sm text-stone-600">Gender</td>
+                            <td class=" px-4 py-4 text-sm text-stone-600">New Arrival</td>
+                            <td class=" px-4 py-4 text-sm text-stone-600">Created By</td>
+                            <td class=" px-4 py-4 text-sm text-stone-600">Created At</td>
                         </tr>
                         <tr>
-                            <td class="border px-4 py-4"> {{ $product->gender }} </td>
-                            <td class="border px-4 py-4"> {{ $product->is_new_arrival ? 'Yes' : 'No' }} </td>
-                            <td class="border px-4 py-4"> {{ $product->user->name }} </td>
-                            <td class="border px-4 py-4"> {{ date('j M Y', strtotime($product->created_at)) }}
+                            <td class=" px-4 py-4"> {{ $product->gender }} </td>
+                            <td class=" px-4 py-4"> {{ $product->is_new_arrival ? 'Yes' : 'No' }} </td>
+                            <td class=" px-4 py-4"> {{ $product->user->name }} </td>
+                            <td class="text-nowrap px-4 py-4"> {{ date('j M Y', strtotime($product->created_at)) }}
                                 {{ date('g:i A', strtotime($product->created_at)) }} </td>
                         </tr>
 
                         {{-- Product Description --}}
                         <tr class="bg-stone-100">
-                            <td colSpan="4" class="border px-4 py-4 text-sm text-stone-600">
+                            <td colSpan="4" class=" px-4 py-4 text-sm text-stone-600">
                                 Product Description
                             </td>
                         </tr>
                         <tr>
-                            <td colSpan="4" class="border px-4 py-4">
+                            <td colSpan="4" class=" px-4 py-4">
                                 <p class="text-sm text-gray-700">
                                     {{ $product->description }}
                                 </p>
@@ -236,19 +239,19 @@
                                     Product Stock (<span> {{ $product->stocks->count() }} </span>)
                                 </h3>
                             </div>
-                            <table class="w-full text-sm text-left text-stone-500">
-                                <thead class="border">
+                            <table class=" w-full divide-y divide-gray-200 text-sm text-left  text-stone-500">
+                                <thead class="divide-y divide-gray-200  bg-stone-100">
                                     <tr>
                                         <th scope="col" class="p-3">Size</th>
                                         <th scope="col" class="p-3">SKU</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="divide-y divide-gray-200 bg-white">
                                     @if ($product->stocks->count())
                                         @foreach ($product->stocks as $stock)
                                             <tr>
-                                                <td class="px-6 py-3 border"> {{ $stock->size->size_name }} </td>
-                                                <td class="px-6 py-3 border"> {{ $stock->sku }} </td>
+                                                <td class="px-6 py-3 whitespace-nowrap text-sm "> {{ $stock->size->size_name }} </td>
+                                                <td class="px-6 py-3 whitespace-nowrap text-sm "> {{ $stock->sku }} </td>
                                             </tr>
                                         @endforeach
                                     @endif
