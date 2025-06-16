@@ -150,14 +150,23 @@
                                         data-new-arrival="{{ $product->is_new_arrival }}"
                                         class="whitespace-nowrap text-center px-4 py-4  text-sm text-gray-900">
                                         <div>
-                                            <label class="inline-flex items-center cursor-pointer">
-                                                <input type="checkbox" value="" class="sr-only peer"
-                                                    {{ $product->is_new_arrival ? 'checked' : '' }}>
-                                                <div
-                                                    class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300  rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all peer-checked:bg-blue-600 ">
-                                                </div>
 
-                                            </label>
+                                            @if ($product->is_new_arrival === "1")
+                                                <span
+                                                    class="bg-green-500 text-white text-xs inline-flex justify-center items-center gap-x-1.5 px-3 py-1 rounded-full">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="size-3.5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                                                    </svg>
+
+                                                    new </span>
+                                            @else
+                                                <span
+                                                    class="bg-blue-500 text-white text-xs inline-block px-3 py-1 rounded-full">
+                                                    regular </span>
+                                            @endif
                                         </div>
                                     </td>
 
@@ -326,9 +335,11 @@
 
                                         <button class="cursor-pointer px-1 hover:bg-gray-100"
                                             data-manage-stock="{{ route('product.show', ['product' => $product->id]) }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-gray-500">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                              </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="size-5 text-gray-500">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                            </svg>
 
 
                                         </button>
@@ -337,11 +348,7 @@
                                 </tr>
                             @endforeach
 
-
-
                         </tbody>
-
-
                     </table>
                 </div>
 
