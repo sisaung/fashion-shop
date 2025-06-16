@@ -1,6 +1,6 @@
 <div class="bg-pearl-bush-50 border-b-2 border-pearl-bush-400 py-5 sticky top-0 left-0 w-full">
     <div class="max-w-7xl mx-auto flex justify-between items-center">
-        <div class="flex items-center gap-x-3">
+        <a href="{{ url('/') }}" class="flex items-center gap-x-3">
             <p>logo</p>
             <div class="flex flex-col ">
                 <h1 class="text-2xl font-medium text-stone-700 font-heading uppercase">
@@ -8,7 +8,7 @@
                 </h1>
 
             </div>
-        </div>
+        </a>
         <div class="flex gap-x-7 text-sm text-stone-800">
             <a href="">New Arrival</a>
             <a href="">Men</a>
