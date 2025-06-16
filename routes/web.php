@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\ProductTypeController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StockController;
+use App\Http\Controllers\Admin\WishlistController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TestController;
 use App\Http\Middleware\MustBeAdmin;
@@ -62,7 +63,6 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
 
 
         // stock
-
         Route::get('/product/{id}/edit/manage-stock',[StockController::class,'create'])->name('manage-stock.create');
         Route::post('/product/{id}/edit/manage-stock',[StockController::class,'store'])->name('manage-stock.store');
 
@@ -73,6 +73,8 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
 
         Route::resource('review',ReviewController::class)->only(['index','show','destroy']);
         Route::patch('/review/{id}/show', [ReviewController::class, 'showReview'])->name('review.show-review');
+
+        Route::resource('wishlist',WishlistController::class)->only(['index','show']);
 
 
 
