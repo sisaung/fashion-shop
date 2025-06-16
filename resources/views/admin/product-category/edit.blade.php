@@ -3,7 +3,7 @@
 @section('content')
     @include('components.admin.breadcrumb', [
         'currentPageTitle' => 'Edit Product Category',
-        'links' => [['name' => 'Manage Product Category', 'path' => 'product-category.index']],
+        'links' => [['name' => 'Product Category', 'path' => route('product-category.index')]],
     ])
     <h1 class="mt-10 text-xl px-5"> Edit Product Category </h1>
     <div>
@@ -24,9 +24,11 @@
                     <input type="hidden" name="page" value="{{ old('page', $page) }}">
                     <input type="hidden" name="search" value="{{ old('page', $q) }}">
 
-                    <label for="category_name" class="@error('category_name')
+                    <label for="category_name"
+                        class="@error('category_name')
                         text-red-500
-                        @enderror leading-7 text-sm text-gray-600">Product Category Name</label>
+                        @enderror leading-7 text-sm text-gray-600">Product
+                        Category Name</label>
                     <input type="text" id="category_name" name="category_name"
                         value="{{ old('category_name', $productCategory->category_name) }}"
                         class="w-full @error('category_name')

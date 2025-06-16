@@ -3,7 +3,7 @@
 @section('content')
     @include('components.admin.breadcrumb', [
         'currentPageTitle' => 'Edit Size',
-        'links' => [['name' => 'Manage Size', 'path' => 'size.index']],
+        'links' => [['name' => 'Size List', 'path' => route('size.index')]],
     ])
     <h1 class="mt-10 text-xl px-5"> Edit Size </h1>
     <div>

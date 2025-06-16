@@ -7,7 +7,7 @@
         <div>
             @include('components.admin.breadcrumb', [
                 'currentPageTitle' => 'Customer Detail',
-                // 'links' => [['name' => 'Manage Product', 'path' => 'product.index']],
+                'links' => [['name' => 'Review List', 'path' => route('review.index')]],
             ])
         </div>
 

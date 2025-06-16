@@ -5,7 +5,7 @@
 
 
         @include('components.admin.breadcrumb', [
-            'currentPageTitle' => 'Manage Size',
+            'currentPageTitle' => 'Size List',
         ])
 
         @include('admin.size.header')

@@ -5,7 +5,7 @@
 
 
         @include('components.admin.breadcrumb', [
-            'currentPageTitle' => 'Manage Brand',
+            'currentPageTitle' => 'Brand List',
         ])
 
         @include('admin.brands.header')

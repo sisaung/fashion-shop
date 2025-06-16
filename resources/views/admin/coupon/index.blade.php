@@ -5,7 +5,7 @@
 
 
         @include('components.admin.breadcrumb', [
-            'currentPageTitle' => 'Manage Coupon',
+            'currentPageTitle' => 'Coupon List',
         ])
 
         @include('admin.coupon.header')

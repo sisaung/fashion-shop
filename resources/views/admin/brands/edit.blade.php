@@ -3,7 +3,7 @@
 @section('content')
     @include('components.admin.breadcrumb', [
         'currentPageTitle' => 'Edit Brand',
-        'links' => [['name' => 'Manage Brands', 'path' => 'brand.index']],
+        'links' => [['name' => 'Brand List', 'path' => route('brand.index')]],
     ])
     <h1 class="mt-10 text-xl px-5"> Edit Brand </h1>
     <div>

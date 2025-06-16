@@ -6,8 +6,7 @@
         <div>
             @include('components.admin.breadcrumb', [
                 'currentPageTitle' => 'Edit Product',
-                'links' => [['name' => 'Manage Product', 'path' => 'product.index', 'product' => '']],
-                'pathKey' => '',
+                'links' => [['name' => 'Product List', 'path' => route('product.index')]],
             ])
         </div>
 

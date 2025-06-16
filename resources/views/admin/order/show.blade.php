@@ -6,8 +6,8 @@
     <div class="flex justify-between items-center ">
         <div>
             @include('components.admin.breadcrumb', [
-                'currentPageTitle' => 'Customer Detail',
-                // 'links' => [['name' => 'Manage Product', 'path' => 'product.index']],
+                'currentPageTitle' => 'Order Detail',
+                'links' => [['name' => 'Order List', 'path' => route('order.index')]],
             ])
         </div>
 
@@ -30,24 +30,24 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
-                           @foreach ($order->orderItems as $item )
-                           <tr>
+                        @foreach ($order->orderItems as $item)
+                            <tr>
 
-                            <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                {{ $item->product->product_name }}
-                            </td>
-                            <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                {{-- {{ $item->product->productType }} --}}
-                            </td>
+                                <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                    {{ $item->product->product_name }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                    {{-- {{ $item->product->productType }} --}}
+                                </td>
 
-                            <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                {{ $item->city }}
-                            </td>
-                            <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                {{ $item->township }}
-                            </td>
-                        </tr>
-                           @endforeach
+                                <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                    {{ $item->city }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                    {{ $item->township }}
+                                </td>
+                            </tr>
+                        @endforeach
 
                     </tbody>
                 </table>

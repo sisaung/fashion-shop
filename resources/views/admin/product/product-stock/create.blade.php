@@ -4,8 +4,12 @@
     <div class="flex justify-between items-center ">
         <div>
             @include('components.admin.breadcrumb', [
-                'currentPageTitle' => 'Manaage Stock',
-                // 'links' => [['name' => 'Manage Product', 'path' => 'product.index']],
+                'currentPageTitle' => 'Manage Stock',
+                'links' => [
+
+                    ['name' => 'Edit Product', 'path' => route('product.edit', ['product' => $product->id])],
+
+                ],
             ])
         </div>
 

@@ -5,7 +5,7 @@
 
 
         @include('components.admin.breadcrumb', [
-            'currentPageTitle' => 'Manage Product',
+            'currentPageTitle' => 'Product List',
         ])
 
         @include('admin.product.header')

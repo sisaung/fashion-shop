@@ -6,8 +6,8 @@
     <div class="flex justify-between items-center ">
         <div>
             @include('components.admin.breadcrumb', [
-                'currentPageTitle' => 'Customer Detail',
-                // 'links' => [['name' => 'Manage Product', 'path' => 'product.index']],
+                'currentPageTitle' => 'Wishlist Detail',
+                'links' => [['name' => 'Wishlist', 'path' => route('wishlist.index')]],
             ])
         </div>
 
@@ -74,7 +74,8 @@
 
                         @foreach ($customer->addresses as $address)
                             <tr>
-                                <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900"> {{ $address->id }} </td>
+                                <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                    {{ $address->id }} </td>
                                 <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
                                     {{ $address->phone_number }}
                                 </td>

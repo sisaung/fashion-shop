@@ -3,7 +3,7 @@
 @section('content')
     @include('components.admin.breadcrumb', [
         'currentPageTitle' => 'Edit Fit',
-        'links' => [['name' => 'Manage Fit', 'path' => 'fit.index']],
+        'links' => [['name' => 'Fit List', 'path' => route('fit.index')]],
     ])
     <h1 class="mt-10 text-xl px-5"> Edit Fit </h1>
     <div>
@@ -59,4 +59,3 @@
         </form>
     </div>
 @endsection
-

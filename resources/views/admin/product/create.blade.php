@@ -3,7 +3,7 @@
 @section('content')
     @include('components.admin.breadcrumb', [
         'currentPageTitle' => 'Create Product',
-        'links' => [['name' => 'Manage Product', 'path' => 'product.index']],
+        'links' => [['name' => 'Product List', 'path' => route('product.index')]],
     ])
     <h1 class="mt-10 text-xl px-5"> Create Product </h1>
     <div>

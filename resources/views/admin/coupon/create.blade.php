@@ -3,7 +3,7 @@
 @section('content')
     @include('components.admin.breadcrumb', [
         'currentPageTitle' => 'Create Coupon',
-        'links' => [['name' => 'Manage Coupon', 'path' => 'coupon.index']],
+        'links' => [['name' => 'Coupon List', 'path' => route('coupon.index')]],
     ])
     <h1 class="mt-10 text-xl px-5"> Create Coupon </h1>
     <div>

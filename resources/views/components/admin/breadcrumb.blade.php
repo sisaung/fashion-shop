@@ -12,6 +12,7 @@
             </a>
         </li>
 
+
         @if (isset($links))
             @foreach ($links as $link)
 
@@ -23,13 +24,15 @@
                                 d="m1 9 4-4-4-4" />
                         </svg>
 
-                        <a href="{{ route($link['path']) }}
-                            class="ms-1 text-sm font-medium text-gray-500 hover:text-gray-600 md:ms-2  ite">
+                        <a href="{{ $link['path'] }}"
+                       class="ms-1 text-sm font-medium
+                            text-gray-500 hover:text-gray-600 md:ms-2 ite">
                             {{ $link['name'] }} </a>
                     </div>
                 </li>
             @endforeach
         @endif
+
 
         <li>
             <div class="flex items-center">

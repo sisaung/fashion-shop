@@ -5,7 +5,7 @@
 
 
         @include('components.admin.breadcrumb', [
-            'currentPageTitle' => 'Manage Fit',
+            'currentPageTitle' => 'Fit List',
         ])
 
         @include('admin.fit.header')

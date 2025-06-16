@@ -5,7 +5,7 @@
 
 
         @include('components.admin.breadcrumb', [
-            'currentPageTitle' => 'Customer List',
+            'currentPageTitle' => 'Order List',
         ])
 
         @include('admin.order.header')

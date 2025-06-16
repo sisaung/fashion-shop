@@ -157,7 +157,7 @@
     $orderOpen = isDropdownOpen($orderRoutes);
 @endphp
 
-<aside class="w-64 h-screen bg-white flex flex-col text-sm  flex-shrink-0 overflow-y-auto">
+<aside class="w-64 h-screen bg-white flex flex-col flex-shrink-0 overflow-y-auto">
     <div class="p-4 text-2xl font-bold">Admin Panel</div>
     <nav class="px-4 space-y-2">
 

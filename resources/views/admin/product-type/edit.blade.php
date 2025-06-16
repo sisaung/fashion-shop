@@ -3,7 +3,7 @@
 @section('content')
     @include('components.admin.breadcrumb', [
         'currentPageTitle' => 'Edit Product Type',
-        'links' => [['name' => 'Manage Product Type', 'path' => 'product-type.index']],
+        'links' => [['name' => 'Product Type', 'path' => route('product-type.index')]],
     ])
     <h1 class="mt-10 text-xl px-5"> Edit Product Type </h1>
     <div>
