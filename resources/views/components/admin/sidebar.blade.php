@@ -157,13 +157,13 @@
     $orderOpen = isDropdownOpen($orderRoutes);
 @endphp
 
-<aside class="w-64 h-screen bg-white flex flex-col  flex-shrink-0 overflow-y-auto">
+<aside class="w-64 h-screen bg-white flex flex-col text-sm  flex-shrink-0 overflow-y-auto">
     <div class="p-4 text-2xl font-bold">Admin Panel</div>
     <nav class="px-4 space-y-2">
 
         <!-- Dashboard -->
         <a href="{{ url('/dashboard') }}"
-            class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('dashboard') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">
+            class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('dashboard.index') ? ' bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">
             Dashboard
         </a>
 
@@ -185,7 +185,7 @@
                     class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('product.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">Product
                 </a>
                 <a href="{{ route('product-category.index') }}"
-                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('category.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">Category</a>
+                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('product-category.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">Category</a>
                 <a href="{{ route('product-type.index') }}"
                     class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('product-type.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">Product
                     Type</a>
