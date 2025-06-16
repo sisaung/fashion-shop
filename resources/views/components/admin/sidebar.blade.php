@@ -163,14 +163,14 @@
 
         <!-- Dashboard -->
         <a href="{{ url('/dashboard') }}"
-            class="block px-4 py-2 rounded hover:bg-pearl-bush-100 {{ Request::routeIs('dashboard') ? 'bg-pearl-bush-300 text-white' : '' }}">
+            class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('dashboard') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">
             Dashboard
         </a>
 
         <!-- Inventory Dropdown -->
         <div>
             <button type="button"
-                class="flex items-center justify-between w-full px-4 py-2 rounded hover:bg-pearl-bush-100 focus:outline-none"
+                class="flex cursor-pointer items-center justify-between w-full px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 focus:outline-none"
                 onclick="toggleDropdown('inventoryDropdown')">
                 <span>Inventory</span>
                 <svg class="w-4 h-4 transition-transform {{ $inventoryOpen ? 'rotate-180' : '' }}"
@@ -180,25 +180,26 @@
             </button>
             <div id="inventoryDropdown" class="ml-6 mt-1 space-y-1 {{ $inventoryOpen ? '' : 'hidden' }}">
                 <a href="{{ route('brand.index') }}"
-                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 {{ Request::routeIs('brand.*') ? 'bg-pearl-bush-300 text-white' : '' }}">Brand</a>
+                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('brand.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">Brand</a>
                 <a href="{{ route('product.index') }}"
-                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 {{ Request::routeIs('product.*') ? 'bg-pearl-bush-300 text-white' : '' }}">Product</a>
+                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('product.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">Product
+                </a>
                 <a href="{{ route('product-category.index') }}"
-                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 {{ Request::routeIs('category.*') ? 'bg-pearl-bush-300 text-white' : '' }}">Category</a>
+                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('category.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">Category</a>
                 <a href="{{ route('product-type.index') }}"
-                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 {{ Request::routeIs('product-type.*') ? 'bg-pearl-bush-300 text-white' : '' }}">Product
+                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('product-type.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">Product
                     Type</a>
                 <a href="{{ route('size.index') }}"
-                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 {{ Request::routeIs('size.*') ? 'bg-pearl-bush-300 text-white' : '' }}">Sizing</a>
+                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('size.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">Sizing</a>
                 <a href="{{ route('fit.index') }}"
-                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 {{ Request::routeIs('fit.*') ? 'bg-pearl-bush-300 text-white' : '' }}">Fitting</a>
+                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('fit.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">Fitting</a>
             </div>
         </div>
 
         <!-- CRM Dropdown -->
         <div>
             <button type="button"
-                class="flex items-center justify-between w-full px-4 py-2 rounded hover:bg-pearl-bush-100 focus:outline-none"
+                class="flex cursor-pointer items-center justify-between w-full px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 focus:outline-none"
                 onclick="toggleDropdown('crmDropdown')">
                 <span>CRM</span>
                 <svg class="w-4 h-4 transition-transform {{ $crmOpen ? 'rotate-180' : '' }}" id="arrow-crmDropdown"
@@ -208,18 +209,18 @@
             </button>
             <div id="crmDropdown" class="ml-6 mt-1 space-y-1 {{ $crmOpen ? '' : 'hidden' }}">
                 <a href="{{ route('customer.index') }}"
-                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 {{ Request::routeIs('customer.*') ? 'bg-pearl-bush-300 text-white' : '' }}">Customer</a>
+                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('customer.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">Customer</a>
                 <a href="{{ route('wishlist.index') }}"
-                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 {{ Request::routeIs('wishlist.*') ? 'bg-pearl-bush-300 text-white' : '' }}">Wishlist</a>
+                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('wishlist.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">Wishlist</a>
                 <a href="{{ route('review.index') }}"
-                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 {{ Request::routeIs('review.*') ? 'bg-pearl-bush-300 text-white' : '' }}">Review</a>
+                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('review.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">Review</a>
             </div>
         </div>
 
         <!-- Order Dropdown -->
         <div>
             <button type="button"
-                class="flex items-center justify-between w-full px-4 py-2 rounded hover:bg-pearl-bush-100 focus:outline-none"
+                class="flex cursor-pointer items-center justify-between w-full px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 focus:outline-none"
                 onclick="toggleDropdown('orderDropdown')">
                 <span>Order</span>
                 <svg class="w-4 h-4 transition-transform {{ $orderOpen ? 'rotate-180' : '' }}" id="arrow-orderDropdown"
@@ -229,9 +230,10 @@
             </button>
             <div id="orderDropdown" class="ml-6 mt-1 space-y-1 {{ $orderOpen ? '' : 'hidden' }}">
                 <a href="{{ route('order.index') }}"
-                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 {{ Request::routeIs('order.*') ? 'bg-pearl-bush-300 text-white' : '' }}">Order</a>
+                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('order.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">
+                    Order</a>
                 <a href="{{ route('coupon.index') }}"
-                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 {{ Request::routeIs('coupon.*') ? 'bg-pearl-bush-300 text-white' : '' }}">Coupon</a>
+                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('coupon.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">Coupon</a>
             </div>
         </div>
     </nav>
