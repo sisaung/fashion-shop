@@ -1,4 +1,4 @@
-<div class="bg-pearl-bush-50 border-b-2 border-pearl-bush-400 py-5 fixed top-0 left-0 w-full">
+<div class="bg-pearl-bush-50 border-b-2 border-pearl-bush-400 py-5 sticky top-0 left-0 w-full">
     <div class="max-w-7xl mx-auto flex justify-between items-center">
         <div class="flex items-center gap-x-3">
             <p>logo</p>
@@ -39,27 +39,64 @@
                 </svg>
 
             </a>
-            <a href="">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-5 stroke-pearl-bush-500">
+
+
+
+
+            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="cursor-pointer"
+                type="button"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor" class="size-5 stroke-pearl-bush-500">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                 </svg>
+            </button>
 
-            </a>
+            <!-- Dropdown menu -->
+            <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 ">
+                <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
+                    @auth
+                        @if (Auth::user()->is_admin === 'admin')
+                            <li>
+                                <a href="{{ route('dashboard.index') }}"
+                                    class="block px-4 py-2  hover:bg-stone-100 hover:text-stone-600">Dasboard</a>
+                            </li>
+                        @else
+                            <li>
+                                <form class="block hover:bg-stone-100 hover:text-stone-600" action="{{ route('logout') }}"
+                                    method="POST">
+                                    @csrf
+                                    <button type="submit" class="gap-x-2 py-2 inline-flex items-center px-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="size-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                                        </svg>
+                                        Logout</button>
+                                </form>
+                            </li>
+                        @endif
+
+                    @endauth
+                    @guest
+                        <li>
+                            <a href="{{ route('login') }}"
+                                class="block px-4 py-2  hover:bg-stone-100 hover:text-stone-600">Login</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('register') }}"
+                                class="block px-4 py-2  hover:bg-stone-100 hover:text-stone-600">Register</a>
+                        </li>
+                    @endguest
+
+                </ul>
+            </div>
+
         </div>
 
-        @auth
-            @if (Auth::user()->is_admin === 'admin')
-                <a href="{{ route('dashboard.index') }}">Dasboard</a>
-            @else
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">Logout</button>
-                </form>
-            @endif
-
-        @endauth
     </div>
 
 </div>
+
+@push('scripts')
+    @vite(['resources/js/flowbite/flowbite.min.js'])
+@endpush

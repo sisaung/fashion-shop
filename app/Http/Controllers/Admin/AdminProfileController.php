@@ -59,16 +59,21 @@ class AdminProfileController extends Controller
      $user = $request->user();
 
 
-     if(Hash::check($request->old_password, $user->password)) {
+     if(!Hash::check($request->old_password, $user->password)) {
 
-        $user->password = Hash::make($request->password);
-        $user->save();
+        return back()->withErrors([
+            'old_password' => 'The provided old password does not match',
+        ]);
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
 
-        return redirect()->route('login');
      }
+     $user->password = Hash::make($request->password);
+     $user->save();
+
+     $request->session()->invalidate();
+     $request->session()->regenerateToken();
+
+     return redirect()->route('login');
     }
 
 }
