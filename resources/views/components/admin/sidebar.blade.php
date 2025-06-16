@@ -158,7 +158,9 @@
 @endphp
 
 <aside class="w-64 h-screen bg-white flex flex-col flex-shrink-0 overflow-y-auto">
-    <div class="p-4 text-2xl font-bold">Admin Panel</div>
+    <h1 class="p-4 text-xl font-heading font-bold py-4 text-center">Fashion Shop</h1>
+
+
     <nav class="px-4 space-y-2">
 
         <!-- Dashboard -->
@@ -237,7 +239,7 @@
             </div>
         </div>
     </nav>
-     <div class="mt-auto border-t  border-pearl-bush-100 p-4">
+    <div class="mt-auto border-t  border-pearl-bush-100 p-4">
         <form action="{{ route('logout') }}" method="POST">
             @csrf
             <button type="submit"

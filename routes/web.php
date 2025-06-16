@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\CustomerController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\Admin\WishlistController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TestController;
 use App\Http\Middleware\MustBeAdmin;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -77,10 +79,29 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         Route::resource('wishlist',WishlistController::class)->only(['index','show']);
 
 
+        // profile
+        Route::controller(AdminProfileController::class)->prefix('admin-profile')->group(function () {
+
+            Route::get('/', 'index')->name('admin-profile.index');
+
+            Route::post('/change-profile-image', 'changeProfileImage')->name('admin-profile.change-profile-image');
+
+            Route::get('/change-name', 'changeNameIndex')->name('admin-profile.change-name-index');
+            Route::post('/change-name', 'changeName')->name('admin-profile.change-name');
+
+            Route::get('/change-password', 'changePasswordIndex')->name('admin-profile.change-password-index');
+            Route::post('/change-password', 'changePassword')->name('admin-profile.change-password');
+
+
+            Route::post('/', 'update')->name('admin-profile.update');
+        });
+
 
     });
 });
 
-//test
+
+
+
 
 Route::get('test', [TestController::class, 'index']);

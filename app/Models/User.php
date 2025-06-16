@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_image'
     ];
 
     /**
@@ -33,6 +34,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
 
     /**
      * Get the attributes that should be cast.
@@ -82,5 +84,9 @@ class User extends Authenticatable
 
     public function wishlists() {
         $this->hasMany(Wishlist::class);
+    }
+
+    public function getProfileImageAttribute($value) {
+        return $value ? asset(Storage::url($value)) : null;
     }
 }
