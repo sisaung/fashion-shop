@@ -14,6 +14,8 @@ const initializeManageProductImageUpload = () => {
 
         const id = e.target.dataset.productId;
         const action = e.target.dataset.manageImageUrl;
+        
+        
 
         const handleFileChange = async (e) => {
             const files = e.target.files;
@@ -35,15 +37,17 @@ const initializeManageProductImageUpload = () => {
                             "X-CSRF-TOKEN": csrfToken,
                         },
                         body: formData,
+                        credentials:"same-origin"
                     }
                 );
 
                 if (res.ok) {
-                    location.href = action;
+                  
+                  location.reload();
+                   
                 }
-                // const data = await res.json();
 
-                console.log(await res.json());
+               
             } catch (e) {
                 console.log(e);
             }

@@ -25,7 +25,7 @@ const initializeChangeAdminProfile = () => {
                 formData.append("profile_image", file);
             }
 
-            formData.append("profile_image",file)
+            // formData.append("profile_image",file)
            
             try {
                 const res = await fetch(

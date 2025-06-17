@@ -40,7 +40,7 @@ class ProductImageController extends Controller
             'product_id' => $id
         ];
         $validator =  Validator::make(['id' => $id], [
-            'id' => 'required|numeric|exists:products'
+            'id' => 'required|numeric|exists:products,id'
         ]);
 
         if ($validator->fails()) {
@@ -51,6 +51,7 @@ class ProductImageController extends Controller
 
         $uploadedPaths = collect();
 
+      
         foreach ($request->file('images') as $image) {
             $imageManager = ImageManager::gd()->read($image);
 
@@ -104,7 +105,7 @@ class ProductImageController extends Controller
             );
         });
 
-        return response()->json($productImages);
+        return response()->json(['productImages' => $productImages]);
 
         // return redirect()->route('manage-image.edit', ['product' => $request->product_id]);
     }
