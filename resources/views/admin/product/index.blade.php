@@ -135,7 +135,7 @@
 
                                     </td>
                                     <td class="whitespace-nowrap text-end  px-4 py-4 text-sm text-gray-900">
-                                        {{ $product->sale_price }}
+                                        {{ number_format($product->sale_price) }} MMK
                                     </td>
 
                                     <td class="whitespace-nowrap text-end  px-4 py-4 text-sm text-gray-900">
@@ -151,7 +151,7 @@
                                         class="whitespace-nowrap text-center px-4 py-4  text-sm text-gray-900">
                                         <div>
 
-                                            @if ($product->is_new_arrival === "1")
+                                            @if ($product->is_new_arrival === '1')
                                                 <span
                                                     class="bg-green-500 text-white text-xs inline-flex justify-center items-center gap-x-1.5 px-3 py-1 rounded-full">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"

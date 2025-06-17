@@ -27,15 +27,16 @@
 
                                 </th>
 
+                                <th data-sortby="total_amount" scope="col"
+                                    class="px-4 py-3 flex justify-end text-sm font-medium text-gray-500">
+                                    @include('components.admin.sortTable', ['sortTitle' => 'Total'])
+
+                                </th>
+
                                 <th scope="col" class="px-4 py-3 text-end text-sm font-medium text-gray-500">
 
                                     Item Count
 
-                                </th>
-
-
-                                <th scope="col" class="px-4 py-3 text-end text-sm font-medium text-gray-500">
-                                    Total
                                 </th>
 
 
@@ -76,7 +77,12 @@
                                             <a href="{{ route('customer.show', ['customer' => $order->customer->id]) }}"
                                                 class="text-base underline underline-offset-2 ">{{ $order->customer->customer_name }}</a>
                                             <span class="text-xs text-stone-500"> {{ $order->address }} </span>
+                                            <span class="text-xs text-stone-500"> {{ $order->order_date }} </span>
                                         </div>
+                                    </td>
+
+                                    <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
+                                        {{ $order->total_amount }}
                                     </td>
 
                                     <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
@@ -84,9 +90,7 @@
                                     </td>
 
 
-                                    <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
-                                        {{ $order->total_amount }}
-                                    </td>
+
 
                                     <td class="whitespace-nowrap flex justify-end px-4 py-4 text-sm text-gray-900">
                                         @if ($order->coupon)

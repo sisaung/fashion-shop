@@ -12,7 +12,6 @@
                         'name' => 'Product List',
                         'path' => route('product.index'),
                     ],
-
                 ],
             ])
         </div>
@@ -158,14 +157,14 @@
 
                         </tr>
                         <tr>
-                            <td class=" px-4 py-4 "> {{ $product->original_price }} MMK</td>
+                            <td class=" px-4 py-4 "> {{ number_format($product->original_price) }} MMK</td>
                             <td class=" px-4 py-4" colSpan={2}>
                                 <p class="inline-flex gap-2">
                                     @if ($product->discount_percentage != 0)
-                                        <span> {{ $product->display_price }} MMK </span>
+                                        <span> {{ number_format($product->display_price) }} MMK </span>
                                     @endif
                                     <span class="{{ $product->discount_percentage ? 'line-through' : '' }}">
-                                        {{ $product->sale_price }} MMK</span>
+                                        {{ number_format($product->sale_price) }} MMK</span>
                                 </p>
                             </td>
                             <td class=" px-4 py-4"> {{ $product->discount_percentage ?? 0 }} % </td>
@@ -250,8 +249,10 @@
                                     @if ($product->stocks->count())
                                         @foreach ($product->stocks as $stock)
                                             <tr>
-                                                <td class="px-6 py-3 whitespace-nowrap text-sm "> {{ $stock->size->size_name }} </td>
-                                                <td class="px-6 py-3 whitespace-nowrap text-sm "> {{ $stock->sku }} </td>
+                                                <td class="px-6 py-3 whitespace-nowrap text-sm ">
+                                                    {{ $stock->size->size_name }} </td>
+                                                <td class="px-6 py-3 whitespace-nowrap text-sm "> {{ $stock->sku }}
+                                                </td>
                                             </tr>
                                         @endforeach
                                     @endif

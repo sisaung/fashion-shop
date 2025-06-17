@@ -44,7 +44,7 @@ class CustomerController extends Controller
                 });
         }
 
-        $query->join('customer_addresses', 'customers.id', '=', 'customer_addresses.customer_id')
+        $query->leftJoin('customer_addresses', 'customers.id', '=', 'customer_addresses.customer_id')
             ->select('customers.*')
             ->groupBy('customers.id', 'customers.customer_name', 'customers.customer_email', 'customers.profile_image', 'customers.created_at', 'customers.updated_at');
 

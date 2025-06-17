@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('order_number')->unique()->index();
-            $table->enum('order_status',['pending','confirmed','delivered','completed'])->default('pending');
+            $table->enum('order_status',['pending','confirmed','delivered','completed','cancelled'])->default('pending');
             $table->double('total_amount')->default(0);
             $table->string('order_date');
             $table->string('address');
+            $table->string('delivery_start_date')->nullable();
+            $table->string('delivery_end_date')->nullable();
             $table->string('confirm_message')->nullable();
             $table->string('deliver_message')->nullable();
             $table->string('cancel_message')->nullable();

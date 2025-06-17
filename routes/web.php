@@ -71,7 +71,13 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
 
         Route::resource('coupon',CouponController::class);
         Route::resource('customer',CustomerController::class)->only(['index','show']);
+
+
         Route::resource('order',OrderController::class)->only(['index','show']);
+
+        Route::post('/order/{id}/confirm', [OrderController::class, 'confirmOrder'])->name('order.confirm');
+        Route::post('/order/{id}/deliver', [OrderController::class, 'deliverOrder'])->name('order.deliver');
+
 
         Route::resource('review',ReviewController::class)->only(['index','show','destroy']);
         Route::patch('/review/{id}/show', [ReviewController::class, 'showReview'])->name('review.show-review');

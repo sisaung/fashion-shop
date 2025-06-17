@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ConfirmOrderRequest;
+use App\Http\Requests\DeliverOrderRequest;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Stock;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +21,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $validSortColumns = ['order_number', 'product_name','total_amount' , 'order_status','order_date','id'];
+        $validSortColumns = ['order_number', 'product_name','total_amount'  ,'order_status','order_date','id'];
         $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'id';
 
         $sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
@@ -30,7 +33,7 @@ class OrderController extends Controller
 
         $searchTerm = $request->input('q');
 
-        $query = Order::with(['orderItems','customer','coupon']);
+        $query = Order::with(['orderItems.stock.product','orderItems.stock.size','customer','coupon']);
 
         if ($searchTerm) {
 
@@ -110,7 +113,7 @@ class OrderController extends Controller
         foreach($order->orderItems as $item){
             $productId = $item->product_id;
             $product = Product::find($productId);
-          
+
         }
 
         return view('admin.order.show',['order' => $order]);
@@ -139,4 +142,88 @@ class OrderController extends Controller
     {
         //
     }
+
+    public function confirmOrder(ConfirmOrderRequest $request,$id) {
+
+
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:orders,id'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('order.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+
+        $order = Order::with('orderItems.stock')->find($id);
+        if($order->order_status === 'pending') {
+            $order->delivery_start_date = $request->start_date;
+        $order->delivery_end_date = $request->end_date;
+
+        foreach($order->orderItems as $item) {
+
+            $stockId = $item->stock_id;
+
+            $stock = Stock::find($stockId);
+            $productId = $stock->product_id;
+            $product = Product::find($productId);
+
+           
+
+            if($stock->stock_quantity > $item->quantity && $stock->stock_quantity > 0 && $product->stock_count > 0 && $product->stock_count > $item->quantity) {
+
+                $stock->decrement('stock_quantity', $item->quantity);
+                $product->decrement('stock_count', $item->quantity);
+            }
+            else {
+                return back()->withErrors([
+                    'start_date' => 'Stock is not available.',
+                    'end_date' => 'Stock is not available.',
+
+                ]);
+            }
+
+        }
+        $order->order_status = "confirmed";
+        $order->save();
+
+        return redirect()->route('order.show',['order' => $order->id]);
+        }
+
+
+    }
+
+    public function deliverOrder(DeliverOrderRequest $request,$id) {
+
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:orders,id'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('order.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+
+        $order = Order::find($id);
+        if($order->order_status === 'confirm' && $request->deliverOrder ) {
+
+            $order->order_status = "delivered";
+            $order->save();
+
+            return redirect()->route('order.show',['order' => $order->id]);
+            }
+            else {
+                return back()->withErrors([
+                    'deliverOrder' => 'Make sure to deliver order.',
+
+                ]);
+            }
+
+        }
+
 }
+

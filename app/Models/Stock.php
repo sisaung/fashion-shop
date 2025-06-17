@@ -24,4 +24,8 @@ class Stock extends Model
     public function size() {
         return $this->belongsTo(Size::class);
     }
+
+    public function orderItems() {
+        return $this->hasMany(OrderItem::class);
+    }
 }

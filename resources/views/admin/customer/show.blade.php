@@ -7,7 +7,7 @@
         <div>
             @include('components.admin.breadcrumb', [
                 'currentPageTitle' => 'Customer Detail',
-                'links' => [['name' => 'Customer List', 'path' => route('customer s.index')]],
+                'links' => [['name' => 'Customer List', 'path' => route('customer.index')]],
             ])
         </div>
 

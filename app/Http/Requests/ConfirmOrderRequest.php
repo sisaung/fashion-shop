@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateProductTypeRequest extends FormRequest
+class ConfirmOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,10 @@ class UpdateProductTypeRequest extends FormRequest
     {
         return [
 
-            'name' => 'required|string|min:3|max:50|unique:product_types,name,'.$this->route('product_type'),
-            'product_category_id' => 'required|numeric|exists:product_categories,id',
-            'fits' => 'nullable|string',
-            'sizes' => 'required|string',
+
+            'start_date' => 'required|string',
+            'end_date' => 'required|string',
+
         ];
     }
 }

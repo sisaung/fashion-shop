@@ -30,4 +30,8 @@ class Size extends Model
     public function stocks() {
         return $this->hasMany(Stock::class);
     }
+
+    // public function orderItems() {
+    //     return $this->hasMany(OrderItem::class);
+    // }
 }

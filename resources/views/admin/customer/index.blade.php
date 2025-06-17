@@ -81,11 +81,16 @@
                                     </td>
 
                                     <td class="whitespace-nowrap  text-left px-4 py-4 text-sm text-gray-900">
-                                        @foreach ($customer->addresses as $address)
-                                            <p
-                                                class="bg-gray-100 px-3 py-1 rounded-md text-gray-600 inline-flex justify-center items-center">
-                                                {{ $address->city }} </p>
-                                        @endforeach
+                                        @if ($customer->addresses->count())
+                                            @foreach ($customer->addresses as $address)
+                                                <p
+                                                    class="bg-gray-100 px-3 py-1 rounded-md text-gray-600 inline-flex justify-center items-center">
+                                                    {{ $address->city }}
+                                                </p>
+                                            @endforeach
+                                        @else
+                                         <p>  - </p>
+                                        @endif
                                     </td>
 
                                     {{-- <td class="whitespace-nowrap text-left px-4 py-4 text-sm text-gray-900">
