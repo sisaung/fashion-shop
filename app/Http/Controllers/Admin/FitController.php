@@ -126,8 +126,9 @@ class FitController extends Controller
      */
     public function update(UpdateFitRequest $request, $id)
     {
+   
         $validator = Validator::make(['id' => $id], [
-            'id' => 'required|numeric|exists:fits'
+            'id' => 'required|numeric|exists:fits,id'
         ]);
 
         if ($validator->fails()) {

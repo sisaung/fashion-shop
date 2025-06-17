@@ -36,5 +36,5 @@
     </section>
 @endsection
 @push('scripts')
-    @vite(['resources/js/changeAdminProfile.js'])
+ 
 @endpush

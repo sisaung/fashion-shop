@@ -36,7 +36,7 @@
                         </button>
                     @endif
 
-                    <input type="file" class="hidden file" name="profile_image" accept="image/*">
+                    <input type="file" class="hidden image-file-upload" name="profile_image" accept="image/png, image/jpg, image/jpeg, image/gif">
                 </div>
 
                 <div class="space-y-4 mt-5 pb-5">

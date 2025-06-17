@@ -22,20 +22,24 @@ class AdminProfileController extends Controller
 
         $user = $request->user();
 
+
         if($user->profile_image) {
 
             Storage::delete($user->profile_image);
         }
 
         $path = null;
-        if($request->hasFile('profile_image')) {
-           $path =  $request->file('profile_image')->store('profile-image','public');
-        }
+      
+        // if($request->hasFile('profile_image')) {
+               $path =  $request->file('profile_image')->store('profile_images','public');
 
         $user->profile_image = $path;
         $user->save();
-        return response()->json($user);
+        return "";
 
+        // }else {
+        //     return   response()->json(['message' => "Invalid File"]);
+        // }
     }
 
     public function changeNameIndex() {

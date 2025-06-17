@@ -9,7 +9,7 @@ class ProductType extends Model
 {
     /** @use HasFactory<\Database\Factories\ProductTypeFactory> */
     use HasFactory;
-    protected $fillable = ['name', 'product_category_id', 'fits', 'sizes', 'user_id'];
+    protected $fillable = ['name', 'product_category_id', 'fits', 'sizes', 'user_id','fit_id'];
 
     public function productCategory()
     {

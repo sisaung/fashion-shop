@@ -22,7 +22,7 @@ class ChangeProfileImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'profile_image' => 'nullable|image|mimes:png,jpg,jpeg',
+            'profile_image' => 'nullable',
         ];
     }
 }

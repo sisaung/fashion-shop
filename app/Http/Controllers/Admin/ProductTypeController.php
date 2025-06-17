@@ -92,8 +92,6 @@ class ProductTypeController extends Controller
     public function store(StoreProductTypeRequest $request)
     {
 
-
-
         $fits =  explode(',', $request->fits ?? 0);
         $sizes = explode(',', $request->sizes);
 
@@ -165,6 +163,7 @@ class ProductTypeController extends Controller
      */
     public function update(UpdateProductTypeRequest $request, $id)
     {
+      
         $validator = Validator::make(['id' => $id], [
             'id' => 'required|numeric|exists:product_types'
         ]);
@@ -175,15 +174,18 @@ class ProductTypeController extends Controller
                 ->withInput();
         }
 
-        $fitIds =  explode(',', $request->fits);
+        $fitIds =  explode(',', $request->fits ?? 0);
         $sizeIds = explode(',', $request->sizes);
-        // return $fitIds;
-
 
         $productType = ProductType::find($id);
         $productType->name = $request->name;
         $productType->product_category_id = $request->product_category_id;
+
+        if($fitIds[0] !=='0'){
         $productType->fits()->sync($fitIds);
+
+        }
+
         $productType->sizes()->sync($sizeIds);
         $productType->save();
 
