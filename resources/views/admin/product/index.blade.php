@@ -100,10 +100,10 @@
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
 
                                         <div class="flex gap-x-3">
-                                            <div class="size-12 ">
+                                            <div class="w-12 h-16">
                                                 @if ($product->productImages->first())
                                                     <img src="{{ $product->productImages->first()->thumbnail }}"
-                                                        class="object-cover object-center " alt="">
+                                                        class="object-cover h-full w-full object-center " alt="">
                                                 @else
                                                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1362px-Placeholder_view_vector.svg.png?20220519031949"
                                                         class="w-full h-full object-cover object-center rounded-md"
