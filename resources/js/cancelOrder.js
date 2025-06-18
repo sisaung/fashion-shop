@@ -3,9 +3,15 @@ const initializeCancelOrder = () => {
 
     const toggleCancellationOrderForm = document.querySelector('.toggle-cancellation-order-form');
     const cancelOrderForm = document.querySelector('.cancel-order-form');
-    const cancelReasonTag = document.querySelector('.cancle-reason-tag');
+    const reasonTags = document.querySelectorAll('.cancel-reason-tag');
+    const reasonInput = document.querySelector('.reason-input');
+
+    console.log(reasonInput);
 
 
+
+
+    console.log(reasonTags);
 
 
     cancelOrderForm.classList.add('hidden');
@@ -28,25 +34,18 @@ const initializeCancelOrder = () => {
 
     }
 
-    const handleClickTagBtn = (e) => {
-        const reasons = document.querySelectorAll('[data-reason]');
+    if (!reasonTags) return;
 
-        if (!reasons) return;
+    reasonTags.forEach(tag => {
 
-        reasons.forEach((reason) => {
-
-            console.log(reason);
-
-
+        tag.addEventListener("click", (e) => {
+            reasonInput.value = e.target.dataset
+            console.log(e.target.dataset.reason);
 
         })
 
+    });
 
-
-
-    }
-
-    cancelReasonTag.addEventListener('click', handleClickTagBtn)
     toggleCancellationOrderForm.addEventListener('change', handleChange)
 
 

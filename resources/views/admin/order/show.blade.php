@@ -304,13 +304,14 @@
                 <div class="cancel-order-form grid-cols-1">
                     <div class="col-span-1">
                         <form action="">
-                            <textarea class="border border-pearl-bush-400 rounded focus:ring-1 focus:ring-pearl-bush-500" name="cancel_reason"
-                                id="cancel_reason" cols="30" rows="4"></textarea>
+                            <textarea name="reason"
+                                class="reason-input border border-pearl-bush-400 rounded focus:ring-1 focus:ring-pearl-bush-500"
+                                name="cancel_reason" id="cancel_reason" cols="30" rows="4"></textarea>
 
                             <div class="flex flex-wrap gap-3">
                                 @foreach ($cancelReasons as $cancelReason)
-                                    <p data-reason={{$cancelReason['description']}}
-                                        class="cancle-reason-tag cursor-pointer text-xs border text-pearl-bush-500 border-pearl-bush-400  px-2 py-1 rounded-full">
+                                    <p data-reason="{{ $cancelReason['description'] }}"
+                                        class="cancel-reason-tag cursor-pointer text-xs border text-pearl-bush-500 border-pearl-bush-400  px-2 py-1 rounded-full">
                                         {{ $cancelReason['description'] }} </p>
                                 @endforeach
                             </div>
