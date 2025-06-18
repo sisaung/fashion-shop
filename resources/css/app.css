@@ -81,3 +81,7 @@
 .selected {
     @apply bg-pearl-bush-500 text-white rounded-lg
 }
+
+.selected-cancel {
+    @apply bg-pearl-bush-500 text-white
+}

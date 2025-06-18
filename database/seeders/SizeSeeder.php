@@ -18,7 +18,7 @@ class SizeSeeder extends Seeder
        'EU-40', 'EU-41', 'EU-42', 'EU-43', 'EU-44',
        'EU-45', 'EU-46', 'EU-47', 'EU-48'];
 
-       $now = Carbon::now();
+       $now = now();
        foreach ($sizes as $size) {
         DB::table('sizes')->insert([
             'size_name' => $size,

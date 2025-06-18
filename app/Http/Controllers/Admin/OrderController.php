@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CancelOrderRequest;
 use App\Http\Requests\CompleteOrderRequest;
 use App\Http\Requests\ConfirmOrderRequest;
 use App\Http\Requests\DeliverOrderRequest;
@@ -162,7 +163,13 @@ class OrderController extends Controller
         $order = Order::with('orderItems.stock')->find($id);
         if($order->order_status === 'pending') {
             $order->delivery_start_date = $request->start_date;
-        $order->delivery_end_date = $request->end_date;
+            $order->delivery_end_date = $request->end_date;
+
+            if($order->orderItems->count() > 1) {
+
+                $order->confirm_message = "Your orders have been confirmed";
+            }
+                $order->confirm_message = "Your order has been  confirmed";
 
         foreach($order->orderItems as $item) {
 
@@ -214,6 +221,13 @@ class OrderController extends Controller
         if($order->order_status === 'confirmed' && $request->deliver_order ) {
 
             $order->order_status = "delivered";
+            if($order->orderItems->count() > 1) {
+
+                $order->deliver_message = "Your orders have been delivered";
+            }
+                $order->deliver_message = "Your order has been  delivererd";
+
+
             $order->save();
 
             return redirect()->route('order.show',['order' => $order->id]);
@@ -244,6 +258,12 @@ class OrderController extends Controller
                 if($order->order_status === 'delivered' && $request->complete_order ) {
 
                     $order->order_status = "completed";
+
+                    if($order->orderItems->count() > 1) {
+
+                        $order->confirm_message = "Your orders completed";
+                    }
+                        $order->confirm_message = "Your order completed";
                     $order->save();
 
                     return redirect()->route('order.show',['order' => $order->id]);
@@ -254,6 +274,62 @@ class OrderController extends Controller
 
                         ]);
                     }
+
+                }
+
+
+
+                public function cancelOrder(CancelOrderRequest $request,$id) {
+
+
+                    $validator = Validator::make(['id' => $id], [
+                        'id' => 'required|numeric|exists:orders,id'
+                    ]);
+
+                    if ($validator->fails()) {
+                        return redirect()->route('order.index')
+                            ->withErrors($validator)
+                            ->withInput();
+                    }
+
+
+
+                    $order = Order::with('orderItems.stock')->find($id);
+
+
+                    if($order->order_status !== 'cancelled' && $request->sure_cancel_order ) {
+
+
+                       if($order->order_status !== "pending") {
+                        foreach($order->orderItems as $item) {
+
+                            $stockId = $item->stock_id;
+
+                            $stock = Stock::find($stockId);
+                            $stock->increment('stock_quantity', $item->quantity);
+
+                            $productId = $stock->product_id;
+                            $product = Product::find($productId);
+                            $product->increment('stock_count', $item->quantity);
+
+                        }
+                    }
+                        $order->is_cancel = 1;
+                        $order->order_status = "cancelled";
+                        $order->cancel_message = $request->reason;
+
+                    
+                    $order->save();
+                    return redirect()->route('order.show',['order' => $order->id]);
+
+                    }else {
+                        return back()->withErrors([
+                            'cancelOrder' => 'Make sure to cancel order.',
+
+                        ]);
+                    }
+
+
 
                 }
 

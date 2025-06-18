@@ -12,6 +12,7 @@ class Order extends Model
     protected $fillable = [
         'customer_id',
         'coupon_id',
+        'customer_address_id',
         'order_number',
         'order_date',
         'total_amount',
@@ -35,5 +36,9 @@ class Order extends Model
 
     public function orderItems() {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function customerAddress() {
+        return $this->belongsTo(CustomerAddress::class);
     }
 }

@@ -76,8 +76,7 @@
                                         <div class="flex flex-col">
                                             <a href="{{ route('customer.show', ['customer' => $order->customer->id]) }}"
                                                 class="text-base underline underline-offset-2 ">{{ $order->customer->customer_name }}</a>
-                                            <span class="text-xs text-stone-500"> {{ $order->address }} </span>
-                                            <span class="text-xs text-stone-500"> {{ $order->order_date }} </span>
+                                            <span class="text-xs text-stone-500"> {{ $order->customerAddress->address_detail }} </span>
                                         </div>
                                     </td>
 
@@ -88,9 +87,6 @@
                                     <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
                                         {{ $order->orderItems->count() }}
                                     </td>
-
-
-
 
                                     <td class="whitespace-nowrap flex justify-end px-4 py-4 text-sm text-gray-900">
                                         @if ($order->coupon)
@@ -110,6 +106,7 @@
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
                                         @include('components.admin.orderStatusBadge', [
                                             'orderStatus' => $order->order_status,
+                                            'style' => 'justify-center'
                                         ])
                                     </td>
 

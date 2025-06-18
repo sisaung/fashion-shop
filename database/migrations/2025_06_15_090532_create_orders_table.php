@@ -17,7 +17,6 @@ return new class extends Migration
             $table->enum('order_status',['pending','confirmed','delivered','completed','cancelled'])->default('pending');
             $table->double('total_amount')->default(0);
             $table->string('order_date');
-            $table->string('address');
             $table->string('delivery_start_date')->nullable();
             $table->string('delivery_end_date')->nullable();
             $table->string('confirm_message')->nullable();
@@ -29,6 +28,8 @@ return new class extends Migration
             // $table->double('shipping_amount')->default(0);
 
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
+            $table->string('customer_address_id')->constrained('customer_addresses')->onDelete('cascade');
+
             $table->foreignId('coupon_id')->nullable()->constrained('coupons')->onDelete('cascade');
             $table->timestamps();
         });

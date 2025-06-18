@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Brand;
-use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +33,7 @@ class BrandSeeder extends Seeder
             ["brand_name" => "Saint Laurent", "brand_image" => null],
         ];
 
-        $now = Carbon::now();
+        $now = now();
 
      $brands =  array_map(fn($brand) => [
 

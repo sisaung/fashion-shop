@@ -58,7 +58,7 @@ class ProductTypeSeeder extends Seeder
             "Hoodies" => ['Relaxed Fit', 'Oversized Fit'],
         ];
 
-        $now = Carbon::now();
+        $now = now();
 
         foreach ($productTypes as $categoryName => $types) {
             $category = ProductCategory::where('category_name', $categoryName)->first();

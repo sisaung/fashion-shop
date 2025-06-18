@@ -28,7 +28,7 @@ class FitSeeder extends Seeder
             'Boxy Fit',
         ];
 
-        $now = Carbon::now();
+        $now = now();
 
         // Insert fits
         foreach ($fits as $fit) {

@@ -1,55 +1,44 @@
-
 const initializeCancelOrder = () => {
+    const toggleCancellationOrderForm = document.querySelector(
+        ".toggle-cancellation-order-form"
+    );
+    const cancelOrderForm = document.querySelector(".cancel-order-form");
+    const reasonTags = document.querySelectorAll(".cancel-reason-tag");
+    const reasonInput = document.querySelector(".reason-input");
 
-    const toggleCancellationOrderForm = document.querySelector('.toggle-cancellation-order-form');
-    const cancelOrderForm = document.querySelector('.cancel-order-form');
-    const reasonTags = document.querySelectorAll('.cancel-reason-tag');
-    const reasonInput = document.querySelector('.reason-input');
-
-    console.log(reasonInput);
-
-
-
-
-    console.log(reasonTags);
-
-
-    cancelOrderForm.classList.add('hidden');
+    cancelOrderForm.classList.add("hidden");
     if (!toggleCancellationOrderForm) return;
 
     const handleChange = (e) => {
-
-
         if (e.target.checked) {
-
-            cancelOrderForm.classList.remove('hidden')
-            cancelOrderForm.classList.add('add')
-
+            cancelOrderForm.classList.remove("hidden");
+            cancelOrderForm.classList.add("add");
+        } else {
+            cancelOrderForm.classList.remove("grid");
+            cancelOrderForm.classList.add("hidden");
         }
-        else {
-
-            cancelOrderForm.classList.remove("grid")
-            cancelOrderForm.classList.add("hidden")
-        }
-
-    }
+    };
 
     if (!reasonTags) return;
 
-    reasonTags.forEach(tag => {
-
+    reasonTags.forEach((tag) => {
         tag.addEventListener("click", (e) => {
-            reasonInput.value = e.target.dataset
-            console.log(e.target.dataset.reason);
+            reasonTags.forEach((t) => t.classList.remove("selected-cancel"));
 
-        })
-
+            e.target.classList.add("selected-cancel");
+            reasonInput.value = e.target.dataset.reason;
+        });
     });
 
-    toggleCancellationOrderForm.addEventListener('change', handleChange)
+    // const handleReasonInputChange = (e) => {
 
+    //     if(e.target.value) {
+    //         reasonInput.value = e.target.value
+    //     }
+    // }
 
+    toggleCancellationOrderForm.addEventListener("change", handleChange);
+    // reasonInput.addEventListener('change',handleReasonInputChange)
+};
 
-}
-
-document.addEventListener('DOMContentLoaded', initializeCancelOrder)
+document.addEventListener("DOMContentLoaded", initializeCancelOrder);

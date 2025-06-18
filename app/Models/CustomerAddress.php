@@ -12,4 +12,8 @@ class CustomerAddress extends Model
         return $this->belongsTo(Customer::class);
     }
 
+    public function order() {
+        return $this->hasOne(Order::class);
+    }
+
 }

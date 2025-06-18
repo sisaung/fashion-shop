@@ -24,7 +24,7 @@ class ProductCategorySeeder extends Seeder
             ["category_name" => "Bags"]
         ];
 
-        $now = Carbon::now();
+        $now = now();
 
         $productCategories =  array_map(fn($category) => ["category_name" => $category['category_name'], 'user_id' => 1, 'created_at' => $now, 'updated_at' => $now], $productCategories);
 

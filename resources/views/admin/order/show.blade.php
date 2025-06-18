@@ -1,33 +1,35 @@
 @php
 
-    $cancelReasons = [
+    $orderCancellationReasons = [
         [
             'id' => 1,
-            'description' => 'Customer requested cancellation',
+            'tag' => 'customer_cancelled',
+            'description' => 'The customer cancelled the order',
         ],
         [
             'id' => 2,
-            'description' => 'Item is out of stock',
+            'tag' => 'payment_failed',
+            'description' => 'Payment was not successful',
         ],
         [
             'id' => 3,
-            'description' => 'Payment was not completed',
+            'tag' => 'out_of_stock',
+            'description' => 'Product was out of stock',
         ],
         [
             'id' => 4,
-            'description' => 'Incorrect shipping address',
+            'tag' => 'delayed_shipping',
+            'description' => 'Shipping was taking too long',
         ],
         [
             'id' => 5,
-            'description' => 'Pricing error on product',
+            'tag' => 'duplicate_order',
+            'description' => 'Duplicate order placed',
         ],
         [
             'id' => 6,
-            'description' => 'Delivery would be delayed',
-        ],
-        [
-            'id' => 7,
-            'description' => 'Other reason',
+            'tag' => 'wrong_item_ordered',
+            'description' => 'Customer ordered the wrong item',
         ],
     ];
 
@@ -95,10 +97,7 @@
                             </td>
                             <td> {{ number_format($order->total_amount) }} MMK </td>
 
-                            {{-- <td rowspan="4" class="">
 
-
-                            </td> --}}
 
 
                         </tr>
@@ -222,67 +221,65 @@
             @endif
         </div>
         <div class="col-span-2">
-            <h1 class="mb-2"> Order Items </h1>
+            <h1 class="mb-2"> Order Summary </h1>
+            <div class="w-full overflow-x-auto mb-5 rounded-lg border border-gray-200">
+
+                <table class=" w-full divide-y divide-gray-200 ">
+                    <tr class="divide-y divide-gray-200">
+                        <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700"><strong>Order Number</strong>
+                        </td>
+                        <td class="text-gray-500">{{ $order->order_number }}</td>
+                    </tr>
+                    <tr class="divide-y divide-gray-200 bg-stone-50">
+                        <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Order At</td>
+                        <td class="text-gray-500"> {{ date('j M Y', strtotime($order->created_at)) }}
+                            {{ date('g:i A', strtotime($order->created_at)) }} </td>
+                    </tr>
+                    <tr>
+                        <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Order Status</td>
+                        <td>
+
+                            @include('components.admin.orderStatusBadge', [
+                                'orderStatus' => $order->order_status,
+                            ])
+                        </td>
+                    </tr>
+                    <tr class="divide-y divide-gray-200 bg-stone-50">
+                        <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Item Count</td>
+                        <td class="text-gray-500">{{ $order->orderItems->count() }}</td>
+                    </tr>
+                </table>
+
+
+            </div>
+            <h1 class="mb-2"> Deliver Information </h1>
             <div class="w-full overflow-x-auto rounded-lg border border-gray-200">
 
-                <table class=" w-full divide-y divide-gray-200">
-                    <thead>
-                        <tr>
-                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Product Name</th>
-                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Size</th>
-                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Price</th>
+                <table class=" w-full divide-y divide-gray-200 mt-5">
+                    <tr class="divide-y divide-gray-200">
+                        <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Name</td>
+                        <td class="text-gray-500 underline underline-offset-4"> <a
+                                href="{{ route('customer.show', ['customer' => $order->customer->id]) }}">{{ $order->customer->customer_name }}</a>
+                        </td>
+                    </tr>
+                    <tr class="divide-y divide-gray-200 bg-stone-50">
+                        <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Email</td>
+                        <td class="text-gray-500 ">{{ $order->customer->customer_email }}</td>
+                    </tr>
+                    <tr>
+                        <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Phone</td>
+                        <td class="text-gray-500">
 
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 ">
-                        @foreach ($order->orderItems as $item)
-                            <tr>
-
-                                <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                    {{ $item->stock->product->product_name }}
-                                </td>
-                                <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                    {{ $item->stock->size->size_name }}
-                                </td>
-
-
-                                <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                    {{ number_format($item->sale_price) }} MMK
-                                </td>
-
-
-                            </tr>
-                        @endforeach
-
-                    </tbody>
-
-                    <tfoot class="divide-y divide-gray-200 bg-stone-50 font-mono">
-                        <tr>
-
-                            <td colspan="2" class=" whitespace-nowrap px-4 py-4  font-medium text-gray-900"><strong>Total
-                                </strong>
-                            </td>
-                            <td> {{ number_format($order->total_amount) }} MMK </td>
-
-                        </tr>
-                        <tr>
-                            <td colspan="2" class=" whitespace-nowrap px-4 py-4  font-medium text-gray-900"><strong>Tax
-                                    amount</strong>
-                            </td>
-                            <td> {{ number_format($order->tax_amount ?? 0) }} MMK </td>
-
-                        </tr>
-
-                        <tr>
-                            <td colspan="2" class=" whitespace-nowrap px-4 py-4  font-medium text-gray-900">
-                                <strong>Coupon Dis</strong>
-                                (%)
-                            </td>
-                            <td> {{ number_format($order->coupon->coupon_discount ?? 0) }} %</td>
-
-                        </tr>
-                    </tfoot>
+                            {{ $order->customerAddress->phone_number }}
+                        </td>
+                    </tr>
+                    <tr class="divide-y divide-gray-200 bg-stone-50">
+                        <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Item Count</td>
+                        <td>{{ $order->orderItems->count() }}</td>
+                    </tr>
                 </table>
+
+
             </div>
         </div>
 
@@ -301,20 +298,48 @@
                     </label>
                 </div>
 
-                <div class="cancel-order-form grid-cols-1">
+                <div class="cancel-order-form grid grid-cols-1">
                     <div class="col-span-1">
-                        <form action="">
+                        <form action="{{ route('order.cancel', ['id' => $order->id]) }}" method="POST">
+                            @csrf
+
                             <textarea name="reason"
                                 class="reason-input border border-pearl-bush-400 rounded focus:ring-1 focus:ring-pearl-bush-500"
                                 name="cancel_reason" id="cancel_reason" cols="30" rows="4"></textarea>
 
-                            <div class="flex flex-wrap gap-3">
-                                @foreach ($cancelReasons as $cancelReason)
-                                    <p data-reason="{{ $cancelReason['description'] }}"
+                            @error('reason')
+                                <p class="text-xs text-red-500"> {{ $message }} </p>
+                            @enderror
+
+                            <div class="flex  flex-wrap gap-3">
+                                @foreach ($orderCancellationReasons as $reason)
+                                    <p data-reason="{{ $reason['description'] }}"
                                         class="cancel-reason-tag cursor-pointer text-xs border text-pearl-bush-500 border-pearl-bush-400  px-2 py-1 rounded-full">
-                                        {{ $cancelReason['description'] }} </p>
+                                        {{ $reason['tag'] }} </p>
                                 @endforeach
                             </div>
+
+                            <div class="mt-3">
+                                <input type="checkbox"
+                                    class="toggle-cancellation-order-form text-sm  focus:ring-2 focus:ring-pearl-bush-500 font-medium text-pearl-bush-500 "
+                                    name="sure_cancel_order" id="sure_cancel_order">
+                                <label for="sure_cancel_order" class=" leading-7 select-none text-sm text-gray-600">
+
+                                    Check this box if you want to cancel the order
+
+                                </label>
+                                @error('sure_cancel_order')
+                                    <p class="text-xs text-red-500"> {{ $message }} </p>
+                                @enderror
+                            </div>
+
+                            <div class="mt-3">
+                                <button type="submit"
+                                    class="text-white bg-pearl-bush-400 border-0 py-2 px-8 focus:outline-none hover:bg-pearl-bush-600 rounded text-sm  cursor-pointer duration-300">
+                                    Cancel
+                                </button>
+                            </div>
+
                         </form>
                     </div>
                 </div>

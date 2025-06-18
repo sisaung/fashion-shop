@@ -78,6 +78,8 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         Route::post('/order/{id}/confirm', [OrderController::class, 'confirmOrder'])->name('order.confirm');
         Route::post('/order/{id}/deliver', [OrderController::class, 'deliverOrder'])->name('order.deliver');
         Route::post('/order/{id}/complete', [OrderController::class, 'completeOrder'])->name('order.complete');
+        Route::post('/order/{id}/cancel', [OrderController::class, 'cancelOrder'])->name('order.cancel');
+
 
 
 
