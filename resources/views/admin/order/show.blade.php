@@ -1,3 +1,38 @@
+@php
+
+    $cancelReasons = [
+        [
+            'id' => 1,
+            'description' => 'Customer requested cancellation',
+        ],
+        [
+            'id' => 2,
+            'description' => 'Item is out of stock',
+        ],
+        [
+            'id' => 3,
+            'description' => 'Payment was not completed',
+        ],
+        [
+            'id' => 4,
+            'description' => 'Incorrect shipping address',
+        ],
+        [
+            'id' => 5,
+            'description' => 'Pricing error on product',
+        ],
+        [
+            'id' => 6,
+            'description' => 'Delivery would be delayed',
+        ],
+        [
+            'id' => 7,
+            'description' => 'Other reason',
+        ],
+    ];
+
+@endphp
+
 @extends('layout.dashboard')
 
 
@@ -83,6 +118,15 @@
                             <td> {{ number_format($order->coupon->coupon_discount ?? 0) }} %</td>
 
                         </tr>
+
+                        <tr>
+                            <td colspan="2" class=" whitespace-nowrap px-4 py-4  font-medium text-gray-900">
+                                <strong>Net Total</strong>
+                                (%)
+                            </td>
+                            <td> {{ number_format($order->net_total) }}</td>
+
+                        </tr>
                     </tfoot>
                 </table>
             </div>
@@ -149,6 +193,32 @@
                             Order</button>
                     </div>
                 </form>
+            @elseif ($order->order_status === 'delivered')
+                <form action="{{ route('order.complete', ['id' => $order->id]) }}" method="POST">
+                    @csrf
+                    <div class="space-y-2">
+                        <div class="flex gap-x-2  items-center">
+                            <input type="checkbox"
+                                class="text-sm  focus:ring-2 focus:ring-pearl-bush-500 font-medium text-pearl-bush-500 "
+                                name="complete_order" id="complete_order">
+                            <label for="complete_order" class=" leading-7 select-none text-sm text-gray-600">Package is
+                                delivered and payment is collected
+
+                            </label>
+                        </div>
+                        @error('complete_order')
+                            <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                        <button type="submit"
+                            class="text-white bg-pearl-bush-400 border-0 py-2 px-8 focus:outline-none hover:bg-pearl-bush-600 rounded text-sm w-full cursor-pointer duration-300">Complete
+                            Order</button>
+                    </div>
+                </form>
+            @elseif ($order->order_status === 'completed')
+                <button type="submit"
+                    class="text-white bg-pearl-bush-400 border-0 py-2 px-8 focus:outline-none hover:bg-pearl-bush-600 rounded text-sm w-full cursor-pointer duration-300">Order
+                    Completed
+                </button>
             @endif
         </div>
         <div class="col-span-2">
@@ -217,6 +287,41 @@
         </div>
 
     </section>
+    <div class="px-5">
+        @if ($order->is_cancel === '0')
+            <div class="flex flex-col  justify-end  w-full ">
+                <div class="flex gap-x-2  items-center">
+                    <input type="checkbox"
+                        class="toggle-cancellation-order-form text-sm  focus:ring-2 focus:ring-pearl-bush-500 font-medium text-pearl-bush-500 "
+                        name="cancel_order" id="cancel_order">
+                    <label for="cancel_order" class=" leading-7 select-none text-sm text-gray-600">
+
+                        Cancellation Order Form
+
+                    </label>
+                </div>
+
+                <div class="cancel-order-form grid-cols-1">
+                    <div class="col-span-1">
+                        <form action="">
+                            <textarea name="reason"
+                                class="reason-input border border-pearl-bush-400 rounded focus:ring-1 focus:ring-pearl-bush-500"
+                                name="cancel_reason" id="cancel_reason" cols="30" rows="4"></textarea>
+
+                            <div class="flex flex-wrap gap-3">
+                                @foreach ($cancelReasons as $cancelReason)
+                                    <p data-reason="{{ $cancelReason['description'] }}"
+                                        class="cancel-reason-tag cursor-pointer text-xs border text-pearl-bush-500 border-pearl-bush-400  px-2 py-1 rounded-full">
+                                        {{ $cancelReason['description'] }} </p>
+                                @endforeach
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endif
+    </div>
 @endsection
 @push('scripts')
+    @vite(['resources/js/cancelOrder.js'])
 @endpush

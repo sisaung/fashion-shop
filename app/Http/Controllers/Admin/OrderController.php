@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CompleteOrderRequest;
 use App\Http\Requests\ConfirmOrderRequest;
 use App\Http\Requests\DeliverOrderRequest;
+
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
@@ -170,7 +172,7 @@ class OrderController extends Controller
             $productId = $stock->product_id;
             $product = Product::find($productId);
 
-           
+
 
             if($stock->stock_quantity > $item->quantity && $stock->stock_quantity > 0 && $product->stock_count > 0 && $product->stock_count > $item->quantity) {
 
@@ -209,7 +211,7 @@ class OrderController extends Controller
 
 
         $order = Order::find($id);
-        if($order->order_status === 'confirm' && $request->deliverOrder ) {
+        if($order->order_status === 'confirmed' && $request->deliver_order ) {
 
             $order->order_status = "delivered";
             $order->save();
@@ -224,6 +226,36 @@ class OrderController extends Controller
             }
 
         }
+
+        public function completeOrder(CompleteOrderRequest $request,$id) {
+
+        $validator = Validator::make(['id' => $id], [
+                    'id' => 'required|numeric|exists:orders,id'
+                ]);
+
+                if ($validator->fails()) {
+                    return redirect()->route('order.index')
+                        ->withErrors($validator)
+                        ->withInput();
+                }
+
+
+                $order = Order::find($id);
+                if($order->order_status === 'delivered' && $request->complete_order ) {
+
+                    $order->order_status = "completed";
+                    $order->save();
+
+                    return redirect()->route('order.show',['order' => $order->id]);
+                    }
+                    else {
+                        return back()->withErrors([
+                            'deliverOrder' => 'Make sure to deliver order.',
+
+                        ]);
+                    }
+
+                }
 
 }
 
