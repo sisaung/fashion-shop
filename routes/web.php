@@ -47,10 +47,10 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         Route::resource('product-category', ProductCategoryController::class);
         Route::resource('product-type', ProductTypeController::class);
         Route::get('/get-product-types/{id}', [ProductTypeController::class, 'getProductTypes']);
-        Route::resource('fit',FitController::class);
+        Route::resource('fit', FitController::class);
         Route::get('/get-fits/{id}', [FitController::class, 'getFits']);
 
-        Route::resource('size',SizeController::class);
+        Route::resource('size', SizeController::class);
         // Route::controller(ProductController::class)->group(function () {
 
         //     Route::resource('product',ProductController::class);
@@ -60,21 +60,21 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         Route::resource('product', ProductController::class);
 
         // Route::get('/product/{id}/show/manage-image',[ProductImageController::class,'index'])->name('manage-image.index');
-        Route::get('/product/{id}/edit/manage-image',[ProductImageController::class,'edit'])->name('manage-image.edit');
-        Route::post('/product/{id}/edit/manage-image',[ProductImageController::class,'store'])->name('manage-image.store');
-        Route::delete('/product/{id}/edit/manage-image',[ProductImageController::class,'destroy'])->name('manage-image.destroy');
+        Route::get('/product/{id}/edit/manage-image', [ProductImageController::class, 'edit'])->name('manage-image.edit');
+        Route::post('/product/{id}/edit/manage-image', [ProductImageController::class, 'store'])->name('manage-image.store');
+        Route::delete('/product/{id}/edit/manage-image', [ProductImageController::class, 'destroy'])->name('manage-image.destroy');
 
 
         // stock
-        Route::get('/product/{id}/edit/manage-stock',[StockController::class,'create'])->name('manage-stock.create');
-        Route::post('/product/{id}/edit/manage-stock',[StockController::class,'store'])->name('manage-stock.store');
+        Route::get('/product/{id}/edit/manage-stock', [StockController::class, 'create'])->name('manage-stock.create');
+        Route::post('/product/{id}/edit/manage-stock', [StockController::class, 'store'])->name('manage-stock.store');
 
 
-        Route::resource('coupon',CouponController::class);
-        Route::resource('customer',CustomerController::class)->only(['index','show']);
+        Route::resource('coupon', CouponController::class);
+        Route::resource('customer', CustomerController::class)->only(['index', 'show']);
 
 
-        Route::resource('order',OrderController::class)->only(['index','show']);
+        Route::resource('order', OrderController::class)->only(['index', 'show']);
 
         Route::post('/order/{id}/confirm', [OrderController::class, 'confirmOrder'])->name('order.confirm');
         Route::post('/order/{id}/deliver', [OrderController::class, 'deliverOrder'])->name('order.deliver');
@@ -84,10 +84,10 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
 
 
 
-        Route::resource('review',ReviewController::class)->only(['index','show','destroy']);
+        Route::resource('review', ReviewController::class)->only(['index', 'show', 'destroy']);
         Route::patch('/review/{id}/show', [ReviewController::class, 'showReview'])->name('review.show-review');
 
-        Route::resource('wishlist',WishlistController::class)->only(['index','show']);
+        Route::resource('wishlist', WishlistController::class)->only(['index', 'show']);
 
 
         // profile
@@ -106,15 +106,15 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
 
             Route::post('/', 'update')->name('admin-profile.update');
         });
-
-
     });
 });
 
 
 //public
 
-Route::resource('shop',ShopCategoryController::class)->only(['index','show']);
+Route::resource('shop', ShopCategoryController::class)->only(['index', 'show']);
+
+
 
 
 

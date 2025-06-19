@@ -12,7 +12,10 @@
 
 
 
+
         const queryString = new URLSearchParams(newParams).toString();
+
+        console.log(queryString);
 
         // console.log( location.origin + location.pathname + "?" + queryString);
 

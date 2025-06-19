@@ -10,7 +10,7 @@ class ShopCategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $validSortColumns = ['product_name', 'display_price', 'brand_name', 'name', 'category_name',  'id'];
+        $validSortColumns = ['product_name', 'display_price', 'brand_name', 'discount_percentage', 'name', 'category_name',  'id'];
         $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'id';
 
         $sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
@@ -22,7 +22,7 @@ class ShopCategoryController extends Controller
 
         $searchTerm = $request->input('q');
 
-        $query = Product::with(['brand', 'productCategory', 'productType', 'fits','productImages']);
+        $query = Product::with(['brand', 'productCategory', 'productType', 'fits', 'productImages']);
 
         if ($searchTerm) {
 
@@ -63,6 +63,6 @@ class ShopCategoryController extends Controller
         ]);
 
 
-        return view('public.shop.index',['products' => $product]);
+        return view('public.shop.index', ['products' => $product]);
     }
 }

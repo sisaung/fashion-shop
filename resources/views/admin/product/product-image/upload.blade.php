@@ -125,7 +125,7 @@
                         </button>
                     </form>
 
-                        <img src="{{ $image->thumbnail }}"
+                        <img src="{{ $image->preview }}"
                             class=" aspect-[3/4] w-full border border-pearl-bush-400 rounded-md"
                             alt="{{ $product->product_name }}">
 
