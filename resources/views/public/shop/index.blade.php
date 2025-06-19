@@ -59,5 +59,7 @@
     @endsection
 
     @push('scripts')
-        @vite(['resources/js/shopProductList.js'])
+        @vite(['resources/js/shop-product/shopProductList.js'])
+        @vite(['resources/js/shop-product/sortProduct.js'])
+
     @endpush
