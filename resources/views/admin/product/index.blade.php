@@ -100,7 +100,7 @@
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
 
                                         <div class="flex gap-x-3">
-                                            <div class="w-12">
+                                            <div class="w-10">
                                                 @if ($product->productImages->first())
                                                     <img src="{{ $product->productImages->first()->thumbnail }}"
                                                         class="object-cover h-full w-full object-center " alt="">

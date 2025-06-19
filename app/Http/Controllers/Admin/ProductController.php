@@ -26,7 +26,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $validSortColumns = ['product_name', 'display_price', 'brand_name', 'name', 'category_name',  'id'];
+        $validSortColumns = ['product_name', 'display_price','sale_price', 'brand_name', 'name', 'category_name',  'id'];
         $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'id';
 
         $sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
@@ -195,8 +195,8 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request,$id)
     {
-        $lastId = Product::max('id') + 1;
-         $productCode = strtoupper('PDR' . str_pad($lastId, 4, '0', STR_PAD_LEFT));
+        // $lastId = Product::max('id') + 1;
+        //  $productCode = strtoupper('PDR' . str_pad($lastId, 4, '0', STR_PAD_LEFT));
         $validator =  Validator::make(['id' => $id], [
             'id' => 'required|numeric|exists:products'
         ]);
@@ -217,7 +217,7 @@ class ProductController extends Controller
             $fitId = null;
         }
         $product = Product::find($id);
-        $product->product_code = $productCode;
+        $product->product_code = $product->product_code;
         $product->product_name = $request->product_name;
         $product->original_price = $request->original_price;
         $product->sale_price = $request->sale_price;

@@ -40,13 +40,16 @@
             </div>
         </div>
 
+        <template id="product-template">
+            @include('public.shop.components.productList')
+
+        </template>
+
         {{-- product list --}}
         <section>
-            <div class="grid grid-cols-4 gap-5 mt-8">
+            <div class="grid grid-cols-4 gap-5 mt-8" id="product-container">
 
-                @foreach ($products as $product)
-                    @include('public.shop.components.productList')
-                @endforeach
+
             </div>
         </section>
 
@@ -56,5 +59,5 @@
     @endsection
 
     @push('scripts')
-        @vite(['resources/js/shopProductSort.js'])
+        @vite(['resources/js/shopProductList.js'])
     @endpush

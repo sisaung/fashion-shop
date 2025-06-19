@@ -214,7 +214,7 @@
                             @foreach ($product->productImages as $image)
                                 <a href="{{ $image->large }}"
                                     class="border border-pearl-bush-300 rounded-lg overflow-hidden" target="_blank">
-                                    <img class="h-20" src="{{ $image->thumbnail }}"
+                                    <img class="h-20 w-18" src="{{ $image->thumbnail }}"
                                         alt="{{ $image->original_name }}" />
                                 </a>
                             @endforeach

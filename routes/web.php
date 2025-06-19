@@ -112,7 +112,8 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
 
 //public
 
-Route::resource('shop', ShopCategoryController::class)->only(['index', 'show']);
+Route::resource('shop', ShopCategoryController::class)->only(['index']);
+Route::get('/shop/get', [ShopCategoryController::class, 'getShop'])->name('shop.getShop');
 
 
 

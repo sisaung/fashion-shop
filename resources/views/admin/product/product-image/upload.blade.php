@@ -126,7 +126,7 @@
                     </form>
 
                         <img src="{{ $image->preview }}"
-                            class=" aspect-[3/4] w-full border border-pearl-bush-400 rounded-md"
+                            class="w-full h-32 object-cover object-center  border border-pearl-bush-400 rounded-md"
                             alt="{{ $product->product_name }}">
 
                 </div>
