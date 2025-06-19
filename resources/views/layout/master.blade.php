@@ -20,7 +20,7 @@
 
 <body>
 
-    <main>
+    <main class="bg-pearl-bush-50">
 
             @include('components.header')
 

@@ -105,8 +105,10 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        $lastId = Product::max('id') + 1;
-         $productCode = strtoupper('PDR' . str_pad($lastId, 4, '0', STR_PAD_LEFT));
+        $latestId = Product::max('id') + 1;
+        $date = now()->format('Ymd');
+        $code = 'PROD-' . $date . '-' . str_pad($latestId, 4, '0', STR_PAD_LEFT);
+        $productCode = strtoupper($code);
 
         $newArrival = 1;
         if (!$request->is_new_arrival) {

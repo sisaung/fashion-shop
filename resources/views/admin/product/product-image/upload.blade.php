@@ -124,9 +124,11 @@
 
                         </button>
                     </form>
-                    <img src="{{ $image->preview }}"
-                        class="object-cover object-center aspect-ratio border border-pearl-bush-400 rounded-md"
-                        alt="{{ $product->product_name }}">
+
+                        <img src="{{ $image->thumbnail }}"
+                            class=" aspect-[3/4] w-full border border-pearl-bush-400 rounded-md"
+                            alt="{{ $product->product_name }}">
+
                 </div>
             @endforeach
         </div>

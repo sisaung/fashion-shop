@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StockController;
 use App\Http\Controllers\Admin\WishlistController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ShopCategoryController;
 use App\Http\Controllers\TestController;
 use App\Http\Middleware\MustBeAdmin;
 
@@ -111,6 +112,9 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
 });
 
 
+//public
+
+Route::resource('shop',ShopCategoryController::class)->only(['index','show']);
 
 
 
