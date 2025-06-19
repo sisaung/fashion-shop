@@ -100,7 +100,7 @@
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
 
                                         <div class="flex gap-x-3">
-                                            <div class="w-12 h-16">
+                                            <div class="w-12">
                                                 @if ($product->productImages->first())
                                                     <img src="{{ $product->productImages->first()->thumbnail }}"
                                                         class="object-cover h-full w-full object-center " alt="">
@@ -123,11 +123,12 @@
                                                     <p
                                                         class=" bg-pearl-bush-300 text-white text-xs inline-block px-2 py-1 rounded-md">
                                                         {{ $product->productCategory->category_name }}</p>
-                                                    @foreach ($product->fits as $fit)
+
+                                                    @if ($product->fit)
                                                         <p
                                                             class="bg-pearl-bush-300 text-white text-xs inline-block px-2 py-1 rounded-md">
-                                                            {{ $fit->fit_name }} </p>
-                                                    @endforeach
+                                                            {{ $product->fit->fit_name }} </p>
+                                                    @endif
 
                                                 </div>
                                             </div>

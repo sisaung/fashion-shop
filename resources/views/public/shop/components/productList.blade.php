@@ -1,5 +1,5 @@
  <div class="col-span-1">
-     <div class=" overflow-hidden  hover:ring-1 hover:ring-pearl-bush-400 bg-pearl-bush-50 rounded-lg group">
+     <div class=" overflow-hidden  hover:ring-1 hover:ring-pearl-bush-400 hover:bg-pearl-bush-50 rounded-lg group">
          <div class="relative overflow-hidden">
              @if ($product->productImages->count() > 0)
                  <img class="rounded-lg border border-pearl-bush-200 group-hover:scale-95 object-cover object-center group-hover:shadow-lg duration-300 h-[450px]"

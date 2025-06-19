@@ -31,9 +31,9 @@ class Product extends Model
         return $this->belongsTo(ProductType::class);
     }
 
-    public function fits()
+    public function fit()
     {
-        return $this->belongsToMany(Fit::class);
+        return $this->belongsTo(Fit::class);
     }
 
     public function sizes()

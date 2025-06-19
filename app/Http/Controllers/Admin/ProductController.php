@@ -38,7 +38,7 @@ class ProductController extends Controller
 
         $searchTerm = $request->input('q');
 
-        $query = Product::with(['brand', 'productCategory', 'productType', 'fits','productImages']);
+        $query = Product::with(['brand', 'productCategory', 'productType', 'fit','productImages']);
 
         if ($searchTerm) {
 
@@ -116,6 +116,12 @@ class ProductController extends Controller
             $newArrival = 0;
         }
 
+        $fitId = $request->fit_id;
+        if(!$request->fit_id) {
+            $fitId = null;
+        }
+
+
         $product = Product::create([
             'product_code' => $productCode,
             'product_name' => $request->product_name,
@@ -129,10 +135,10 @@ class ProductController extends Controller
             'brand_id' => $request->brand_id,
             'product_category_id' => $request->product_category_id,
             'product_type_id' => $request->product_type_id,
+            $fitId && 'fit_id' => $fitId,
             'user_id' => Auth::id()
         ]);
 
-        $product->fits()->attach($request->fit_id);
 
         return redirect()->route('manage-image.edit', ['id' => $product->id]);
     }
@@ -206,6 +212,10 @@ class ProductController extends Controller
             $newArrival = 0;
         }
 
+        $fitId = $request->fit_id;
+        if(!$request->fit_id) {
+            $fitId = null;
+        }
         $product = Product::find($id);
         $product->product_code = $productCode;
         $product->product_name = $request->product_name;
@@ -218,7 +228,7 @@ class ProductController extends Controller
         $product->brand_id = $request->brand_id;
         $product->product_category_id = $request->product_category_id;
         $product->product_type_id = $request->product_type_id;
-        $product->fits()->sync($request->fit_id);
+       $fitId && $product->fit_id = $fitId;
         $product->save();
         return redirect()->route('product.index');
     }

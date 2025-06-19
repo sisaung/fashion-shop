@@ -22,7 +22,7 @@ class ShopCategoryController extends Controller
 
         $searchTerm = $request->input('q');
 
-        $query = Product::with(['brand', 'productCategory', 'productType', 'fits', 'productImages']);
+        $query = Product::with(['brand', 'productCategory', 'productType', 'fit', 'productImages']);
 
         if ($searchTerm) {
 

@@ -5,7 +5,7 @@ const initializeFit = () => {
 
     productTypeSelect.addEventListener("change", async (e) => {
         const productTypeId = e.target.value;
-        fitSelect.innerHTML = "<option selected value=''>Choose fit</option>";
+        fitSelect.innerHTML = `<option selected value=''>Choose fit</option>`;
 
         // fitSelect.innerHTML = "<option selected value=''>Choose fit</option>";
 

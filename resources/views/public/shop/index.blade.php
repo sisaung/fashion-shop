@@ -27,7 +27,7 @@
 
 
                     <select id="countries"
-                        class="sort-product bg-gray-50 border border-pearl-bush-300 focus:ring-1 focus:ring-pearl-bush-400 border-gray-300 text-gray-900 text-sm rounded-lg  block w-52 p-2.5 ">
+                        class="sort-product bg-gray-50 border border-pearl-bush-300 focus:ring-1 focus:ring-pearl-bush-400  text-gray-900 text-sm rounded-lg  block w-52 p-2.5 ">
                         <option>Select Product</option>
 
                         @foreach ($selectProducts as $key => $product)

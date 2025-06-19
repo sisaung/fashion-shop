@@ -36,6 +36,7 @@ return new class extends Migration
             $table->foreignId('brand_id')->constrained('brands')->onDelete('cascade');
             $table->foreignId('product_category_id')->constrained('product_categories')->onDelete('cascade');
             $table->foreignId('product_type_id')->constrained('product_types')->onDelete('cascade');
+            $table->foreignId('fit_id')->nullable()->constrained('fits')->onDelete('cascade');
 
             $table->timestamps();
         });

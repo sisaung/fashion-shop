@@ -132,10 +132,8 @@
                             <td class=" px-4 py-4">
                                 <span class=" px-2 rounded-lg bg-pearl-bush-400 text-white py-2 text-sm">
 
-                                    @if ($product->fits->count())
-                                        @foreach ($product->fits as $fit)
-                                            {{ $fit->fit_name }}
-                                        @endforeach
+                                    @if ($product->fit)
+                                        {{ $product->fit->fit_name }}
                                     @else
                                         There is no fit.
                                     @endif
