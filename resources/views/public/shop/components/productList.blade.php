@@ -3,7 +3,7 @@
         class="overflow-hidden hover:ring-1 hover:ring-pearl-bush-400 hover:bg-pearl-bush-50 rounded-lg group">
         <div class="relative overflow-hidden">
             <img
-                class="product-image rounded-lg border border-pearl-bush-200 group-hover:scale-95 object-cover object-center group-hover:shadow-lg duration-300 h-[450px]" />
+                class="product-image rounded-lg border border-pearl-bush-200 group-hover:scale-95 object-cover object-center group-hover:shadow-lg duration-300 h-[250px]" />
 
             <div
                 class="absolute group-hover:top-5 group-hover:right-5 hover:border cursor-pointer duration-300 hover:border-pearl-bush-500  top-3 right-3 size-10 bg-white inline-flex justify-center items-center rounded-full">
@@ -34,9 +34,9 @@
                               12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1
                               1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
                 </svg>
-                <span class="code-text"></span>
+                <span class="code-text text-sm"></span>
             </p>
-            <p class="product-price text-gray-500 text-lg"></p>
+            <p class="product-price text-gray-500 text-sm"></p>
         </div>
     </div>
 </div>

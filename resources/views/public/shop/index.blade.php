@@ -11,7 +11,7 @@
 
 @endphp
 
-@extends('components.pagelayout')
+@extends('components.public.pagelayout')
 @section('container')
     <div class="mt-8">
         <div class="flex justify-between items-center">
@@ -23,19 +23,16 @@
             </div>
             <div>
 
-                <form class="w-full">
+                <select id="select-product"
+                    class="sort-product bg-gray-50 border border-gray-300 focus:ring-1 focus:ring-gray-400  text-gray-900 text-sm rounded-lg  block w-52 p-2.5 ">
+                    <option>Select Product</option>
 
+                    @foreach ($selectProducts as $key => $product)
+                        <option value="{{ $key }}"> {{ $product }} </option>
+                    @endforeach
 
-                    <select id="countries"
-                        class="sort-product bg-gray-50 border border-pearl-bush-300 focus:ring-1 focus:ring-pearl-bush-400  text-gray-900 text-sm rounded-lg  block w-52 p-2.5 ">
-                        <option>Select Product</option>
+                </select>
 
-                        @foreach ($selectProducts as $key => $product)
-                            <option value="{{ $key }}"> {{ $product }} </option>
-                        @endforeach
-
-                    </select>
-                </form>
 
             </div>
         </div>
@@ -61,5 +58,4 @@
     @push('scripts')
         @vite(['resources/js/shop-product/shopProductList.js'])
         @vite(['resources/js/shop-product/sortProduct.js'])
-
     @endpush
