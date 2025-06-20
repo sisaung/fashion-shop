@@ -23,7 +23,11 @@ class ShopCategoryController extends Controller
 
         $searchTerm = $request->input('q');
 
+
+
         $query = Product::with(['brand', 'productCategory', 'productType', 'fit', 'productImages']);
+
+
 
         if ($searchTerm) {
 
@@ -82,8 +86,10 @@ class ShopCategoryController extends Controller
         $limit = is_numeric($limit) && $limit > 0 ? $limit : 5;
 
         $searchTerm = $request->input('q');
+        $brandNames = $request->input('brands');
 
         $query = Product::with(['brand', 'productCategory', 'productType', 'fit', 'productImages']);
+
 
         if ($searchTerm) {
 
@@ -113,6 +119,11 @@ class ShopCategoryController extends Controller
 
 
 
+            if (!empty($brandNames) && is_array($brandNames)) {
+                $query->whereHas('brand', function (Builder $q) use ($brandNames) {
+                    $q->whereIn('brand_name', $brandNames);
+                });
+            }
         $query->orderBy($sortBy, $sortDirection);
 
         $product = $query->paginate($limit);
@@ -120,12 +131,37 @@ class ShopCategoryController extends Controller
             'q' => $searchTerm,
             'sort_by' => $sortBy,
             'sort_direction' => $sortDirection,
-            'limit' => $limit
+            'limit' => $limit,
+            'brands' => $brandNames
         ]);
 
 
+        return $product;
 
         return response()->json($product);
 
+    }
+
+    public function getBrand(Request $request) {
+        $brand = Brand::with('products')->get();
+        return response()->json($brand);
+    }
+
+    public function filterBrand(Request $request) {
+
+        $brandNames = $request->input('brands');
+
+
+        // $brand = Brand::with('products.productImages')->whereIn('brand_name', $brandNames)->get();
+        $product = Product::with(['productImages', 'brand'])
+        ->whereHas('brand', function ($query) use ($brandNames) {
+            $query->whereIn('brand_name', $brandNames);
+        })
+        ->get();
+
+
+
+        return $product;
+        // return response()->json($brand);
     }
 }

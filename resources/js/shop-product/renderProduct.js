@@ -9,7 +9,7 @@ const renderProduct = (product) => {
     const image = clone.querySelector(".product-image");
 
     image.src =
-        product.product_images.length > 0
+        product?.product_images?.length > 0
             ? product.product_images[0].large
             : "https://storage.mms-it.com/boss-nation/previews/galleries/pJyVBUw7Bpwl40N10pYZy2WrhwD4HXPViBVlLozF.jpg";
 

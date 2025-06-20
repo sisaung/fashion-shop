@@ -16,7 +16,7 @@ const initializeSortProduct = () => {
         const data = await fetchProductShop(`/shop/get${url}`);
 
         if (data?.data) {
-            renderProductList(data, container);
+            renderProductList(data?.data, container);
         }
         history.pushState({}, "", url);
     };

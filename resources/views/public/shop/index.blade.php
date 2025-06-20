@@ -58,4 +58,6 @@
     @push('scripts')
         @vite(['resources/js/shop-product/shopProductList.js'])
         @vite(['resources/js/shop-product/sortProduct.js'])
+        @vite(['resources/js/sidebar/renderShopBrand.js'])
+
     @endpush

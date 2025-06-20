@@ -13,10 +13,10 @@ const initializeSort = async () => {
     const data = await fetchProductShop(`/shop/get`);
 
     if (data?.data) {
-        renderProductList(data, container);
+        renderProductList(data?.data, container);
     }
 
-   
+
 };
 
 document.addEventListener("DOMContentLoaded", initializeSort);

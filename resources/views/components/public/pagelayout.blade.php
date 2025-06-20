@@ -12,9 +12,12 @@
 @section('content')
     <div class="max-w-7xl container mx-auto ">
         <div class="flex flex-col gap-5 lg:flex-row">
+
+
             @include('components.public.sidebar', [
                 'brands' => $brands,
             ])
+
 
             <div class="flex-1">
                 @yield('container')
