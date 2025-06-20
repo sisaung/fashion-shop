@@ -53,8 +53,12 @@
             </div>
         </section>
 
-        <div class="flex justify-center items-center pb-10">
-            @include('components.public.pagination', ['paginator' => $products])
+        <template id="pagination-template">
+            @include('components.public.paginationTest')
+
+        </template>
+
+        <div class="flex justify-center items-center pb-10" id="pagination-container">
         </div>
     @endsection
 

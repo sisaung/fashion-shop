@@ -69,6 +69,10 @@ class ShopCategoryController extends Controller
 
         $brand = Brand::with('products')->get();
 
+        if($request->ajax()){
+            return response()->json($product);
+        };
+
         return view('public.shop.index', ['products' => $product,['brands' => $brand]]);
     }
 
@@ -136,7 +140,7 @@ class ShopCategoryController extends Controller
         ]);
 
 
-        
+
 
         return response()->json($product);
 
