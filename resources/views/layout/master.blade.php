@@ -22,7 +22,7 @@
 
     <main class="bg-gray-50">
 
-            @include('components.header')
+            @include('components.public.header')
 
         <div>
             @yield('content')

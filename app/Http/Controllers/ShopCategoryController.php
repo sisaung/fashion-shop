@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
@@ -62,8 +63,9 @@ class ShopCategoryController extends Controller
             'limit' => $limit
         ]);
 
+        $brand = Brand::with('products')->get();
 
-        return view('public.shop.index', ['products' => $product]);
+        return view('public.shop.index', ['products' => $product,['brands' => $brand]]);
     }
 
     public function getShop(Request $request) {

@@ -39,7 +39,7 @@
                 </svg>
                 <p class="ms-1 text-sm font-medium    md:ms-2  ite">
                     <span class="text-gray-700 pr-3">{{ $currentPageTitle }}</span> </p>
-                    <span class="text-xs bg-pearl-bush-200  text-pearl-bush-600  px-3 py-1 rounded-full font-medium"> Total Products {{$totalProduct}} </span>
+                    <span class="text-xs bg-gray-100 text-gray-800  px-3 py-1 rounded-full font-medium"> Total Products {{$totalProduct}} </span>
             </div>
         </li>
 
