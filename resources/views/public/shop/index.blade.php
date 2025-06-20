@@ -15,6 +15,9 @@
 @section('container')
     <div class="mt-8">
         <div class="flex justify-between items-center">
+
+
+
             <div>
                 @include('components.breadcrumb', [
                     'currentPageTitle' => 'Shop',
@@ -50,7 +53,7 @@
             </div>
         </section>
 
-        <div>
+        <div class="flex justify-center items-center pb-10">
             @include('components.public.pagination', ['paginator' => $products])
         </div>
     @endsection
@@ -58,6 +61,5 @@
     @push('scripts')
         @vite(['resources/js/shop-product/shopProductList.js'])
         @vite(['resources/js/shop-product/sortProduct.js'])
-        @vite(['resources/js/sidebar/renderShopBrand.js'])
-
+        {{-- @vite(['resources/js/sidebar/renderShopBrand.js']) --}}
     @endpush

@@ -136,7 +136,7 @@ class ShopCategoryController extends Controller
         ]);
 
 
-        return $product;
+        
 
         return response()->json($product);
 

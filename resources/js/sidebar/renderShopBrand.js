@@ -1,5 +1,6 @@
 import { fetchBrand } from "../services/fetchBrand";
 import { fetchProductShop } from "../services/fetchProductShop";
+import { renderBreadcrumbTotalProduct } from "../shop-product/renderBreadcrumbTotalProduct";
 import renderProductList from "../shop-product/renderProductList";
 
 export const renderShopBrand = async (brand) => {
@@ -7,6 +8,9 @@ export const renderShopBrand = async (brand) => {
     if (!template) return;
     const content = template.content.cloneNode(true);
     const container = document.getElementById("product-container");
+    const totalProductContainer = document.getElementById(
+        "total-product-container"
+    );
 
     const selectedBrands = new URLSearchParams(window.location.search).getAll(
         "brands[]"
@@ -46,6 +50,10 @@ export const renderShopBrand = async (brand) => {
 
             if (data?.data) {
                 renderProductList(data?.data, container);
+                renderBreadcrumbTotalProduct(
+                    data?.total,
+                    totalProductContainer
+                );
             }
         } else {
             const url = new URL(window.location);
@@ -55,6 +63,10 @@ export const renderShopBrand = async (brand) => {
             const data = await fetchProductShop(`/shop/get?${searchParams}`);
             if (data?.data) {
                 renderProductList(data?.data, container);
+                renderBreadcrumbTotalProduct(
+                    data?.total,
+                    totalProductContainer
+                );
             }
         }
     });

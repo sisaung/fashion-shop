@@ -1,8 +1,7 @@
 <nav class="flex" aria-label="Breadcrumb">
     <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
         <li class="inline-flex items-center">
-            <a href="/"
-                class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-600  ite">
+            <a href="/" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-600  ite">
 
                 Home
             </a>
@@ -11,7 +10,6 @@
 
         @if (isset($links))
             @foreach ($links as $link)
-
                 <li>
                     <div class="flex items-center">
                         <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
@@ -21,7 +19,7 @@
                         </svg>
 
                         <a href="{{ $link['path'] }}"
-                       class="ms-1 text-sm font-medium
+                            class="ms-1 text-sm font-medium
                             text-gray-500 hover:text-gray-600 md:ms-2 ite">
                             {{ $link['name'] }} </a>
                     </div>
@@ -37,11 +35,18 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="m1 9 4-4-4-4" />
                 </svg>
-                <p class="ms-1 text-sm font-medium    md:ms-2  ite">
-                    <span class="text-gray-700 pr-3">{{ $currentPageTitle }}</span> </p>
-                    <span class="text-xs bg-pearl-bush-100 text-pearl-bush-800  px-3 py-1 rounded-full font-medium"> Total Products {{$totalProduct}} </span>
+                <p class="ms-1 text-sm font-medium  md:ms-2  ite">
+                    <span class="text-gray-700 pr-3">{{ $currentPageTitle }}</span>
+                    <span id="total-product-container"></span>
+                </p>
+
             </div>
         </li>
 
+        <template id="total-product-template">
+            <span
+                class="text-xs bg-pearl-bush-100 text-pearl-bush-800  px-3 py-1 rounded-full font-medium total-product">
+            </span>
+        </template>
     </ol>
 </nav>
