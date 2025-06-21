@@ -6,7 +6,7 @@
                 class="product-image rounded-lg border border-pearl-bush-200 group-hover:scale-95 object-cover object-center group-hover:shadow-lg duration-300 h-[250px]" />
 
             <div
-                class="absolute group-hover:top-5 group-hover:right-5 hover:border cursor-pointer duration-300 hover:border-pearl-bush-500  top-3 right-3 size-10 bg-white inline-flex justify-center items-center rounded-full">
+                class="absolute  group-hover:top-5 group-hover:right-5 hover:border cursor-pointer duration-300 hover:border-pearl-bush-500  top-3 right-3 size-10 bg-white inline-flex justify-center items-center rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor" class="size-5 stroke-pearl-bush-500">
                     <path stroke-linecap="round" stroke-linejoin="round"

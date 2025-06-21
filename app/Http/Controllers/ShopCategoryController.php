@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Product;
+use App\Models\ProductCategory;
+use App\Models\ProductType;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
 
@@ -71,9 +73,10 @@ class ShopCategoryController extends Controller
 
         if($request->ajax()){
             return response()->json($product);
+
         };
 
-        return view('public.shop.index', ['products' => $product,['brands' => $brand]]);
+        return view('public.shop.index', ['products' => $product]);
     }
 
     public function getShop(Request $request) {
@@ -167,5 +170,15 @@ class ShopCategoryController extends Controller
 
         return $product;
         // return response()->json($brand);
+    }
+
+    public function getProductCategory() {
+        $productCategory = ProductCategory::with(['productTypes','productTypes.fits','productTypes.sizes'])->get();
+        return response()->json($productCategory);
+    }
+
+    public function getProductType() {
+        $productType = ProductType::with(['fits','sizes'])->get();
+        return response()->json($productType);
     }
 }

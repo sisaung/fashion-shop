@@ -13,7 +13,9 @@
             <div class="flex gap-x-7">
                 <a href="" class="text-gray-700 hover:text-black font-medium transition-colors text-sm">New
                     Arrival</a>
+
                 <a href="" class="text-gray-700 hover:text-black font-medium transition-colors text-sm">Men</a>
+
                 <a href="" class="text-gray-700 hover:text-black font-medium transition-colors text-sm">Women</a>
                 <a href=""
                     class="text-gray-700 hover:text-black font-medium transition-colors text-sm">Unisex</a>

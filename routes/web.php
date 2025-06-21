@@ -116,6 +116,10 @@ Route::resource('shop', ShopCategoryController::class)->only(['index']);
 Route::get('/shop/get', [ShopCategoryController::class, 'getShop'])->name('shop.getShop');
 Route::get('/shop/get-brand', [ShopCategoryController::class, 'getBrand'])->name('shop.getBrand');
 Route::get('/shop/filter-brand', [ShopCategoryController::class, 'filterBrand'])->name('shop.filterBrand');
+Route::get('/shop/get-product-category', [ShopCategoryController::class, 'getProductCategory'])->name('shop.getProductCategory');
+
+Route::get('/shop/get-product-type', [ShopCategoryController::class, 'getProductType'])->name('shop.getProductType');
+
 
 
 

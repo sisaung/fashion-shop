@@ -16,15 +16,96 @@
     <div class="mt-8">
         <div class="flex justify-between items-center">
 
-
-
             <div>
                 @include('components.breadcrumb', [
                     'currentPageTitle' => 'Shop',
                     'totalProduct' => $products->count(),
                 ])
             </div>
-            <div>
+            <div class="flex items-center gap-3">
+
+                <button data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example"
+                    data-drawer-placement="right" aria-controls="drawer-right-example"
+                    class="bg-gray-50
+                    border border-gray-300 focus:ring-1 focus:ring-pearl-bush-400 text-gray-900 inline-flex items-center
+                    text-sm rounded-lg gap-x-2 px-4 py-2.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-list-filter group-active:scale-75 duration-300">
+                        <path d="M3 6h18"></path>
+                        <path d="M7 12h10"></path>
+                        <path d="M10 18h4"></path>
+                    </svg>
+                    Filter Product </button>
+
+                <div id="drawer-right-example"
+                    class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 "
+                    tabindex="-1" aria-labelledby="drawer-right-label">
+                    <h5 id="drawer-right-label"
+                        class="inline-flex items-center gap-x-2 mb-4 text-base font-semibold text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5 stroke-pearl-bush-500">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+                        </svg>
+                        Filter Product
+                    </h5>
+                    <button type="button" data-drawer-hide="drawer-right-example" aria-controls="drawer-right-example"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center ">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close menu</span>
+                    </button>
+
+
+                    <div>
+                        <h5 class="text-gray-700">Product Category Filter </h5>
+
+                        <template id="filter-product-category-template">
+                            <span
+                                class="filter-category-btn cursor-pointer  px-4 py-2 border border-pearl-bush-200 text-xs text-gray-500 rounded-lg">
+                                Clothing </span>
+
+                        </template>
+
+                        <div id="filter-product-category-container" class="mt-5 flex flex-wrap gap-2">
+                        </div>
+                    </div>
+
+                    <div>
+                        <h5 class="text-gray-700">Product Types Filter </h5>
+
+                        <template id="filter-product-type-template">
+                            <span
+                                class="filter-productType-btn cursor-pointer  px-4 py-2 border border-pearl-bush-200 text-xs text-gray-500 rounded-lg">
+                            </span>
+
+                        </template>
+
+                        <div id="filter-product-type-container" class="mt-5 flex flex-wrap gap-2">
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-x-3">
+                        <button id="apply-clears-btn"
+                            class=" text-white cursor-pointer bg-pearl-bush-300 px-4 py-2 rounded-full text-sm">
+                            Clear
+                            Filters </button>
+                        <button id="apply-filters-btn"
+                            class=" text-white cursor-pointer bg-pearl-bush-500 px-4 py-2 rounded-full text-sm">
+                            Filter
+                            Products
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
 
                 <select id="select-product"
                     class="sort-product bg-gray-50 border border-gray-300 focus:ring-1 focus:ring-gray-400  text-gray-900 text-sm rounded-lg  block w-52 p-2.5 ">
@@ -65,5 +146,14 @@
     @push('scripts')
         @vite(['resources/js/shop-product/shopProductList.js'])
         @vite(['resources/js/shop-product/sortProduct.js'])
+        @vite(['resources/js/shop-product/getProductCategory.js'])
+        @vite(['resources/js/shop-product/filterProductCategory.js'])
+        @vite(['resources/js/shop-product/product-type/getProductType.js'])
+        @vite(['resources/js/shop-product/product-type/filterProductType.js'])
+        @vite(['resources/js/shop-product/setUpFilterEvent.js'])
+
+
+
+
         {{-- @vite(['resources/js/sidebar/renderShopBrand.js']) --}}
     @endpush
