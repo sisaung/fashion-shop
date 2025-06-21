@@ -23,10 +23,10 @@ const initializeSort = async () => {
         renderBreadcrumbTotalProduct(data?.total, totalProductContainer);
         renderPaginationList(
             data?.links,
+
             paginationContainer
         );
     }
-  
 };
 
 document.addEventListener("DOMContentLoaded", initializeSort);

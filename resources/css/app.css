@@ -77,14 +77,22 @@
         rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 }
 
-
 .selected {
-    @apply bg-pearl-bush-500 text-white rounded-lg
+    @apply bg-pearl-bush-500 text-white rounded-lg;
 }
 
 .selected-cancel {
-    @apply bg-pearl-bush-500 text-white
+    @apply bg-pearl-bush-500 text-white;
 }
 .transition-max-height {
     transition: max-height 0.3s ease-in-out;
-  }
+}
+.pagination-disable {
+    @apply pointer-events-none opacity-50  text-gray-500;
+}
+.pagination-icon {
+    @apply px-2 py-1 text-sm hover:text-pearl-bush-600 text-pearl-bush-500 rounded-md;
+}
+.pagination-active {
+    @apply size-8 inline-flex justify-center items-center rounded-full text-sm font-bold text-white bg-pearl-bush-300
+}

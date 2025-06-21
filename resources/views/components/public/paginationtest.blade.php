@@ -1,1 +1,2 @@
-<button class="pagination-btn px-3 py-1 text-sm rounded bg-gray-100 hover:bg-gray-300"></button>
+<button
+    class="pagination-btn size-8 mx-0.5 inline-flex justify-center items-center rounded-full text-sm text-gray-700 hover:bg-pearl-bush-300  hover:text-white "></button>

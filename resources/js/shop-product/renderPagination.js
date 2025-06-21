@@ -1,5 +1,6 @@
 import { fetchProductShop } from "../services/fetchProductShop";
 import { renderBreadcrumbTotalProduct } from "./renderBreadcrumbTotalProduct";
+import { renderPaginationList } from "./renderPaginationList";
 import renderProductList from "./renderProductList";
 
 export const renderPagination = (link) => {
@@ -8,6 +9,8 @@ export const renderPagination = (link) => {
     const totalProductContainer = document.getElementById(
         "total-product-container"
     );
+
+    const paginationContainer = document.getElementById("pagination-container");
 
     if (!paginationTemplate) return;
 
@@ -18,26 +21,47 @@ export const renderPagination = (link) => {
     const paginationBtn = content.querySelector(".pagination-btn");
 
     if (link.label === "&laquo; Previous") {
-        paginationBtn.textContent = "Prev";
+        paginationBtn.innerHTML = ` <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                            stroke="currentColor" class="size-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                        </svg>`;
+        paginationBtn.classList.remove(
+            "hover:bg-pearl-bush-300",
+            "hover:text-white"
+        );
     } else if (link.label === "Next &raquo;") {
-        paginationBtn.textContent = "Next";
+        paginationBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-4 text-gray-500 ">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>`;
+                        paginationBtn.classList.add('hover:text-gray-700')
+        paginationBtn.classList.remove(
+            "hover:bg-pearl-bush-300",
+            "hover:text-white"
+        );
     } else {
         paginationBtn.textContent = link.label;
     }
 
     // If no URL, it's a disabled button (like "Previous" on first page)
     if (isDisabled) {
-        console.log("first");
         const content = paginationTemplate.content.cloneNode(true);
         const paginationBtn = content.querySelector(".pagination-btn");
-        paginationBtn.textContent =
+        paginationBtn.innerHTML =
             link.label === "&laquo; Previous"
-                ? "Prev"
+                ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                        </svg>`
                 : link.label === "Next &raquo;"
-                ? "Next"
+                ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>`
                 : link.label;
         paginationBtn.disabled = true;
-        paginationBtn.classList.add("opacity-50", "cursor-not-allowed");
+        paginationBtn.classList.remove("bg-gray-100");
+        paginationBtn.classList.add("pagination-disable");
         return content;
     }
 
@@ -50,6 +74,11 @@ export const renderPagination = (link) => {
         history.pushState({}, "", location.pathname + "?" + queryString);
     };
 
+    if (link.active) {
+        paginationBtn.classList.remove("bg-gray-100");
+        paginationBtn.classList.add("pagination-active");
+    }
+
     // Handle click
     paginationBtn.onclick = async () => {
         urlToParam(link.url);
@@ -58,10 +87,11 @@ export const renderPagination = (link) => {
         if (data?.data) {
             renderProductList(data?.data, container);
             renderBreadcrumbTotalProduct(data?.total, totalProductContainer);
+
+            renderPaginationList(data?.links, paginationContainer);
         }
-        console.log(link.url);
-        console.log(data);
     };
 
     return content;
 };
+// size-8 inline-flex justify-center items-center rounded-full text-sm font-bold text-white bg-pearl-bush-300

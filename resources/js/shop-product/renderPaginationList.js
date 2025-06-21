@@ -1,7 +1,7 @@
 import { renderBreadcrumb } from "./renderBreadcrumb";
 import { renderPagination } from "./renderPagination";
 
-export const renderPaginationList = ( links, container) => {
+export const renderPaginationList = ( links,container) => {
     container.innerHTML = "";
 
     if (links && links.length > 0) {
