@@ -1,6 +1,7 @@
 import { fetchBrand } from "../services/fetchBrand";
 import { fetchProductShop } from "../services/fetchProductShop";
 import { renderBreadcrumbTotalProduct } from "../shop-product/renderBreadcrumbTotalProduct";
+import { renderPaginationList } from "../shop-product/renderPaginationList";
 import renderProductList from "../shop-product/renderProductList";
 
 export const renderShopBrand = async (brand) => {
@@ -11,6 +12,8 @@ export const renderShopBrand = async (brand) => {
     const totalProductContainer = document.getElementById(
         "total-product-container"
     );
+
+    const paginationContainer = document.getElementById("pagination-container");
 
     const selectedBrands = new URLSearchParams(window.location.search).getAll(
         "brands[]"
@@ -54,6 +57,8 @@ export const renderShopBrand = async (brand) => {
                     data?.total,
                     totalProductContainer
                 );
+                renderPaginationList(data?.links, paginationContainer);
+
             }
         } else {
             const url = new URL(window.location);
@@ -67,6 +72,9 @@ export const renderShopBrand = async (brand) => {
                     data?.total,
                     totalProductContainer
                 );
+                renderPaginationList(data?.links, paginationContainer);
+
+
             }
         }
     });
