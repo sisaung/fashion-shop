@@ -4,14 +4,26 @@ export const renderProductCategory = (category) => {
     );
     if (!productCategoryTemplate) return;
 
+
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedProductCategoryId = urlParams.get(
+        "filters[productCategory_id]"
+    );
+
     const content = productCategoryTemplate.content.cloneNode(true);
+    const input = content.querySelector("input");
+    const span = content.querySelector("span");
 
-    const categoryBtn = content.querySelector(".filter-category-btn");
+    input.setAttribute("data-product-categpry", category.id);
+    input.value = category.id;
+    span.textContent = category.category_name;
 
-    categoryBtn.textContent = category.category_name;
-    categoryBtn.setAttribute("data-product-category", category.id);
 
-
+    if (String(category.id) === selectedProductCategoryId) {
+        input.checked = true;
+        span.classList.add("bg-pearl-bush-400", "text-white");
+    }
 
     return content;
 };

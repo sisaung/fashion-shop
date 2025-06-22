@@ -4,15 +4,23 @@ export const renderProductFit = (productFit) => {
     );
     if (!productFitTemplate) return;
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedProductFitId = urlParams.get("filters[productFit_id]");
+
     const content = productFitTemplate.content.cloneNode(true);
-    // const fitHeader = content.querySelector(".fit-heading");
-    // fitHeader.textContent = "Product Fit Filter";
 
-    const productFitBtn = content.querySelector(".filter-product-fit-btn");
+    const input = content.querySelector("input");
+    const span = content.querySelector("span");
 
-    productFitBtn.textContent = productFit.fit_name;
+    input.setAttribute("data-product-fit", productFit.id);
+    input.value = productFit.id;
+    span.textContent = productFit.fit_name;
 
-    productFitBtn.setAttribute("data-product-fit", productFit.id);
+    console.log(selectedProductFitId)
+    if (String(productFit.id) === selectedProductFitId) {
+        input.checked = true;
+        span.classList.add("bg-pearl-bush-400", "text-white");
+    }
 
     return content;
 };

@@ -4,14 +4,16 @@ export const renderProductSize = (productSize) => {
     );
     if (!productSizeTemplate) return;
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedProductSizeId = urlParams.get("filters[productSize_id]");
+
     const content = productSizeTemplate.content.cloneNode(true);
+    const input = content.querySelector("input");
+    const span = content.querySelector("span");
 
-
-    const productSizeBtn = content.querySelector(".filter-product-size-btn");
-
-    productSizeBtn.textContent = productSize.size_name;
-
-    productSizeBtn.setAttribute("data-product-size", productSize.id);
+    input.setAttribute("data-product-size", productSize.id);
+    input.value = productSize.id;
+    span.textContent = productSize.size_name;
 
     return content;
 };

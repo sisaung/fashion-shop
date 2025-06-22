@@ -61,56 +61,88 @@
                     </button>
 
 
-                    <div>
-                        <h5 class="text-gray-700">Product Category Filter </h5>
+
+                    {{-- <div class="mb-6">
+                        <h5 class="text-gray-700 font-heading font-semibold">Product Category Filter </h5>
 
                         <template id="filter-product-category-template">
+                            <input type="radio" name="">
                             <span
                                 class="filter-category-btn cursor-pointer  px-4 py-2 border border-pearl-bush-200 text-xs text-gray-500 rounded-lg">
-                                Clothing </span>
-
-                        </template>
-
-                        <div id="filter-product-category-container" class="mt-5 flex flex-wrap gap-2">
-                        </div>
-                    </div>
-
-                    <div>
-                        <h5 class="text-gray-700">Product Types Filter </h5>
-
-                        <template id="filter-product-type-template">
-                            <span
-                                class="filter-productType-btn cursor-pointer  px-4 py-2 border border-pearl-bush-200 text-xs text-gray-500 rounded-lg">
                             </span>
 
                         </template>
 
-                        <div id="filter-product-type-container" class="mt-5 flex flex-wrap gap-2">
+                        <div id="filter-product-category-container" class="mt-2 flex flex-wrap gap-2">
                         </div>
+                    </div> --}}
+
+                    {{-- category with radio --}}
+                    <div class="mb-6">
+                        <h5 class="text-gray-700 font-heading font-semibold">Product Category Filter </h5>
+
+                        <template id="filter-product-category-template">
+                            <label class="cursor-pointer text-sm text-gray-600">
+                                <input type="radio" name="product-category" class="filter-product-category-radio hidden"
+                                    data-product-category="" />
+                                <span
+                                    class="filter-product-category-label inline-block px-4 py-2 border border-pearl-bush-200 text-xs text-gray-500 rounded-lg"></span>
+                            </label>
+                        </template>
+
+                        <div id="filter-product-category-container" class="mt-2 flex flex-wrap gap-2"></div>
                     </div>
 
-                    <template id="filter-product-fit-template">
 
-                        <span
-                            class="filter-product-fit-btn cursor-pointer  px-4 py-2 border border-pearl-bush-200 text-xs text-gray-500 rounded-lg">
-                        </span>
+                    {{-- producttype with radio --}}
 
-                    </template>
+                    <div class="mb-6">
+                        <h5 class="text-gray-700 font-heading font-semibold">Product Type Filter </h5>
 
-                    <h5 class="text-gray-700 fit-heading hidden"> Product Fit Filter </h5>
-                    <div id="filter-product-fit-container" class="mt-5 flex flex-wrap gap-2">
+                        <template id="filter-product-type-template">
+                            <label class="cursor-pointer text-sm text-gray-600">
+                                <input type="radio" name="product-type" class="filter-product-type-radio hidden"
+                                    data-product-type="" />
+                                <span
+                                    class="filter-product-type-label inline-block px-4 py-2 border border-pearl-bush-200 text-xs text-gray-500 rounded-lg"></span>
+                            </label>
+                        </template>
+
+                        <div id="filter-product-type-container" class="mt-2 flex flex-wrap gap-2"></div>
                     </div>
 
-                    <template id="filter-product-size-template">
 
-                        <span
-                            class="filter-product-size-btn cursor-pointer  px-4 py-2 border border-pearl-bush-200 text-xs text-gray-500 rounded-lg">
-                        </span>
+                    {{-- product fit with radio --}}
 
-                    </template>
+                    <div class="mb-6">
+                        <h5 class="text-gray-700 font-heading font-semibold hidden fit-heading">Product Fit Filter </h5>
 
-                    <h5 class="text-gray-700 size-heading hidden"> Product Size Filter </h5>
-                    <div id="filter-product-size-container" class="mt-5 flex flex-wrap gap-2">
+                        <template id="filter-product-fit-template">
+                            <label class="cursor-pointer text-sm text-gray-600">
+                                <input type="radio" name="product-fit" class="filter-product-fit-radio hidden"
+                                    data-product-fit="" />
+                                <span
+                                    class="filter-product-fit-label inline-block px-4 py-2 border border-pearl-bush-200 text-xs text-gray-500 rounded-lg"></span>
+                            </label>
+                        </template>
+
+                        <div id="filter-product-fit-container" class="mt-2 flex flex-wrap gap-2"></div>
+                    </div>
+
+
+                    <div class="mb-6">
+                        <h5 class="text-gray-700 font-heading font-semibold hidden size-heading">Product Size Filter </h5>
+
+                        <template id="filter-product-size-template">
+                            <label class="cursor-pointer text-sm text-gray-600">
+                                <input type="radio" name="product-size" class="filter-product-size-radio hidden"
+                                    data-product-size="" />
+                                <span
+                                    class="filter-product-size-label inline-block px-4 py-2 border border-pearl-bush-200 text-xs text-gray-500 rounded-lg"></span>
+                            </label>
+                        </template>
+
+                        <div id="filter-product-size-container" class="mt-2 flex flex-wrap gap-2"></div>
                     </div>
 
 
