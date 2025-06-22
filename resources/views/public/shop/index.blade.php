@@ -89,6 +89,31 @@
                         </div>
                     </div>
 
+                    <template id="filter-product-fit-template">
+
+                        <span
+                            class="filter-product-fit-btn cursor-pointer  px-4 py-2 border border-pearl-bush-200 text-xs text-gray-500 rounded-lg">
+                        </span>
+
+                    </template>
+
+                    <h5 class="text-gray-700 fit-heading hidden"> Product Fit Filter </h5>
+                    <div id="filter-product-fit-container" class="mt-5 flex flex-wrap gap-2">
+                    </div>
+
+                    <template id="filter-product-size-template">
+
+                        <span
+                            class="filter-product-size-btn cursor-pointer  px-4 py-2 border border-pearl-bush-200 text-xs text-gray-500 rounded-lg">
+                        </span>
+
+                    </template>
+
+                    <h5 class="text-gray-700 size-heading hidden"> Product Size Filter </h5>
+                    <div id="filter-product-size-container" class="mt-5 flex flex-wrap gap-2">
+                    </div>
+
+
                     <div class="flex items-center gap-x-3">
                         <button id="apply-clears-btn"
                             class=" text-white cursor-pointer bg-pearl-bush-300 px-4 py-2 rounded-full text-sm">
@@ -147,13 +172,8 @@
         @vite(['resources/js/shop-product/shopProductList.js'])
         @vite(['resources/js/shop-product/sortProduct.js'])
         @vite(['resources/js/shop-product/getProductCategory.js'])
-        @vite(['resources/js/shop-product/filterProductCategory.js'])
         @vite(['resources/js/shop-product/product-type/getProductType.js'])
-        @vite(['resources/js/shop-product/product-type/filterProductType.js'])
-        @vite(['resources/js/shop-product/setUpFilterEvent.js'])
-
-
-
+        {{-- @vite(['resources/js/shop-product/setUpFilterEvent.js']) --}}
 
         {{-- @vite(['resources/js/sidebar/renderShopBrand.js']) --}}
     @endpush

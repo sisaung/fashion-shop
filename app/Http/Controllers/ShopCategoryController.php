@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
+use App\Models\Fit;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductType;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+use function PHPSTORM_META\type;
 
 class ShopCategoryController extends Controller
 {
@@ -87,6 +91,8 @@ class ShopCategoryController extends Controller
 
         $sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
 
+        $brandNames = $request->input('brands'); // array of brand names
+        $filters = $request->input('filters',[]);
 
         $limit = $request->input('limit', 5);
 
@@ -95,7 +101,8 @@ class ShopCategoryController extends Controller
         $searchTerm = $request->input('q');
         $brandNames = $request->input('brands');
 
-        $query = Product::with(['brand', 'productCategory', 'productType', 'fit', 'productImages']);
+
+        $query = Product::with(['brand', 'productCategory', 'productType', 'fit', 'productImages','sizes']);
 
 
         if ($searchTerm) {
@@ -131,6 +138,44 @@ class ShopCategoryController extends Controller
                     $q->whereIn('brand_name', $brandNames);
                 });
             }
+
+            if ($brandNames) {
+                $query->whereHas('brand', function ($query) use ($brandNames) {
+                    $query->whereIn('brand_name', $brandNames);
+                });
+            }
+
+            // 🔹 Filter by product category
+            if (!empty($filters['productCategory_id'])) {
+                $query->whereHas('productCategory', function ($query) use ($filters) {
+                    $query->where('id', $filters['productCategory_id']);
+                });
+            }
+
+            // 🔹 Filter by product type
+            if (!empty($filters['productType_id'])) {
+                $query->whereHas('productType', function ($query) use ($filters) {
+                    $query->where('id', $filters['productType_id']);
+                });
+            }
+
+             // 🔹 Filter by product fit
+
+             if (!empty($filters['productFit_id'])) {
+                $query->whereHas('fit', function ($query) use ($filters) {
+                    $query->where('id', $filters['productFit_id']);
+                });
+            }
+
+             // 🔹 Filter by product size
+
+             if (!empty($filters['productSize_id'])) {
+                $query->whereHas('productType.sizes', function ($query) use ($filters) {
+                    $query->where('sizes.id', $filters['productSize_id']);
+                });
+            }
+
+
         $query->orderBy($sortBy, $sortDirection);
 
         $product = $query->paginate($limit);
@@ -145,6 +190,7 @@ class ShopCategoryController extends Controller
 
 
 
+
         return response()->json($product);
 
     }
@@ -154,23 +200,42 @@ class ShopCategoryController extends Controller
         return response()->json($brand);
     }
 
-    public function filterBrand(Request $request) {
+    public function filterShopProduct(Request $request)
+    {
+        $brandNames = $request->input('brands'); // array of brand names
+        $filters = $request->input('filters');   // associative array
 
-        $brandNames = $request->input('brands');
-
-
-        // $brand = Brand::with('products.productImages')->whereIn('brand_name', $brandNames)->get();
-        $product = Product::with(['productImages', 'brand'])
-        ->whereHas('brand', function ($query) use ($brandNames) {
-            $query->whereIn('brand_name', $brandNames);
-        })
-        ->get();
+        $query = Product::with(['productImages', 'brand', 'productCategory', 'productType']);
 
 
+        // 🔹 Filter by brand names
+        if ($brandNames) {
+            $query->whereHas('brand', function ($query) use ($brandNames) {
+                $query->whereIn('brand_name', $brandNames);
+            });
+        }
 
-        return $product;
-        // return response()->json($brand);
+        // 🔹 Filter by product category
+        if (!empty($filters['productCategory_id'])) {
+            $query->whereHas('productCategory', function ($query) use ($filters) {
+                $query->where('id', $filters['productCategory_id']);
+            });
+        }
+
+        // 🔹 Filter by product type
+        if (!empty($filters['productType_id'])) {
+            $query->whereHas('productType', function ($query) use ($filters) {
+                $query->where('id', $filters['productType_id']);
+            });
+        }
+
+        // You can add more filters like price range, discount etc. here
+
+        $products = $query->paginate(10);
+
+        return response()->json($products);
     }
+
 
     public function getProductCategory() {
         $productCategory = ProductCategory::with(['productTypes','productTypes.fits','productTypes.sizes'])->get();
@@ -181,4 +246,6 @@ class ShopCategoryController extends Controller
         $productType = ProductType::with(['fits','sizes'])->get();
         return response()->json($productType);
     }
+
+
 }

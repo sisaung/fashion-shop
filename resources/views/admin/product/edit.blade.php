@@ -1,7 +1,6 @@
 @extends('layout.dashboard')
 
 @section('content')
-
     <div class="flex justify-between items-center">
         <div>
             @include('components.admin.breadcrumb', [
@@ -222,12 +221,8 @@
                             is-invalid
                         @enderror block w-full  p-2.5  rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 ">
                             <option value="" selected class="text-sm text-gray-700">Choose fit</option>
-                            @if ($product->fits)
-                                @foreach ($product->fits as $fit)
-                                    <option value="{{ $fit->id }}" selected>
-                                        {{ $fit->fit_name }}
-                                    </option>
-                                @endforeach
+                            @if ($product->fit)
+                                <option value="{{ $product->fit->id }}" selected>{{ $product->fit->fit_name }}</option>
                             @endif
                         </select>
                         @error('fit_id')

@@ -38,7 +38,7 @@ class ProductController extends Controller
 
         $searchTerm = $request->input('q');
 
-        $query = Product::with(['brand', 'productCategory', 'productType', 'fit','productImages']);
+        $query = Product::with(['brand', 'productCategory', 'productType', 'fit','productImages','sizes']);
 
         if ($searchTerm) {
 
@@ -55,7 +55,7 @@ class ProductController extends Controller
                     ->orWhereHas('productType', function (Builder $q) use ($searchTerm) {
                         return $q->where('name', 'like', "%$searchTerm%");
                     })
-                    ->orWhereHas('fits', function (Builder $q) use ($searchTerm) {
+                    ->orWhereHas('fit', function (Builder $q) use ($searchTerm) {
                         return $q->where('fit_name', 'like', "%$searchTerm%");
                     });
             });
@@ -122,6 +122,7 @@ class ProductController extends Controller
         }
 
 
+
         $product = Product::create([
             'product_code' => $productCode,
             'product_name' => $request->product_name,
@@ -135,7 +136,7 @@ class ProductController extends Controller
             'brand_id' => $request->brand_id,
             'product_category_id' => $request->product_category_id,
             'product_type_id' => $request->product_type_id,
-            $fitId && 'fit_id' => $fitId,
+            'fit_id' => $fitId,
             'user_id' => Auth::id()
         ]);
 
