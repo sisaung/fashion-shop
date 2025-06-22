@@ -1,3 +1,4 @@
+import { fetchProductFit } from "../../services/fetchProductFit";
 import { fetchProductShop } from "../../services/fetchProductShop";
 import { fetchProductType } from "../../services/fetchProductType";
 import renderProductFitList from "../fit/renderProductFitLIst";
@@ -32,6 +33,9 @@ const initializeProductType = async () => {
 
     const fitHeading = document.querySelector(".fit-heading");
     const sizeHeading = document.querySelector(".size-heading");
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedProductFitId = urlParams.get("filters[productFit_id]");
 
     const selectedFilters = {
         productCategory_id: null,
@@ -104,6 +108,9 @@ const initializeProductType = async () => {
             );
 
             // filter fit
+            // const fitData = await fetchProductFit(
+            //     `/shop/get-product-fit/${productType_id}`
+            // );
             const fitData = currentProductType.fits;
 
             renderProductFitList(fitData, filterProductFitContainer);
@@ -174,6 +181,14 @@ const initializeProductType = async () => {
             selectedFilters.productSize_id = productSize_id;
         }
     };
+
+    // populate when refresh
+
+    if(selectedProductFitId) {
+
+        const productFitData = await fetchProductFit(`/shop/get-product-fit/${selectedProductFitId}`)
+        renderProductFitList(productFitData, filterProductFitContainer);
+    }
 
     filterCategoryContainer.addEventListener("change", handleProductCategory);
 

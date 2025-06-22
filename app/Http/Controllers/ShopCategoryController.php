@@ -247,5 +247,20 @@ class ShopCategoryController extends Controller
         return response()->json($productType);
     }
 
+    public function getProductFit($id) {
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|exists:product_types,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $fit = Fit::whereHas('productTypes', function ($query) use ($id) {
+            $query->where('product_types.id', $id);
+        })->orderBy('id', 'asc')->get();
+
+       return response()->json($fit);
+    }
 
 }
