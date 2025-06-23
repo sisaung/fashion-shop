@@ -112,8 +112,11 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
 
 //public
 
-Route::resource('shop', ShopCategoryController::class)->only(['index']);
+Route::get('/shop', [ShopCategoryController::class,'index'])->name('shop.index');
 Route::get('/shop/get', [ShopCategoryController::class, 'getShop'])->name('shop.getShop');
+Route::get('/shop-product/{slug}', [ShopCategoryController::class, 'show']);
+
+
 Route::get('/shop/get-brand', [ShopCategoryController::class, 'getBrand'])->name('shop.getBrand');
 Route::get('/shop/filter-brand', [ShopCategoryController::class, 'filterShopProduct'])->name('shop.filterShopProduct');
 Route::get('/shop/get-product-category', [ShopCategoryController::class, 'getProductCategory'])->name('shop.getProductCategory');

@@ -6,6 +6,11 @@ const renderProduct = (product) => {
     }
     const clone = template.content.cloneNode(true);
 
+    const productCard = clone.querySelector(".product-card");
+
+
+    productCard.setAttribute("data-product-slug", product.slug);
+
     const image = clone.querySelector(".product-image");
 
     image.src =
@@ -33,6 +38,8 @@ const renderProduct = (product) => {
             product.display_price
         ).toLocaleString()} MMK`;
     }
+
+
 
     return clone;
 };

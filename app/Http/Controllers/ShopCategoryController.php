@@ -84,6 +84,31 @@ class ShopCategoryController extends Controller
         return view('public.shop.index', ['products' => $product]);
     }
 
+    public function show($slug) {
+
+        $validator = Validator::make(['slug' => $slug], [
+            'slug' => 'required|exists:products,slug'
+        ]);
+
+        if ($validator->fails()) {
+             return redirect()->route('shop.index')
+            ->withErrors($validator)
+            ->withInput();
+        }
+
+        $product = Product::with([
+            'brand',
+            'productCategory',
+            'productType',
+            'fit',
+            'productImages',
+            'sizes',
+            'stocks.size'
+        ])->where('slug', $slug)->first();
+        
+        return view('public.shop.show', ['product' => $product]);
+    }
+
     public function getShop(Request $request) {
 
 

@@ -1,4 +1,4 @@
-<div class="col-span-1">
+<div class="col-span-1  product-card">
     <div
         class="overflow-hidden hover:ring-1 hover:ring-pearl-bush-400 hover:bg-pearl-bush-50 rounded-lg group">
         <div class="relative overflow-hidden">

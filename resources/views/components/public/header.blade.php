@@ -11,6 +11,8 @@
                 </div>
             </a>
             <div class="flex gap-x-7">
+                <a href="{{route('shop.index')}}" class="text-gray-700 hover:text-black font-medium transition-colors text-sm">
+                    Shop</a>
                 <a href="" class="text-gray-700 hover:text-black font-medium transition-colors text-sm">New
                     Arrival</a>
 

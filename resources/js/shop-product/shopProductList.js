@@ -1,5 +1,6 @@
 import { fetchProductShop } from "../services/fetchProductShop";
 import urlString from "../utils/urlString";
+import initializeRedirect from "./product-detail/redirect";
 import { renderBreadcrumbTotalProduct } from "./renderBreadcrumbTotalProduct";
 import { renderPaginationList } from "./renderPaginationList";
 import renderProductList from "./renderProductList";
@@ -26,6 +27,7 @@ const initializeSort = async () => {
 
             paginationContainer
         );
+        // initializeRedirect();
     }
 };
 
