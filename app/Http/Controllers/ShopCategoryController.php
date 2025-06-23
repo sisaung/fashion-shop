@@ -7,6 +7,7 @@ use App\Models\Fit;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductType;
+use App\Models\Size;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -261,6 +262,23 @@ class ShopCategoryController extends Controller
         })->orderBy('id', 'asc')->get();
 
        return response()->json($fit);
+    }
+
+    public function getProductSize($id) {
+
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|exists:product_types,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $size = Size::whereHas('productTypes', function ($query) use ($id) {
+            $query->where('product_types.id', $id);
+        })->orderBy('id', 'asc')->get();
+
+        return response()->json($size);
     }
 
 }

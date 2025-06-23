@@ -15,5 +15,10 @@ export const renderProductSize = (productSize) => {
     input.value = productSize.id;
     span.textContent = productSize.size_name;
 
+    if (String(productSize.id) === selectedProductSizeId) {
+        input.checked = true;
+        span.classList.add("bg-pearl-bush-400", "text-white");
+    }
+
     return content;
 };

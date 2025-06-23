@@ -16,11 +16,11 @@ export const renderProductType = (productType) => {
     input.value = productType.id;
     span.textContent = productType.name;
 
-    if (String(productType.id) === selectedProductTypeId) {
+
+
+    if (String(productType.id) == selectedProductTypeId) {
         input.checked = true;
         span.classList.add("bg-pearl-bush-400", "text-white");
-
-        
 
     }
 

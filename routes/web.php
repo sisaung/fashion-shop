@@ -121,6 +121,8 @@ Route::get('/shop/filter-product-category', [ShopCategoryController::class, 'fil
 
 Route::get('/shop/get-product-type', [ShopCategoryController::class, 'getProductType'])->name('shop.getProductType');
 Route::get('/shop/get-product-fit/{productTypeId}', [ShopCategoryController::class, 'getProductFit'])->name('shop.getProductFit');
+Route::get('/shop/get-product-size/{productTypeId}', [ShopCategoryController::class, 'getProductSize'])->name('shop.getProductSize');
+
 
 
 

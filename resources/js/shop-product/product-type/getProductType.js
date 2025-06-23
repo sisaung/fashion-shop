@@ -1,5 +1,6 @@
 import { fetchProductFit } from "../../services/fetchProductFit";
 import { fetchProductShop } from "../../services/fetchProductShop";
+import { fetchProductSize } from "../../services/fetchProductSize";
 import { fetchProductType } from "../../services/fetchProductType";
 import renderProductFitList from "../fit/renderProductFitLIst";
 import { renderBreadcrumbTotalProduct } from "../renderBreadcrumbTotalProduct";
@@ -36,6 +37,7 @@ const initializeProductType = async () => {
 
     const urlParams = new URLSearchParams(window.location.search);
     const selectedProductFitId = urlParams.get("filters[productFit_id]");
+    const selectedProductSizeId = urlParams.get("filters[productSize_id]");
 
     const selectedFilters = {
         productCategory_id: null,
@@ -135,7 +137,7 @@ const initializeProductType = async () => {
             }
 
             // console.log(fitData);
-            // ✅ Get selected type ID
+            //  Get selected type ID
             selectedFilters.productType_id = productType_id;
         }
     };
@@ -184,14 +186,20 @@ const initializeProductType = async () => {
 
     // populate when refresh
 
-    if(selectedProductFitId) {
-
-        const productFitData = await fetchProductFit(`/shop/get-product-fit/${selectedProductFitId}`)
+    if (selectedProductFitId) {
+        const productFitData = await fetchProductFit(
+            `/shop/get-product-fit/${selectedProductFitId}`
+        );
         renderProductFitList(productFitData, filterProductFitContainer);
     }
 
+    if (selectedProductSizeId) {
+        const productSizeData = await fetchProductSize(
+            `/shop/get-product-size/${selectedProductSizeId}`
+        );
+        renderProductSizeList(productSizeData, filterProductSizeContainer);
+    }
     filterCategoryContainer.addEventListener("change", handleProductCategory);
-
     filterProductTypeContainer.addEventListener("change", handleProductType);
     filterProductFitContainer.addEventListener("change", handleProductFit);
     filterProductSizeContainer.addEventListener("change", handleProductSize);
@@ -218,30 +226,30 @@ const initializeProductType = async () => {
                 "input[name='product-size']:checked"
             );
 
-            if (selectedFilters.productCategory_id) {
+            if (selectedProductCategory) {
                 params.append(
                     "filters[productCategory_id]",
-                    selectedFilters.productCategory_id
+                    selectedProductCategory.value
                 );
             }
 
-            if (selectedFilters.productType_id) {
+            if (selectedProductType) {
                 params.append(
                     "filters[productType_id]",
-                    selectedFilters.productType_id
+                    selectedProductType.value
                 );
             }
 
-            if (selectedFilters.productFit_id) {
+            if (selectedProductFit) {
                 params.append(
                     "filters[productFit_id]",
-                    selectedFilters.productFit_id
+                    selectedProductFit.value
                 );
             }
-            if (selectedFilters.productSize_id) {
+            if (selectedProductSize) {
                 params.append(
                     "filters[productSize_id]",
-                    selectedFilters.productSize_id
+                    selectedProductSize.value
                 );
             }
 
@@ -280,20 +288,22 @@ const initializeProductType = async () => {
     document
         .getElementById("apply-clears-btn")
         .addEventListener("click", async () => {
+            history.pushState({}, "", "/shop");
+
             selectedFilters.productCategory_id = null;
             selectedFilters.productType_id = null;
             selectedFilters.productFit_id = null;
             selectedFilters.productSize_id = null;
 
-            // 🔁 Uncheck all radios
+            //  Uncheck all radios
             document
                 .querySelectorAll("input[type='radio']")
                 .forEach((radio) => (radio.checked = false));
 
-            // 🔁 Remove active styles from all labels/spans
+            // Remove active styles from all labels/spans
             document
                 .querySelectorAll(
-                    ".filter-product-category-label, .filter-product-type-label,.filter-product-fit-label,.filter-product-size-label"
+                    ".filter-product-category-label, .filter-product-type-label, .filter-product-fit-label,.filter-product-size-label"
                 )
                 .forEach((label) => {
                     label.classList.remove("bg-pearl-bush-400", "text-white");
@@ -322,8 +332,9 @@ const initializeProductType = async () => {
                 renderPaginationList(productShop.links, paginationContainer);
             }
 
-            // 🔁 Remove filters from URL
+            //  Remove filters from URL
             history.pushState({}, "", "/shop");
+
 
             // document.querySelectorAll(".filter-category-btn").forEach((btn) => {
             //     btn.classList.remove("bg-pearl-bush-400", "text-white");
