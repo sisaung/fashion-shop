@@ -36,6 +36,7 @@ const initializeProductType = async () => {
     const sizeHeading = document.querySelector(".size-heading");
 
     const urlParams = new URLSearchParams(window.location.search);
+    const selectedProductTypeId = urlParams.get("filters[productType_id]");
     const selectedProductFitId = urlParams.get("filters[productFit_id]");
     const selectedProductSizeId = urlParams.get("filters[productSize_id]");
 
@@ -188,16 +189,19 @@ const initializeProductType = async () => {
 
     if (selectedProductFitId) {
         const productFitData = await fetchProductFit(
-            `/shop/get-product-fit/${selectedProductFitId}`
+            `/shop/get-product-fit/${selectedProductTypeId}`
         );
+        console.log(productFitData);
         renderProductFitList(productFitData, filterProductFitContainer);
+        fitHeading.classList.toggle("hidden");
     }
 
     if (selectedProductSizeId) {
         const productSizeData = await fetchProductSize(
-            `/shop/get-product-size/${selectedProductSizeId}`
+            `/shop/get-product-size/${selectedProductTypeId}`
         );
         renderProductSizeList(productSizeData, filterProductSizeContainer);
+        sizeHeading.classList.toggle("hidden");
     }
     filterCategoryContainer.addEventListener("change", handleProductCategory);
     filterProductTypeContainer.addEventListener("change", handleProductType);
@@ -334,7 +338,6 @@ const initializeProductType = async () => {
 
             //  Remove filters from URL
             history.pushState({}, "", "/shop");
-
 
             // document.querySelectorAll(".filter-category-btn").forEach((btn) => {
             //     btn.classList.remove("bg-pearl-bush-400", "text-white");
