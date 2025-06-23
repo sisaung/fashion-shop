@@ -2,8 +2,6 @@
 @section('content')
     <div class="min-h-screen bg-gray-50">
 
-
-
         {{-- Main Content --}}
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -22,16 +20,7 @@
                         @endif
                     </div>
 
-                    {{-- Thumbnail (static) --}}
                     <div class="grid grid-cols-4 gap-4">
-                        {{-- @for ($i = 1; $i <= 3; $i++)
-                            <div
-                                class="aspect-square rounded-xl overflow-hidden border-2 border-gray-200 hover:border-gray-300">
-                                <img src="{{ asset('images/product' . $i . '.jpg') }}" alt="Thumbnail {{ $i }}"
-                                    class="w-full h-full object-cover" />
-                            </div>
-                        @endfor --}}
-
 
                         @if ($product->productImages->count())
                             @foreach ($product->productImages->skip(1) as $image)
@@ -90,13 +79,24 @@
                         <span
                             class="bg-pearl-bush-400 text-white text-xs px-3 py-1 rounded-full  font-medium">{{ $product->productType->name }}</span>
 
-                        <span
-                            class="bg-pearl-bush-400 text-white text-xs px-3 py-1 rounded-full  font-medium">{{ $product->fit->fit_name }}</span>
+                        @if ($product->fit)
+                            <span
+                                class="bg-pearl-bush-400 text-white text-xs px-3 py-1 rounded-full  font-medium">{{ $product->fit->fit_name }}</span>
+                        @endif
                     </div>
 
                     {{-- Price --}}
                     <div class="space-y-2">
-                        <div class="text-xl text-gray-800 ">{{ number_format($product->sale_price) }} MMK </div>
+                        <div class="text-xl text-gray-800 space-x-2 ">
+
+                            @if ($product->discount_percentage > 0)
+                                <span class="line-through text-gray-500"> {{ $product->sale_price }} MMK </span>
+                                <span> {{ $product->display_price }} MMK </span>
+
+                            @else
+                                <span> {{ $product->sale_price }} MMK </span>
+                            @endif
+                        </div>
                         {{-- <div class="text-gray-600">Free shipping on orders over 300,000 MMK</div> --}}
                     </div>
 
@@ -108,7 +108,7 @@
                         </div>
 
 
-                        <div class="flex flex-wrap items-center gap-3">
+                        <div id="sizeButtons" class="flex flex-wrap items-center gap-3">
                             @if ($product->stocks->count())
                                 @foreach ($product->stocks as $productStock)
                                     @php
@@ -116,10 +116,12 @@
                                     @endphp
 
                                     <button {{ $isOutOfStock ? 'disabled' : '' }}
-                                        class="relative rounded-lg px-4 py-2 border text-xs font-medium
+                                        class="size-btn relative rounded-lg px-4 py-2 border text-xs font-medium
                                            {{ $isOutOfStock
                                                ? 'border-gray-300 text-gray-400 bg-gray-100 '
-                                               : 'text-pearl-bush-700 border-pearl-bush-400 hover:border-pearl-bush-300 hover:bg-pearl-bush-50 cursor-pointer' }}">
+                                               : 'text-pearl-bush-700 border-pearl-bush-400 hover:border-pearl-bush-300 hover:bg-pearl-bush-50 cursor-pointer' }}"
+                                        data-size="{{ $productStock->size->size_name }}"
+                                        data-stock="{{ $productStock->stock_quantity }}">
                                         {{ $productStock->size->size_name }}
 
                                         {{-- Slash Cross for Out of Stock --}}
@@ -131,6 +133,18 @@
                                                 </svg>
                                             </span>
                                         @endif
+                                        {{-- <span
+                                            class="selected-size-check border-pearl-bush-400 hidden  absolute top-0 right-0 -translate-y-1/2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor"
+                                                class="size-5 fill-pearl-bush-500 stroke-white ">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                            </svg>
+
+
+
+                                        </span> --}}
                                     </button>
                                 @endforeach
                             @endif
@@ -139,20 +153,29 @@
 
                     </div>
 
-                    {{-- Quantity (static) --}}
+
                     <div class="space-y-4">
                         <h3 class="text-lg font-semibold text-gray-900">Quantity</h3>
                         <div class="flex items-center border border-gray-300 rounded-lg w-fit">
-                            <button class="p-2 hover:bg-gray-50 text-gray-600">−</button>
-                            <span class="px-4 py-2 font-medium">1</span>
-                            <button class="p-2 hover:bg-gray-50 text-gray-600">+</button>
+                            <button id="decreaseQty" class="cursor-pointer p-2 hover:bg-gray-50 text-gray-600">−</button>
+                            <span id="quantityValue" class="px-4 py-2 font-medium">1</span>
+                            <button id="increaseQty" class="cursor-pointer p-2 hover:bg-gray-50 text-gray-600">+</button>
+                        </div>
+                        <div>
+                            <p id="stockInfo" class="text-sm text-gray-500">Please select a size to see stock info.</p>
+                            <p id="errorMsg" class="text-sm text-red-500 hidden">Please select a size before changing
+                                quantity.
+                            </p>
                         </div>
                     </div>
+
 
                     {{-- Buttons --}}
                     <div class="flex items-center gap-3">
                         <button
-                            class=" cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 text-white py-2.5  rounded-full px-5 text-sm gap-x-3  inline-flex items-center justify-center transition duration-300 ">
+                        data-product="{{ $product }}"
+
+                            class="add-to-cart-btn cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 text-white py-2.5  rounded-full px-5 text-sm gap-x-3  inline-flex items-center justify-center transition duration-300 ">
                             <span>Add to Cart</span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-4">
@@ -175,6 +198,7 @@
 
                         </button>
                     </div>
+
 
                     {{-- Features --}}
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8 border-t border-gray-200">
@@ -255,4 +279,6 @@
         @vite(['resources/js/shop-product/getProductCategory.js'])
         @vite(['resources/js/shop-product/product-type/getProductType.js'])
         --}}
+
+    @vite(['resources/js/shop-product/product-detail/addToCart.js'])
 @endpush

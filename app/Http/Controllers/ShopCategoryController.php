@@ -105,7 +105,7 @@ class ShopCategoryController extends Controller
             'sizes',
             'stocks.size'
         ])->where('slug', $slug)->first();
-        
+
         return view('public.shop.show', ['product' => $product]);
     }
 
@@ -212,10 +212,6 @@ class ShopCategoryController extends Controller
             'limit' => $limit,
             'brands' => $brandNames
         ]);
-
-
-
-
 
         return response()->json($product);
 

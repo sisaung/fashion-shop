@@ -94,5 +94,8 @@
     @apply px-2 py-1 text-sm hover:text-pearl-bush-600 text-pearl-bush-500 rounded-md;
 }
 .pagination-active {
-    @apply size-8 inline-flex justify-center items-center rounded-full text-sm font-bold text-white bg-pearl-bush-300
+    @apply size-8 inline-flex justify-center items-center rounded-full text-sm font-bold text-white bg-pearl-bush-300;
+}
+.selected-size {
+    @apply bg-pearl-bush-400 text-white hover:text-white hover:bg-pearl-bush-400 font-semibold;
 }
