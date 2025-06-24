@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\WishlistController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ShopCategoryController;
+use App\Http\Controllers\ShopOrderController;
 use App\Http\Controllers\TestController;
 use App\Http\Middleware\MustBeAdmin;
 
@@ -130,11 +131,9 @@ Route::get('/shop/get-product-size/{productTypeId}', [ShopCategoryController::cl
 Route::get('/cart',[CartController::class,'index'])->name('cart.index');
 
 
-
-
-
-
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/order-confirmation',[ShopOrderController::class,'index'])->name('order-confirmation.index');
+});
 
 
 Route::get('test', [TestController::class, 'index']);

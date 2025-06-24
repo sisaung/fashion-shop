@@ -86,21 +86,22 @@ const initializeAddToCart = () => {
                 ? product.display_price
                 : product.sale_price;
 
-        const existingIndex = cart.findIndex(
-            (item) => item.product.id === product.id && item.size === selectedSize
+        const existingIndex = cart.items.findIndex(
+            (item) =>
+                item.product.id === product.id && item.size === selectedSize
         );
 
         console.log(existingIndex);
 
         if (existingIndex != -1) {
-            const updateQuantity = cart[existingIndex].quantity + quantity;
+            const updateQuantity = cart.items[existingIndex].quantity + quantity;
             const newCost = updateQuantity * cartPrice;
 
-            cart[existingIndex].quantity = updateQuantity;
-            cart[existingIndex].cost = newCost;
+            cart.items[existingIndex].quantity = updateQuantity;
+            cart.items[existingIndex].cost = newCost;
         } else {
             // Add new
-            cart.push({
+            cart.items.push({
                 id: Date.now(),
                 product: product,
                 quantity: quantity,
@@ -110,7 +111,7 @@ const initializeAddToCart = () => {
         }
 
         localStorage.setItem(key, JSON.stringify(cart));
-        totalCartItems.textContent = cart.length;
+        totalCartItems.textContent = cart.items.length;
         if (cartItems.classList.contains("hidden")) {
             cartItems.classList.remove("hidden");
         }

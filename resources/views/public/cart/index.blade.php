@@ -84,15 +84,15 @@
                             <!-- JavaScript will render values here -->
                         </div>
 
-                        @auth()
-                            <button
-                                class="w-full mt-4 bg-pearl-bush-500 text-white text-sm py-3 rounded-lg hover:bg-pearl-bush-700 cursor-pointer transition">
+                        @auth
+                            <a href="{{ route('order-confirmation.index') }}"
+                                class="w-full mt-4 block text-center bg-pearl-bush-500 text-white text-sm py-3 rounded-lg hover:bg-pearl-bush-700 cursor-pointer transition">
                                 Proceed to Checkout
-                            </button>
+                            </a>
                         @endauth
-                        @guest()
+                        @guest
                             <a href="{{ route('login') }}"
-                                class="w-full mt-4 bg-pearl-bush-500 text-white text-sm py-3 rounded-lg hover:bg-pearl-bush-700 cursor-pointer transition px-4">
+                                class="w-full block text-center mt-4 bg-pearl-bush-500 text-white text-sm py-3 rounded-lg hover:bg-pearl-bush-700 cursor-pointer transition px-4">
                                 Login to Checkout
                             </a>
                         @endguest
