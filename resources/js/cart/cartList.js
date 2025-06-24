@@ -150,7 +150,21 @@ const initializeCartList = () => {
             );
 
             if (index !== -1) {
-                cart[index].quantity += 1;
+                const stocks = cart[index].product.stocks;
+
+                stocks.forEach((stock) => {
+                    if (
+                        stock.size.size_name == size &&
+                        stock.stock_quantity > cart[index].quantity
+                    ) {
+                        cart[index].quantity += 1;
+                    } else {
+
+                        increaseQty.disabled = true;
+                        increaseQty.classList.add('opactiy-50')
+                    }
+                });
+
                 saveCartData(cart);
                 updateCart();
             }
@@ -185,7 +199,7 @@ const initializeCartList = () => {
 
         if (removeCart) {
             const cartId = Number(removeCart.dataset.cartId);
-            const size = removeCart.dataset.size;
+            const size = removeCart.dataset.cartSize;
 
             const newCart = cart.filter(
                 (item) => !(item.id === cartId && item.size == size)

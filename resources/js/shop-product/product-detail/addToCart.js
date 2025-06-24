@@ -91,11 +91,19 @@ const initializeAddToCart = () => {
                 item.product.id === product.id && item.size === selectedSize
         );
 
-        console.log(existingIndex);
-
         if (existingIndex != -1) {
-            const updateQuantity = cart.items[existingIndex].quantity + quantity;
-            const newCost = updateQuantity * cartPrice;
+            let updateQuantity;
+            let newCost;
+
+            const totalQuantity = cart.items[existingIndex].quantity + quantity;
+
+            if (totalQuantity <= selectedStock) {
+                updateQuantity = totalQuantity;
+                newCost = updateQuantity * cartPrice;
+            } else {
+                updateQuantity = selectedStock;
+                newCost = updateQuantity * cartPrice;
+            }
 
             cart.items[existingIndex].quantity = updateQuantity;
             cart.items[existingIndex].cost = newCost;

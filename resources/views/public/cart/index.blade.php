@@ -32,6 +32,7 @@
                                     </h3>
                                     <div class="flex items-center gap-4 text-sm text-gray-600">
                                         <p>Size: <span class="cart-product-size"></span></p>
+                                        <p>Stock: <span class="cart-product-stock text-green-500"></span></p>
 
                                     </div>
 
