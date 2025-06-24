@@ -11,7 +11,7 @@ const renderCart = (cartItem) => {
     const cartQuantityValue = content.querySelector(".cart-quantity-value");
     const cartDecreaseQty = content.querySelector(".cart-decrease-qty");
     const cartIncreaseQty = content.querySelector(".cart-increase-qty");
-   const cartProductStock = content.querySelector(".cart-product-stock")
+    const cartProductStock = content.querySelector(".cart-product-stock");
 
     const cartProductSalePrice = content.querySelector(
         ".cart-product-sale-price"
@@ -23,21 +23,18 @@ const renderCart = (cartItem) => {
     const cartTotal = content.querySelector(".cart-total");
     const cartItemRemove = content.querySelector(".cart-item-remove");
 
-    let availableStock   = 0;
-    const productStock = cartItem.product.stocks.forEach(stock => {
-        if(stock.size.size_name == cartItem.size){
-            availableStock = stock.stock_quantity
+    let availableStock = 0;
+    const productStock = cartItem.product.stocks.forEach((stock) => {
+        if (stock.size.size_name == cartItem.size) {
+            availableStock = stock.stock_quantity;
         }
-
-    })
-
-
+    });
 
     image.src = cartItem.product.product_images[0].preview;
     cartProductName.textContent = cartItem.product.product_name;
     cartProductSize.textContent = cartItem.size;
     cartQuantityValue.textContent = cartItem.quantity;
-    cartProductStock.textContent = availableStock +' Avaliable'
+    cartProductStock.textContent = availableStock + " Avaliable";
     cartIncreaseQty.setAttribute("data-cart-id", cartItem.id);
     cartIncreaseQty.setAttribute("data-cart-size", cartItem.size);
     cartItemRemove.setAttribute("data-cart-id", cartItem.id);
@@ -60,6 +57,26 @@ const renderCart = (cartItem) => {
         cartProductDisplayPrice.textContent = `${cartItemSalePrice} MMK`;
     }
     cartTotal.textContent = `${cartItemTotal} MMK`;
+
+    cartItem.product.stocks.forEach((stock) => {
+        if (stock.stock_quantity <= cartItem.quantity) {
+            cartIncreaseQty.disabled = true;
+            cartIncreaseQty.classList.add(
+                "opacity-30",
+                "selected-none",
+                "pointer-events-none"
+            );
+        } else {
+            cartIncreaseQty.disabled = false;
+            cartIncreaseQty.classList.remove(
+                "opacity-30",
+                'selected-none',
+                'pointer-events-none'
+
+            );
+        }
+    });
+
     return content;
 };
 export default renderCart;
