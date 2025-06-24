@@ -1,4 +1,11 @@
 import renderCartList from "./renderCartList";
+import renderSummary from "./renderOrderSummary";
+
+const emptyCard = (cartLength, cartItems) => {
+    if (cartLength < 1) {
+        cartItems.classList.add("hidden");
+    }
+};
 
 const initializeCartList = () => {
     const cart = JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -6,7 +13,14 @@ const initializeCartList = () => {
     const totalCartItems = document.querySelector(".total-cart-items");
     const cartItems = document.querySelector(".cart-items");
 
-    renderCartList(cart, cartContainer);
+
+    const updateCart = () => {
+        const cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+        renderCartList(cart, cartContainer);
+        renderSummary(cart);
+    };
+
+
 
     const handleClick = (e) => {
         const cart = JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -15,7 +29,6 @@ const initializeCartList = () => {
         const removeCart = e.target.closest(".cart-item-remove");
 
         if (increaseQty) {
-
             const cartId = increaseQty.dataset.cartId;
             const size = increaseQty.dataset.cartSize;
 
@@ -25,11 +38,10 @@ const initializeCartList = () => {
 
             cart[currentCartId].quantity += 1;
             localStorage.setItem("cartItems", JSON.stringify(cart));
-            renderCartList(cart, cartContainer);
+            updateCart(cart, cartContainer);
         }
 
         if (decreaseQty) {
-
             const cartId = decreaseQty.dataset.cartId;
             const size = decreaseQty.dataset.cartSize;
 
@@ -37,21 +49,21 @@ const initializeCartList = () => {
                 (item) => item.id === Number(cartId)
             );
 
-            
             if (cart[currentCartId].quantity <= 1) {
-
                 const filteredCart = cart.filter(
-                    (item) => item.id !== Number(currentCartId)
+                    (item) =>
+                        item.id !== Number(currentCartId) && item.size !== size
                 );
-                console.log(filteredCart)
-                console.log('filter')
+
                 localStorage.setItem("cartItems", JSON.stringify(filteredCart));
-                renderCartList(filteredCart, cartContainer);
+                updateCart(filteredCart, cartContainer);
+
+                emptyCard(filteredCart.length, cartItems);
             } else {
                 cart[currentCartId].quantity -= 1;
+                localStorage.setItem("cartItems", JSON.stringify(cart));
+                updateCart(cart, cartContainer);
             }
-            localStorage.setItem("cartItems", JSON.stringify(cart));
-            renderCartList(cart, cartContainer);
         }
 
         if (removeCart) {
@@ -62,16 +74,15 @@ const initializeCartList = () => {
 
             totalCartItems.textContent = newCart.length;
 
-            if (newCart.length < 1) {
-                cartItems.classList.add("hidden");
-            }
+            emptyCard(newCart.length, cartItems);
 
             localStorage.setItem("cartItems", JSON.stringify(newCart));
-            renderCartList(newCart, cartContainer);
+            updateCart(newCart, cartContainer);
         }
     };
 
     cartContainer.addEventListener("click", handleClick);
+    updateCart();
 };
 
 document.addEventListener("DOMContentLoaded", initializeCartList);

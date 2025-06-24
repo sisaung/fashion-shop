@@ -1,9 +1,9 @@
-const renderCart = (cartItem) => {
+import numberFormat from "../utils/numberFormat";
 
+const renderCart = (cartItem) => {
     const template = document.getElementById("cart-item-template");
     if (!template) return;
     const content = template.content.cloneNode(true);
-
 
     const image = content.querySelector(".cart-product-image");
     const cartProductName = content.querySelector(".cart-product-name");
@@ -21,47 +21,34 @@ const renderCart = (cartItem) => {
     const cartTotal = content.querySelector(".cart-total");
     const cartItemRemove = content.querySelector(".cart-item-remove");
 
-    const numberFormat = (number) => {
-        return number % 1 === 0
-            ? number.toLocaleString("en-US")
-            : number.toLocaleString("en-US", {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-              });
-    };
 
 
     image.src = cartItem.product.product_images[0].preview;
-        cartProductName.textContent = cartItem.product.product_name;
-        cartProductSize.textContent = cartItem.size;
-        cartQuantityValue.textContent = cartItem.quantity;
-        cartIncreaseQty.setAttribute('data-cart-id',cartItem.id)
-        cartIncreaseQty.setAttribute('data-cart-size',cartItem.size)
-        cartItemRemove.setAttribute('data-cart-id',cartItem.id)
-        cartItemRemove.setAttribute('data-cart-size',cartItem.size)
+    cartProductName.textContent = cartItem.product.product_name;
+    cartProductSize.textContent = cartItem.size;
+    cartQuantityValue.textContent = cartItem.quantity;
+    cartIncreaseQty.setAttribute("data-cart-id", cartItem.id);
+    cartIncreaseQty.setAttribute("data-cart-size", cartItem.size);
+    cartItemRemove.setAttribute("data-cart-id", cartItem.id);
+    cartItemRemove.setAttribute("data-cart-size", cartItem.size);
 
+    cartDecreaseQty.setAttribute("data-cart-id", cartItem.id);
+    cartDecreaseQty.setAttribute("data-cart-size", cartItem.size);
 
+    const cartItemSalePrice = numberFormat(cartItem.product.sale_price);
+    const cartItemDisplayPrice = numberFormat(cartItem.product.display_price);
 
-        cartDecreaseQty.setAttribute('data-cart-id',cartItem.id)
-        cartDecreaseQty.setAttribute('data-cart-size',cartItem.size)
+    const cartItemTotal = numberFormat(
+        cartItem.product.display_price * cartItem.quantity
+    );
 
-
-        const cartItemSalePrice = numberFormat(cartItem.product.sale_price);
-        const cartItemDisplayPrice = numberFormat(
-            cartItem.product.display_price
-        );
-
-        const cartItemTotal = numberFormat(
-            cartItem.product.display_price * cartItem.quantity
-        );
-
-        if (cartItem.product.discount_percentage > 0) {
-            cartProductSalePrice.textContent = `${cartItemSalePrice} MMK`;
-            cartProductDisplayPrice.textContent = `${cartItemDisplayPrice} MMK`;
-        } else {
-            cartProductDisplayPrice.textContent = `${cartItemSalePrice} MMK`;
-        }
-        cartTotal.textContent = `${cartItemTotal} MMK`;
-        return content
-}
-export default renderCart
+    if (cartItem.product.discount_percentage > 0) {
+        cartProductSalePrice.textContent = `${cartItemSalePrice} MMK`;
+        cartProductDisplayPrice.textContent = `${cartItemDisplayPrice} MMK`;
+    } else {
+        cartProductDisplayPrice.textContent = `${cartItemSalePrice} MMK`;
+    }
+    cartTotal.textContent = `${cartItemTotal} MMK`;
+    return content;
+};
+export default renderCart;
