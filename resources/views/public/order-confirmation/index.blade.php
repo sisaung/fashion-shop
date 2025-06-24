@@ -3,39 +3,46 @@
     <section>
         <div class="min-h-screen bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 py-8">
-                <form action="#" method="POST">
-                    @csrf
+                {{-- <form action="#" method="POST">
+                    @csrf --}}
                     <div class="grid lg:grid-cols-3 gap-8">
                         {{-- Left Column --}}
                         <div class="lg:col-span-2 space-y-8">
 
                             <template id="ordered-product-list-template">
                                 <div class="flex gap-4 pb-6">
-                                    <div class="w-32 h-40 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                                        <img src="https://images.pexels.com/photos/1043473/pexels-photo-1043473.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop"
+                                    <div class="w-30 h-30 border border-pearl-bush-300  bg-red-500 rounded-lg overflow-hidden flex-shrink-0">
+                                        <img class="ordered-product-image"
+
                                             alt="BOSS Polo Penrose 38" class="w-full h-full object-cover" />
                                     </div>
 
                                     <div class="flex-1">
-                                        <h3 class="font-semibold text-gray-800 text-lg mb-2">BOSS Polo Penrose 38</h3>
-                                        <p class="text-amber-600 text-sm mb-2">🏷️ 58469368 001</p>
-                                        <p class="text-xl font-bold text-gray-800 mb-3">550,000 MMK</p>
+                                        <h3 class="font-semibold text-gray-800 text-lg mb-2 ordered-product-name "></h3>
+                                        <p class="text-amber-600 text-sm mb-2 ordered-product-code"></p>
+                                        <p class="text-sm text-gray-400 mb-3 ordered-product-sale-price line-through">
+                                        </p>
+
+                                        <p class=" text-gray-700 mb-3 ordered-product-display-price">
+                                        </p>
 
                                         <div class="flex items-center gap-4 mb-4">
                                             <span
-                                                class="bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-sm font-medium">M</span>
-                                            <span class="text-green-600 text-sm font-medium">In Stock</span>
+                                                class="bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-sm font-medium ordered-product-size "> Size: </span>
+                                            <span class="text-bearl-bush-500 text-sm font-medium ordered-quantity-value">
+                                                Qty:</span>
                                         </div>
 
                                         <div class="flex gap-3">
-                                            <a href="#"
-                                                class="text-gray-500 hover:text-gray-700 text-sm underline transition-colors">
+                                            <button type="button"
+                                                class="ordered-product-remove text-gray-500 hover:text-gray-700 text-sm underline transition-colors">
                                                 Remove
-                                            </a>
-                                            <a href="#"
-                                                class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                            </button>
+                                            <button
+                                            type="button"
+                                                class="redirect-to-detail bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                                                 See More
-                                            </a>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -202,12 +209,12 @@
                         </div>
                     </div>
 
-                </form>
+                {{-- </form> --}}
             </div>
         </div>
 
     </section>
 @endsection
 @push('scripts')
-
+    @vite(['resources/js/order-confirmation/renderOrderedProductList.js'])
 @endpush

@@ -160,23 +160,26 @@ const initializeCartList = () => {
             const cartId = decreaseQty.dataset.cartId;
             const size = decreaseQty.dataset.cartSize;
 
+            console.log(cartId);
+
             const currentCartId = cart.findIndex(
-                (item) => item.id === Number(cartId)
+                (item) => item.id === Number(cartId) && item.size == size
             );
 
-            if (cart[currentCartId].quantity <= 1) {
+            if (cart[currentCartId]?.quantity <= 1) {
                 const filteredCart = cart.filter(
                     (item) =>
                         item.id !== Number(currentCartId) && item.size !== size
                 );
+                console.log(filteredCart);
 
-                updateCart(filteredCart, cartContainer);
                 saveCartData(filteredCart);
-
+                updateCart(filteredCart, cartContainer);
             } else {
+                console.log(cart[currentCartId].quantity);
                 cart[currentCartId].quantity -= 1;
-                updateCart(cart, cartContainer);
                 saveCartData(cart);
+                updateCart(cart, cartContainer);
             }
         }
 
