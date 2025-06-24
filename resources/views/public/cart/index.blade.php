@@ -17,54 +17,59 @@
                         </div>
 
                         {{-- Demo Cart Items --}}
-                        <div class="divide-y divide-gray-100">
-                            {{-- Item 1 --}}
+
+                        <template id="cart-item-template">
                             <div class="flex items-center gap-6 py-6">
                                 {{-- Product Image --}}
                                 <div class="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
                                     <img src="https://via.placeholder.com/100" alt="Product 1"
-                                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                                        class="cart-product-image w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
                                 </div>
 
                                 {{-- Product Info --}}
                                 <div class="flex-1 min-w-0">
-                                    <h3 class="font-semibold text-gray-900 text-lg mb-2">Cool Sneakers</h3>
+                                    <h3 class="font-semibold text-gray-900 text-lg mb-2 cart-product-name">Cool Sneakers
+                                    </h3>
                                     <div class="flex items-center gap-4 text-sm text-gray-600">
-                                        <span>Size: 42</span>
+                                        <p>Size: <span class="cart-product-size"></span></p>
 
                                     </div>
 
                                     {{-- Quantity --}}
                                     <div class="flex items-center gap-3 mt-4">
                                         <button
-                                            class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-400 hover:bg-gray-50">−</button>
-                                        <span class="w-8 text-center font-medium">2</span>
+                                            class="cart-decrease-qty w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-400 hover:bg-gray-50">−</button>
+                                        <span  class="w-8 text-center font-medium cart-quantity-value"></span>
                                         <button
-                                            class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-400 hover:bg-gray-50">＋</button>
+                                            class="cart-increase-qty w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-400 hover:bg-gray-50">＋</button>
                                     </div>
 
                                     {{-- Remove --}}
                                     <button
-                                        class="text-gray-400 hover:text-gray-600 text-sm mt-3 transition-colors">Remove</button>
+                                        class="cart-item-remove text-gray-400 hover:text-gray-600 text-sm mt-3 transition-colors">Remove</button>
                                 </div>
 
                                 {{-- Price --}}
                                 <div class="text-right flex-shrink-0">
-                                    <div class="text-sm text-gray-600 mb-1">Price</div>
+                                    <div class="text-sm text-gray-600 mb-1 cart-product-price">Price</div>
                                     <div class="space-y-1">
-                                        <div class="text-sm text-gray-400 line-through">$120.00</div>
-                                        <div class="font-semibold text-gray-900">$100.00</div>
+                                        <div class="text-sm text-gray-400 line-through cart-product-sale-price"></div>
+                                        <div class="font-semibold text-gray-900 cart-product-display-price"></div>
                                     </div>
                                 </div>
 
                                 {{-- Total --}}
                                 <div class="text-right flex-shrink-0 w-24">
                                     <div class="text-sm text-gray-600 mb-1">Total</div>
-                                    <div class="font-semibold text-gray-900">$200.00</div>
+                                    <div class="font-semibold text-gray-900 cart-total">$200.00</div>
                                 </div>
                             </div>
+                        </template>
+                        <div class="divide-y divide-gray-100 cart-container">
+                            {{-- Item 1 --}}
 
-                            {{-- Item 2 --}}
+
+                           
 
                         </div>
                     </div>
@@ -108,4 +113,6 @@
         @vite(['resources/js/shop-product/getProductCategory.js'])
         @vite(['resources/js/shop-product/product-type/getProductType.js'])
         --}}
+
+    @vite(['resources/js/cart/cartList.js'])
 @endpush

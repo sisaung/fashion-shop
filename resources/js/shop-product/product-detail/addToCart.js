@@ -10,6 +10,8 @@ const initializeAddToCart = () => {
     const stockInfo = document.getElementById("stockInfo");
     const errorMsg = document.getElementById("errorMsg");
     const addToCartBtn = document.querySelector(".add-to-cart-btn");
+    const totalCartItems = document.querySelector(".total-cart-items");
+    const cartItems = document.querySelector(".cart-items");
 
     // Handle size selection
     sizeButtons.forEach((btn) => {
@@ -74,38 +76,45 @@ const initializeAddToCart = () => {
             return;
         }
 
-        const product = addToCartBtn.getAttribute("data-product");
+        const product = JSON.parse(addToCartBtn.getAttribute("data-product"));
 
         const key = "cartItems";
         const cart = JSON.parse(localStorage.getItem(key)) || [];
 
+        const cartPrice =
+            product.discount_percentage > 0
+                ? product.display_price
+                : product.sale_price;
+
         const existingIndex = cart.findIndex(
-            (item) =>
-                item.id === product.id && item.size === selectedSize
+            (item) => item.product.id === product.id && item.size === selectedSize
         );
 
-        console.log(JSON.parse(localStorage.getItem("cartItems")));
         console.log(existingIndex);
 
         if (existingIndex != -1) {
-            console.log("exist");
-            addToCartBtn.disabled = true;
-            addToCartBtn.classList.add("bg-pear-bush-600");
-            addToCartBtn.textContent = "Added to Cart ";
+            const updateQuantity = cart[existingIndex].quantity + quantity;
+            const newCost = updateQuantity * cartPrice;
+
+            cart[existingIndex].quantity = updateQuantity;
+            cart[existingIndex].cost = newCost;
         } else {
             // Add new
             cart.push({
-                id: product.id,
-                product: JSON.parse(product),
+                id: Date.now(),
+                product: product,
                 quantity: quantity,
                 size: selectedSize,
-                total: 0,
-                tax: 0,
-                netTotal: 0,
+                cost: cartPrice * quantity,
             });
         }
 
         localStorage.setItem(key, JSON.stringify(cart));
+        totalCartItems.textContent = cart.length;
+        if (cartItems.classList.contains("hidden")) {
+            cartItems.classList.remove("hidden");
+        }
+        // console.log(JSON.parse(localStorage.getItem("cartItems")));
 
         // window.location.href = "/cart";
     });
