@@ -79,7 +79,12 @@ const initializeAddToCart = () => {
         const product = JSON.parse(addToCartBtn.getAttribute("data-product"));
 
         const key = "cartItems";
-        const cart = JSON.parse(localStorage.getItem(key)) || [];
+        const cart = JSON.parse(localStorage.getItem(key)) || {
+            items: [],
+            subtotal: 0,
+            tax: 0,
+            netTotal: 0,
+        };
 
         const cartPrice =
             product.discount_percentage > 0

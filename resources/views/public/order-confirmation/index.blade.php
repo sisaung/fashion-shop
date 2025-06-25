@@ -216,5 +216,5 @@
     </section>
 @endsection
 @push('scripts')
-    @vite(['resources/js/order-confirmation/renderOrderedProductList.js'])
+    @vite(['resources/js/order-confirmation/orderConfirmationList.js'])
 @endpush
