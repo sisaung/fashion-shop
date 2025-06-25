@@ -58,24 +58,27 @@ const renderCart = (cartItem) => {
     }
     cartTotal.textContent = `${cartItemTotal} MMK`;
 
-    cartItem.product.stocks.forEach((stock) => {
-        if (stock.stock_quantity <= cartItem.quantity) {
-            cartIncreaseQty.disabled = true;
-            cartIncreaseQty.classList.add(
-                "opacity-30",
-                "selected-none",
-                "pointer-events-none"
-            );
-        } else {
-            cartIncreaseQty.disabled = false;
-            cartIncreaseQty.classList.remove(
-                "opacity-30",
-                'selected-none',
-                'pointer-events-none'
 
-            );
-        }
-    });
+    const currentStock = cartItem.product.stocks.find(
+        (stock) => stock.size.size_name === cartItem.size
+    );
+    if (currentStock.stock_quantity <= cartItem.quantity) {
+        cartIncreaseQty.disabled = true;
+        cartIncreaseQty.classList.add(
+            "opacity-30",
+            "selected-none",
+            "pointer-events-none"
+        );
+    } else {
+        cartIncreaseQty.disabled = false;
+        cartIncreaseQty.classList.remove(
+            "opacity-30",
+            "selected-none",
+            "pointer-events-none"
+        );
+    }
+
+
 
     return content;
 };

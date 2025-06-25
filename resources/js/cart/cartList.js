@@ -103,7 +103,6 @@ const initializeCartList = () => {
                 saveCartData(filteredCart);
                 updateCart(filteredCart, cartContainer);
             } else {
-                console.log(cart[currentCartId].quantity);
                 cart[currentCartId].quantity -= 1;
                 saveCartData(cart);
                 updateCart(cart, cartContainer);

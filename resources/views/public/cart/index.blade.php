@@ -47,7 +47,7 @@
 
                                     {{-- Remove --}}
                                     <button
-                                        class="cart-item-remove text-gray-400 hover:text-gray-600 text-sm mt-3 transition-colors">Remove</button>
+                                        class="cart-item-remove cursor-pointer text-gray-400 hover:text-gray-600 text-sm mt-3 transition-colors">Remove</button>
                                 </div>
 
                                 {{-- Price --}}

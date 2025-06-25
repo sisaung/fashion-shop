@@ -44,7 +44,7 @@
                         'links' => [['name' => 'Shop', 'path' => route('shop.index')]],
                     ])
                     <div>
-                        <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">BOSS Polo Penrose 38</h1>
+                        <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-2"> {{ $product->product_name }} </h1>
                         <div class="flex items-center space-x-4 mb-4">
 
                             {{-- rating --}}
