@@ -20,7 +20,7 @@
 
 <body>
 
-    <main class="bg-gray-50">
+    <main class="bg-white">
 
             @include('components.public.header')
 

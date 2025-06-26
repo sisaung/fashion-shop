@@ -57,6 +57,17 @@
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji"; */
 
+        /* Works for most modern browsers */
+.hide-scrollbar {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+
 .is-invalid {
     @apply border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500;
 }

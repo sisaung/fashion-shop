@@ -1,6 +1,7 @@
 import renderSummary from "../cart/renderOrderSummary";
 import { emptyCart, getCartData, saveCartData } from "../utils/cart";
 import renderOrderedProductList from "./renderOrderedProductList";
+import renderOrderSummary from "./renderOrderSummary";
 
 const initializeOrderConfirmationList = () => {
     const container = document.querySelector(
@@ -12,8 +13,9 @@ const initializeOrderConfirmationList = () => {
     if (!container) return;
 
     const cart = getCartData();
-    console.log(cart);
+
     renderOrderedProductList(cart, container);
+    renderOrderSummary(cart);
 
     const handleClick = (e) => {
         const redirectProductDetail = e.target.closest(".redirect-to-detail");
@@ -31,12 +33,12 @@ const initializeOrderConfirmationList = () => {
             const newCart = cart.filter(
                 (cartItem) => cartItem.id !== Number(orderedCartId)
             );
-            console.log(newCart);
             renderOrderedProductList(newCart, container);
             saveCartData(newCart);
-            renderSummary(newCart);
+            renderOrderSummary(newCart);
             totalCartItems.textContent = newCart.length;
             emptyCart(newCart.length, cartItems);
+
             // updateCart()
         }
     };

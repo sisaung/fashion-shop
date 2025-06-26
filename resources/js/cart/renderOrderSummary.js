@@ -15,6 +15,7 @@ const renderSummary = (cart) => {
     const subtotalEl = content.querySelector(".sub-total");
     const taxEl = content.querySelector(".tax");
     const netTotalEl = content.querySelector(".net-total");
+    
 
     const subtotal = cart.reduce((acc, item) => {
 
@@ -22,7 +23,7 @@ const renderSummary = (cart) => {
         return acc + productPrice * item.quantity;
     }, 0);
 
-    const tax = subtotal * 0.05; 
+    const tax = subtotal * 0.05;
     const netTotal = subtotal + tax;
 
     const format = (num) => numberFormat(num);

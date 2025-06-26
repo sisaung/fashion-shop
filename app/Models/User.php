@@ -22,7 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'profile_image'
+        'profile_image',
+        'user_address_id'
     ];
 
     /**
@@ -88,5 +89,9 @@ class User extends Authenticatable
 
     public function getProfileImageAttribute($value) {
         return $value ? asset(Storage::url($value)) : null;
+    }
+
+    public function address() {
+        return $this->hasMany(UserAddress::class);
     }
 }

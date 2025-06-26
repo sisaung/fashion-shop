@@ -133,6 +133,7 @@ Route::get('/cart',[CartController::class,'index'])->name('cart.index');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/order-confirmation',[ShopOrderController::class,'index'])->name('order-confirmation.index');
+    Route::get('/coupon-check',[ShopOrderController::class,'checkCoupon'])->name('coupon-check.index');
 });
 
 
