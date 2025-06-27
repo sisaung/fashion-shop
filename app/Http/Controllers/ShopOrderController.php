@@ -116,7 +116,7 @@ return response()->json(['message' => 'Order created successfully','data'=>$orde
 
 public function getOrders() {
 
-    $userOrders = Order::where('customer_id',Auth::id())->get();
+    $userOrders = Order::with(['orderItems','customerAddress','orderItems.stock','orderItems.stock.product'])->where('customer_id',Auth::id())->get();
 
     return view('public.account.order.index',['orders' => $userOrders]);
 }

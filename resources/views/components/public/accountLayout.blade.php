@@ -1,8 +1,8 @@
 @extends('layout.master')
 @section('content')
     <div class="w-[1310px] mx-auto  flex ">
-        <div class="w-80 border-r border-r-pearl-bush-100 space-y-5 ">
-            <h1 class="font-heading text-lg text-gray-800 font-semibold py-3  px-4">Account Settings</h1>
+        <div class="w-80 mt-5 border-r border-r-pearl-bush-100 space-y-5 ">
+            <h1 class="font-heading text-lg text-gray-800 font-semibold  px-4">Account Settings</h1>
             <div>
                 <a class="flex items-center menu-btn gap-x-3 hover:bg-stone-100 px-4 py-3 rounded mr-5">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -17,7 +17,7 @@
             </div>
             <div>
                 <a href="{{ route('account.orders') }}"
-                    class="flex px-4 py-3 mr-5 rounded items-center menu-btn gap-x-3 {{ Request::routeIs('account.orders') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }} hover:bg-stone-100 ">
+                    class="flex px-4 py-3 mr-5 rounded items-center menu-btn gap-x-3 {{ Request::routeIs('account.orders') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }} ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-4.5">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -92,7 +92,7 @@
 
 
         </div>
-        <div class="w-full">
+        <div class="w-full h-screen overflow-y-scroll hide-scrollbar">
             @yield('container')
 
         </div>
