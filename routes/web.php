@@ -141,6 +141,8 @@ Route::middleware(['auth'])->group(function () {
    Route::resource('address', UserProfileController ::class);
 
    Route::get('/account/orders',[ShopOrderController::class,'getOrders'])->name('account.orders');
+   Route::get('/account/orders/{orderNumber}',[ShopOrderController::class,'showOrder'])->name('account.showOrder');
+
 
 
 

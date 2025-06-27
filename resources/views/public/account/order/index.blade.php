@@ -1,7 +1,22 @@
 @extends('components.public.accountLayout')
 @section('container')
-    <div>
-        <h1 class="font-heading px-5 mb-3 mt-5"> Your Orders </h1>
+    <div class="pb-10">
+        <div class="flex items-center my-5 justify-between">
+            <div>
+                <h1 class="font-heading px-5 "> Your Orders </h1>
+            </div>
+            <div class="flex items-center justify-between px-5">
+                <div class="text-sm text-gray-700">
+                    Showing <span class="font-semibold">{{ $orders->firstItem() ?? 0 }}</span>
+                    to <span class="font-semibold">{{ $orders->lastItem() ?? 0 }}</span>
+                    of <span class="font-semibold">{{ $orders->total() ?? 0 }}</span> entries
+                </div>
+                <div>
+                    @include('components.public.pagination', ['paginator' => $orders])
+
+                </div>
+            </div>
+        </div>
         @if ($orders->count() > 0)
             <div class="px-5 space-y-3">
                 @foreach ($orders as $order)
@@ -99,9 +114,9 @@
                             </div>
 
                             <div class="text-end justify-end flex items-center col-span-1">
-                                <button
+                                <a href="{{ route('account.showOrder', $order->order_number) }}"
                                     class="bg-pearl-bush-500 text-white px-4 py-2.5 rounded-full hover:bg-pearl-bush-600 cursor-pointer text-xs">Order
-                                    Detail</button>
+                                    Detail</a>
                             </div>
                         </div>
                     </div>

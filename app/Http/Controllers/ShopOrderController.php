@@ -11,6 +11,7 @@ use App\Models\OrderItem;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ShopOrderController extends Controller
 {
@@ -116,8 +117,24 @@ return response()->json(['message' => 'Order created successfully','data'=>$orde
 
 public function getOrders() {
 
-    $userOrders = Order::with(['orderItems','customerAddress','orderItems.stock','orderItems.stock.product'])->where('customer_id',Auth::id())->get();
+    $userOrders = Order::with(['orderItems','customerAddress','orderItems.stock','orderItems.stock.product'])->where('customer_id',Auth::id())->orderBy('id','desc')->paginate(5);
+
+
 
     return view('public.account.order.index',['orders' => $userOrders]);
+}
+
+public function showOrder($orderNumber) {
+
+    Validator::make(['order_number' => $orderNumber], [
+
+        'order_number' => 'required|exists:orders,order_number',
+    ]);
+
+    $order = Order::with(['orderItems','customerAddress','orderItems.stock','orderItems.stock.product'])->where('order_number',$orderNumber)->first();
+
+    return $order;
+    return view('public.account.order.show',['order' => $order]);
+
 }
 }
