@@ -113,4 +113,11 @@ return response()->json(['message' => 'Order created successfully','data'=>$orde
     $userAddress =  UserAddress::all();
     return view('public.order-confirmation.index',['userAddress' => $userAddress]);
 }
+
+public function getOrders() {
+
+    $userOrders = Order::where('customer_id',Auth::id())->get();
+
+    return view('public.account.order.index',['orders' => $userOrders]);
+}
 }

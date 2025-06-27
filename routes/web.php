@@ -140,6 +140,8 @@ Route::middleware(['auth'])->group(function () {
 
    Route::resource('address', UserProfileController ::class);
 
+   Route::get('/account/orders',[ShopOrderController::class,'getOrders'])->name('account.orders');
+
 
 
    Route::post('/store-customer',[OrderedCustomerController::class,'store'])->name('customer.store');
