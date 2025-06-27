@@ -2,8 +2,12 @@ const initializeRedirect = () => {
 
     const container = document.getElementById("product-container");
 
+    if(!container) return;
+
     container.addEventListener("click", (e) => {
         const card = e.target.closest(".product-card");
+
+        
 
         if (card && card.dataset.productSlug) {
             window.location.href = `/shop-product/${card.dataset.productSlug}`;

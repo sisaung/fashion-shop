@@ -148,7 +148,13 @@
 
                             <td class=" px-4 py-4 text-sm text-stone-600" colSpan={2}>
                                 Sale Price <span class="text-green-500 pl-1 "> Profit (
-                                    {{ $product->sale_price - $product->original_price }} ) </span>
+                                    @if ($product->discount_percentage)
+                                        {{ $product->display_price - $product->original_price }}
+                                    @else
+                                        {{ $product->sale_price - $product->original_price }}
+                                    @endif )
+
+                                </span>
                             </td>
                             <td class=" px-4 py-4 text-sm text-stone-600">Discount</td>
                             <td class=" px-4 py-4 text-sm text-stone-600"></td>
@@ -240,6 +246,7 @@
                                 <thead class="divide-y divide-gray-200  bg-stone-100">
                                     <tr>
                                         <th scope="col" class="p-3">Size</th>
+                                        <th scope="col" class="p-3"> Stock Quantity </th>
                                         <th scope="col" class="p-3">SKU</th>
                                     </tr>
                                 </thead>
@@ -249,6 +256,8 @@
                                             <tr>
                                                 <td class="px-6 py-3 whitespace-nowrap text-sm ">
                                                     {{ $stock->size->size_name }} </td>
+                                                    <td class="px-6 py-3 whitespace-nowrap text-sm ">
+                                                        {{ $stock->stock_quantity}} </td>
                                                 <td class="px-6 py-3 whitespace-nowrap text-sm "> {{ $stock->sku }}
                                                 </td>
                                             </tr>

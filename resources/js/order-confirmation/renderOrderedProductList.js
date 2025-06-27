@@ -5,11 +5,19 @@ const renderOrderedProductList = (cart, container) => {
 
     if (!container) return;
 
-    cart.forEach((item) => {
-        const content = renderOrderedProduct(item);
-        container.appendChild(content);
+    const template = document.getElementById("empty-cart-template");
+    const content = template.content.cloneNode(true);
 
-    });
+
+
+    if (cart.length > 0) {
+        cart.forEach((item) => {
+            const content = renderOrderedProduct(item);
+            container.appendChild(content);
+        });
+    } else {
+        container.appendChild(content);
+    }
 };
 
 export default renderOrderedProductList;

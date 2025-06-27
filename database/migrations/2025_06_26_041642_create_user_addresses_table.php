@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_addressess', function (Blueprint $table) {
+        Schema::create('user_addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('name')->nullable();
             $table->string('phone_number')->nullable()->unique();
             $table->string('city')->nullable();
             $table->string('township')->nullable();

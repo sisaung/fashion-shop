@@ -39,6 +39,7 @@
 
                                 </th>
 
+                               
 
                                 <th scope="col" class="px-4 py-3 text-end text-sm font-medium text-gray-500">
                                     Coupon Discount
@@ -83,6 +84,7 @@
                                     <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
                                         {{ $order->total_amount }}
                                     </td>
+
 
                                     <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
                                         {{ $order->orderItems->count() }}

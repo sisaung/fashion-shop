@@ -63,6 +63,8 @@
                         <tr>
                             <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Product Name</th>
                             <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Size</th>
+                            <th class="px-4 py-3 text-end text-sm font-medium text-gray-500">Quantity</th>
+
                             <th class="px-4 py-3 text-left text-sm font-medium text-gray-500">Price</th>
 
                         </tr>
@@ -76,6 +78,9 @@
                                 </td>
                                 <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
                                     {{ $item->stock->size->size_name }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-4 text-sm text-end font-medium text-gray-900">
+                                    {{ $item->quantity }}
                                 </td>
 
 
@@ -92,7 +97,7 @@
                     <tfoot class="divide-y divide-gray-200 bg-stone-50 font-mono">
                         <tr>
 
-                            <td colspan="2" class=" whitespace-nowrap px-4 py-4  font-medium text-gray-900"><strong>Total
+                            <td colspan="3" class=" whitespace-nowrap px-4 py-4  font-medium text-gray-900"><strong>Total
                                 </strong>
                             </td>
                             <td> {{ number_format($order->total_amount) }} MMK </td>
@@ -102,7 +107,7 @@
 
                         </tr>
                         <tr>
-                            <td colspan="2" class=" whitespace-nowrap px-4 py-4  font-medium text-gray-900"><strong>Tax
+                            <td colspan="3" class=" whitespace-nowrap px-4 py-4  font-medium text-gray-900"><strong>Tax
                                     amount</strong>
                             </td>
                             <td> {{ number_format($order->tax_amount ?? 0) }} MMK </td>
@@ -110,7 +115,7 @@
                         </tr>
 
                         <tr>
-                            <td colspan="2" class=" whitespace-nowrap px-4 py-4  font-medium text-gray-900">
+                            <td colspan="3" class=" whitespace-nowrap px-4 py-4  font-medium text-gray-900">
                                 <strong>Coupon Dis</strong>
                                 (%)
                             </td>
@@ -119,7 +124,7 @@
                         </tr>
 
                         <tr>
-                            <td colspan="2" class=" whitespace-nowrap px-4 py-4  font-medium text-gray-900">
+                            <td colspan="3" class=" whitespace-nowrap px-4 py-4  font-medium text-gray-900">
                                 <strong>Net Total</strong>
                                 (%)
                             </td>

@@ -92,7 +92,6 @@
                             @if ($product->discount_percentage > 0)
                                 <span class="line-through text-gray-500"> {{ $product->sale_price }} MMK </span>
                                 <span> {{ $product->display_price }} MMK </span>
-
                             @else
                                 <span> {{ $product->sale_price }} MMK </span>
                             @endif
@@ -121,7 +120,8 @@
                                                ? 'border-gray-300 text-gray-400 bg-gray-100 '
                                                : 'text-pearl-bush-700 border-pearl-bush-400 hover:border-pearl-bush-300 hover:bg-pearl-bush-50 cursor-pointer' }}"
                                         data-size="{{ $productStock->size->size_name }}"
-                                        data-stock="{{ $productStock->stock_quantity }}">
+                                        data-stock="{{ $productStock->stock_quantity }}"
+                                        data-stock-id="{{ $productStock->id }}">
                                         {{ $productStock->size->size_name }}
 
                                         {{-- Slash Cross for Out of Stock --}}
@@ -172,9 +172,7 @@
 
                     {{-- Buttons --}}
                     <div class="flex items-center gap-3">
-                        <button
-                        data-product="{{ $product }}"
-
+                        <button data-product="{{ $product }}"
                             class="add-to-cart-btn cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 text-white py-2.5  rounded-full px-5 text-sm gap-x-3  inline-flex items-center justify-center transition duration-300 ">
                             <span>Add to Cart</span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

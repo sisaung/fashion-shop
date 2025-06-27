@@ -17,12 +17,15 @@ const renderOrderSummary = (cart) => {
     const couponDiscount = content.querySelector(".coupon-discount");
     const netTotalEl = content.querySelector(".net-total");
 
-    const subtotal = cart.reduce((acc, item) => {
-        const productPrice = item.product.discount_percentage
-            ? item.product.display_price
-            : item.product.sale_price;
-        return acc + productPrice * item.quantity;
-    }, 0);
+    const subtotal =
+        cart.length > 0
+            ? cart.reduce((acc, item) => {
+                  const productPrice = item.product.discount_percentage
+                      ? item.product.display_price
+                      : item.product.sale_price;
+                  return acc + productPrice * item.quantity;
+              }, 0)
+            : 0;
 
     const tax = subtotal * 0.05;
     const netTotal = subtotal + tax;
@@ -36,6 +39,7 @@ const renderOrderSummary = (cart) => {
     container.appendChild(content);
 
     const couponInput = container.querySelector(".coupon_code");
+    const couponId = container.querySelector(".coupon-id");
     const applyBtn = container.querySelector(".coupon-apply-btn");
 
     if (couponInput) {
@@ -55,15 +59,14 @@ const renderOrderSummary = (cart) => {
         const couponCode = couponInput.value.trim();
         const data = await checkCoupon(couponCode);
 
-        if (data?.coupon_discount) {
-
+        if (data?.coupon_discount && data?.coupon_id) {
             const discountPrice = (data.coupon_discount / 100) * subtotal;
             couponDiscount.textContent = `${numberFormat(discountPrice)} MMK`;
             const total = subtotal - discountPrice;
             subtotalEl.textContent = `${numberFormat(total)} MMK`;
             taxEl.textContent = `${numberFormat(total * 0.05)} MMK`;
             netTotalEl.textContent = `${numberFormat(total * 1.05)} MMK`;
-
+            couponId.value = data.coupon_id;
         }
         couponInput.value = "";
     });

@@ -17,11 +17,12 @@ use App\Http\Controllers\Admin\StockController;
 use App\Http\Controllers\Admin\WishlistController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderedCustomerController;
 use App\Http\Controllers\ShopCategoryController;
 use App\Http\Controllers\ShopOrderController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\UserProfileController;
 use App\Http\Middleware\MustBeAdmin;
-
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -133,7 +134,15 @@ Route::get('/cart',[CartController::class,'index'])->name('cart.index');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/order-confirmation',[ShopOrderController::class,'index'])->name('order-confirmation.index');
+    Route::post('/confirm-order',[ShopOrderController::class,'store'])->name('confirm-order.store');
     Route::get('/coupon-check',[ShopOrderController::class,'checkCoupon'])->name('coupon-check.index');
+    Route::get('/delivery-address',[ShopOrderController::class,'getDeliveryAddress'])->name('delivery-address.index');
+
+   Route::resource('address', UserProfileController ::class);
+
+
+
+   Route::post('/store-customer',[OrderedCustomerController::class,'store'])->name('customer.store');
 });
 
 

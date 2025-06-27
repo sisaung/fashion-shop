@@ -110,3 +110,7 @@
 .selected-size {
     @apply bg-pearl-bush-400 text-white hover:text-white hover:bg-pearl-bush-400 font-semibold;
 }
+
+.active-address {
+    @apply bg-pearl-bush-400 text-white hover:text-white hover:bg-pearl-bush-400 font-semibold;
+}

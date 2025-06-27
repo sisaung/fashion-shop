@@ -21,7 +21,7 @@ const initializeOrderConfirmationList = () => {
         const redirectProductDetail = e.target.closest(".redirect-to-detail");
         const removeProductCart = e.target.closest(".ordered-product-remove");
 
-        const orderedCartId = removeProductCart.dataset.orderedCartId;
+        const orderedCartId = removeProductCart?.dataset?.orderedCartId;
 
         if (redirectProductDetail) {
             const productSlug = redirectProductDetail.dataset.detail;
