@@ -69,10 +69,18 @@
                                         </div>
                                         <div>
                                             <h3 class="text-xs text-stone-400">Esimate Delivery</h3>
-                                            @if ($order->delivery_start_date && $order->delivery_end_date)
+                                            {{-- @if ($order->delivery_start_date && $order->delivery_end_date)
+                                                <p class="text-xs text-stone-700"> Wil Deliver between
+                                                    {{ $order->delivery_start_date }} and {{ $order->delivery_end_date }}
+                                                </p> --}}
+                                                @if ($order->order_status === 'confirmed')
                                                 <p class="text-xs text-stone-700"> Wil Deliver between
                                                     {{ $order->delivery_start_date }} and {{ $order->delivery_end_date }}
                                                 </p>
+                                            @elseif($order->order_status === 'delivered')
+                                                <p class="text-xs text-stone-700"> Out for deliver </p>
+                                            @elseif($order->order_status === 'completed')
+                                                <p class="text-xs text-stone-700"> Your order is completed </p>
                                             @else
                                                 <p class="text-xs text-stone-700"> not confirm yet </p>
                                             @endif

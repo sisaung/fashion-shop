@@ -117,7 +117,7 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
 
 Route::get('/shop', [ShopCategoryController::class,'index'])->name('shop.index');
 Route::get('/shop/get', [ShopCategoryController::class, 'getShop'])->name('shop.getShop');
-Route::get('/shop-product/{slug}', [ShopCategoryController::class, 'show']);
+Route::get('/shop-product/{slug}', [ShopCategoryController::class, 'show'])->name('shop.show');
 
 
 Route::get('/shop/get-brand', [ShopCategoryController::class, 'getBrand'])->name('shop.getBrand');
@@ -142,9 +142,7 @@ Route::middleware(['auth'])->group(function () {
 
    Route::get('/account/orders',[ShopOrderController::class,'getOrders'])->name('account.orders');
    Route::get('/account/orders/{orderNumber}',[ShopOrderController::class,'showOrder'])->name('account.showOrder');
-
-
-
+   Route::patch('/account/orders-cancel/{id}',[ShopOrderController::class,'cancelOrder'])->name('account.cancelOrder');
 
    Route::post('/store-customer',[OrderedCustomerController::class,'store'])->name('customer.store');
 });

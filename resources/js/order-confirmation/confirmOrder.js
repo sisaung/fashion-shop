@@ -37,11 +37,6 @@ const initalizeConfirmOrder = () => {
             netTotal: 0,
         };
 
-        console.log(cart);
-        console.log(couponId?.value);
-        console.log(addressId);
-        console.log();
-
         if (!addressId) {
             showErrorToast("Please select an address to place the order");
             return;
@@ -77,7 +72,9 @@ const initalizeConfirmOrder = () => {
 
             if (orderData.success) {
                 showSuccessToast(orderData.message);
+                window.location.href = location.origin + "/account/orders";
             } else {
+                showErrorToast(orderData.message);
             }
             couponId.value = "";
             selectedAddress.classList.remove("active-address");

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ShopOrderCancelRequest;
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\Coupon;
 use App\Models\Customer;
@@ -126,15 +127,45 @@ public function getOrders() {
 
 public function showOrder($orderNumber) {
 
-    Validator::make(['order_number' => $orderNumber], [
+  $validator =   Validator::make(['order_number' => $orderNumber], [
 
         'order_number' => 'required|exists:orders,order_number',
     ]);
 
+    if($validator->fails()) {
+        return back()->withErrors($validator)->withInput();
+    }
     $order = Order::with(['orderItems','customerAddress','orderItems.stock','orderItems.stock.product'])->where('order_number',$orderNumber)->first();
 
-    return $order;
     return view('public.account.order.show',['order' => $order]);
+
+}
+
+public function cancelOrder(ShopOrderCancelRequest $request,$id) {
+
+   
+
+    $validator =   Validator::make(['id' => $id], [
+        'id' => 'required|exists:orders,id',
+    ]);
+
+    if($validator->fails()) {
+        return back()->withErrors($validator)->withInput();
+    }
+
+
+
+    $order = Order::find($id);
+
+    if($order->order_status === 'pending' && $request->sure_cancel_order ) {
+
+        $order->is_cancel = 1;
+        $order->order_status = 'cancelled';
+        $order->cancel_message = $request->cancel_reason;
+        $order->save();
+        return back()->with('success','Order is cancelled');
+
+    }
 
 }
 }

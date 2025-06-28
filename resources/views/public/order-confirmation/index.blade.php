@@ -53,7 +53,7 @@
         </div>
 
 
-        <div class="min-h-screen bg-white overflow-y-scroll hide-scrollbar">
+        <div class="min-h-screen bg-white overflow-y-scroll hide-scrollbar pb-14">
             <div class="max-w-7xl mx-auto py-8">
                 {{-- current user --}}
                 <input type="hidden" name="user" value="{{ auth()->user() }}" class="current-user">

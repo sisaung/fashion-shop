@@ -102,9 +102,6 @@
                             </td>
                             <td> {{ number_format($order->total_amount) }} MMK </td>
 
-
-
-
                         </tr>
                         <tr>
                             <td colspan="3" class=" whitespace-nowrap px-4 py-4  font-medium text-gray-900"><strong>Tax
