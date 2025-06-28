@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserAddressRequest extends FormRequest
+class UpdateUserAddressRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,11 @@ class UserAddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-
             'name' => 'nullable|string|min:3|max:40',
-            'phone_number' => 'required|string|unique:user_addresses,phone_number',
+            'phone_number' => 'required|string|unique:user_addresses,phone_number,' . $this->route('id'),
             'city' => 'required|string',
             'township' => 'required|string',
             'address_detail' => 'required|string',
-
         ];
     }
 }

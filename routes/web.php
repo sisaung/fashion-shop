@@ -147,6 +147,13 @@ Route::middleware(['auth'])->group(function () {
    Route::post('/account/profile-information/change-profile',[UserProfileController::class,'changeProfileImage'])->name('account.changeProfileImage');
    Route::patch('/account/profile-information/change-name',[UserProfileController::class,'changeName'])->name('account.changeName');
 
+   Route::get('/account/address',[UserProfileController::class,'addressIndex'])->name('account.addressIndex');
+   Route::post('/account/address/store',[UserProfileController::class,'storeAdress'])->name('account.storeAdress');
+   Route::delete('/account/address/delete/{id}',[UserProfileController::class,'destroyAddress'])->name('account.destroyAddress');
+   Route::put('/account/address/update/{id}',[UserProfileController::class,'updateAddress'])->name('account.updateAddress');
+
+
+
 
 
    Route::post('/store-customer',[OrderedCustomerController::class,'store'])->name('customer.store');

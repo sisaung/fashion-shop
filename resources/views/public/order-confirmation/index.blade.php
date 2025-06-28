@@ -245,6 +245,8 @@
                                                 @enderror
                                             </div>
 
+                                            
+
                                             <div class="flex items-center gap-2 pt-2">
                                                 <input name="set_default" disabled checked type="checkbox"
                                                     id="set_default"

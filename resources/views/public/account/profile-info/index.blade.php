@@ -102,7 +102,7 @@
                                         text-red-500
                                     @enderror leading-7 text-sm text-gray-600">Your
                                 Name
-                                Name</label>
+                            </label>
                             <span class="text-gray-500">*</span>
 
                             <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}"
