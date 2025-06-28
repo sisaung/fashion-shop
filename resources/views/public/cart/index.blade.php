@@ -5,16 +5,34 @@
         {{-- Main Content --}}
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 p-8">
+
                 {{-- Cart Items --}}
                 <div class="lg:col-span-2 h-screen overflow-y-auto hide-scrollbar">
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                    <button
+                        class="clear-all-btn text-stone-500 flex hover:text-stone-600 hover:underline-offset-4 hover:underline w-full justify-end cursor-pointer text-sm px-4 py-2 rounded-full">Clear
+                        All</button>
+                    <div class="empty-cart-output">
+
+                    </div>
+
+                    {{-- empty cart --}}
+                    <template id="empty-cart-template">
+                        <div class="w-full border border-pearl-bush-400 rounded-lg flex justify-center items-center h-72">
+                            Your cart is empty
+                        </div>
+                    </template>
+                    <div class="cart-items-header bg-white rounded-2xl shadow-sm  border border-gray-100 p-6">
                         {{-- Table Header --}}
+
                         <div
                             class=" grid grid-cols-12 gap-6 pb-4 border-b border-gray-200 text-xs font-medium text-gray-600 uppercase tracking-wider">
                             <div class="col-span-6">Product</div>
                             <div class="col-span-3 text-center">Price</div>
                             <div class="col-span-3 text-center">Total</div>
                         </div>
+
+
+
 
                         {{-- Demo Cart Items --}}
 

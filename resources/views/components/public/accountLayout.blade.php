@@ -4,7 +4,8 @@
         <div class="w-80 mt-5 border-r border-r-pearl-bush-100 space-y-5 ">
             <h1 class="font-heading text-lg text-gray-800 font-semibold  px-4">Account Settings</h1>
             <div>
-                <a class="flex items-center menu-btn gap-x-3 hover:bg-stone-100 px-4 py-3 rounded mr-5">
+                <a href="{{ route('shop.index') }}"
+                    class="flex items-center menu-btn gap-x-3 hover:bg-stone-100 px-4 py-3 rounded mr-5">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-4.5">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -78,19 +79,22 @@
                 </a>
             </div>
             <div>
-                <a href="" class="flex items-center gap-x-3 px-4 py-3 rounded mr-5 hover:bg-stone-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-4.5">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
-                    </svg>
+                <form action="{{ route('logout') }}" method="POST" class="px-4 py-3 mr-5  hover:bg-stone-100">
+                    @csrf
+                    <button type="submit" class="cursor-pointer flex items-center gap-x-3  rounded ">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-4.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                        </svg>
 
 
 
-                    <span class="font-heading">
-                        Logout
-                    </span>
-                </a>
+                        <span class="font-heading">
+                            Logout
+                        </span>
+                    </button>
+                </form>
             </div>
 
 

@@ -1,8 +1,19 @@
-import { getCartData, saveCartData, updateCart } from "../utils/cart";
-
+import { emptyCart, getCartData, saveCartData, updateCart } from "../utils/cart";
+import renderCartList from "./renderCartList";
 
 const initializeCartList = () => {
     const cartContainer = document.querySelector(".cart-container");
+    const clearAllBtn = document.querySelector(".clear-all-btn");
+    const totalCartItems = document.querySelector(".total-cart-items");
+    const cartItems = document.querySelector(".cart-items");
+
+    const handleClearAll = () => {
+        localStorage.removeItem("cartItems");
+        saveCartData([]);
+        updateCart();
+
+
+    };
 
     const handleClick = (e) => {
         const cart = getCartData();
@@ -76,6 +87,7 @@ const initializeCartList = () => {
     };
 
     cartContainer.addEventListener("click", handleClick);
+    clearAllBtn.addEventListener("click", handleClearAll);
     updateCart(); // Run once on page load
 };
 

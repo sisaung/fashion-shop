@@ -93,7 +93,7 @@ const initializeAddToCart = () => {
                 ? product.display_price
                 : product.sale_price;
 
-        const existingIndex = cart.items.findIndex(
+        const existingIndex = cart.items?.findIndex(
             (item) =>
                 item.product.id === product.id && item.size === selectedSize
         );
