@@ -104,7 +104,8 @@
                                 </li>
                             @else
                                 <li class="hover:bg-stone-100 hover:text-stone-600 px-2 py-2">
-                                    <a href="" class="inline-flex items-center px-2 gap-x-2 ">
+                                    <a href="{{ route('account.showProfileInformation') }}"
+                                        class="inline-flex items-center px-2 gap-x-2 ">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="size-5">
                                             <path stroke-linecap="round" stroke-linejoin="round"

@@ -17,7 +17,7 @@
             </div>
             <div>
                 <a href="{{ route('account.orders') }}"
-                    class="flex px-4 py-3 mr-5 rounded items-center menu-btn gap-x-3 {{ Request::routeIs('account.orders') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }} ">
+                    class="flex px-4 py-3 mr-5 rounded items-center menu-btn gap-x-3 {{ Request::routeIs('account.orders') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : 'hover:bg-stone-100 ' }} ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-4.5">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -30,7 +30,8 @@
                 </a>
             </div>
             <div>
-                <a class="flex px-4 py-3 mr-5 rounded items-center menu-btn gap-x-3 {{ Request::routeIs('account.profile') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }} hover:bg-stone-100 ">
+                <a href="{{ route('account.showProfileInformation') }}"
+                    class="flex px-4 py-3 mr-5 rounded items-center menu-btn gap-x-3 {{ Request::routeIs('account.showProfileInformation') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : 'hover:bg-stone-100 ' }} ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-4.5">
                         <path stroke-linecap="round" stroke-linejoin="round"

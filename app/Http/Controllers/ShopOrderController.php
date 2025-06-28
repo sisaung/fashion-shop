@@ -143,7 +143,7 @@ public function showOrder($orderNumber) {
 
 public function cancelOrder(ShopOrderCancelRequest $request,$id) {
 
-   
+
 
     $validator =   Validator::make(['id' => $id], [
         'id' => 'required|exists:orders,id',
@@ -168,4 +168,12 @@ public function cancelOrder(ShopOrderCancelRequest $request,$id) {
     }
 
 }
+
+
+public function showProfileInformation() {
+
+    $user = Auth::user();
+    return view('public.account.profile-info.index',['user' => $user]);
+}
+
 }

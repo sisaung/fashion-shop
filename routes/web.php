@@ -143,6 +143,11 @@ Route::middleware(['auth'])->group(function () {
    Route::get('/account/orders',[ShopOrderController::class,'getOrders'])->name('account.orders');
    Route::get('/account/orders/{orderNumber}',[ShopOrderController::class,'showOrder'])->name('account.showOrder');
    Route::patch('/account/orders-cancel/{id}',[ShopOrderController::class,'cancelOrder'])->name('account.cancelOrder');
+   Route::get('/account/profile-information',[ShopOrderController::class,'showProfileInformation'])->name('account.showProfileInformation');
+   Route::post('/account/profile-information/change-profile',[UserProfileController::class,'changeProfileImage'])->name('account.changeProfileImage');
+   Route::patch('/account/profile-information/change-name',[UserProfileController::class,'changeName'])->name('account.changeName');
+
+
 
    Route::post('/store-customer',[OrderedCustomerController::class,'store'])->name('customer.store');
 });
