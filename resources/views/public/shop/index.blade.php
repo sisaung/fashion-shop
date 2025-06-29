@@ -201,6 +201,7 @@
     @endsection
 
     @push('scripts')
+        {{-- @vite(['resources/js/flowbite/flowbite.min.js']) --}}
         @vite(['resources/js/shop-product/shopProductList.js'])
         @vite(['resources/js/shop-product/sortProduct.js'])
         @vite(['resources/js/shop-product/getProductCategory.js'])

@@ -25,16 +25,18 @@
 
             </div>
             <div class="flex items-center gap-x-3">
-                <div
-                    class="hover:border inline-flex justify-center items-center hover:border-pearl-bush-400 rounded-full size-10 ">
-                    <a href="">
+                <button data-modal-target="small-modal-1" data-modal-toggle="small-modal-1"
+                    class="hover:border cursor-pointer  inline-flex justify-center items-center hover:border-pearl-bush-400 rounded-full size-10 ">
+                    <span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5 ">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                         </svg>
-                    </a>
-                </div>
+                    </span>
+                </button>
+
+
                 <div
                     class="hover:border inline-flex justify-center items-center hover:border-pearl-bush-400 rounded-full size-10 ">
                     <a href="size-5" class=" ">
@@ -48,9 +50,9 @@
                     </a>
                 </div>
 
-                <div
-                    class="hover:border inline-flex justify-center items-center hover:border-pearl-bush-400 rounded-full size-10 ">
-                    <a href="{{ route('cart.index') }}" class="cart-header relative">
+                <a href="{{ route('cart.index') }}"
+                    class="hover:border  inline-flex justify-center items-center hover:border-pearl-bush-400 rounded-full size-10 ">
+                    <div class="cart-header relative inline-block">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -58,12 +60,12 @@
                         </svg>
                         <p class="hidden cart-items">
                             <span
-                                class="absolute top-0 right-0 translate-x-1/3 border border-white -translate-y-1/3 bg-red-500 text-xs size-4 rounded-full inline-flex justify-center items-center text-white total-cart-items">
+                                class="absolute top-0 right-0 translate-x-1/3 -translate-y-1/3 border border-white  bg-red-500 text-xs size-4 rounded-full inline-flex justify-center items-center text-white total-cart-items">
                                 1 </span>
                         </p>
 
-                    </a>
-                </div>
+                    </div>
+                </a>
 
                 {{-- account and dashboard --}}
                 <div>
@@ -162,9 +164,96 @@
         </div>
 
     </div>
+
+    <div id="small-modal-1" tabindex="-1"
+        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto  max-h-full ">
+        {{-- md:inset-0 h-[calc(100%-1rem)] --}}
+        <div class="relative w-full max-w-xl max-h-full ">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow-sm">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:px-5 py-3">
+                    <h3 class=" font-heading font-medium text-stone-700 ">
+                        Search Products
+                    </h3>
+                    <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-full text-sm size-8 ms-auto inline-flex justify-center items-center "
+                        data-modal-hide="small-modal-1">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+
+                <div class="px-5 mb-5">
+                    <input type="text" id="search-product" name="search-product"
+                        class="w-full bg-white rounded border border-pearl-bush-400 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-400 text-base outline-none text-gray-700 py-1 ps-5 px-3 placeholder:text-sm placeholder:text-gray-400 leading-8 transition-colors duration-200 ease-in-out"
+                        placeholder="Search products">
+
+                </div>
+
+                <h1 class="px-5 text-stone-700 font-heading header-search-result font-medium mb-5">
+                    Your search results
+                </h1>
+                <div class="px-5 search-product-result-container">
+
+                </div>
+
+
+
+                <template id="search-product-template">
+                    <div class="space-y-4">
+                        <div
+                            class="search-product-item flex border border-transparent items-center gap-3 hover:border-pearl-bush-500 hover:rounded-md hover:bg-pearl-bush-50 hover:cursor-pointer hover:scale-[102%] active:scale-95 duration-500  ">
+                            <div>
+                                <img class="search-product-image size-16  object-top object-cover rounded-md">
+                            </div>
+                            <div class="space-y-1.5">
+                                <p class="search-product-name font-heading text-stone-600"> </p>
+                                <div class="flex items-center gap-x-1">
+                                    <p
+                                        class="search-brand-name bg-pearl-bush-100 text-pearl-bush-800 py-1 px-3 text-xs rounded-full">
+                                    </p>
+                                    <p
+                                        class="search-product-type bg-pearl-bush-100 text-pearl-bush-800 py-1 px-3 text-xs rounded-full">
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </template>
+
+                <template id="empty-search-product-template">
+                    <div
+                        class="rounded-md text-center py-10 text-stone-700 text-sm header-search-result font-medium bg-stone-100 ">
+                        There is no product...
+                    </div>
+                </template>
+
+                <!-- Modal footer -->
+                <div class="flex items-center p-4 md:p-5 ">
+                    <button data-modal-hide="small-modal-1" type="submit"
+                        class="hidden search-result-btn text-sm w-full font-medium bg-pearl-bush-400 text-white py-3 px-4 rounded-full cursor-pointer focus:ring-2 focus:ring-pearl-bush-500  hover:bg-pearl-bush-500 duration-300">
+                    </button>
+
+                </div>
+
+                {{-- --------- --}}
+            </div>
+        </div>
+    </div>
+
 </header>
 
 @push('scripts')
-    @vite(['resources/js/flowbite/flowbite.min.js'])
+    {{-- @vite(['resources/js/flowbite/flowbite.min.js']) --}}
+    @vite(['resources/js/shop-product/search/searchProduct.js'])
     @vite(['resources/js/cart/cartHeader.js'])
 @endpush

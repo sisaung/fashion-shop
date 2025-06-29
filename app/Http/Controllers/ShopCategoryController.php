@@ -51,7 +51,7 @@ class ShopCategoryController extends Controller
                     ->orWhereHas('productType', function (Builder $q) use ($searchTerm) {
                         return $q->where('name', 'like', "%$searchTerm%");
                     })
-                    ->orWhereHas('fits', function (Builder $q) use ($searchTerm) {
+                    ->orWhereHas('fit', function (Builder $q) use ($searchTerm) {
                         return $q->where('fit_name', 'like', "%$searchTerm%");
                     });
             });
@@ -138,6 +138,9 @@ class ShopCategoryController extends Controller
             $query->where(function (Builder $q) use ($searchTerm) {
 
                 return $q->where('product_name', 'like', "%$searchTerm%")
+                        ->orWhere('product_name', 'like', "%$searchTerm%")
+                        ->orWhere('sale_price', 'like', "%$searchTerm%")
+                        ->orWhere('display_price', 'like', "%$searchTerm%")
 
                     ->orWhereHas('brand', function (Builder $q) use ($searchTerm) {
                         return $q->where('brand_name', 'like', "%$searchTerm%");
@@ -148,7 +151,7 @@ class ShopCategoryController extends Controller
                     ->orWhereHas('productType', function (Builder $q) use ($searchTerm) {
                         return $q->where('name', 'like', "%$searchTerm%");
                     })
-                    ->orWhereHas('fits', function (Builder $q) use ($searchTerm) {
+                    ->orWhereHas('fit', function (Builder $q) use ($searchTerm) {
                         return $q->where('fit_name', 'like', "%$searchTerm%");
                     });
             });
@@ -214,6 +217,7 @@ class ShopCategoryController extends Controller
             'limit' => $limit,
             'brands' => $brandNames
         ]);
+
 
         return response()->json($product);
 

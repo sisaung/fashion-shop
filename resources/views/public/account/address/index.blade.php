@@ -123,9 +123,6 @@
 
         <div>
 
-
-
-
             @if (Auth::user()->address()->count() > 0)
                 <div class="grid grid-cols-2 gap-3">
                     @foreach (Auth::user()->address as $address)

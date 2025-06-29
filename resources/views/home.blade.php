@@ -6,5 +6,5 @@
 @endsection
 
 @push('scripts')
-    @vite(['resources/js/flowbite/flowbite.min.js'])
+    {{-- @vite(['resources/js/flowbite/flowbite.min.js']) --}}
 @endpush

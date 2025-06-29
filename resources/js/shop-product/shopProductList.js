@@ -17,7 +17,10 @@ const initializeSort = async () => {
     if (!container) return;
 
     // initialRender
-    const data = await fetchProductShop(`/shop`);
+    const data = await fetchProductShop(`/shop/get`);
+    // const data = await fetchProductShop(`/shop`);
+
+
 
     if (data?.data) {
         renderProductList(data?.data, container);
