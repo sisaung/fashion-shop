@@ -115,5 +115,9 @@
 }
 
 .active-tab {
-    @apply border-b-2 py-3 border-amber-500 text-amber-500
+    @apply border-b-2 py-3 border-amber-500 text-amber-500;
+}
+
+.active-filter {
+    @apply bg-pearl-bush-400  text-white text-sm  rounded-full  font-medium;
 }

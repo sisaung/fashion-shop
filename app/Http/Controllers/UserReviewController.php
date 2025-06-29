@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Validator;
 
 class UserReviewController extends Controller
 {
-    public function getShopReview($productId) {
-
+    public function getShopReview($productId, Request $request) {
+        // validate product id
         $validator = Validator::make(['id' => $productId],[
             'id' => 'required|numeric|exists:products,id'
         ]);
@@ -21,25 +21,35 @@ class UserReviewController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        $review = Review::with(['user'])->where('product_id',$productId);
+        // get filter rating from request, default is 'All'
+        $filterRating = $request->input('filter-rating', 'All');
+
+        // build review query
+        $review = Review::with(['user'])->where('product_id', $productId);
 
         if(Auth::check()) {
-
-
-            $review->where('is_show',1)
-                    ->orWhere('user_id',Auth::id())
-                    ->where('is_show','!=',1);
-
-        }else {
-            $review->where('is_show',1);
+            $review->where(function($q) {
+                $q->where('is_show', 1)
+                  ->orWhere(function($q2) {
+                      $q2->where('user_id', Auth::id())
+                         ->where('is_show', '!=', 1);
+                  });
+            });
+        } else {
+            $review->where('is_show', 1);
         }
 
-        $review->orderBy('id','DESC');
-        $review = $review->paginate(5);
+
+        if($filterRating != 'All') {
+            $review->where('rating', $filterRating);
+        }
+
+        
+        $review = $review->orderBy('id', 'DESC')->paginate(5);
+
         return response()->json($review);
-
-
     }
+
     public function store(StoreReviewRequest $request, $productId) {
 
         $validator = Validator::make(['id' => $productId],[

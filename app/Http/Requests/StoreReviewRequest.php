@@ -23,7 +23,7 @@ class StoreReviewRequest extends FormRequest
     {
         return [
 
-            'review' => 'required|string|min:3|max:100',
+            'review' => 'required|string|min:3',
             'rating' => 'required',
             'is_show' => 'nullable'
         ];

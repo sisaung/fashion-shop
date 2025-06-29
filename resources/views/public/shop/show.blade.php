@@ -8,6 +8,33 @@
         ? $product->reviews->where('is_show', 1)->count() +
             $product->reviews->where('user_id', Auth::id())->where('is_show', '!=', 1)->count()
         : $product->reviews->where('is_show', 1)->count();
+
+    $filterStars = [
+        [
+            'id' => 1,
+            'count' => 'All',
+        ],
+        [
+            'id' => 2,
+            'count' => '5',
+        ],
+        [
+            'id' => 3,
+            'count' => '4',
+        ],
+        [
+            'id' => 4,
+            'count' => '3',
+        ],
+        [
+            'id' => 5,
+            'count' => '2',
+        ],
+        [
+            'id' => 6,
+            'count' => '1',
+        ],
+    ];
 @endphp
 @extends('layout.master')
 @section('content')
@@ -437,22 +464,22 @@
 
             <div class="flex items-center gap-x-3 mb-8">
 
-                <div class="bg-pearl-bush-400  text-white text-sm px-3 py-1.5 rounded-full  font-medium">
+                {{-- <div class="bg-pearl-bush-400  text-white text-sm px-3 py-1.5 rounded-full  font-medium">
                     <span>All Reviews</span>
-                </div>
+                </div> --}}
 
-                <div class="flex flex-row-reverse gap-x-3 items-center">
-                    @foreach (range(1, 5) as $star => $value)
-                        <p class="flex gap-x-1 items-center bg-gray-100 text-gray-600 text-sm px-3.5 py-1.5 rounded-full">
-                            {{ $value }}
+                <div class="flex  gap-x-3 items-center">
+                    @foreach ($filterStars as $key => $count)
+                        <button data-count="{{ $count['count'] }}" class="flex cursor-pointer hover:bg-pearl-bush-400 hover:text-white gap-x-1 filter-btn items-center bg-gray-100 text-gray-600 text-sm px-3.5 py-1.5 rounded-full">
+                            {{ $count['count'] }}
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="size-4">
+                                stroke-width="1.5" stroke="currentColor" class="size-4 ">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
                             </svg>
 
 
-                        </p>
+                        </button>
                     @endforeach
                 </div>
 
@@ -501,7 +528,7 @@
             <section>
                 <span data-product-id="{{ $product->id }}" class="product-id"></span>
 
-                <h1 class="review-count-container mb-5" ></h1>
+                <h1 class="review-count-container mb-5"></h1>
 
                 <template id="review-count-template">
                     <h1 class="review-count"> All Reviews ( {{ $reviewCount }} ) </h1>
@@ -516,7 +543,8 @@
                         <div class="flex gap-x-3 mb-3">
                             <img class="size-12 profile-image object-center object-cover rounded-full" alt="">
                             <div>
-                                <p class="font-heading font-medium user-name "> </p>
+                                <p class="text-lg font-medium font-heading  user-name"> </p>
+
                                 <div class="flex items-center">
                                     @foreach ([1, 2, 3, 4, 5] as $el)
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -527,10 +555,11 @@
                                         </svg>
                                     @endforeach
                                 </div>
+                                <p class="text-gray-500 leading-8 review-description"> </p>
+
                             </div>
                         </div>
 
-                        <p class="text-gray-500 leading-8 review-description"> </p>
                     </div>
 
                 </template>
