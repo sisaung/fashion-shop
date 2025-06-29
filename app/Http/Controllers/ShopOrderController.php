@@ -46,6 +46,11 @@ class ShopOrderController extends Controller
     ]
 );
 
+if (!empty($request->customer['profile_image'])) {
+    $customer->profile_image = $request->customer['profile_image'];
+    $customer->save();
+}
+
 
     // 2. Get user address
 $userAddress = UserAddress::where('id', $request->address_id)

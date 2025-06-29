@@ -1,3 +1,14 @@
+@php
+    $totalReviews = Auth::check()
+        ? $product->reviews->where('is_show', 1)->count() +
+            $product->reviews->where('user_id', Auth::id())->where('is_show', '!=', 1)->count()
+        : $product->reviews->where('is_show', 1)->count();
+
+    $reviewCount = Auth::check()
+        ? $product->reviews->where('is_show', 1)->count() +
+            $product->reviews->where('user_id', Auth::id())->where('is_show', '!=', 1)->count()
+        : $product->reviews->where('is_show', 1)->count();
+@endphp
 @extends('layout.master')
 @section('content')
     <div class="min-h-screen bg-white">
@@ -6,7 +17,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
-                {{-- Product Image (static) --}}
+                {{-- product image --}}
                 <div class="space-y-4">
                     <div
                         class="relative group border border-pearl-bush-300 bg-gray-100 rounded-2xl overflow-hidden aspect-square">
@@ -52,8 +63,8 @@
                                 @for ($i = 0; $i < 5; $i++)
                                     <svg class="w-5 h-5 text-yellow-400 fill-yellow-400"><!-- Star SVG --></svg>
                                 @endfor
-                            </div>
-                            <span class="text-gray-600">(128 reviews)</span> --}}
+                            </div> --}}
+                            <span class="text-gray-600">(128 reviews)</span>
                         </div>
                         <div class="flex items-center space-x-2 mb-6">
                             <span
@@ -231,42 +242,295 @@
                 </div>
             </div>
 
-            {{-- Description --}}
-            <div class="mt-16 max-w-4xl">
-                <h2 class="text-2xl font-bold text-gray-900 mb-6">Product Description</h2>
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 space-y-6">
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-3"> {{ $product->product_name }} -
-                            {{ $product->product_code }} </h3>
-                        <p class="text-gray-700 leading-relaxed">
 
-                            {{ $product->description }}
-                        </p>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+
+            <div id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content"
+                class="flex gap-x-15 mb-10 border-b border-stone-200 " data-tabs-active-classes="active-tab"
+                data-tabs-inactive-classes="text-stone-600">
+                <button id="review-styled-tab" data-tabs-target="#styled-review" role="tab" aria-controls="review"
+                    aria-selected="false" class="tab text-stone-600 cursor-pointer py-3 active-tab"> Review </button>
+                <button id="description-styled-tab" data-tabs-target="#styled-description" type="button" role="tab"
+                    aria-controls="description" aria-selected="false" class="tab text-stone-600 cursor-pointer py-3">
+                    Description </button>
+            </div>
+
+            <div class="tab-content mb-5" id="default-styled-tab-content">
+                {{-- Review Tab --}}
+                <div id="styled-review" role="tabpanel" aria-labelledby="review-tab"
+                    class="bg-white border grid grid-cols-2 border-stone-200 rounded-lg p-8">
+                    <div class="flex items-center gap-x-3">
+
+
+
+                        {{-- {{ number_format($product->reviews->avg('rating'), 2, '.', '') }} --}}
+                        <span class="text-4xl font-semibold">
+                            @auth
+
+                                @php
+                                    $approvedReviews = $product->reviews->where('is_show', 1);
+                                    $userPendingReviews = $product->reviews
+                                        ->where('user_id', Auth::id())
+                                        ->where('is_show', '!=', 1);
+
+                                    $allRatings = $approvedReviews
+                                        ->pluck('rating')
+                                        ->merge($userPendingReviews->pluck('rating'));
+
+                                    $averageRating =
+                                        $allRatings->count() > 0
+                                            ? number_format($allRatings->avg(), 2, '.', '')
+                                            : '0.00';
+                                @endphp
+
+                                {{ $averageRating }}
+                            @endauth
+
+                            @guest
+                                {{ number_format($product->reviews->where('is_show', 1)->avg('rating'), 2, '.', '') }}
+                            @endguest
+                        </span>
                         <div>
-                            <h4 class="font-semibold text-gray-900 mb-3">Key Features</h4>
-                            <ul class="space-y-2 text-gray-700 list-disc list-inside">
-                                <li>Slim fit</li>
-                                <li>Flat-knit collar</li>
-                                <li>Number of buttons: 2</li>
-                                <li>Short sleeves</li>
-                                <li>No cuffs</li>
-                            </ul>
+                            @foreach (range(1, 5) as $star)
+                                <button>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor"
+                                        class="size-6 fill-yellow-400 stroke-none">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                                    </svg>
+                                </button>
+                            @endforeach
+                            <p class="text-gray-600 text-sm">
+                                @auth
+                                    Base on
+                                    {{ $reviewCount }}
+                                @endauth
+
+                                @guest
+                                    Base on {{ $product->reviews->where('is_show', 1)->count() }}
+                                @endguest
+
+                                reviews
+                            </p>
                         </div>
+                    </div>
+
+                    {{-- <div class="col-span-1 flex flex-col">
+                        @foreach (range(5, 1) as $star => $value)
+                            <div class="flex items-center gap-x-8">
+                                <div>
+                                    <p class="inline-flex items-center text-stone-600  ">
+                                        <span>{{ $value }}</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor"
+                                            class="size-4 fill-yellow-400 stroke-none">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                                        </svg>
+                                    </p>
+                                </div>
+
+                                <div class="flex items-center gap-2">
+                                    <div class="bg-stone-300 h-2.5 w-96 rounded-full">
+                                        <div class="bg-yellow-400 rounded-full h-2.5 w-40"></div>
+                                    </div>
+                                    <span>
+
+                                        @auth
+                                            {{ $product->reviews->where('is_show', 1)->where('rating', $value)->count() +
+                                                $product->reviews->where('user_id', Auth::id())->where('is_show', '!=', 1)->where('rating', $value)->count() }}
+                                        @endauth
+                                        @guest
+                                            {{ $product->reviews->where('is_show', 1)->where('rating', $value)->count() }}
+                                        @endguest
+
+                                    </span>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div> --}}
+                    <div class="col-span-1 flex flex-col">
+                        @foreach (range(5, 1) as $star)
+                            @php
+                                if (Auth::check()) {
+                                    // Count approved + user own unapproved for this star
+                                    $starCount =
+                                        $product->reviews->where('is_show', 1)->where('rating', $star)->count() +
+                                        $product->reviews
+                                            ->where('user_id', Auth::id())
+                                            ->where('is_show', '!=', 1)
+                                            ->where('rating', $star)
+                                            ->count();
+                                } else {
+                                    // Guest sees only approved reviews count
+                                    $starCount = $product->reviews
+                                        ->where('is_show', 1)
+                                        ->where('rating', $star)
+                                        ->count();
+                                }
+
+                                // Calculate bar percentage
+                                $percentage = $totalReviews > 0 ? ($starCount / $totalReviews) * 100 : 0;
+                            @endphp
+
+                            <div class="flex items-center gap-x-8">
+
+                                <div>
+                                    <button class="inline-flex items-center text-stone-600 cursor-pointer">
+                                        <span>{{ $star }}</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor"
+                                            class="size-4 fill-yellow-400 stroke-none">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <div class="flex items-center gap-2 w-full">
+                                    <div class="bg-stone-300 h-2.5 w-96 rounded-full">
+                                        <div class="bg-yellow-400 rounded-full h-2.5"
+                                            style="width: {{ $percentage }}%"></div>
+                                    </div>
+                                    <span>{{ $starCount }}</span>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- Description Tab --}}
+                <div class="mt-16 max-w-4xl" id="styled-description" role="tabpanel" aria-labelledby="description-tab">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Product Description</h2>
+                    <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 space-y-6">
                         <div>
-                            <h4 class="font-semibold text-gray-900 mb-3">Material & Care</h4>
-                            <ul class="space-y-2 text-gray-700 list-disc list-inside">
-                                <li>100% Mercerised Cotton</li>
-                                <li>Machine wash cold</li>
-                                <li>Do not bleach</li>
-                                <li>Tumble dry low</li>
-                                <li>Iron on medium heat</li>
-                            </ul>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-3"> {{ $product->product_name }} -
+                                {{ $product->product_code }} </h3>
+                            <p class="text-gray-700 leading-relaxed">{{ $product->description }}</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-3">Key Features</h4>
+                                <ul class="space-y-2 text-gray-700 list-disc list-inside">
+                                    <li>Slim fit</li>
+                                    <li>Flat-knit collar</li>
+                                    <li>Number of buttons: 2</li>
+                                    <li>Short sleeves</li>
+                                    <li>No cuffs</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-3">Material & Care</h4>
+                                <ul class="space-y-2 text-gray-700 list-disc list-inside">
+                                    <li>100% Mercerised Cotton</li>
+                                    <li>Machine wash cold</li>
+                                    <li>Do not bleach</li>
+                                    <li>Tumble dry low</li>
+                                    <li>Iron on medium heat</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="flex items-center gap-x-3 mb-8">
+                <div class="bg-pearl-bush-400  text-white text-sm px-3 py-1.5 rounded-full  font-medium">
+                    <span>All Reviews</span>
+                </div>
+
+                <div class="flex flex-row-reverse gap-x-3 items-center">
+                    @foreach (range(1, 5) as $star => $value)
+                        <p class="flex gap-x-1 items-center bg-gray-100 text-gray-600 text-sm px-3.5 py-1.5 rounded-full">
+                            {{ $value }}
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-4">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                            </svg>
+
+
+                        </p>
+                    @endforeach
+                </div>
+
+
+            </div>
+            <div class="grid grid-cols-2">
+                <form action="{{ route('review.store', ['productId' => $product->id]) }}" method="POST">
+                    @csrf
+                    <h3 class="font-heading font-semibold text-lg mb-3"> Write Reviews </h3>
+                    <div>
+                        <textarea name="review" id="" cols="60" rows="10"
+                            class="border border-pearl-bush-400 mb-3 w-full rounded-lg "></textarea>
+
+                        <div class="flex items-center gap-x-5 justify-end">
+                            <p>Rate this product</p>
+                            <div>
+                                <input type="hidden" name="rating" class="rating">
+                                @foreach (range(1, 5) as $star => $value)
+                                    <button data-rating="{{ $value }}"
+                                        class="rating-btn cursor-pointer inline-flex items-center ">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor"
+                                            class="size-6 stroke-none fill-gray-400 star">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                                        </svg>
+                                    </button>
+                                @endforeach
+                            </div>
+                            @auth
+                                <button
+                                    class=" cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 text-white py-2.5  rounded-full px-5 text-sm gap-x-1  inline-flex items-center justify-center transition duration-300 ">Post
+                                    Review</button>
+                            @endauth
+                            @guest
+                                <a class=" cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 text-white py-2.5  rounded-full px-5 text-sm gap-x-1  inline-flex items-center justify-center transition duration-300 "
+                                    href="{{ route('login') }}">Login Review </a>
+                            @endguest
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+
+            <section>
+                <h1> All Reviews ( {{ $reviewCount }} ) </h1>
+                <div class="space-y-5">
+
+                    @foreach ($product->reviews->where('is_show', 1) as $review)
+                        <div class="border border-gray-200 rounded-lg px-8 py-5 min-h-32">
+                            <div class="flex gap-x-3 mb-3">
+
+                                <img src="{{ $review->user->profile_image ? $review->user->profile_image : 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈' }}"
+                                    class="size-12 object-center object-cover rounded-full"
+                                    alt="{{ $review->user->name }}">
+                                <div>
+                                    <p class="font-heading font-medium"> {{ $review->user->name }} </p>
+                                    <div class="flex items-center">
+                                        @foreach ([1, 2, 3, 4, 5] as $el)
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor"
+                                                class="size-4 {{ $el <= $review->rating ? 'fill-yellow-400' : 'fill-gray-400' }} stroke-none">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                                            </svg>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="text-gray-500 leading-8"> {{$review->review}} </p>
+                        </div>
+                    @endforeach
+
+
+                </div>
+            </section>
+
         </div>
     </div>
 @endsection
@@ -279,4 +543,6 @@
         --}}
 
     @vite(['resources/js/shop-product/product-detail/addToCart.js'])
+    @vite(['resources/js/shop-product/product-detail/activeTab.js'])
+    @vite(['resources/js/shop-product/product-detail/rating.js'])
 @endpush

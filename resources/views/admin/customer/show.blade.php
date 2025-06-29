@@ -28,7 +28,8 @@
                         <td class="px-6 py-3 font-bold border border-stone-200 text-start">Image</td>
                         <td class="px-6 py-3 border border-stone-200 text-start">
                             @if ($customer->profile_image)
-                                <img src="{{ $customer->profile_image }}" alt="{{ $customer->customer_name }}">
+                                <img src="{{ $customer->profile_image }}" alt="{{ $customer->customer_name }}"
+                                    class="w-18 rounded-full object-cover object-center">
                             @else
                                 <img class="w-20 rounded-full"
                                     src="https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1"
@@ -46,7 +47,10 @@
                     </tr>
                     <tr>
                         <td class="px-6 py-3 font-bold border border-stone-200 text-start">Created</td>
-                        <td class="px-6 py-3 border border-stone-200 text-start"> {{ $customer->created_at }} </td>
+                        <td class="px-6 py-3 border border-stone-200 text-start text-nowrap">
+                            {{ date('j M Y', strtotime($customer->created_at)) }} -
+                            {{ date('h:i A', strtotime($customer->created_at)) }} 
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -74,7 +78,8 @@
 
                         @foreach ($customer->addresses as $address)
                             <tr>
-                                <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900"> {{ $address->id }} </td>
+                                <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                    {{ $address->id }} </td>
                                 <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
                                     {{ $address->phone_number }}
                                 </td>

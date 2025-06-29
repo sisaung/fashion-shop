@@ -65,6 +65,8 @@ const initalizeConfirmOrder = () => {
                 })),
             };
 
+           
+
             const res = await storeOrder("/confirm-order", data, csrfToken);
             const orderData = await res.json();
 

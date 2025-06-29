@@ -22,7 +22,7 @@ class UserProfileController extends Controller
 
 
     public function store(UserAddressRequest $request) {
-        return $request;
+      
         UserAddress::create([
             'user_id' => Auth::id(),
             'name' => $request->name,
@@ -107,7 +107,7 @@ public function updateAddress(UpdateUserAddressRequest $request,$id) {
         return redirect()->route('account.addressIndex');
     }
     $address = UserAddress::find($id);
-   
+
     $address->phone_number = $request->phone_number;
     $address->city = $request->city;
     $address->township = $request->township;

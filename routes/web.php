@@ -22,6 +22,7 @@ use App\Http\Controllers\ShopCategoryController;
 use App\Http\Controllers\ShopOrderController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\UserReviewController;
 use App\Http\Middleware\MustBeAdmin;
 use Illuminate\Support\Facades\Route;
 
@@ -154,10 +155,14 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+   Route::post('/review-store/{productId}',[UserReviewController::class,'store'])->name('review.store');
+
+
 
 
    Route::post('/store-customer',[OrderedCustomerController::class,'store'])->name('customer.store');
 });
 
+Route::get('/get-review/{productId}',[UserReviewController::class,'getshopReview'])->name('review.getReview');
 
 Route::get('test', [TestController::class, 'index']);

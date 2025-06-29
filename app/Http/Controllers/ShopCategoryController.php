@@ -103,7 +103,9 @@ class ShopCategoryController extends Controller
             'fit',
             'productImages',
             'sizes',
-            'stocks.size'
+            'stocks.size',
+            'reviews',
+            'reviews.user'
         ])->where('slug', $slug)->first();
 
         return view('public.shop.show', ['product' => $product]);
