@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class UserReviewController extends Controller
 {
-    public function getReview($productId) {
+    public function getShopReview($productId) {
 
         $validator = Validator::make(['id' => $productId],[
             'id' => 'required|numeric|exists:products,id'
@@ -21,12 +21,24 @@ class UserReviewController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-       $review =  Review::with(['user'])->where('product_id',$productId)->where('is_show',1)->get();
-       return $review;
+        $review = Review::with(['user'])->where('product_id',$productId);
+
+        if(Auth::check()) {
 
 
+            $review->where('is_show',1)
+                    ->orWhere('user_id',Auth::id())
+                    ->where('is_show','!=',1);
 
-       return view('public.shop.show',['reviews' => $review]);
+        }else {
+            $review->where('is_show',1);
+        }
+
+        $review->orderBy('id','DESC');
+        $review = $review->paginate(5);
+        return response()->json($review);
+
+
     }
     public function store(StoreReviewRequest $request, $productId) {
 

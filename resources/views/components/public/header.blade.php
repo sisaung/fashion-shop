@@ -68,7 +68,7 @@
                 {{-- account and dashboard --}}
                 <div>
                     <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="cursor-pointer "
-                        type="button">
+                        type="button" class="inline-flex  justify-center items-center">
                         @auth
                             @if (Auth::user()->profile_image)
                                 <span
@@ -77,7 +77,7 @@
                                 </span>
                             @else
                                 <span
-                                    class="inline-flex justify-center items-center size-10 border border-pearl-bush-300 rounded-full overflow-hidden">
+                                    class="inline-flex  justify-center items-center size-10 border border-pearl-bush-300 rounded-full overflow-hidden">
 
                                     <img src="https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1"
                                         alt="placeholder" class="size-8 object-center object-cover rounded-full">
@@ -89,7 +89,8 @@
                                 stroke="currentColor" class="size-5 ">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                        </svg> @endguest
+                            </svg>
+                        @endguest
                     </button>
                 </div>
 
@@ -111,7 +112,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                 d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                                         </svg>
-                                       
+
                                         Profile
                                     </a>
                                 </li>
