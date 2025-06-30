@@ -80,11 +80,10 @@ export const renderPagination = (link) => {
 
         const newParam = new URLSearchParams(newParamObj).toString();
 
-
-
         const queryString = newParam.toString();
 
         history.pushState({}, "", location.pathname + "?" + queryString);
+        return queryString;
     };
 
     if (link.active) {
@@ -94,8 +93,8 @@ export const renderPagination = (link) => {
 
     // Handle click
     paginationBtn.onclick = async () => {
-        urlToParam(link.url);
-        const data = await fetchProductShop(link.url);
+        const queryString = urlToParam(link.url);
+        const data = await fetchProductShop(`/shop/get?${queryString}`);
 
         if (data?.data) {
             renderProductList(data?.data, container);

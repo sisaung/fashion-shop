@@ -220,6 +220,7 @@ class ShopCategoryController extends Controller
 
             if(!empty($filterByGender)) {
                 $query->orWhere('gender',$filterByGender);
+
             }
 
         $query->orderBy($sortBy, $sortDirection);
@@ -230,9 +231,7 @@ class ShopCategoryController extends Controller
             'sort_by' => $sortBy,
             'sort_direction' => $sortDirection,
             'limit' => $limit,
-            'brands' => $brandNames,
-            'item' => 'new_arrival',
-            'gender' => $filterByGender
+         
         ]);
 
 

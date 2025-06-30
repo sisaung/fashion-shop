@@ -121,7 +121,6 @@ const initializeProductType = async () => {
                 ? fitHeading.classList.remove("hidden")
                 : fitHeading.classList.add("hidden");
 
-            console.log(fitData);
             // filter size
 
             const sizeData = currentProductType.sizes;
@@ -191,7 +190,6 @@ const initializeProductType = async () => {
         const productFitData = await fetchProductFit(
             `/shop/get-product-fit/${selectedProductTypeId}`
         );
-        console.log(productFitData);
         renderProductFitList(productFitData, filterProductFitContainer);
         fitHeading.classList.toggle("hidden");
     }
@@ -268,7 +266,6 @@ const initializeProductType = async () => {
                 );
 
                 if (productShop?.data) {
-                    console.log(productShop?.data);
                     renderProductList(productShop?.data, container);
                     renderBreadcrumbTotalProduct(
                         productShop?.total,
@@ -285,7 +282,6 @@ const initializeProductType = async () => {
                 history.pushState({}, "", url);
             }
 
-            console.log("Fetching from:", url);
         });
 
     //apply resest btn

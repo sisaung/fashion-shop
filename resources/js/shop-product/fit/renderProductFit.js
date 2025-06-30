@@ -16,7 +16,6 @@ export const renderProductFit = (productFit) => {
     input.value = productFit.id;
     span.textContent = productFit.fit_name;
 
-    console.log(selectedProductFitId)
     if (String(productFit.id) === selectedProductFitId) {
         input.checked = true;
         span.classList.add("bg-pearl-bush-400", "text-white");
