@@ -13,14 +13,15 @@ const initializeSort = async () => {
     );
 
     const paginationContainer = document.getElementById("pagination-container");
+    const searchParam = window.location.search;
 
     if (!container) return;
 
     // initialRender
-    const data = await fetchProductShop(`/shop/get`);
+
+
+        const data = searchParam != "" ? await  fetchProductShop(`/shop/get${searchParam}`) : await  fetchProductShop(`/shop/get`)
     // const data = await fetchProductShop(`/shop`);
-
-
 
     if (data?.data) {
         renderProductList(data?.data, container);

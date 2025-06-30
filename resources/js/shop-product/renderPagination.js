@@ -12,6 +12,8 @@ export const renderPagination = (link) => {
 
     const paginationContainer = document.getElementById("pagination-container");
 
+    const currentSearchParam = location.search;
+
     if (!paginationTemplate) return;
 
     const isDisabled = !link.url || link.url === "null";
@@ -34,7 +36,7 @@ export const renderPagination = (link) => {
                             stroke="currentColor" class="size-4 text-gray-500 ">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                         </svg>`;
-                        paginationBtn.classList.add('hover:text-gray-700')
+        paginationBtn.classList.add("hover:text-gray-700");
         paginationBtn.classList.remove(
             "hover:bg-pearl-bush-300",
             "hover:text-white"
@@ -69,7 +71,18 @@ export const renderPagination = (link) => {
     const urlToParam = (url = "") => {
         const { search } = new URL(url);
         const params = new URLSearchParams(search);
-        const queryString = params.toString();
+        const currentParams = new URLSearchParams(currentSearchParam);
+
+        const paramObj = Object.fromEntries(params);
+        const currentParamObj = Object.fromEntries(currentParams);
+
+        const newParamObj = { ...currentParamObj, ...paramObj };
+
+        const newParam = new URLSearchParams(newParamObj).toString();
+
+
+
+        const queryString = newParam.toString();
 
         history.pushState({}, "", location.pathname + "?" + queryString);
     };

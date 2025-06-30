@@ -115,12 +115,18 @@ class ShopCategoryController extends Controller
 
 
         $validSortColumns = ['product_name', 'display_price', 'sale_price' ,'brand_name', 'discount_percentage', 'name', 'category_name',  'id'];
+        $validFilter = ['male','female','unisex'];
         $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'id';
 
         $sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
+        $filterByGender = in_array($request->input('gender'),$validFilter) ? $request->input('gender') : '';
 
         $brandNames = $request->input('brands'); // array of brand names
         $filters = $request->input('filters',[]);
+
+        $item = $request->input('item');
+
+
 
         $limit = $request->input('limit', 5);
 
@@ -206,6 +212,15 @@ class ShopCategoryController extends Controller
                 });
             }
 
+            if(!empty($item) && $item == 'new_arrival') {
+
+                $query->where('is_new_arrival',1);
+
+            }
+
+            if(!empty($filterByGender)) {
+                $query->orWhere('gender',$filterByGender);
+            }
 
         $query->orderBy($sortBy, $sortDirection);
 
@@ -215,7 +230,9 @@ class ShopCategoryController extends Controller
             'sort_by' => $sortBy,
             'sort_direction' => $sortDirection,
             'limit' => $limit,
-            'brands' => $brandNames
+            'brands' => $brandNames,
+            'item' => 'new_arrival',
+            'gender' => $filterByGender
         ]);
 
 

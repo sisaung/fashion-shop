@@ -10,20 +10,26 @@
 
                 </div>
             </a>
+            {{-- main menu item  --}}
             <div class="flex gap-x-7">
                 <a href="{{ route('shop.index') }}"
                     class="text-gray-700 hover:text-black font-medium transition-colors text-sm">
                     Shop</a>
-                <a href="" class="text-gray-700 hover:text-black font-medium transition-colors text-sm">New
+                <a href="{{ route('shop.index', ['item' => 'new_arrival']) }}"
+                    class="text-gray-700 hover:text-black font-medium transition-colors text-sm">New
                     Arrival</a>
 
-                <a href="" class="text-gray-700 hover:text-black font-medium transition-colors text-sm">Men</a>
+                <a href="{{ route('shop.index', ['gender' => 'male']) }}"
+                    class="text-gray-700 hover:text-black font-medium transition-colors text-sm">Men</a>
 
-                <a href="" class="text-gray-700 hover:text-black font-medium transition-colors text-sm">Women</a>
-                <a href=""
+                <a href="{{ route('shop.index', ['gender' => 'female']) }}"
+                    class="text-gray-700 hover:text-black font-medium transition-colors text-sm">Women</a>
+                <a href="{{ route('shop.index', ['gender' => 'unisex']) }}"
                     class="text-gray-700 hover:text-black font-medium transition-colors text-sm">Unisex</a>
 
             </div>
+
+
             <div class="flex items-center gap-x-3">
                 <button data-modal-target="small-modal-1" data-modal-toggle="small-modal-1"
                     class="hover:border cursor-pointer  inline-flex justify-center items-center hover:border-pearl-bush-400 rounded-full size-10 ">
