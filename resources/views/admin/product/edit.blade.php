@@ -82,6 +82,14 @@
             @method('PUT')
             <div class="grid grid-cols-8 gap-5 px-5">
 
+                {{-- save current param --}}
+
+                <input type="hidden" name="sort_by" value="{{ old('sort_by', $sort_by) }}">
+                <input type="hidden" name="sort_direction" value="{{ old('sort_direction', $sort_direction) }}">
+                <input type="hidden" name="limit" value="{{ old('limit', $limit) }}">
+                <input type="hidden" name="page" value="{{ old('page', $page) }}">
+                <input type="hidden" name="search" value="{{ old('page', $q) }}">
+
                 {{-- product code --}}
                 <div class="relative mb-4 col-span-2">
                     <label for="product_code"
@@ -374,9 +382,8 @@
                     </div>
 
 
-                    {{-- create --}}
                     <div class="flex  gap-x-5  w-full ">
-                        <a href="{{ route('product.index') }}"
+                        <a href="{{ route('product.index', ['sort_by' => $sort_by, 'sort_direction' => $sort_direction, 'limit' => $limit, 'page' => $page, 'q' => $q]) }}"
                             class="text-stone-500 inline-flex justify-center items-center bg-white py-2 px-8 focus:outline-none hover:bg-pearl-bush-500 w-1/2 hover:text-white border  border-pearl-bush-300 rounded text-sm cursor-pointer duration-300">Cancel</a>
                         <button
                             class="text-white bg-pearl-bush-400 border-0 py-2 px-8 focus:outline-none hover:bg-pearl-bush-600 rounded text-sm  cursor-pointer w-1/2 duration-300">Update</button>

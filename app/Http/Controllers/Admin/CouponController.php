@@ -129,7 +129,7 @@ class CouponController extends Controller
         $coupon->coupon_expire_date = $request->coupon_expire_date;
         $coupon->save();
 
-        return redirect()->route('coupon.index');
+        return redirect()->route('coupon.index',['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }
 
     /**

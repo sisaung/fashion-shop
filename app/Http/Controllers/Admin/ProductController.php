@@ -167,7 +167,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit($id,Request $request)
     {
 
        $validator = Validator::make(['id' => $id], [
@@ -188,7 +188,7 @@ class ProductController extends Controller
     //    return $product;
 
 
-       return view('admin.product.edit', ['product' => $product, 'brands' => $brands, 'productCategories' => $productCategory, 'productTypes' => $productType, 'fits' => $fits]);
+       return view('admin.product.edit', ['product' => $product, 'brands' => $brands, 'productCategories' => $productCategory, 'productTypes' => $productType, 'fits' => $fits,'sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }
 
     /**
@@ -231,7 +231,7 @@ class ProductController extends Controller
         $product->product_type_id = $request->product_type_id;
        $fitId && $product->fit_id = $fitId;
         $product->save();
-        return redirect()->route('product.index');
+        return redirect()->route('product.index',['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }
 
     /**
