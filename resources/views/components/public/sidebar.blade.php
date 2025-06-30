@@ -1,13 +1,4 @@
-@php
-    $brands = [
-        ['brand_name' => 'Boss', 'brand_image' => null],
-        ['brand_name' => 'Gucci', 'brand_image' => null],
-        ['brand_name' => 'Prada', 'brand_image' => null],
-        ['brand_name' => 'Louis Vuitton', 'brand_image' => null],
-        ['brand_name' => 'Chanel', 'brand_image' => null],
-        ['brand_name' => 'Dior', 'brand_image' => null],
-    ];
-@endphp
+
 
 <aside id="sidebar"
     class="fixed mt-10 lg:sticky top-0 left-0 z-50 lg:z-0 w-80 lg:w-64 h-full lg:h-auto bg-white rounded-md transform transition-transform duration-300 ease-in-out
@@ -79,12 +70,12 @@
 </aside>
 
 <template id="brand-list-template">
-    {{-- value="{{ $brand['brand_name'] }}" --}}
+    
     <label class="flex items-center cursor-pointer group">
-        <input type="checkbox" {{-- {{ in_array($brand['brand_name'], request()->get('brands', [])) ? 'checked' : '' }} --}}
+        <input type="checkbox"
             class="filter-brand-check w-4 h-4 text-gray-900 border-gray-300 rounded focus:ring-gray-900 focus:ring-2" />
         <span class="brand-name select-none ml-3 text-sm text-gray-700 group-hover:text-gray-900 transition-colors">
-            {{-- {{ $brand['brand_name'] }} (6) --}}
+
         </span>
     </label>
 </template>
@@ -92,5 +83,5 @@
 @push('scripts')
     @vite(['resources/js/sidebar/toggleSidebar.js'])
     @vite(['resources/js/sidebar/getBrand.js'])
-    
+
 @endpush

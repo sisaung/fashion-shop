@@ -51,6 +51,8 @@ export const renderShopBrand = async (brand) => {
             const searchParams = new URLSearchParams(url.search).toString();
             const data = await fetchProductShop(`/shop/get?${searchParams}`);
 
+            console.log(data)
+
             if (data?.data) {
                 renderProductList(data?.data, container);
                 renderBreadcrumbTotalProduct(

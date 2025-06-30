@@ -219,7 +219,7 @@ class ShopCategoryController extends Controller
             }
 
             if(!empty($filterByGender)) {
-                $query->orWhere('gender',$filterByGender);
+                $query->where('gender',$filterByGender);
 
             }
 
@@ -231,7 +231,7 @@ class ShopCategoryController extends Controller
             'sort_by' => $sortBy,
             'sort_direction' => $sortDirection,
             'limit' => $limit,
-         
+
         ]);
 
 
@@ -240,8 +240,33 @@ class ShopCategoryController extends Controller
     }
 
     public function getBrand(Request $request) {
-        $brand = Brand::with('products')->get();
-        return response()->json($brand);
+
+        $gender = $request->input('gender');
+        $item = $request->input('item');
+
+
+        $brand = Brand::with('products');
+
+        $brand->whereHas('products', function ($query) {
+            $query->where('brand_id', '!=', null);
+        });
+
+        if(!empty($gender)) {
+            $brand->whereHas('products', function ($query) use ($gender) {
+                $query->where('gender', $gender);
+            });
+        }
+
+        if(!empty($item) && $item == 'new_arrival') {
+
+            $brand->whereHas('products', function ($query) {
+                $query->where('is_new_arrival', 1);
+            });
+        }
+
+
+
+        return response()->json($brand->get());
     }
 
     public function filterShopProduct(Request $request)

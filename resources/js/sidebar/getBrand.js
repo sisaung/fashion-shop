@@ -1,17 +1,19 @@
 import { fetchBrand } from "../services/fetchBrand";
+import { fetchProductShop } from "../services/fetchProductShop";
 import { renderShopBrandList } from "./renderShopBrandList";
 
 const initializeGetBrand = async () => {
     const filterBrand = document.getElementById("filter-brand");
-
+    const searchParam = window.location.search;
 
     if (!filterBrand) return;
 
-    const data = await fetchBrand(`/shop/get-brand`);
-    if (data) {
-
-        renderShopBrandList(data, filterBrand);
+    const brand = await fetchBrand(`/shop/get-brand${searchParam}`);
+    if (brand) {
+        renderShopBrandList(brand, filterBrand);
     }
+
+
 
     // content.querySelector(".brand-name").textContent = brand.brand_name;
 };
