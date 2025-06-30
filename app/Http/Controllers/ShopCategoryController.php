@@ -135,6 +135,8 @@ class ShopCategoryController extends Controller
         $searchTerm = $request->input('q');
         $brandNames = $request->input('brands');
 
+        $filterInStockOnly = $request->input('in_stock');
+
 
         $query = Product::with(['brand', 'productCategory', 'productType', 'fit', 'productImages','sizes']);
 
@@ -212,16 +214,30 @@ class ShopCategoryController extends Controller
                 });
             }
 
+            // filter new product arrival
             if(!empty($item) && $item == 'new_arrival') {
 
                 $query->where('is_new_arrival',1);
 
             }
 
+
+
             if(!empty($filterByGender)) {
                 $query->where('gender',$filterByGender);
 
             }
+
+            // filter instock only
+
+            if(!empty($filterInStockOnly)) {
+
+                $query->whereHas('stocks', function ($query) {
+                    $query->where('stock_quantity', '>', 0);
+                });
+            }
+
+
 
         $query->orderBy($sortBy, $sortDirection);
 
@@ -264,6 +280,7 @@ class ShopCategoryController extends Controller
             });
         }
 
+        $brand->orderBy('brand_name', 'asc');
 
 
         return response()->json($brand->get());
