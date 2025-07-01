@@ -28,7 +28,7 @@ const renderProduct = async (product, wishlistProducts) => {
         );
 
         if (existingWishlist) {
-            updatUiWishlist(!!existingWishlist, wishlistIcon);
+            updatUiWishlist(!!existingWishlist, wishlistIcon,wishlistProducts);
         }
     }
 

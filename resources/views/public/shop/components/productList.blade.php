@@ -1,10 +1,10 @@
 <div class="col-span-1  product-card">
     <div class="col-span-1 group rounded-lg cursor-pointer">
 
-        <div class="relative">
+        <div class=" relative">
             <img
                 alt="" class="product-image w-full transition-transform duration-300 ease-in rounded-t-lg" />
-            <div class="absolute top-0 left-0 w-full h-full bg-black/2"></div>
+            <div class="absolute top-0  left-0 w-full h-full bg-black/2"></div>
 
 
 
