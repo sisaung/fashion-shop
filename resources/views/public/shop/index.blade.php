@@ -16,9 +16,39 @@
     <div class="mt-8">
         <div class="flex justify-between items-center">
 
+
+            @php
+                $item = request()->query('item');
+                $gender = request()->query('gender');
+                $currentPageTitle = 'Shop'; // default
+
+                // Determine title based on query
+                if ($item) {
+                    if ($item === 'new_arrival') {
+                        $currentPageTitle = 'New Arrival';
+                    } else {
+                        $currentPageTitle = ucwords(str_replace('-', ' ', $item));
+                    }
+                }
+
+                if ($gender) {
+                    if ($gender === 'male') {
+                        $currentPageTitle = 'Male';
+                    } elseif ($gender === 'female') {
+                        $currentPageTitle = 'Female';
+                    } elseif ($gender === 'unisex') {
+                        $currentPageTitle = 'Unisex';
+                    }
+                }
+
+                // Prepare breadcrumb links
+                $links = [['name' => 'Shop', 'path' => route('shop.index')]];
+            @endphp
+
             <div>
                 @include('components.breadcrumb', [
-                    'currentPageTitle' => 'Shop',
+                    'currentPageTitle' => $currentPageTitle,
+                    'links' => $currentPageTitle !== 'Shop' ? $links : null,
                     'totalProduct' => $products->count(),
                 ])
             </div>

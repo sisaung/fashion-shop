@@ -28,7 +28,7 @@ const renderProduct = async (product, wishlistProducts) => {
         );
 
         if (existingWishlist) {
-            updatUiWishlist(!!existingWishlist, wishlistIcon,wishlistProducts);
+            updatUiWishlist(!!existingWishlist, wishlistIcon, wishlistProducts);
         }
     }
 
@@ -43,7 +43,7 @@ const renderProduct = async (product, wishlistProducts) => {
     image.src =
         product?.product_images?.length > 0
             ? product.product_images[0].large
-            : "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1362px-Placeholder_view_vector.svg.png?20220519031949";
+            : "https://www.mooreseal.com/wp-content/uploads/2013/11/dummy-image-square-300x300.jpg";
 
     clone.querySelector(".product-brand").textContent =
         product.brand?.brand_name || "";
