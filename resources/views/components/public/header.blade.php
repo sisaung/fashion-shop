@@ -43,9 +43,9 @@
                 </button>
 
 
-                <div
-                    class="hover:border inline-flex justify-center items-center hover:border-pearl-bush-400 rounded-full size-10 ">
-                    <a href="size-5" class=" ">
+                <a href="{{ route('wishlist.showWishlistShow') }}"
+                    class="hover:border relative  inline-flex justify-center items-center hover:border-pearl-bush-400 rounded-full size-10 ">
+                    <p>
 
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5 ">
@@ -53,8 +53,12 @@
                                 d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                         </svg>
 
-                    </a>
-                </div>
+                    </p>
+                    <p class="hidden wishlist-count">
+                        <span
+                            class="bg-red-500 text-xs text-white absolute top-0 right-0 rounded-full px-1  inline-flex justify-center items-center border border-white translate-y-1/3 -translate-x-1 total-wishlist-count"></span>
+                    </p>
+                </a>
 
                 <a href="{{ route('cart.index') }}"
                     class="hover:border  inline-flex justify-center items-center hover:border-pearl-bush-400 rounded-full size-10 ">
@@ -262,4 +266,5 @@
     {{-- @vite(['resources/js/flowbite/flowbite.min.js']) --}}
     @vite(['resources/js/shop-product/search/searchProduct.js'])
     @vite(['resources/js/cart/cartHeader.js'])
+    @vite(['resources/js/wishlist/wishListHeader.js'])
 @endpush

@@ -1,17 +1,3 @@
-// const initializeRating = () => {
-//     const ratingBtn = document.querySelectorAll(".rating-btn");
-//     const stars = document.querySelectorAll(".star");
-//     ratingBtn.forEach((rating) => {
-//         rating.addEventListener("click", () => {
-//            stars.forEach(star => {
-//            star.classList.toggle('fill-red-500')
-//            })
-//             console.log(rating.dataset.rating);
-
-//         });
-//     });
-// }
-// document.addEventListener("DOMContentLoaded", initializeRating);
 const initializeRating = () => {
     const ratingBtns = document.querySelectorAll(".rating-btn");
     const ratingInput = document.querySelector(".rating");
@@ -56,28 +42,7 @@ const initializeRating = () => {
         });
       });
 
-    // ratingBtns.forEach((btn, index) => {
 
-
-
-    //   btn.addEventListener("click", (e) => {
-    //     e.preventDefault()
-    //     e.stopPropagation()
-    //     // Remove fill from all stars first
-    //     stars.forEach(star => {
-    //       star.classList.remove("fill-yellow-400");
-    //       star.classList.add("fill-gray-300");
-    //     });
-
-    //     // Add fill to clicked star and all before it
-    //     for (let i = 0; i <= index; i++) {
-    //       stars[i].classList.remove("fill-gray-300");
-    //       stars[i].classList.add("fill-yellow-400");
-    //     }
-
-    //     ratingInput.value = btn.dataset.rating;
-    //   });
-    // });
   };
 
   document.addEventListener("DOMContentLoaded", initializeRating);

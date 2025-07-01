@@ -66,7 +66,7 @@
                         <template id="ordered-product-list-template">
                             <div class="flex gap-4 pb-6">
                                 <div
-                                    class="w-30 h-30 border border-pearl-bush-300  bg-red-500 rounded-lg overflow-hidden flex-shrink-0">
+                                    class="w-30 h-30 border border-pearl-bush-300   rounded-lg overflow-hidden flex-shrink-0">
                                     <img class="ordered-product-image" alt="BOSS Polo Penrose 38"
                                         class="w-full h-full object-cover" />
                                 </div>
@@ -245,7 +245,7 @@
                                                 @enderror
                                             </div>
 
-                                            
+
 
                                             <div class="flex items-center gap-2 pt-2">
                                                 <input name="set_default" disabled checked type="checkbox"

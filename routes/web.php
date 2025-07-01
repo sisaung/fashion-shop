@@ -24,6 +24,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserReviewController;
 use App\Http\Middleware\MustBeAdmin;
+use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -133,7 +134,7 @@ Route::get('/shop/get-product-size/{productTypeId}', [ShopCategoryController::cl
 Route::get('/cart',[CartController::class,'index'])->name('cart.index');
 
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth',Authenticate::class])->group(function () {
     Route::get('/order-confirmation',[ShopOrderController::class,'index'])->name('order-confirmation.index');
     Route::post('/confirm-order',[ShopOrderController::class,'store'])->name('confirm-order.store');
     Route::get('/coupon-check',[ShopOrderController::class,'checkCoupon'])->name('coupon-check.index');
@@ -157,6 +158,11 @@ Route::middleware(['auth'])->group(function () {
 
    Route::post('/review-store/{productId}',[UserReviewController::class,'store'])->name('review.store');
 
+   Route::post('/store-wishlist',[WishlistController::class,'store'])->name('wishlist.store');
+   Route::get('/get-wishlist',[WishlistController::class,'getWishList'])->name('wishlist.getWishlist');
+    Route::get('/wishlist',[WishlistController::class,'showWishlistShow'])->name('wishlist.showWishlistShow');
+    Route::delete('/wishlist/{productId}',[WishlistController::class,'destroy'])->name('wishlist.destroy');
+    Route::delete('/wishlist-destroy/{productId}',[WishlistController::class,'destroyWishlist'])->name('wishlist.destroyWishlist');
 
 
 

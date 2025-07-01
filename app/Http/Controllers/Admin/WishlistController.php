@@ -8,6 +8,8 @@ use App\Http\Requests\StoreWishlistRequest;
 use App\Http\Requests\UpdateWishlistRequest;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class WishlistController extends Controller
 {
@@ -61,7 +63,7 @@ class WishlistController extends Controller
         ]);
 
 
-        
+
 
         return view('admin.wishlist.index', ['wishlists' => $wishlist]);
     }
@@ -79,8 +81,29 @@ class WishlistController extends Controller
      */
     public function store(StoreWishlistRequest $request)
     {
-        //
+        $user = Auth::user();
+
+        if (!Auth::check()) {
+            return response()->json([
+               'message' => 'Unauthenticated'
+            ], 401);
+        }
+
+
+        // Get or create wishlist for user
+        $wishlist = Wishlist::firstOrCreate([
+            'user_id' => $user->id
+        ]);
+
+        $wishlist->products()->syncWithoutDetaching($request->product_id);
+        $wishlist->load('products');
+
+
+
+        return response()->json(['message' => 'Product added to wishlist successfully.','success' => true,'wishlist' => $wishlist], 200);
     }
+
+
 
     /**
      * Display the specified resource.
@@ -109,8 +132,77 @@ class WishlistController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Wishlist $wishlist)
+    public function destroy($productId)
     {
-        //
+        $user = Auth::user();
+
+        if (!Auth::check()) {
+            return response()->json([
+               'message' => 'Unauthenticated'
+            ], 401);
+        }
+
+        $validator = Validator::make(['product_id' => $productId], [
+            'product_id' => 'required|exists:products,id',
+        ]);
+
+        if($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $wishlist = Wishlist::where('user_id', $user->id)->first();
+        $wishlist->products()->detach($productId);
+
+        return redirect()->route('wishlist.showWishlistShow')->with('success', 'Product removed from wishlist successfully.');
+    }
+
+    public function destroyWishlist($productId)
+    {
+        $user = Auth::user();
+
+        if (!Auth::check()) {
+            return response()->json([
+               'message' => 'Unauthenticated'
+            ], 401);
+        }
+
+        $validator = Validator::make(['product_id' => $productId], [
+            'product_id' => 'required|exists:products,id',
+        ]);
+
+        if($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $wishlist = Wishlist::where('user_id', $user->id)->first();
+        $wishlist->products()->detach($productId);
+
+        return response()->json(['message' => 'Product removed from wishlist successfully.','success' => true], 200);
+    }
+
+    public function getWishList() {
+        $user = Auth::user();
+
+        if (!Auth::check()) {
+            return response()->json([
+               'message' => 'Unauthenticated'
+            ], 401);
+        }
+
+        $wishlist = Wishlist::where('user_id', $user->id)->first();
+        $wishlist->load('products');
+
+        return response()->json(['message' => 'Product added to wishlist successfully.','success' => true,'wishlist' => $wishlist], 200);
+    }
+
+    public function showWishlistShow() {
+
+        $wishlist = Wishlist::where('user_id', Auth::user()->id)->first();
+        if ($wishlist) {
+            $wishlist->load(['products' => function ($query) {
+                $query->orderBy('id', 'desc');
+            }]);
+        }
+        return view('public.wishlist.index',['wishlist' => $wishlist]);
     }
 }

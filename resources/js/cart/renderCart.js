@@ -30,7 +30,9 @@ const renderCart = (cartItem) => {
         }
     });
 
-    image.src = cartItem.product.product_images[0].preview;
+    image.src =
+        cartItem.product.product_images.length > 0? cartItem.product.product_images[0].preview :
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1362px-Placeholder_view_vector.svg.png?20220519031949";
     cartProductName.textContent = cartItem.product.product_name;
     cartProductSize.textContent = cartItem.size;
     cartQuantityValue.textContent = cartItem.quantity;
@@ -58,7 +60,6 @@ const renderCart = (cartItem) => {
     }
     cartTotal.textContent = `${cartItemTotal} MMK`;
 
-
     const currentStock = cartItem.product.stocks.find(
         (stock) => stock.size.size_name === cartItem.size
     );
@@ -77,8 +78,6 @@ const renderCart = (cartItem) => {
             "pointer-events-none"
         );
     }
-
-
 
     return content;
 };

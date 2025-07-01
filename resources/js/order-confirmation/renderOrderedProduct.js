@@ -23,7 +23,8 @@ const renderOrderedProduct = (cart) => {
     const orderedItemRemove = content.querySelector(".ordered-product-remove");
     const redirectToDetail = content.querySelector(".redirect-to-detail");
 
-    image.src = cart.product.product_images[0].preview;
+    image.src = cart.product.product_images.length > 0? cart.product.product_images[0].preview :
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1362px-Placeholder_view_vector.svg.png?20220519031949"
     orderedProductName.textContent = cart.product.product_name;
     orderedProductSize.textContent = cart.size;
     orderedQuantityValue.textContent = "Qty: " + cart.quantity;
