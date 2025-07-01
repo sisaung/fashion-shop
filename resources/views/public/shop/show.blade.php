@@ -479,7 +479,7 @@
                     <h3 class="font-heading font-semibold text-lg mb-3"> Write Reviews </h3>
                     <div>
                         <textarea name="review" id="" cols="60" rows="10"
-                            class="border border-pearl-bush-400 mb-3 w-full rounded-lg "></textarea>
+                            class="border border-pearl-bush-400 focus:ring-1 focus:ring-pearl-bush-500 mb-3 w-full rounded-lg "></textarea>
 
                         <div class="flex items-center gap-x-5 justify-end">
                             <p>Rate this product</p>

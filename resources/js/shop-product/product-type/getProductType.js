@@ -7,6 +7,7 @@ import { renderBreadcrumbTotalProduct } from "../renderBreadcrumbTotalProduct";
 import { renderPaginationList } from "../renderPaginationList";
 import renderProductList from "../renderProductList";
 import renderProductSizeList from "../size/renderProductSizeLIst";
+import getWishlist from "../wishlist/getWishlist";
 import renderProductTypeList from "./renderProductTypeLIst";
 
 const initializeProductType = async () => {
@@ -51,6 +52,7 @@ const initializeProductType = async () => {
 
     // initialRender
     const productTypeData = await fetchProductType(`/shop/get-product-type`);
+    const wishlistProducts = await getWishlist();
 
     if (productTypeData) {
         renderProductTypeList(productTypeData, filterProductTypeContainer);
@@ -266,14 +268,15 @@ const initializeProductType = async () => {
                 );
 
                 if (productShop?.data) {
-                    renderProductList(productShop?.data, container);
+                   await renderProductList(productShop?.data, container,wishlistProducts);
                     renderBreadcrumbTotalProduct(
                         productShop?.total,
                         totalProductContainer
                     );
-                    renderPaginationList(
+                  await renderPaginationList(
                         productShop?.links,
-                        paginationContainer
+                        paginationContainer,
+                        wishlistProducts
                     );
                 }
 
@@ -324,12 +327,12 @@ const initializeProductType = async () => {
             const productShop = await fetchProductShop(`/shop/get`);
 
             if (productShop?.data) {
-                renderProductList(productShop.data, container);
+               await renderProductList(productShop.data, container,wishlistProducts);
                 renderBreadcrumbTotalProduct(
                     productShop.total,
                     totalProductContainer
                 );
-                renderPaginationList(productShop.links, paginationContainer);
+               await renderPaginationList(productShop.links, paginationContainer,wishlistProducts);
             }
 
             //  Remove filters from URL

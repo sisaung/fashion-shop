@@ -3,7 +3,7 @@ import { renderBreadcrumbTotalProduct } from "./renderBreadcrumbTotalProduct";
 import { renderPaginationList } from "./renderPaginationList";
 import renderProductList from "./renderProductList";
 
-export const renderPagination = (link) => {
+export const renderPagination = async (link,wishlistProducts) => {
     const paginationTemplate = document.querySelector("#pagination-template");
     const container = document.getElementById("product-container");
     const totalProductContainer = document.getElementById(
@@ -97,10 +97,10 @@ export const renderPagination = (link) => {
         const data = await fetchProductShop(`/shop/get?${queryString}`);
 
         if (data?.data) {
-            renderProductList(data?.data, container);
+            await renderProductList(data?.data, container,wishlistProducts);
             renderBreadcrumbTotalProduct(data?.total, totalProductContainer);
 
-            renderPaginationList(data?.links, paginationContainer);
+            await renderPaginationList(data?.links, paginationContainer,wishlistProducts);
         }
     };
 

@@ -5,9 +5,9 @@ const initializeWishListHeader = async () => {
     const totalWishlistCount = document.querySelector(".total-wishlist-count");
     const data = await fetchWishlist("/get-wishlist");
 
-    if (data.wishlist.products.length > 0) {
+    if (data?.wishlist?.products?.length > 0) {
         wishlistCount.classList.remove("hidden");
-        totalWishlistCount.textContent = data.wishlist.products.length;
+        totalWishlistCount.textContent = data.wishlist ? data.wishlist.products.length : ''
     }
 };
 

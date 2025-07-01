@@ -3,6 +3,7 @@ import { fetchProductShop } from "../services/fetchProductShop";
 import { renderBreadcrumbTotalProduct } from "../shop-product/renderBreadcrumbTotalProduct";
 import { renderPaginationList } from "../shop-product/renderPaginationList";
 import renderProductList from "../shop-product/renderProductList";
+import getWishlist from "../shop-product/wishlist/getWishlist";
 
 export const renderShopBrand = async (brand) => {
     const template = document.getElementById("brand-list-template");
@@ -34,11 +35,13 @@ export const renderShopBrand = async (brand) => {
     // inital filter
 
     if (!container) return;
+    const wishlistProducts = await getWishlist();
+
 
     const searchParams = new URLSearchParams(window.location.search).toString();
     const data = await fetchProductShop(`/shop/get?${searchParams}`);
     if (data?.data) {
-        renderProductList(data?.data, container);
+       await renderProductList(data?.data, container,wishlistProducts);
     }
 
     checkbox.addEventListener("change", async (e) => {
@@ -53,7 +56,7 @@ export const renderShopBrand = async (brand) => {
 
 
             if (data?.data) {
-                renderProductList(data?.data, container);
+               await renderProductList(data?.data, container,wishlistProducts);
                 renderBreadcrumbTotalProduct(
                     data?.total,
                     totalProductContainer
@@ -68,7 +71,7 @@ export const renderShopBrand = async (brand) => {
             const searchParams = new URLSearchParams(url.search).toString();
             const data = await fetchProductShop(`/shop/get?${searchParams}`);
             if (data?.data) {
-                renderProductList(data?.data, container);
+                await renderProductList(data?.data, container,wishlistProducts);
                 renderBreadcrumbTotalProduct(
                     data?.total,
                     totalProductContainer

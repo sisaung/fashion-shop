@@ -191,13 +191,14 @@
             </div>
         </section>
 
+        <section>
+            <div id="pagination-container" class="flex justify-center pb-10"></div>
+        </section>
+
         <template id="pagination-template">
             @include('components.public.paginationTest')
 
         </template>
-
-        <div class="flex justify-center items-center pb-10" id="pagination-container">
-        </div>
     @endsection
 
     @push('scripts')
@@ -207,6 +208,14 @@
         @vite(['resources/js/shop-product/getProductCategory.js'])
         @vite(['resources/js/shop-product/product-type/getProductType.js'])
         @vite(['resources/js/shop-product/product-detail/redirect.js'])
+        @vite(['resources/js/shop-product/product-detail/redirect.js'])
+
+        @vite(['resources/js/shop-product/wishlist/addWishlist.js'])
+
+
+
+
+
 
 
         {{-- @vite(['resources/js/shop-product/setUpFilterEvent.js']) --}}

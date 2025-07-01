@@ -137,8 +137,9 @@ import { fetchProductShop } from "../services/fetchProductShop";
 import { renderBreadcrumbTotalProduct } from "../shop-product/renderBreadcrumbTotalProduct";
 import { renderPaginationList } from "../shop-product/renderPaginationList";
 import renderProductList from "../shop-product/renderProductList";
+import getWishlist from "../shop-product/wishlist/getWishlist";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async() => {
     const container = document.getElementById("product-container");
     const totalProductContainer = document.getElementById(
         "total-product-container"
@@ -152,6 +153,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const currentSearchParams = new URLSearchParams(location.search);
     const currentParamsObj = Object.fromEntries(currentSearchParams);
+
+    const wishlistProducts = await getWishlist();
+    console.log(wishlistProducts)
 
     // Sidebar close button
     closeBtn?.addEventListener("click", () => {
@@ -198,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         if (data?.data) {
-            renderProductList(data.data, container);
+           await renderProductList(data.data, container,wishlistProducts);
             renderBreadcrumbTotalProduct(data.total, totalProductContainer);
             renderPaginationList(data.links, paginationContainer);
         }

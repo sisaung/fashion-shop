@@ -190,7 +190,10 @@ class WishlistController extends Controller
         }
 
         $wishlist = Wishlist::where('user_id', $user->id)->first();
-        $wishlist->load('products');
+        if($wishlist) {
+
+            $wishlist->load('products');
+        }
 
         return response()->json(['message' => 'Product added to wishlist successfully.','success' => true,'wishlist' => $wishlist], 200);
     }
