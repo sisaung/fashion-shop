@@ -1,4 +1,9 @@
-import { emptyCart, getCartData, saveCartData, updateCart } from "../utils/cart";
+import {
+    emptyCart,
+    getCartData,
+    saveCartData,
+    updateCart,
+} from "../utils/cart";
 import renderCartList from "./renderCartList";
 
 const initializeCartList = () => {
@@ -11,8 +16,6 @@ const initializeCartList = () => {
         localStorage.removeItem("cartItems");
         saveCartData([]);
         updateCart();
-
-
     };
 
     const handleClick = (e) => {

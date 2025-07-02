@@ -34,7 +34,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                            class="text-gray-500 hover:text-gray-700 text-sm underline transition-colors">
+                                            class="cursor-pointer text-gray-500 hover:text-gray-700 text-sm underline transition-colors">
                                             Remove
                                         </button>
                                     </form>

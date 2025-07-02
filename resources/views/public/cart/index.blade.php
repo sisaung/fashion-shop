@@ -3,14 +3,17 @@
     <div class="min-h-screen bg-gray-50">
 
         {{-- Main Content --}}
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
+            <div class=" clear-cart-container px-5 absolute" >
+                <button
+                    class="clear-all-btn flex text-stone-500  hover:text-stone-600 hover:underline-offset-4 hover:underline cursor-pointer text-sm px-4 py-2 rounded-full">Clear
+                    All</button>
+            </div>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 p-8">
 
                 {{-- Cart Items --}}
                 <div class="lg:col-span-2 h-screen overflow-y-auto hide-scrollbar">
-                    <button
-                        class="clear-all-btn text-stone-500 flex hover:text-stone-600 hover:underline-offset-4 hover:underline w-full justify-end cursor-pointer text-sm px-4 py-2 rounded-full">Clear
-                        All</button>
+
                     <div class="empty-cart-output">
 
                     </div>
