@@ -237,9 +237,8 @@
         @vite(['resources/js/shop-product/sortProduct.js'])
         @vite(['resources/js/shop-product/getProductCategory.js'])
         @vite(['resources/js/shop-product/product-type/getProductType.js'])
+        {{-- @vite(['resources/js/shop-product/product-detail/redirect.js']) --}}
         @vite(['resources/js/shop-product/product-detail/redirect.js'])
-        @vite(['resources/js/shop-product/product-detail/redirect.js'])
-
         @vite(['resources/js/shop-product/wishlist/addWishlist.js'])
 
 

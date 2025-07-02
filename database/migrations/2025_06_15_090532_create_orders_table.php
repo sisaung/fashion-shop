@@ -28,7 +28,7 @@ return new class extends Migration
             // $table->double('shipping_amount')->default(0);
 
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
-            $table->string('customer_address_id')->constrained('customer_addresses')->onDelete('cascade');
+            $table->string('customer_address_id')->conspotrained('customer_addresses')->onDelete('cascade');
 
             $table->foreignId('coupon_id')->nullable()->constrained('coupons')->onDelete('cascade');
             $table->timestamps();

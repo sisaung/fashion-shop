@@ -27,6 +27,7 @@ const initializeSort = async () => {
     // const data = await fetchProductShop(`/shop`);
 
     const wishlistProducts = await getWishlist();
+    console.log(wishlistProducts)
 
     if (data?.data) {
         await renderProductList(data?.data, container, wishlistProducts);
