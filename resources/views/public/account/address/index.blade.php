@@ -194,7 +194,7 @@
 
                                                     <div class="space-y-2">
                                                         <label for="city"
-                                                            class="@error('phone_number')
+                                                            class="@error('city')
                                 text-red-500
                             @enderror leading-7 text-sm text-gray-600">City
 

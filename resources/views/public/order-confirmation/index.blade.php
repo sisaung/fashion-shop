@@ -121,13 +121,9 @@
                         <div class="bg-white rounded-lg ">
                             <h2 class="  text-gray-600 font-heading mb-3">Delivery Information</h2>
                             <div class="space-y-4">
-                                {{-- <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                                    <input type="email" name="email"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
-                                </div> --}}
 
-                                <div class="delivery-address-container space-y-4">
+
+                                <div class="delivery-address-container space-y-4 px-3">
                                     @if (Auth::check() && Auth::user()->address->count() > 0)
                                         @foreach (Auth::user()->address as $address)
                                             <div data-address-id="{{ $address->id }}"
@@ -211,10 +207,15 @@
                                             <div class="grid md:grid-cols-2 gap-4">
                                                 <div>
                                                     <label for="name" id="name"
-                                                        class="block text-sm font-medium text-gray-700 mb-2">Full
+                                                    class="@error('name')
+                                                    text-red-500
+                                                        @enderror leading-7 text-sm text-gray-600">Full
                                                         Name</label>
                                                     <input type="text" name="name" id="name"
-                                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                                    class="@error('name')
+
+                                                    is-invalid
+                                                @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     @error('name')
                                                         <p class="text-sm text-red-500"> {{ $message }} </p>
                                                     @enderror
@@ -222,10 +223,14 @@
 
                                                 <div>
                                                     <label id="phone_number"
-                                                        class="block text-sm font-medium text-gray-700 mb-2">Phone
+                                                        class="@error('phone_number')
+                                                    text-red-500
+                                                        @enderror leading-7 text-sm text-gray-600">Phone
                                                         Number</label>
                                                     <input type="text" name="phone_number"
-                                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                                        class="@error('phone_number')
+                                                    is-invalid
+                                                @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     @error('phone_number')
                                                         <p class="text-sm text-red-500"> {{ $message }} </p>
                                                     @enderror
@@ -235,19 +240,27 @@
 
                                             <div class="grid md:grid-cols-2 gap-4">
                                                 <div>
-                                                    <label
-                                                        class="block text-sm font-medium text-gray-700 mb-2">City</label>
+                                                    <label el for="city"
+                                                        class="@error('city')
+                        text-red-500
+                    @enderror leading-7 text-sm text-gray-600">City</label>
                                                     <input type="text" name="city"
-                                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                                    class="@error('city')
+                                                    is-invalid
+                                                @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     @error('city')
                                                         <p class="text-sm text-red-500"> {{ $message }} </p>
                                                     @enderror
                                                 </div>
                                                 <div>
                                                     <label
-                                                        class="block text-sm font-medium text-gray-700 mb-2">Township</label>
+                                                    class="@error('township')
+                                                    text-red-500
+                                                @enderror leading-7 text-sm text-gray-600">Township</label>
                                                     <input type="text" name="township"
-                                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                                    class="@error('township')
+                                                    is-invalid
+                                                @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     @error('township')
                                                         <p class="text-sm text-red-500"> {{ $message }} </p>
                                                     @enderror
@@ -255,10 +268,15 @@
                                             </div>
 
                                             <div>
-                                                <label class="block text-sm font-medium text-gray-700 mb-2">Full
+                                                <label class="@error('address_detail')
+                                                text-red-500
+                                            @enderror leading-7 text-sm text-gray-600">Full
                                                     Address</label>
                                                 <textarea name="address_detail" rows="4"
-                                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"></textarea>
+                                                class="@error('address_detail')
+
+                                                is-invalid
+                                            @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
                                                 @error('address_detail')
                                                     <p class="text-sm text-red-500"> {{ $message }} </p>
                                                 @enderror
@@ -269,13 +287,13 @@
                                             <div class="flex items-center gap-2 pt-2">
                                                 <input name="set_default" disabled checked type="checkbox"
                                                     id="set_default"
-                                                    class="w-4 h-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded">
+                                                    class="w-4 h-4 text-pearl-bush-600 focus:ring-pearl-bush-500 border-gray-300 rounded">
                                                 <label for="set_default" class="text-sm text-gray-700">Set as default
                                                     address</label>
                                             </div>
 
                                             <button type="submit"
-                                                class="bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                                                class="bg-pearl-bush-500 hover:bg-pearl-bush-600 text-white px-6 py-3 text-sm cursor-pointer rounded-lg font-medium transition-colors">
                                                 Save Information
                                             </button>
                                         </form>
