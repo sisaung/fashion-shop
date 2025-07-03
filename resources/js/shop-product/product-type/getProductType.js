@@ -212,7 +212,9 @@ const initializeProductType = async () => {
     document
         .getElementById("apply-filters-btn")
         .addEventListener("click", async () => {
-            const params = new URLSearchParams();
+            const {search} = window.location;
+
+            const params = new URLSearchParams(search);
 
             const selectedProductCategory = document.querySelector(
                 "input[name='product-category']:checked"
@@ -258,6 +260,8 @@ const initializeProductType = async () => {
             }
 
             const url = `shop?${params.toString()}`;
+
+            console.log(params.toString())
 
             if (
                 selectedFilters.productCategory_id ||

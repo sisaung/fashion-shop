@@ -1,13 +1,13 @@
 @extends('layout.dashboard')
 @section('content')
-    <section class="px-5">
+    <section class="px-5 mt-5 bg-white py-5 rounded-lg shadow">
 
         @include('components.admin.breadcrumb', [
             'currentPageTitle' => 'Change Name',
             'links' => [['name' => 'Profile', 'path' => route('admin-profile.index')]],
         ])
 
-        <div class="grid grid-cols-3">
+        <div class="grid grid-cols-3 mt-5">
             <div class="col-span-1 px-5 border border-stone-50 shadow-md p-4 rounded">
 
                 <form action="{{ route('admin-profile.change-name') }}" method="POST">
@@ -36,5 +36,5 @@
     </section>
 @endsection
 @push('scripts')
- 
+
 @endpush

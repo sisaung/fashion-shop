@@ -3,7 +3,7 @@ import { renderBreadcrumbTotalProduct } from "./renderBreadcrumbTotalProduct";
 import { renderPaginationList } from "./renderPaginationList";
 import renderProductList from "./renderProductList";
 
-export const renderPagination = async (link,wishlistProducts) => {
+export const renderPagination = async (link, wishlistProducts) => {
     const paginationTemplate = document.querySelector("#pagination-template");
     const container = document.getElementById("product-container");
     const totalProductContainer = document.getElementById(
@@ -68,6 +68,23 @@ export const renderPagination = async (link,wishlistProducts) => {
     }
 
     // Parse query params to update browser URL
+    // const urlToParam = (url = "") => {
+    //     const { search } = new URL(url);
+    //     const params = new URLSearchParams(search);
+    //     const currentParams = new URLSearchParams(currentSearchParam);
+
+    //     const paramObj = Object.fromEntries(params);
+    //     const currentParamObj = Object.fromEntries(currentParams);
+
+    //     const newParamObj = { ...currentParamObj, ...paramObj };
+
+    //     const newParam = new URLSearchParams(newParamObj).toString();
+
+    //     const queryString = newParam.toString();
+
+    //     history.pushState({}, "", location.pathname + "?" + queryString);
+    //     return queryString;
+    // };
     const urlToParam = (url = "") => {
         const { search } = new URL(url);
         const params = new URLSearchParams(search);
@@ -82,7 +99,9 @@ export const renderPagination = async (link,wishlistProducts) => {
 
         const queryString = newParam.toString();
 
+
         history.pushState({}, "", location.pathname + "?" + queryString);
+        
         return queryString;
     };
 
@@ -93,14 +112,26 @@ export const renderPagination = async (link,wishlistProducts) => {
 
     // Handle click
     paginationBtn.onclick = async () => {
+        console.log(link.url)
         const queryString = urlToParam(link.url);
+        // window.history.pushState(
+        //     {},
+        //     "",
+        //     location.origin + location.pathname + "?" + queryString
+        // );
+
+        console.log(queryString)
         const data = await fetchProductShop(`/shop/get?${queryString}`);
 
         if (data?.data) {
-            await renderProductList(data?.data, container,wishlistProducts);
+            await renderProductList(data?.data, container, wishlistProducts);
             renderBreadcrumbTotalProduct(data?.total, totalProductContainer);
 
-            await renderPaginationList(data?.links, paginationContainer,wishlistProducts);
+            await renderPaginationList(
+                data?.links,
+                paginationContainer,
+                wishlistProducts
+            );
         }
     };
 

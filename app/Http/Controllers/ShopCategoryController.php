@@ -247,6 +247,7 @@ class ShopCategoryController extends Controller
             'sort_by' => $sortBy,
             'sort_direction' => $sortDirection,
             'limit' => $limit,
+            'brands' => $brandNames
 
         ]);
 

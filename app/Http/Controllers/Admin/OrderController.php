@@ -24,8 +24,8 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $validSortColumns = ['order_number', 'product_name','total_amount'  ,'order_status','order_date','id'];
-        $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'id';
+        $validSortColumns = ['order_number', 'product_name','total_amount'  ,'order_status','order_date','id','created_at'];
+        $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'created_at';
 
         $sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
 
@@ -318,7 +318,7 @@ class OrderController extends Controller
                         $order->order_status = "cancelled";
                         $order->cancel_message = $request->reason;
 
-                    
+
                     $order->save();
                     return redirect()->route('order.show',['order' => $order->id]);
 

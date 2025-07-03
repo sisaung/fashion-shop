@@ -1,13 +1,13 @@
 @extends('layout.dashboard')
 @section('content')
-    <section class="px-5">
+    <section class="px-5 py-5 mt-5 bg-white rounded-lg shadow">
 
         @include('components.admin.breadcrumb', [
             'currentPageTitle' => 'Change Password',
             'links' => [['name' => 'Profile', 'path' => route('admin-profile.index')]],
         ])
 
-        <div class="grid grid-cols-3">
+        <div class="grid grid-cols-3 mt-5">
             <div class="col-span-1 px-5 border border-stone-50 shadow-md p-4 rounded">
 
                 <form action="{{ route('admin-profile.change-password') }}" method="POST">

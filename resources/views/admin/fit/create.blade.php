@@ -1,6 +1,7 @@
 @extends('layout.dashboard')
 
 @section('content')
+  <div class="py-5 mt-5 bg-white rounded-lg shadow">
     @include('components.admin.breadcrumb', [
         'currentPageTitle' => 'Create Fit',
         'links' => [['name' => 'Fit List', 'path' => route('fit.index')]],
@@ -59,6 +60,7 @@
             </div>
         </form>
     </div>
+  </div>
 @endsection
 @push('scripts')
     {{-- @vite(['resources/js/fileUpload.js']) --}}

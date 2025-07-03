@@ -81,8 +81,8 @@ class ProductTypeController extends Controller
     {
 
         $productCategory = ProductCategory::all();
-        $fit = Fit::all();
-        $size = Size::all();
+        $fit = Fit::orderBy('fit_name', 'asc')->get();
+        $size = Size::orderBy('size_name','asc')->get();
         return view('admin.product-type.create', ['productCategories' => $productCategory, 'fits' => $fit, 'sizes' => $size]);
     }
 
@@ -163,7 +163,7 @@ class ProductTypeController extends Controller
      */
     public function update(UpdateProductTypeRequest $request, $id)
     {
-      
+
         $validator = Validator::make(['id' => $id], [
             'id' => 'required|numeric|exists:product_types'
         ]);

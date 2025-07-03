@@ -1,7 +1,7 @@
 @extends('layout.dashboard')
 
 @section('content')
-    <div>
+    <div class="bg-white mt-5 py-5 rounded-md shadow">
 
 
         @include('components.admin.breadcrumb', [
@@ -39,7 +39,7 @@
 
                                 </th>
 
-                               
+
 
                                 <th scope="col" class="px-4 py-3 text-end text-sm font-medium text-gray-500">
                                     Coupon Discount

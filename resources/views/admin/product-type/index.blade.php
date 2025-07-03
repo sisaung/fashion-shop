@@ -1,7 +1,7 @@
 @extends('layout.dashboard')
 
 @section('content')
-    <div>
+    <div class="py-5 mt-5 bg-white rounded-lg shadow">
 
 
         @include('components.admin.breadcrumb', [

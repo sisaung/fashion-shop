@@ -20,6 +20,7 @@ const initializeFit = () => {
                 fitGroup.classList.add("block");
             }
 
+            console.log(data)
             data.forEach((fit) => {
                 const option = document.createElement("option");
                 option.value = fit.id;

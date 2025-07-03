@@ -1,3 +1,4 @@
+
 @extends('components.public.accountLayout')
 @section('container')
     <div class="px-5">
@@ -167,7 +168,8 @@
                                                 </button>
                                             </div>
                                             <!-- Modal body -->
-                                            <form action="{{ route('account.updateAddress',['id' => $address->id]) }}" method="POST">
+                                            <form action="{{ route('account.updateAddress', ['id' => $address->id]) }}"
+                                                method="POST">
                                                 @csrf
                                                 @method('PUT')
 

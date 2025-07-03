@@ -126,7 +126,7 @@ class FitController extends Controller
      */
     public function update(UpdateFitRequest $request, $id)
     {
-   
+
         $validator = Validator::make(['id' => $id], [
             'id' => 'required|numeric|exists:fits,id'
         ]);
@@ -173,7 +173,7 @@ class FitController extends Controller
     public function getFits($id)
     {
         $validator = Validator::make(['id' => $id], [
-            'id' => 'required|numeric|exists:product_types'
+            'id' => 'required|numeric|exists:product_types,id'
         ]);
 
         if ($validator->fails()) {
@@ -185,6 +185,7 @@ class FitController extends Controller
         $fits = Fit::whereHas('productTypes', function ($query) use ($id) {
             $query->where('product_types.id', $id);
         })->get();
+
 
         return response()->json($fits);
     }

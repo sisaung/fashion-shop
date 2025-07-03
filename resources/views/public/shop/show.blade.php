@@ -47,11 +47,11 @@
                 {{-- product image --}}
                 <div class="space-y-4">
                     <div
-                        class="relative group border border-pearl-bush-300 bg-gray-100 rounded-2xl overflow-hidden aspect-square">
+                        class="relative group border border-pearl-bush-300 bg-gray-100 rounded-2xl overflow-hidden">
                         @if ($product->productImages->count())
-                            <img src="{{ $product->productImages->first()->large }}"
-                                alt="{{ $product->productImages->first()->original_name }}"
-                                class="w-full h-full object-cover object-center">
+                        <img src="{{ $product->productImages->first()->large }}"
+                        alt="{{ $product->productImages->first()->original_name }}"
+                        class="w-full h-full object-cover object-top">
                         @else
                             <img src="https://www.mooreseal.com/wp-content/uploads/2013/11/dummy-image-square-300x300.jpg"
                                 alt="" class="w-full h-full object-cover object-center">

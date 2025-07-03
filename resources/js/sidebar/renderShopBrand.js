@@ -37,11 +37,10 @@ export const renderShopBrand = async (brand) => {
     if (!container) return;
     const wishlistProducts = await getWishlist();
 
-
     const searchParams = new URLSearchParams(window.location.search).toString();
     const data = await fetchProductShop(`/shop/get?${searchParams}`);
     if (data?.data) {
-       await renderProductList(data?.data, container,wishlistProducts);
+        await renderProductList(data?.data, container, wishlistProducts);
     }
 
     checkbox.addEventListener("change", async (e) => {
@@ -51,18 +50,29 @@ export const renderShopBrand = async (brand) => {
             url.searchParams.append("brands[]", e.target.value);
 
             window.history.pushState({}, "", url);
+
+            const selectedBrands = new URLSearchParams(
+                window.location.search
+            ).getAll("brands[]");
+
+            if (selectedBrands.includes(brand.brand_name)) {
+                checkbox.checked = true;
+            }
+
             const searchParams = new URLSearchParams(url.search).toString();
             const data = await fetchProductShop(`/shop/get?${searchParams}`);
 
-
             if (data?.data) {
-               await renderProductList(data?.data, container,wishlistProducts);
+                await renderProductList(
+                    data?.data,
+                    container,
+                    wishlistProducts
+                );
                 renderBreadcrumbTotalProduct(
                     data?.total,
                     totalProductContainer
                 );
                 renderPaginationList(data?.links, paginationContainer);
-
             }
         } else {
             const url = new URL(window.location);
@@ -71,14 +81,16 @@ export const renderShopBrand = async (brand) => {
             const searchParams = new URLSearchParams(url.search).toString();
             const data = await fetchProductShop(`/shop/get?${searchParams}`);
             if (data?.data) {
-                await renderProductList(data?.data, container,wishlistProducts);
+                await renderProductList(
+                    data?.data,
+                    container,
+                    wishlistProducts
+                );
                 renderBreadcrumbTotalProduct(
                     data?.total,
                     totalProductContainer
                 );
                 renderPaginationList(data?.links, paginationContainer);
-
-
             }
         }
     });

@@ -51,33 +51,35 @@ class ProductImageController extends Controller
 
         $uploadedPaths = collect();
 
-      
+
         foreach ($request->file('images') as $image) {
             $imageManager = ImageManager::gd()->read($image);
+
 
             $uuid = Str::uuid()->toString();
 
             $extension = $image->getClientOriginalExtension();
+
             $originalName = $image->getClientOriginalName();
 
             $fileName = $uuid . '.' . $extension;
 
             $largePath = $image->storeAs('/product_images/large', $fileName, 'public');
 
-            $previewImage = $imageManager->resize(400, 400, function ($c) {
+            $previewImage = $imageManager->resize(2000, 2000, function ($c) {
 
                 $c->aspectRatio();
                 $c->upsize();
             });
 
             $previewPath = 'product_images/preview/' . $uuid . '.jpg';
-            Storage::disk('public')->put($previewPath, $previewImage->encodeByExtension('jpg', 80));
+            Storage::disk('public')->put($previewPath, $previewImage->encode());
 
 
             $thumbNailImage = $imageManager->cover(150, 150);
             $thumbnailPath = 'product_images/thumbnail/' . $uuid . '.jpg';
 
-            Storage::disk('public')->put($thumbnailPath, $thumbNailImage->encodeByExtension('jpg', 80));
+            Storage::disk('public')->put($thumbnailPath, $thumbNailImage->encode());
 
             $uploadedImage = array_merge($baseImageData, [
 
@@ -90,8 +92,6 @@ class ProductImageController extends Controller
 
             $uploadedPaths->push($uploadedImage);
         }
-
-
 
        $productImages = $uploadedPaths->map(function  ($path)  {
             return ProductImage::create(

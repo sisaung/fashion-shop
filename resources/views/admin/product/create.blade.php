@@ -1,11 +1,12 @@
 @extends('layout.dashboard')
 
 @section('content')
+  <div class="py-5 mt-5 bg-white rounded-lg shadow">
     @include('components.admin.breadcrumb', [
         'currentPageTitle' => 'Create Product',
         'links' => [['name' => 'Product List', 'path' => route('product.index')]],
     ])
-    <h1 class="mt-10 text-xl px-5"> Create Product </h1>
+    <h1 class="mt-5 mb-5 text-xl px-5"> Create Product </h1>
     <div>
         <form action="{{ route('product.store') }}" method="POST">
             @csrf
@@ -305,6 +306,7 @@
     </div>
     </form>
     </div>
+  </div>
 @endsection
 @push('scripts')
     {{-- @vite(['resources/js/fileUpload.js']) --}}

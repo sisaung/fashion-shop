@@ -1,8 +1,7 @@
 @extends('layout.dashboard')
 
 @section('content')
-    <div>
-
+    <div class="bg-white py-5 mt-5 rounded-lg shadow">
 
         @include('components.admin.breadcrumb', [
             'currentPageTitle' => 'Brand List',

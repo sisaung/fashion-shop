@@ -3,7 +3,8 @@
 
 
 @section('content')
-    <div class="flex justify-between items-center ">
+   <div class="py-5 mt-5 bg-white rounded-lg shadow">
+    <div class="flex justify-between items-center  ">
         <div>
             @include('components.admin.breadcrumb', [
                 'currentPageTitle' => 'Customer Detail',
@@ -49,7 +50,7 @@
                         <td class="px-6 py-3 font-bold border border-stone-200 text-start">Created</td>
                         <td class="px-6 py-3 border border-stone-200 text-start text-nowrap">
                             {{ date('j M Y', strtotime($customer->created_at)) }} -
-                            {{ date('h:i A', strtotime($customer->created_at)) }} 
+                            {{ date('h:i A', strtotime($customer->created_at)) }}
                         </td>
                     </tr>
                 </tbody>
@@ -101,6 +102,7 @@
             </div>
         </div>
     </section>
+   </div>
 @endsection
 @push('scripts')
 @endpush
