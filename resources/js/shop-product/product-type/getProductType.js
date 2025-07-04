@@ -212,9 +212,12 @@ const initializeProductType = async () => {
     document
         .getElementById("apply-filters-btn")
         .addEventListener("click", async () => {
-            const {search} = window.location;
+            // history.pushState({}, "", "/shop");
+
+            const { search } = window.location;
 
             const params = new URLSearchParams(search);
+            history.pushState({}, "", "shop");
 
             const selectedProductCategory = document.querySelector(
                 "input[name='product-category']:checked"
@@ -261,7 +264,8 @@ const initializeProductType = async () => {
 
             const url = `shop?${params.toString()}`;
 
-            console.log(params.toString())
+            history.pushState({}, "", url);
+            console.log(params.toString());
 
             if (
                 selectedFilters.productCategory_id ||
@@ -271,13 +275,19 @@ const initializeProductType = async () => {
                     `/shop/get?${params.toString()}`
                 );
 
+                console.log(productShop);
+
                 if (productShop?.data) {
-                   await renderProductList(productShop?.data, container,wishlistProducts);
+                    await renderProductList(
+                        productShop?.data,
+                        container,
+                        wishlistProducts
+                    );
                     renderBreadcrumbTotalProduct(
                         productShop?.total,
                         totalProductContainer
                     );
-                  await renderPaginationList(
+                    await renderPaginationList(
                         productShop?.links,
                         paginationContainer,
                         wishlistProducts
@@ -286,9 +296,8 @@ const initializeProductType = async () => {
 
                 // renderProductTypeList(productTypeData, filterProductTypeContainer);
 
-                history.pushState({}, "", url);
+                // history.pushState({}, "", url);
             }
-
         });
 
     //apply resest btn
@@ -316,6 +325,12 @@ const initializeProductType = async () => {
                     label.classList.remove("bg-pearl-bush-400", "text-white");
                 });
 
+            document
+                .querySelectorAll('input[type="checkbox"]')
+                .forEach((checkbox) => {
+                    checkbox.checked = false;
+                });
+
             //  Hide fit/size sections
             fitHeading.classList.add("hidden");
             sizeHeading.classList.add("hidden");
@@ -331,12 +346,20 @@ const initializeProductType = async () => {
             const productShop = await fetchProductShop(`/shop/get`);
 
             if (productShop?.data) {
-               await renderProductList(productShop.data, container,wishlistProducts);
+                await renderProductList(
+                    productShop.data,
+                    container,
+                    wishlistProducts
+                );
                 renderBreadcrumbTotalProduct(
                     productShop.total,
                     totalProductContainer
                 );
-               await renderPaginationList(productShop.links, paginationContainer,wishlistProducts);
+                await renderPaginationList(
+                    productShop.links,
+                    paginationContainer,
+                    wishlistProducts
+                );
             }
 
             //  Remove filters from URL

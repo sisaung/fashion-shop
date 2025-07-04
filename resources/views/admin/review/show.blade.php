@@ -65,7 +65,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="px-6 py-3 whitespace-nowrap text-gray-600">
+                                <td class="px-6 py-3 whitespace-wrap text-gray-600">
                                     {{ $review->review }}
                                 </td>
                             </tr>

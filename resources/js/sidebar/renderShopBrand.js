@@ -94,5 +94,6 @@ export const renderShopBrand = async (brand) => {
             }
         }
     });
+
     return content;
 };

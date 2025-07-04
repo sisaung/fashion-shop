@@ -123,7 +123,11 @@ return response()->json(['message' => 'Order created successfully','data'=>$orde
 
 public function getOrders() {
 
-    $userOrders = Order::with(['orderItems','customerAddress','orderItems.stock','orderItems.stock.product'])->where('customer_id',Auth::id())->orderBy('id','desc')->paginate(5);
+
+
+    $userOrders = Order::with(['orderItems','customerAddress','orderItems.stock','orderItems.stock.product'])->whereHas('customer', function ($query) {
+        $query->where('customer_email', Auth::user()->email);
+    })->paginate(5);
 
 
 

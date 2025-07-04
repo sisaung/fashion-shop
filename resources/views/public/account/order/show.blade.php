@@ -50,10 +50,11 @@
                         <div class="bg-white border border-pearl-bush-100 rounded-lg  p-6 ordered-products-list-container">
                             <div class="flex gap-4 pb-6">
                                 <div
-                                    class="w-30 h-48 inline-flex justify-center items-center border border-pearl-bush-300  rounded-lg overflow-hidden flex-shrink-0">
-                                    <img src="{{ $item->stock->product->productImages->first()->large }}"
+                                    class="w-50 relative h-50 inline-flex justify-center items-center rounded-lg overflow-hidden flex-shrink-0">
+                                    <img src="{{ $item->stock->product->productImages->first()->preview }}"
                                         class="ordered-product-image" alt="BOSS Polo Penrose 38"
                                         class="w-full h-full object-cover" />
+                                        <div class="absolute top-0 left-0 w-full h-full bg-black/4"></div>
                                 </div>
 
                                 <div class="flex-1">

@@ -116,7 +116,7 @@
         <section class="mt-5 px-5">
             <div class="grid grid-cols-8 gap-5">
                 @foreach ($product->productImages as $image)
-                    <div class="col-span-1 relative group ">
+                    <div class="col-span-1 flex flex-col relative group ">
                         <div class="bg-black/10 absolute top-0 left-0 w-full h-full hidden group-hover:block  duration-500">
                         </div>
                         <form method="POST" action="{{ route('manage-image.destroy', ['id' => $image->id]) }}">
@@ -132,10 +132,12 @@
 
                             </button>
                         </form>
+                        <div class="aspect-square overflow-hidden">
 
-                        <img src="{{ $image->thumbnail }}"
-                            class="w-full h-full object-cover object-center  border border-pearl-bush-400 rounded-md"
-                            alt="{{ $product->product_name }}">
+                            <img src="{{ $image->preview }}"
+                                class="w-full h-full object-cover   border border-pearl-bush-400 rounded-md"
+                                alt="{{ $product->product_name }}">
+                        </div>
 
                     </div>
                 @endforeach

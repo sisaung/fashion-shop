@@ -74,7 +74,7 @@
                                     <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
                                         <div class="flex flex-col gap-1">
                                             <span>{{ $review->user->name }}</span>
-                                            <span class="text-gray-400"> {{ $review->review }} </span>
+                                            <span class="text-gray-400"> {{ substr($review->review, 0, 20) }}... </span>
                                         </div>
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">

@@ -1,7 +1,7 @@
-<div class="col-span-1  product-card">
-    <div class="col-span-1  group rounded-lg cursor-pointer">
+<div class="col-span-1  product-card ">
+    <div class="flex flex-col group rounded-lg cursor-pointer">
 
-        <div class=" relative rounded-lg overflow-hidden">
+        <div class=" relative w-full aspect-[3/4] flex justify-center items-center rounded-lg overflow-hidden">
             <img
                 alt="" class="product-image w-full  transition-transform duration-300 ease-in rounded-t-lg" />
             <div class="absolute top-0  left-0 w-full h-full bg-black/4"></div>
@@ -31,7 +31,7 @@
         <div
             class="group-hover:bg-black/2 flex flex-col gap-3 px-4 py-3 transition duration-300 ease-in  group-hover:shadow-xl">
             <p class="text-sm tracking-widest product-brand">Boss</p>
-            <h3 class="text-lg tracking-wide font-heading text-gray-800 product-name line-clamp-2">Classic cotton shirt</h3>
+            <h3 class="text-lg tracking-wide font-heading text-gray-800 product-name line-clamp-1">Classic cotton shirt</h3>
             <div class="flex items-center gap-x-2">
                 <p class="font-medium product-price"></p>
                 <p class="line-through text-sm text-gray-400 sale-product-price"></p>
