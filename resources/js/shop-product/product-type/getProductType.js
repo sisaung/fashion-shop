@@ -54,9 +54,26 @@ const initializeProductType = async () => {
     const params = new URLSearchParams(location.search);
     const paramsObject = Object.fromEntries(params);
 
-    const numberOfFilters = Object.values(paramsObject).length;
+    let selectFilterProductArr = [];
 
-    console.log(numberOfFilters)
+    for (const [key, value] of Object.entries(paramsObject)) {
+        if (key.includes("productCategory_id")) {
+            // selectedFilters.productCategory_id = value;
+            selectFilterProductArr.push(value);
+        }
+        if (key.includes("productType_id")) {
+            // selectedFilters.productType_id = value;
+            selectFilterProductArr.push(value);
+        }
+        if (key.includes("productFit_id")) {
+            // selectedFilters.productFit_id = value;
+            selectFilterProductArr.push(value);
+        }
+        if (key.includes("productSize_id")) {
+            // selectedFilters.productSize_id = value;
+            selectFilterProductArr.push(value);
+        }
+    }
 
     // if (!filterProductTypeContainer) return;
 
@@ -69,10 +86,13 @@ const initializeProductType = async () => {
     }
 
     const calculateTotalFilter = (numberOfFilters) => {
-
+        console.log(numberOfFilters);
         if (numberOfFilters > 0) {
             filterProductText.textContent = `Filtered`;
-            filterProductText.classList.add("text-pearl-bush-500",'font-heading');
+            filterProductText.classList.add(
+                "text-pearl-bush-500",
+                "font-heading"
+            );
             totalFilterProduct.classList.remove("hidden");
             totalFilterProduct.textContent = numberOfFilters;
         }
@@ -80,7 +100,7 @@ const initializeProductType = async () => {
         // return numberOfFilters;
     };
 
-    calculateTotalFilter(numberOfFilters);
+    calculateTotalFilter(selectFilterProductArr.length);
 
     //click product category and filter producttype
     const handleProductCategory = (e) => {
@@ -316,9 +336,27 @@ const initializeProductType = async () => {
                         wishlistProducts
                     );
 
+                    const obj = Object.fromEntries(params);
 
+                    let selecedtFilterProductArr = [];
 
-                    calculateTotalFilter(numberOfFilters)
+                    for (const [key, value] of Object.entries(obj)) {
+                        if (key.includes("productCategory_id")) {
+                            selecedtFilterProductArr.push(value);
+                        }
+                        if (key.includes("productType_id")) {
+                            selecedtFilterProductArr.push(value);
+                        }
+                        if (key.includes("productFit_id")) {
+                            selecedtFilterProductArr.push(value);
+                        }
+                        if (key.includes("productSize_id")) {
+                            selecedtFilterProductArr.push(value);
+                        }
+                    }
+
+                  
+                    calculateTotalFilter(selecedtFilterProductArr.length);
                 }
 
                 // renderProductTypeList(productTypeData, filterProductTypeContainer);

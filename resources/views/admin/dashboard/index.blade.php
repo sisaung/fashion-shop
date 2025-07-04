@@ -36,7 +36,7 @@
                             </p>
                         </div>
                     @else
-                        <p>No data last month</p>
+                        <p class="text-xs text-gray-500">No data last month</p>
                     @endif
                 </div>
 
@@ -77,7 +77,8 @@
                             </p>
                         </div>
                     @else
-                        <p>No data last month</p>
+                        <p class="text-xs text-gray-500">No data last month</p>
+
                     @endif
                 </div>
 
@@ -137,7 +138,8 @@
                             </p>
                         </div>
                     @else
-                        <p>No data last month</p>
+                        <p class="text-xs text-gray-500">No data last month</p>
+
                     @endif
                 </div>
 

@@ -215,6 +215,10 @@
 
         </template>
 
+        <div>
+            There is no product
+        </div>
+
         {{-- product list --}}
         <section>
             <div class="grid grid-cols-4 gap-5 mt-8" id="product-container">
