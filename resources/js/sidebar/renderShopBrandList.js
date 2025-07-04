@@ -5,7 +5,6 @@ export const renderShopBrandList = async(data, container) => {
     if (data) {
         for (let brand of data) {
             const brandList = await renderShopBrand(brand);
-
             container.appendChild(brandList);
         }
     }
