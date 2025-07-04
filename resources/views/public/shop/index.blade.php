@@ -66,7 +66,9 @@
                         <path d="M7 12h10"></path>
                         <path d="M10 18h4"></path>
                     </svg>
-                    Filter Product </button>
+                    <span class="filter-product-text"> Filter Product</span>
+                    <span class="total-filter-product text-xs bg-pearl-bush-100 text-pearl-bush-800 font-medium  px-2.5 py-0.5 rounded-md hidden">  </span>
+                </button>
 
                 <div id="drawer-right-example"
                     class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 "

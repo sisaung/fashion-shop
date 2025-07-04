@@ -31,7 +31,7 @@ const initializeGetReview = async () => {
     const reviews = document.querySelectorAll(".review-description");
     const reviewTime = document.querySelectorAll(".review-time");
 
-    console.log(reviews);
+    
 
     reviews.forEach((review) => {
         const createdAt = review.getAttribute("data-review-created-at");

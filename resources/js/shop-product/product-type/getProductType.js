@@ -33,6 +33,9 @@ const initializeProductType = async () => {
 
     const paginationContainer = document.getElementById("pagination-container");
 
+    const filterProductText = document.querySelector(".filter-product-text");
+    const totalFilterProduct = document.querySelector(".total-filter-product");
+
     const fitHeading = document.querySelector(".fit-heading");
     const sizeHeading = document.querySelector(".size-heading");
 
@@ -48,6 +51,13 @@ const initializeProductType = async () => {
         productSize_id: null,
     };
 
+    const params = new URLSearchParams(location.search);
+    const paramsObject = Object.fromEntries(params);
+
+    const numberOfFilters = Object.values(paramsObject).length;
+
+    console.log(numberOfFilters)
+
     // if (!filterProductTypeContainer) return;
 
     // initialRender
@@ -57,6 +67,20 @@ const initializeProductType = async () => {
     if (productTypeData) {
         renderProductTypeList(productTypeData, filterProductTypeContainer);
     }
+
+    const calculateTotalFilter = (numberOfFilters) => {
+
+        if (numberOfFilters > 0) {
+            filterProductText.textContent = `Filtered`;
+            filterProductText.classList.add("text-pearl-bush-500",'font-heading');
+            totalFilterProduct.classList.remove("hidden");
+            totalFilterProduct.textContent = numberOfFilters;
+        }
+
+        // return numberOfFilters;
+    };
+
+    calculateTotalFilter(numberOfFilters);
 
     //click product category and filter producttype
     const handleProductCategory = (e) => {
@@ -265,7 +289,6 @@ const initializeProductType = async () => {
             const url = `shop?${params.toString()}`;
 
             history.pushState({}, "", url);
-            console.log(params.toString());
 
             if (
                 selectedFilters.productCategory_id ||
@@ -292,6 +315,10 @@ const initializeProductType = async () => {
                         paginationContainer,
                         wishlistProducts
                     );
+
+
+
+                    calculateTotalFilter(numberOfFilters)
                 }
 
                 // renderProductTypeList(productTypeData, filterProductTypeContainer);
@@ -360,6 +387,11 @@ const initializeProductType = async () => {
                     paginationContainer,
                     wishlistProducts
                 );
+
+                filterProductText.textContent = `Filter Product`;
+                filterProductText.classList.remove("text-pearl-bush-500");
+                totalFilterProduct.classList.add("hidden");
+                totalFilterProduct.textContent = "";
             }
 
             //  Remove filters from URL

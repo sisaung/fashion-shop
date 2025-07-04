@@ -552,7 +552,7 @@
                 <template id="review-template">
 
                     <div class="border border-gray-200 rounded-lg px-8 py-5 min-h-32">
-                        <div class="flex gap-x-3 mb-3">
+                        <div class="flex  gap-x-3 mb-3 relative">
                             <img class="size-12 profile-image object-center object-cover rounded-full" alt="">
                             <div>
                                 <p class="text-lg font-medium font-heading  user-name"> </p>
@@ -571,7 +571,15 @@
 
 
                             </div>
-                            <span class="text-gray-500 text-sm mt-1 px-5 review-time"> </span>
+                            <div class="flex absolute top-0 right-0 items-center justify-center px-5">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="size-4 text-gray-500">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+
+                                <span class="text-gray-500 text-sm  review-time"> </span>
+                            </div>
                         </div>
 
                     </div>
