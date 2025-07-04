@@ -7,63 +7,53 @@ const initializeManageProductImageUpload = () => {
         .querySelector('meta[name="csrf-token"]')
         .getAttribute("content");
 
-    if (!manageImgeUpload) return;
+
+    if (!manageImgeUpload ) return;
+    let currentProductId = null;
 
     const handleClick = (e) => {
         e.preventDefault();
 
-        const id = e.target.dataset.productId;
-        const action = e.target.dataset.manageImageUrl;
-
-        const handleFileChange = async (e) => {
-            const files = e.target.files;
-            console.log(files)
-
-            if (!files) return;
-
-            const formData = new FormData();
-
-            for (let file of files) {
-                formData.append("images[]", file);
-            }
-
-            try {
-                const res = await fetch(
-                    `/dashboard/product/${id}/edit/manage-image`,
-                    {
-                        method: "POST",
-                        headers: {
-                            "X-CSRF-TOKEN": csrfToken,
-                            'Accept': 'application/json'
-                        },
-                        body: formData,
-                        credentials:"same-origin"
-                    }
-                );
-
-                if (res.ok) {
-                  location.reload();
-
-                }
-
-
-            } catch (e) {
-                console.log(e);
-            }
-        };
-        file.addEventListener("change", handleFileChange);
+        currentProductId = e.target.dataset.productId;
 
         file.click();
 
-        //   const manageProductImageUrl = e.target.closest('[data-manage-image]')
-
-        //   if(manageProductImageUrl) {
-
-        //       const action = manageProductImageUrl.dataset.manageImage;
-        //     location.href = `${action}${currentUrl}`
-
-        //   }
     };
+
+    const handleFileChange = async (e) => {
+        const files = e.target.files;
+        console.log(files);
+
+        if (!files || !currentProductId) return;
+
+        const formData = new FormData();
+
+        for (let file of files) {
+            formData.append("images[]", file);
+        }
+
+        try {
+            const res = await fetch(
+                `/dashboard/product/${currentProductId}/edit/manage-image`,
+                {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": csrfToken,
+                        Accept: "application/json",
+                    },
+                    body: formData,
+                    credentials: "same-origin",
+                }
+            );
+
+            if (res.ok) {
+                location.reload();
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    };
+    file.addEventListener("change", handleFileChange);
 
     manageImgeUpload.addEventListener("click", handleClick);
 };
