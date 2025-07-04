@@ -127,7 +127,9 @@ public function getOrders() {
 
     $userOrders = Order::with(['orderItems','customerAddress','orderItems.stock','orderItems.stock.product'])->whereHas('customer', function ($query) {
         $query->where('customer_email', Auth::user()->email);
-    })->paginate(5);
+    })->orderBy('id', 'desc')->paginate(5);
+
+
 
 
 

@@ -372,7 +372,7 @@
                     {{-- Bottom Actions - Sticky --}}
                     <div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 shadow-md px-4 py-4 z-50">
                         <div class="max-w-7xl mx-auto flex justify-between items-center">
-                            <a href="#"
+                            <a href="{{route('shop.index')}}"
                                 class="flex items-center gap-2 text-pearl-bush-400 hover:text-pearl-bush-600 font-medium transition-colors">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
                                     viewBox="0 0 24 24">

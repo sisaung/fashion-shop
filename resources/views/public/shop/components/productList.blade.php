@@ -7,9 +7,6 @@
             <div class="absolute top-0  left-0 w-full h-full bg-black/4"></div>
             {{-- <div class="absolute top-0  left-0 w-full h-full bg-black/5"></div> --}}
 
-
-
-
             <div class="flex justify-between w-full items-center absolute top-0">
                 <div id="product-promo-container">
                     <p class=" text-white   text-xs px-2 py-1 product-promo  hidden"></p>

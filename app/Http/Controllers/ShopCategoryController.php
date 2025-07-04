@@ -281,6 +281,8 @@ class ShopCategoryController extends Controller
             });
         }
 
+
+
         $brand->orderBy('brand_name', 'asc');
 
         return $brand->get();

@@ -21,6 +21,8 @@ const renderReview = (review) => {
     name.textContent = review.user.name;
     reviewDescription.textContent = review.review;
 
+    reviewDescription.setAttribute("data-review-created-at", review.created_at);
+
     return content;
 };
 

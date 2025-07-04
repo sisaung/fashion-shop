@@ -240,11 +240,7 @@
         {{-- @vite(['resources/js/shop-product/product-detail/redirect.js']) --}}
         @vite(['resources/js/shop-product/product-detail/redirect.js'])
         @vite(['resources/js/shop-product/wishlist/addWishlist.js'])
-
-
-
-
-
+        @vite(['resources/js/shop-product/countFilterNumber/countFilterNumber.js'])
 
 
         {{-- @vite(['resources/js/shop-product/setUpFilterEvent.js']) --}}

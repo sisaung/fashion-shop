@@ -46,12 +46,11 @@
 
                 {{-- product image --}}
                 <div class="space-y-4">
-                    <div
-                        class="relative group border border-pearl-bush-300 bg-gray-100 rounded-2xl overflow-hidden">
+                    <div class="relative group border border-pearl-bush-300 bg-gray-100 rounded-2xl overflow-hidden">
                         @if ($product->productImages->count())
-                        <img src="{{ $product->productImages->first()->large }}"
-                        alt="{{ $product->productImages->first()->original_name }}"
-                        class="w-full h-full object-cover object-top">
+                            <img src="{{ $product->productImages->first()->large }}"
+                                alt="{{ $product->productImages->first()->original_name }}"
+                                class="w-full h-full object-cover object-top">
                         @else
                             <img src="https://www.mooreseal.com/wp-content/uploads/2013/11/dummy-image-square-300x300.jpg"
                                 alt="" class="w-full h-full object-cover object-center">
@@ -570,7 +569,9 @@
                                 </div>
                                 <p class="text-gray-500 leading-8 review-description"> </p>
 
+
                             </div>
+                            <span class="text-gray-500 text-sm mt-1 px-5 review-time"> </span>
                         </div>
 
                     </div>
@@ -593,5 +594,7 @@
     @vite(['resources/js/shop-product/product-detail/activeTab.js'])
     @vite(['resources/js/shop-product/product-detail/rating.js'])
     @vite(['resources/js/review/getReview.js'])
+    @vite(['resources/js/review/postReviewTime.js'])
+
     @vite(['resources/js/wishList/wishList.js'])
 @endpush
