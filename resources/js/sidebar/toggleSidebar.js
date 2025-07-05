@@ -133,13 +133,15 @@
 //         stockCheckbox.addEventListener("change", updateToggleUI);
 //     }
 // });
+import { fetchBrand } from "../services/fetchBrand";
 import { fetchProductShop } from "../services/fetchProductShop";
 import { renderBreadcrumbTotalProduct } from "../shop-product/renderBreadcrumbTotalProduct";
 import { renderPaginationList } from "../shop-product/renderPaginationList";
 import renderProductList from "../shop-product/renderProductList";
 import getWishlist from "../shop-product/wishlist/getWishlist";
+import { renderShopBrandList } from "./renderShopBrandList";
 
-document.addEventListener("DOMContentLoaded", async() => {
+document.addEventListener("DOMContentLoaded", async () => {
     const container = document.getElementById("product-container");
     const totalProductContainer = document.getElementById(
         "total-product-container"
@@ -150,12 +152,28 @@ document.addEventListener("DOMContentLoaded", async() => {
     const stockCheckbox = document.getElementById("inStockOnly");
     const toggleBg = document.getElementById("stockToggleBg");
     const toggleDot = document.getElementById("stockToggleDot");
+    const filterBrand = document.getElementById("filter-brand");
 
     const currentSearchParams = new URLSearchParams(location.search);
     const currentParamsObj = Object.fromEntries(currentSearchParams);
 
+    // Update toggle UI styling
+    const updateToggleUI = (isChecked) => {
+        if (isChecked) {
+            toggleBg.classList.replace("bg-gray-300", "bg-pearl-bush-500");
+            toggleDot.style.transform = "translateX(16px)";
+        } else {
+            toggleBg.classList.replace("bg-pearl-bush-500", "bg-gray-300");
+            toggleDot.style.transform = "translateX(0)";
+        }
+    };
+
+    if (currentSearchParams.get("in_stock") === "1") {
+        stockCheckbox.checked = true;
+        updateToggleUI(true);
+    }
+
     const wishlistProducts = await getWishlist();
-    console.log(wishlistProducts)
 
     // Sidebar close button
     closeBtn?.addEventListener("click", () => {
@@ -201,24 +219,21 @@ document.addEventListener("DOMContentLoaded", async() => {
             `/shop/get${newSearchParams ? "?" + newSearchParams : ""}`
         );
 
+        const brand = await fetchBrand(
+            `/shop/get-brand${newSearchParams ? "?" + newSearchParams : ""}`
+        );
+
+        if (brand) {
+            await renderShopBrandList(brand, filterBrand);
+        }
+
         if (data?.data) {
-           await renderProductList(data.data, container,wishlistProducts);
+            await renderProductList(data.data, container, wishlistProducts);
             renderBreadcrumbTotalProduct(data.total, totalProductContainer);
             renderPaginationList(data.links, paginationContainer);
         }
 
         updateToggleUI(stockCheckbox.checked);
-    };
-
-    // Update toggle UI styling
-    const updateToggleUI = (isChecked) => {
-        if (isChecked) {
-            toggleBg.classList.replace("bg-gray-300", "bg-pearl-bush-500");
-            toggleDot.style.transform = "translateX(16px)";
-        } else {
-            toggleBg.classList.replace("bg-pearl-bush-500", "bg-gray-300");
-            toggleDot.style.transform = "translateX(0)";
-        }
     };
 
     // Chevron icon helpers
@@ -236,7 +251,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     // Initialize stock toggle functionality
     if (stockCheckbox) {
-        handleStockToggle(); // initial load
+        // handleStockToggle(); // initial load
         stockCheckbox.addEventListener("change", handleStockToggle);
     }
 });

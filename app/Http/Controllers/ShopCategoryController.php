@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductType;
 use App\Models\Size;
+use App\Models\Stock;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -256,38 +257,51 @@ class ShopCategoryController extends Controller
 
     }
 
-    public function getBrand(Request $request) {
-
-        $gender = $request->input('gender');
-        $item = $request->input('item');
 
 
-        $brand = Brand::with('products');
+    public function getBrand(Request $request)
+{
+    $gender = $request->input('gender');
+    $item = $request->input('item');
+    $inStock = $request->input('in_stock');
 
-        $brand->whereHas('products', function ($query) {
-            $query->where('brand_id', '!=', null);
-        });
-
-        if(!empty($gender)) {
-            $brand->whereHas('products', function ($query) use ($gender) {
-                $query->where('gender', $gender);
-            });
+    // Initialize brand query with products relation, filtered based on in_stock
+    $brand = Brand::with(['products' => function ($query) use ($inStock, $gender, $item) {
+        if (!empty($inStock) && $inStock == 1) {
+            $query->where('stock_count', '>', 0);
         }
 
-        if(!empty($item) && $item == 'new_arrival') {
-
-            $brand->whereHas('products', function ($query) {
-                $query->where('is_new_arrival', 1);
-            });
+        if (!empty($gender)) {
+            $query->where('gender', $gender);
         }
 
+        if (!empty($item) && $item == 'new_arrival') {
+            $query->where('is_new_arrival', 1);
+        }
+    }]);
+
+    // Always filter brands that have at least one product (matching the same conditions)
+    $brand->whereHas('products', function ($query) use ($inStock, $gender, $item) {
+        if (!empty($inStock) && $inStock == 1) {
+            $query->where('stock_count', '>', 0);
+        }
+
+        if (!empty($gender)) {
+            $query->where('gender', $gender);
+        }
+
+        if (!empty($item) && $item == 'new_arrival') {
+            $query->where('is_new_arrival', 1);
+        }
+    });
+
+    $brand->orderBy('brand_name', 'asc');
+
+    return response()->json($brand->get());
+}
 
 
-        $brand->orderBy('brand_name', 'asc');
 
-        return $brand->get();
-        return response()->json($brand->get());
-    }
 
     public function filterShopProduct(Request $request)
     {

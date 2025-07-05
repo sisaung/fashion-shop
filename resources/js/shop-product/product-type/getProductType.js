@@ -318,7 +318,7 @@ const initializeProductType = async () => {
                     `/shop/get?${params.toString()}`
                 );
 
-                console.log(productShop);
+               
 
                 if (productShop?.data) {
                     await renderProductList(
@@ -355,7 +355,7 @@ const initializeProductType = async () => {
                         }
                     }
 
-                  
+
                     calculateTotalFilter(selecedtFilterProductArr.length);
                 }
 

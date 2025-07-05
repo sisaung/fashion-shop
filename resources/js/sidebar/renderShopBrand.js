@@ -24,12 +24,21 @@ export const renderShopBrand = async (brand) => {
     checkbox.name = "brands[]";
     checkbox.value = brand.brand_name;
 
+    const { search } = location;
+
+    const selectedBrands = new URLSearchParams(window.location.search).getAll(
+        "brands[]"
+    );
+
+    if (selectedBrands.includes(brand.brand_name)) {
+        checkbox.checked = true;
+    }
     // Get selected brands from URL to keep checked state
-    
 
     // Prepare wishlist for product rendering
     const wishlistProducts = await getWishlist();
 
+   
     // Checkbox change event handler
     checkbox.addEventListener("change", async (e) => {
         const checkedBrandInputs = document.querySelectorAll(
@@ -41,6 +50,10 @@ export const renderShopBrand = async (brand) => {
 
         const url = new URL(window.location);
         const params = new URLSearchParams();
+
+        if (search) {
+            params.append("in_stock", 1);
+        }
 
         brands.forEach((b) => params.append("brands[]", b));
 

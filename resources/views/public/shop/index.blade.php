@@ -67,7 +67,9 @@
                         <path d="M10 18h4"></path>
                     </svg>
                     <span class="filter-product-text"> Filter Product</span>
-                    <span class="total-filter-product text-xs bg-pearl-bush-100 text-pearl-bush-800 font-medium  px-2.5 py-0.5 rounded-md hidden">  </span>
+                    <span
+                        class="total-filter-product text-xs bg-pearl-bush-100 text-pearl-bush-800 font-medium  px-2.5 py-0.5 rounded-md hidden">
+                    </span>
                 </button>
 
                 <div id="drawer-right-example"
@@ -215,9 +217,14 @@
 
         </template>
 
-        <div>
-            There is no product
-        </div>
+        <template id="product-empty-template">
+            <div class="w-full gap-5 flex flex-col mt-5 items-center justify-center">
+                <h1 class="text-3xl font-heading text-gray-800"> Nothing Found Products </h1>
+                <p class="text-sm text-gray-500"> Please check back </p>
+                <button data-go-shop="{{ route('shop.index') }}"
+                    class="back-shop-now bg-pearl-bush-500 text-white px-5 hover:bg-pearl-bush-600 py-2 rounded-full">Shop Now</button>
+            </div>
+        </template>
 
         {{-- product list --}}
         <section>
@@ -226,6 +233,9 @@
 
             </div>
         </section>
+
+        {{-- empty section --}}
+        <div id="empty-product-container"></div>
 
         <section>
             <div id="pagination-container" class="flex justify-center pb-10"></div>
