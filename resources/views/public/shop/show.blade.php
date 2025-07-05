@@ -431,7 +431,7 @@
                                         <div class="bg-yellow-400 rounded-full h-2.5"
                                             style="width: {{ $percentage }}%"></div>
                                     </div>
-                                    <span>{{ $starCount }}</span>
+                                    <span>{{ number_format($percentage) }} %</span>
                                 </div>
                             </div>
                         @endforeach
@@ -585,6 +585,21 @@
                     </div>
 
                 </template>
+
+
+
+
+            </section>
+
+            <template id="review-pagination-template">
+                @include('components.public.paginationTest')
+
+            </template>
+
+            <section class="mt-5">
+                <div id="review-pagination-container">
+
+                </div>
             </section>
 
         </div>
@@ -602,7 +617,6 @@
     @vite(['resources/js/shop-product/product-detail/activeTab.js'])
     @vite(['resources/js/shop-product/product-detail/rating.js'])
     @vite(['resources/js/review/getReview.js'])
-    @vite(['resources/js/review/postReviewTime.js'])
 
     @vite(['resources/js/wishList/wishList.js'])
 @endpush

@@ -1,5 +1,5 @@
 import renderReview from "./renderReview";
-const renderReviewList = (reviews, container, reviewCountContainer) => {
+const renderReviewList = async (reviews, container, reviewCountContainer) => {
     container.innerHTML = "";
     reviewCountContainer.innerHTML = "";
 
@@ -13,8 +13,8 @@ const renderReviewList = (reviews, container, reviewCountContainer) => {
     reviewCountContainer.appendChild(content);
 
     if (!container) return;
-    reviews.forEach((review) => {
-        const content = renderReview(review);
+    reviews.forEach(async (review) => {
+        const content = await renderReview(review);
         container.appendChild(content);
     });
 };

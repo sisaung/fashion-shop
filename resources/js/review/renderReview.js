@@ -1,4 +1,4 @@
-const renderReview = (review) => {
+const renderReview = async (review) => {
     const template = document.getElementById("review-template");
 
     if (!template) return;

@@ -44,7 +44,7 @@ class UserReviewController extends Controller
             $review->where('rating', $filterRating);
         }
 
-        
+
         $review = $review->orderBy('id', 'DESC')->paginate(5);
 
         return response()->json($review);
