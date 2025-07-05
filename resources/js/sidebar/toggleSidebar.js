@@ -140,6 +140,7 @@ import { renderPaginationList } from "../shop-product/renderPaginationList";
 import renderProductList from "../shop-product/renderProductList";
 import getWishlist from "../shop-product/wishlist/getWishlist";
 import { renderShopBrandList } from "./renderShopBrandList";
+import updateToggleUI from "./updateToggleUI";
 
 document.addEventListener("DOMContentLoaded", async () => {
     const container = document.getElementById("product-container");
@@ -150,27 +151,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     const sidebar = document.getElementById("sidebar");
     const closeBtn = document.getElementById("closeSidebar");
     const stockCheckbox = document.getElementById("inStockOnly");
-    const toggleBg = document.getElementById("stockToggleBg");
-    const toggleDot = document.getElementById("stockToggleDot");
+   
     const filterBrand = document.getElementById("filter-brand");
 
     const currentSearchParams = new URLSearchParams(location.search);
     const currentParamsObj = Object.fromEntries(currentSearchParams);
 
     // Update toggle UI styling
-    const updateToggleUI = (isChecked) => {
-        if (isChecked) {
-            toggleBg.classList.replace("bg-gray-300", "bg-pearl-bush-500");
-            toggleDot.style.transform = "translateX(16px)";
-        } else {
-            toggleBg.classList.replace("bg-pearl-bush-500", "bg-gray-300");
-            toggleDot.style.transform = "translateX(0)";
-        }
-    };
+
 
     if (currentSearchParams.get("in_stock") === "1") {
         stockCheckbox.checked = true;
         updateToggleUI(true);
+    }else{
+        stockCheckbox.checked = false;
+        updateToggleUI(false);
     }
 
     const wishlistProducts = await getWishlist();

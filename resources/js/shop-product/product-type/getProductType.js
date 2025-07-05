@@ -2,6 +2,7 @@ import { fetchProductFit } from "../../services/fetchProductFit";
 import { fetchProductShop } from "../../services/fetchProductShop";
 import { fetchProductSize } from "../../services/fetchProductSize";
 import { fetchProductType } from "../../services/fetchProductType";
+import updateToggleUI from "../../sidebar/updateToggleUI";
 import renderProductFitList from "../fit/renderProductFitLIst";
 import { renderBreadcrumbTotalProduct } from "../renderBreadcrumbTotalProduct";
 import { renderPaginationList } from "../renderPaginationList";
@@ -38,6 +39,8 @@ const initializeProductType = async () => {
 
     const fitHeading = document.querySelector(".fit-heading");
     const sizeHeading = document.querySelector(".size-heading");
+    const stockCheckbox = document.getElementById("inStockOnly");
+
 
     const urlParams = new URLSearchParams(window.location.search);
     const selectedProductTypeId = urlParams.get("filters[productType_id]");
@@ -318,7 +321,7 @@ const initializeProductType = async () => {
                     `/shop/get?${params.toString()}`
                 );
 
-               
+
 
                 if (productShop?.data) {
                     await renderProductList(
@@ -430,6 +433,8 @@ const initializeProductType = async () => {
                 filterProductText.classList.remove("text-pearl-bush-500");
                 totalFilterProduct.classList.add("hidden");
                 totalFilterProduct.textContent = "";
+                stockCheckbox.checked = false;
+                updateToggleUI(false);
             }
 
             //  Remove filters from URL
