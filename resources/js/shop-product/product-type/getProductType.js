@@ -84,12 +84,25 @@ const initializeProductType = async () => {
     // if (!filterProductTypeContainer) return;
 
     // initialRender
-    const productTypeData = await fetchProductType(`/shop/get-product-type`);
+    const selectedBrands = new URLSearchParams(window.location.search).getAll(
+        "brands[]"
+    );
     const wishlistProducts = await getWishlist();
+
+    let productTypeData = [];
+
+    if (selectedBrands.length > 0) {
+        productTypeData = await fetchProductType(
+            `/shop/get-product-type?brands[]=${selectedBrands}`
+        );
+    } else {
+        productTypeData = await fetchProductType(`/shop/get-product-type`);
+    }
 
     if (productTypeData) {
         renderProductTypeList(productTypeData, filterProductTypeContainer);
     }
+
 
     const calculateTotalFilter = (numberOfFilters) => {
         console.log(numberOfFilters);
@@ -109,7 +122,7 @@ const initializeProductType = async () => {
     calculateTotalFilter(selectFilterProductArr.length);
 
     //click product category and filter producttype
-    const handleProductCategory = (e) => {
+    const handleProductCategory = async (e) => {
         if (e.target.classList.contains("filter-product-category-radio")) {
             // Remove active from all
             document
@@ -125,19 +138,38 @@ const initializeProductType = async () => {
             selectedLabel.classList.add("bg-pearl-bush-400", "text-white");
 
             const productCategory_id = e.target.getAttribute(
-                "data-product-categpry"
+                "data-product-category"
             );
 
-            const filterProductType = productTypeData.filter(
-                (productType) =>
-                    productType.product_category_id ===
-                    Number(productCategory_id)
+            const selectedBrands = new URLSearchParams(window.location.search).getAll(
+                "brands[]"
             );
 
-            renderProductTypeList(
-                filterProductType,
-                filterProductTypeContainer
-            );
+
+            if (selectedBrands.length > 0) {
+
+                const filterProductType = await fetchProductType(
+                    `/shop/get-product-type?brands[]=${selectedBrands}`
+                );
+               console.log('filter product type')
+                if (filterProductType) {
+                    renderProductTypeList(
+                        filterProductType,
+                        filterProductTypeContainer
+                    );
+                }
+            } else {
+                const filterProductType = productTypeData.filter(
+                    (productType) =>
+                        productType.product_category_id ===
+                        Number(productCategory_id)
+                );
+                renderProductTypeList(
+                    filterProductType,
+                    filterProductTypeContainer
+                );
+            }
+
             selectedFilters.productCategory_id = productCategory_id;
         }
     };
