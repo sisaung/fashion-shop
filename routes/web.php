@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\ProductTypeController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StockController;
@@ -111,6 +112,8 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
 
             Route::post('/', 'update')->name('admin-profile.update');
         });
+
+        Route::get('/reports',[ReportController::class,'index'])->name('reports.index');
     });
 });
 

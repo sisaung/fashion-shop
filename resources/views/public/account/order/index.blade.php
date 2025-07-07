@@ -112,7 +112,7 @@
 
                             <div class="flex items-center gap-2">
                                 @foreach ($order->orderItems as $item)
-                                    @foreach ($item->stock->product->productImages as $image)
+                                    @foreach ($item->stock->product->productImages->take(1) as $image)
                                         <div class="size-10 border border-pearl-bush-300 rounded-lg overflow-hidden">
                                             <img src="{{ $image->preview }}" alt="{{ $image->original_name }}"
                                                 class="w-full  h-full object-cover object-center">

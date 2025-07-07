@@ -238,6 +238,11 @@
                     class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('coupon.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">Coupon</a>
             </div>
         </div>
+
+        <a href="{{ route('reports.index') }}"
+            class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('reports.index') ? ' bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">
+            Report
+        </a>
     </nav>
     <div class="mt-auto border-t  border-pearl-bush-100 p-4">
         <form action="{{ route('logout') }}" method="POST">

@@ -4,6 +4,7 @@
 @import "flowbite/src/themes/default";
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -24,6 +25,7 @@
     --color-pearl-bush-800: #694943;
     --color-pearl-bush-900: #563e38;
     --color-pearl-bush-950: #2e1f1c;
+
 }
 
 /* first */

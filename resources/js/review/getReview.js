@@ -29,6 +29,7 @@ const initializeGetReview = async () => {
 
             await renderReviewList(data?.data, container, reviewCountContainer);
             await renderReviewPaginationList(data?.links, paginationContainer);
+            postReviewTime()
         });
     });
 

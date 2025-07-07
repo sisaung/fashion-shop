@@ -5,6 +5,7 @@ const storeOrder = async (url, data, csrfToken) => {
             headers: {
 
                 "Content-Type": "application/json",
+                'Accept' : "application/json",
                 "X-CSRF-TOKEN": csrfToken,
             },
             body: JSON.stringify(data),

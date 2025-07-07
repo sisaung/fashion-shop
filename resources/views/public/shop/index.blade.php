@@ -57,7 +57,7 @@
                 <button data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example"
                     data-drawer-placement="right" aria-controls="drawer-right-example"
                     class="bg-gray-50
-                    border border-gray-300 focus:ring-1 focus:ring-pearl-bush-400 text-gray-900 inline-flex items-center
+                    border border-gray-300  focus:ring-1 focus:ring-pearl-bush-400 text-gray-900 inline-flex items-center
                     text-sm rounded-lg gap-x-2 px-4 py-2.5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -182,11 +182,11 @@
 
                     <div class="flex items-center gap-x-3">
                         <button id="apply-clears-btn"
-                            class=" text-white cursor-pointer bg-pearl-bush-300 px-4 py-2 rounded-full text-sm">
+                            class=" text-white  cursor-pointer bg-pearl-bush-300 px-4 py-2 rounded-full text-sm">
                             Clear
                             Filters </button>
                         <button id="apply-filters-btn"
-                            class=" text-white cursor-pointer bg-pearl-bush-500 px-4 py-2 rounded-full text-sm">
+                            class=" text-white   cursor-pointer bg-pearl-bush-500 px-4 py-2 rounded-full text-sm">
                             Filter
                             Products
                         </button>
