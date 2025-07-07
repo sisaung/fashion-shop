@@ -22,7 +22,9 @@ const getPaginationIcon = (label) => {
 export const renderPagination = async (link, wishlistProducts) => {
     const paginationTemplate = document.querySelector("#pagination-template");
     const container = document.getElementById("product-container");
-    const totalProductContainer = document.getElementById("total-product-container");
+    const totalProductContainer = document.getElementById(
+        "total-product-container"
+    );
     const paginationContainer = document.getElementById("pagination-container");
 
     if (!paginationTemplate) return;
@@ -38,10 +40,16 @@ export const renderPagination = async (link, wishlistProducts) => {
 
         // Button hover class adjustments
         if (link.label === "&laquo; Previous") {
-            paginationBtn.classList.remove("hover:bg-pearl-bush-300", "hover:text-white");
+            paginationBtn.classList.remove(
+                "hover:bg-pearl-bush-300",
+                "hover:text-white"
+            );
         } else {
             paginationBtn.classList.add("hover:text-gray-700");
-            paginationBtn.classList.remove("hover:bg-pearl-bush-300", "hover:text-white");
+            paginationBtn.classList.remove(
+                "hover:bg-pearl-bush-300",
+                "hover:text-white"
+            );
         }
     } else {
         paginationBtn.textContent = link.label;
@@ -80,8 +88,13 @@ export const renderPagination = async (link, wishlistProducts) => {
 
         if (data?.data) {
             await renderProductList(data.data, container, wishlistProducts);
+            window.scrollTo(0, 0, { behavior: "smooth" });
             renderBreadcrumbTotalProduct(data.total, totalProductContainer);
-            await renderPaginationList(data.links, paginationContainer, wishlistProducts);
+            await renderPaginationList(
+                data.links,
+                paginationContainer,
+                wishlistProducts
+            );
         }
     };
 

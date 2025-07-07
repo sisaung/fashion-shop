@@ -76,7 +76,7 @@ class ProductImageController extends Controller
             Storage::disk('public')->put($previewPath, $previewImage->encode());
 
 
-            $thumbNailImage = $imageManager->cover(150, 150);
+            $thumbNailImage = $imageManager->cover(400, 400);
             $thumbnailPath = 'product_images/thumbnail/' . $uuid . '.jpg';
 
             Storage::disk('public')->put($thumbnailPath, $thumbNailImage->encode());

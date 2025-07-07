@@ -106,7 +106,7 @@
                                                         class="object-cover h-full w-full object-center " alt="">
                                                 @else
                                                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1362px-Placeholder_view_vector.svg.png?20220519031949"
-                                                        class="w-full h-full object-cover object-center rounded-md"
+                                                        class="w-full aspect-square object-cover object-center rounded-md"
                                                         alt="">
                                                 @endif
                                             </div>

@@ -68,7 +68,7 @@
                         <input type="hidden" name="fits" class="fit-hidden">
                         <div class="inline-flex flex-wrap items-center gap-2 cursor-pointer  text-pearl-bush-400">
 
-                            @if ($fits->count())
+                            @if ($fits->count() > 0)
                                 @foreach ($fits as $fit)
                                     <p data-id="{{ $fit->id }}"
                                         class="text-sm text-nowrap border select-none border-pearl-bush-300 fit-tag px-4 py-1.5 rounded-lg">

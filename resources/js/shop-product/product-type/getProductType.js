@@ -84,25 +84,14 @@ const initializeProductType = async () => {
     // if (!filterProductTypeContainer) return;
 
     // initialRender
-    const selectedBrands = new URLSearchParams(window.location.search).getAll(
-        "brands[]"
-    );
+
     const wishlistProducts = await getWishlist();
 
-    let productTypeData = [];
-
-    if (selectedBrands.length > 0) {
-        productTypeData = await fetchProductType(
-            `/shop/get-product-type?brands[]=${selectedBrands}`
-        );
-    } else {
-        productTypeData = await fetchProductType(`/shop/get-product-type`);
-    }
+    const productTypeData = await fetchProductType(`/shop/get-product-type`);
 
     if (productTypeData) {
         renderProductTypeList(productTypeData, filterProductTypeContainer);
     }
-
 
     const calculateTotalFilter = (numberOfFilters) => {
         console.log(numberOfFilters);
@@ -141,34 +130,15 @@ const initializeProductType = async () => {
                 "data-product-category"
             );
 
-            const selectedBrands = new URLSearchParams(window.location.search).getAll(
-                "brands[]"
+            const filterProductType = productTypeData.filter(
+                (productType) =>
+                    productType.product_category_id ===
+                    Number(productCategory_id)
             );
-
-
-            if (selectedBrands.length > 0) {
-
-                const filterProductType = await fetchProductType(
-                    `/shop/get-product-type?brands[]=${selectedBrands}`
-                );
-               console.log('filter product type')
-                if (filterProductType) {
-                    renderProductTypeList(
-                        filterProductType,
-                        filterProductTypeContainer
-                    );
-                }
-            } else {
-                const filterProductType = productTypeData.filter(
-                    (productType) =>
-                        productType.product_category_id ===
-                        Number(productCategory_id)
-                );
-                renderProductTypeList(
-                    filterProductType,
-                    filterProductTypeContainer
-                );
-            }
+            renderProductTypeList(
+                filterProductType,
+                filterProductTypeContainer
+            );
 
             selectedFilters.productCategory_id = productCategory_id;
         }
@@ -299,7 +269,13 @@ const initializeProductType = async () => {
             const { search } = window.location;
 
             const params = new URLSearchParams(search);
+
             const selectedBrands = params.getAll("brands[]");
+
+            params.delete("page");
+            params.delete("limit");
+            params.delete("sort_by");
+            params.delete("sort_direction");
 
             history.pushState({}, "", "shop");
 
@@ -349,7 +325,7 @@ const initializeProductType = async () => {
                     selectedProductSize.value
                 );
             }
-            console.log(params.toString());
+            
 
             const url = `shop?${params.toString()}`;
 
