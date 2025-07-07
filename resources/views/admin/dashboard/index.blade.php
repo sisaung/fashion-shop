@@ -158,21 +158,21 @@
             {{ $order }}
         @endforeach --}}
 
-        <div class="grid grid-cols-2 gap-5">
+        {{-- <div class="grid grid-cols-2 gap-5">
             <div class="col-span-1 space-y-3">
 
                 @foreach ($monthlyOrders as $monthlyOrder)
                     @foreach ($monthlyOrder as $order)
                         <div class="flex items-center">
                             <p> {{ $order }} </p>
-                            {{-- <div class="w-full bg-gray-200 rounded-full h-3"></div> --}}
                         </div>
                     @endforeach
                 @endforeach
             </div>
-        </div>
+        </div> --}}
 
 
+        {{-- latest order --}}
 
         <div id="order-list-container">
             <section class="mt-10   drop-down-modal ">
@@ -321,126 +321,20 @@
             </section>
         </div>
 
-        {{-- <div class="card">
-            <h3>Total Orders (This Month)</h3>
-            <p>{{ $currentMonthOrders }}</p>
+        <div class="grid grid-cols-2 gap-5">
 
-            @if (!is_null($orderChange))
-                <p>
-                    @if ($orderChange >= 0)
-                        +{{ number_format($orderChange, 1) }}% vs last month
-                    @else
-                        {{ number_format($orderChange, 1) }}% vs last month
-                    @endif
-                </p>
-            @else
-                <p>No data last month</p>
-            @endif
-        </div> --}}
-
-        {{-- <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div class="bg-white shadow rounded-lg p-4">
-                <p class="text-gray-600">Total Revenue</p>
-                <p class="text-xl font-semibold">${{ number_format($totalRevenue, 2) }}</p>
-            </div>
-            <div class="bg-white shadow rounded-lg p-4">
-                <p class="text-gray-600">Total Orders</p>
-                <p class="text-xl font-semibold">{{ $totalOrder }}</p>
-            </div>
-            <div class="bg-white shadow rounded-lg p-4">
-                <p class="text-gray-600">Total Products</p>
-                <p class="text-xl font-semibold">{{ $totalProduct }}</p>
-            </div>
-            <div class="bg-white shadow rounded-lg p-4">
-                <p class="text-gray-600">Total Customers</p>
-                <p class="text-xl font-semibold">{{ $totalCustomer }}</p>
-            </div>
+        {{-- low stock alert --}}
+        <div>
+            
         </div>
 
-        <div class="bg-white shadow rounded-lg p-4">
-            <h3 class="text-lg font-semibold mb-4">Monthly Revenue & Orders</h3>
-            <canvas id="revenueOrdersChart" height="100"></canvas>
+
+
+        {{-- recent customers --}}
+        {{-- top categories --}}
         </div>
 
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const data = @json($monthlyData);
-
-            const labels = data.map(item => item.month);
-            const orderCounts = data.map(item => item.order_count);
-            const revenues = data.map(item => item.total_revenue);
-
-            const ctx = document.getElementById('revenueOrdersChart').getContext('2d');
-
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                            label: 'Orders',
-                            data: orderCounts,
-                            backgroundColor: 'rgba(59, 130, 246, 0.5)', // blue-500
-                            borderColor: 'rgba(59, 130, 246, 1)',
-                            borderWidth: 1,
-                            yAxisID: 'y-orders',
-                        },
-                        {
-                            label: 'Revenue',
-                            data: revenues,
-                            backgroundColor: 'rgba(16, 185, 129, 0.5)', // emerald-500
-                            borderColor: 'rgba(16, 185, 129, 1)',
-                            borderWidth: 2,
-                            type: 'line',
-                            yAxisID: 'y-revenue',
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    interaction: {
-                        mode: 'index',
-                        intersect: false,
-                    },
-                    stacked: false,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Monthly Revenue and Orders (Last 6 Months)',
-                            font: {
-                                size: 18
-                            }
-                        }
-                    },
-                    scales: {
-                        y - orders: {
-                            type: 'linear',
-                            position: 'left',
-                            title: {
-                                display: true,
-                                text: 'Orders'
-                            },
-                            beginAtZero: true
-                        },
-                        y - revenue: {
-                            type: 'linear',
-                            position: 'right',
-                            title: {
-                                display: true,
-                                text: 'Revenue ($)'
-                            },
-                            grid: {
-                                drawOnChartArea: false
-                            },
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        });
-    </script> --}}
     @endsection
 
     @push('scripts')

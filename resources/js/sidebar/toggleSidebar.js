@@ -151,19 +151,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     const sidebar = document.getElementById("sidebar");
     const closeBtn = document.getElementById("closeSidebar");
     const stockCheckbox = document.getElementById("inStockOnly");
-   
+
     const filterBrand = document.getElementById("filter-brand");
 
-    const currentSearchParams = new URLSearchParams(location.search);
-    const currentParamsObj = Object.fromEntries(currentSearchParams);
+    const { search } = location;
+
+    const currentSearchParams = new URLSearchParams(search);
 
     // Update toggle UI styling
-
 
     if (currentSearchParams.get("in_stock") === "1") {
         stockCheckbox.checked = true;
         updateToggleUI(true);
-    }else{
+    } else {
         stockCheckbox.checked = false;
         updateToggleUI(false);
     }
@@ -196,18 +196,26 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Stock toggle handler
     const handleStockToggle = async () => {
-        let newParamsObj = { ...currentParamsObj };
+        const params = new URLSearchParams(window.location.search);
+        const selectedBrands = params.getAll("brands[]");
 
         if (stockCheckbox.checked) {
-            newParamsObj.in_stock = 1;
+            params.delete("in_stock");
+            params.append("in_stock", 1);
         } else {
-            delete newParamsObj.in_stock;
+            params.delete("in_stock");
         }
 
-        const newSearchParams = new URLSearchParams(newParamsObj).toString();
+        // const newSearchParams = new URLSearchParams(newParamsObj).toString();
+        // const newUrl = `${location.origin}${location.pathname}${
+        //     newSearchParams ? "?" + newSearchParams : ""
+        // }`;
+
+        const newSearchParams = params.toString();
         const newUrl = `${location.origin}${location.pathname}${
             newSearchParams ? "?" + newSearchParams : ""
         }`;
+
         history.pushState({}, "", newUrl);
 
         const data = await fetchProductShop(
@@ -221,6 +229,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (brand) {
             await renderShopBrandList(brand, filterBrand);
         }
+
+        const checkbox = document.querySelectorAll('input[type="checkbox"]');
+
+
+        checkbox.forEach((el) => {
+            if (selectedBrands.includes(el.value)) {
+                console.log("checked");
+                el.checked = true;
+            }
+        });
 
         if (data?.data) {
             await renderProductList(data.data, container, wishlistProducts);

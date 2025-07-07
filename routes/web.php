@@ -114,6 +114,8 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         });
 
         Route::get('/reports',[ReportController::class,'index'])->name('reports.index');
+        Route::get('/reports/showMonthlySaleOrders',[ReportController::class,'showMonthlySaleOrders'])->name('reports.showMonthlySaleOrders.index');
+
     });
 });
 

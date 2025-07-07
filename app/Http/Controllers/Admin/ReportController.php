@@ -83,4 +83,34 @@ return view('admin.reports.index', [
     'orderStatusData' => $orderedStatus->values(),
 ]);
     }
+
+    public function showMonthlySaleOrders() {
+        $sales = DB::table('orders')
+        ->select(DB::raw("MONTH(created_at) as month_number"), DB::raw("SUM(net_total) as total"))
+        ->where('order_status', 'completed')
+        ->groupBy('month_number')
+        ->orderBy('month_number')
+        ->pluck('total', 'month_number');
+
+        // Create full 12 months array initialized to 0
+        $months = [
+        1 => 0, 2 => 0, 3 => 0, 4 => 0,
+        5 => 0, 6 => 0, 7 => 0, 8 => 0,
+        9 => 0, 10 => 0, 11 => 0, 12 => 0,
+        ];
+
+
+        // Merge DB results into months array
+        foreach ($sales as $monthNumber => $total) {
+        $months[$monthNumber] = $total;
+        }
+
+        // Convert to month short names
+        $monthLabels = [];
+        foreach ($months as $num => $value) {
+        $monthLabels[] = date("M", mktime(0, 0, 0, $num, 10)); // Jan, Feb, etc
+        }
+
+        return view('admin.reports.monthlytSaleRevenueOrder.index');
+    }
 }

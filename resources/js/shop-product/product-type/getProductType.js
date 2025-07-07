@@ -1,7 +1,9 @@
+import { fetchBrand } from "../../services/fetchBrand";
 import { fetchProductFit } from "../../services/fetchProductFit";
 import { fetchProductShop } from "../../services/fetchProductShop";
 import { fetchProductSize } from "../../services/fetchProductSize";
 import { fetchProductType } from "../../services/fetchProductType";
+import { renderShopBrandList } from "../../sidebar/renderShopBrandList";
 import updateToggleUI from "../../sidebar/updateToggleUI";
 import renderProductFitList from "../fit/renderProductFitLIst";
 import { renderBreadcrumbTotalProduct } from "../renderBreadcrumbTotalProduct";
@@ -41,6 +43,7 @@ const initializeProductType = async () => {
     const sizeHeading = document.querySelector(".size-heading");
     const stockCheckbox = document.getElementById("inStockOnly");
 
+    const filterBrand = document.getElementById("filter-brand");
 
     const urlParams = new URLSearchParams(window.location.search);
     const selectedProductTypeId = urlParams.get("filters[productType_id]");
@@ -264,6 +267,8 @@ const initializeProductType = async () => {
             const { search } = window.location;
 
             const params = new URLSearchParams(search);
+            const selectedBrands = params.getAll("brands[]");
+
             history.pushState({}, "", "shop");
 
             const selectedProductCategory = document.querySelector(
@@ -283,6 +288,7 @@ const initializeProductType = async () => {
             );
 
             if (selectedProductCategory) {
+                params.delete("filters[productCategory_id]");
                 params.append(
                     "filters[productCategory_id]",
                     selectedProductCategory.value
@@ -290,6 +296,7 @@ const initializeProductType = async () => {
             }
 
             if (selectedProductType) {
+                params.delete("filters[productType_id]");
                 params.append(
                     "filters[productType_id]",
                     selectedProductType.value
@@ -297,17 +304,20 @@ const initializeProductType = async () => {
             }
 
             if (selectedProductFit) {
+                params.delete("filters[productFit_id]");
                 params.append(
                     "filters[productFit_id]",
                     selectedProductFit.value
                 );
             }
             if (selectedProductSize) {
+                params.delete("filters[productSize_id]");
                 params.append(
                     "filters[productSize_id]",
                     selectedProductSize.value
                 );
             }
+            console.log(params.toString());
 
             const url = `shop?${params.toString()}`;
 
@@ -320,8 +330,6 @@ const initializeProductType = async () => {
                 const productShop = await fetchProductShop(
                     `/shop/get?${params.toString()}`
                 );
-
-
 
                 if (productShop?.data) {
                     await renderProductList(
@@ -338,6 +346,27 @@ const initializeProductType = async () => {
                         paginationContainer,
                         wishlistProducts
                     );
+
+                    const brand = await fetchBrand(
+                        `/shop/get-brand${
+                            params ? "?" + params.toString() : ""
+                        }`
+                    );
+
+                    if (brand) {
+                        await renderShopBrandList(brand, filterBrand);
+                    }
+
+                    const checkbox = document.querySelectorAll(
+                        'input[type="checkbox"]'
+                    );
+
+                    checkbox.forEach((el) => {
+                        if (selectedBrands.includes(el.value)) {
+                            console.log("checked");
+                            el.checked = true;
+                        }
+                    });
 
                     const obj = Object.fromEntries(params);
 
@@ -357,7 +386,6 @@ const initializeProductType = async () => {
                             selecedtFilterProductArr.push(value);
                         }
                     }
-
 
                     calculateTotalFilter(selecedtFilterProductArr.length);
                 }
@@ -429,6 +457,11 @@ const initializeProductType = async () => {
                     wishlistProducts
                 );
 
+                const brand = await fetchBrand(`/shop/get-brand`);
+
+                if (brand) {
+                    await renderShopBrandList(brand, filterBrand);
+                }
                 filterProductText.textContent = `Filter Product`;
                 filterProductText.classList.remove("text-pearl-bush-500");
                 totalFilterProduct.classList.add("hidden");

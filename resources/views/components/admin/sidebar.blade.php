@@ -141,6 +141,7 @@
     $inventoryRoutes = ['brand.*', 'product.*', 'product-category.*', 'product-type.*', 'size.*', 'fit.*'];
     $crmRoutes = ['customer.*', 'wishlist.*', 'review.*'];
     $orderRoutes = ['order.*', 'coupon.*'];
+    $reportRoutes = ['report.*'];
 
     function isDropdownOpen(array $routes)
     {
@@ -155,6 +156,8 @@
     $inventoryOpen = isDropdownOpen($inventoryRoutes);
     $crmOpen = isDropdownOpen($crmRoutes);
     $orderOpen = isDropdownOpen($orderRoutes);
+    $reportOpen = isDropdownOpen($reportRoutes);
+
 @endphp
 
 <aside class="w-64 h-screen bg-white flex flex-col flex-shrink-0 overflow-y-auto">
@@ -239,10 +242,25 @@
             </div>
         </div>
 
-        <a href="{{ route('reports.index') }}"
-            class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('reports.index') ? ' bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">
-            Report
-        </a>
+        <div>
+            <button type="button"
+                class="flex cursor-pointer items-center justify-between w-full px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 focus:outline-none"
+                onclick="toggleDropdown('reportDropdown')">
+                <span>Report</span>
+                <svg class="w-4 h-4 transition-transform {{ $reportOpen ? 'rotate-180' : '' }}"
+                    id="arrow-reportDropdown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+            <div id="reportDropdown" class="ml-6 mt-1 space-y-1 {{ $reportOpen ? '' : 'hidden' }}">
+                <a href="{{ route('reports.showMonthlySaleOrders.index') }}"
+                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('reports.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">
+                    Monthly Sales & Orders </a>
+
+
+                <a href=""> </a>
+            </div>
+        </div>
     </nav>
     <div class="mt-auto border-t  border-pearl-bush-100 p-4">
         <form action="{{ route('logout') }}" method="POST">

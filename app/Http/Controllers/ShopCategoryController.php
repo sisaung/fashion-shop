@@ -264,9 +264,11 @@ class ShopCategoryController extends Controller
     $gender = $request->input('gender');
     $item = $request->input('item');
     $inStock = $request->input('in_stock');
+    $filters = $request->input('filters',[]);
+
 
     // Initialize brand query with products relation, filtered based on in_stock
-    $brand = Brand::with(['products' => function ($query) use ($inStock, $gender, $item) {
+    $brand = Brand::with(['products' => function ($query) use ($inStock, $gender, $item,$filters) {
         if (!empty($inStock) && $inStock == 1) {
             $query->where('stock_count', '>', 0);
         }
@@ -277,11 +279,41 @@ class ShopCategoryController extends Controller
 
         if (!empty($item) && $item == 'new_arrival') {
             $query->where('is_new_arrival', 1);
+        }
+
+         // 🔹 Filter by product category
+         if (!empty($filters['productCategory_id'])) {
+            $query->whereHas('productCategory', function ($query) use ($filters) {
+                $query->where('id', $filters['productCategory_id']);
+            });
+        }
+
+        // 🔹 Filter by product type
+        if (!empty($filters['productType_id'])) {
+            $query->whereHas('productType', function ($query) use ($filters) {
+                $query->where('id', $filters['productType_id']);
+            });
+        }
+
+         // 🔹 Filter by product fit
+
+         if (!empty($filters['productFit_id'])) {
+            $query->whereHas('fit', function ($query) use ($filters) {
+                $query->where('id', $filters['productFit_id']);
+            });
+        }
+
+         // 🔹 Filter by product size
+
+         if (!empty($filters['productSize_id'])) {
+            $query->whereHas('productType.sizes', function ($query) use ($filters) {
+                $query->where('sizes.id', $filters['productSize_id']);
+            });
         }
     }]);
 
     // Always filter brands that have at least one product (matching the same conditions)
-    $brand->whereHas('products', function ($query) use ($inStock, $gender, $item) {
+    $brand->whereHas('products', function ($query) use ($inStock, $gender, $item,$filters) {
         if (!empty($inStock) && $inStock == 1) {
             $query->where('stock_count', '>', 0);
         }
@@ -292,6 +324,36 @@ class ShopCategoryController extends Controller
 
         if (!empty($item) && $item == 'new_arrival') {
             $query->where('is_new_arrival', 1);
+        }
+
+         // 🔹 Filter by product category
+         if (!empty($filters['productCategory_id'])) {
+            $query->whereHas('productCategory', function ($query) use ($filters) {
+                $query->where('id', $filters['productCategory_id']);
+            });
+        }
+
+        // 🔹 Filter by product type
+        if (!empty($filters['productType_id'])) {
+            $query->whereHas('productType', function ($query) use ($filters) {
+                $query->where('id', $filters['productType_id']);
+            });
+        }
+
+         // 🔹 Filter by product fit
+
+         if (!empty($filters['productFit_id'])) {
+            $query->whereHas('fit', function ($query) use ($filters) {
+                $query->where('id', $filters['productFit_id']);
+            });
+        }
+
+         // 🔹 Filter by product size
+
+         if (!empty($filters['productSize_id'])) {
+            $query->whereHas('productType.sizes', function ($query) use ($filters) {
+                $query->where('sizes.id', $filters['productSize_id']);
+            });
         }
     });
 
@@ -340,8 +402,20 @@ class ShopCategoryController extends Controller
     }
 
 
-    public function getProductCategory() {
+    public function getProductCategory(Request $request) {
+
+        $brandNames = $request->input('brands'); // array of brand names
+
+
         $productCategory = ProductCategory::with(['productTypes','productTypes.fits','productTypes.sizes'])->get();
+
+        // if ($brandNames) {
+        //     $query->whereHas('products', function ($query) use ($brandNames) {
+        //         $query->whereHas('brand', function ($query) use ($brandNames) {
+        //             $query->whereIn('brand_name', $brandNames);
+        //         });
+        //     });
+        // }
         return response()->json($productCategory);
     }
 

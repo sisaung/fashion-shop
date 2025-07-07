@@ -45,6 +45,7 @@ class ProductController extends Controller
             $query->where(function (Builder $q) use ($searchTerm) {
 
                 return $q->where('product_name', 'like', "%$searchTerm%")
+                ->orWhere('gender','like',"%$searchTerm%")
 
                     ->orWhereHas('brand', function (Builder $q) use ($searchTerm) {
                         return $q->where('brand_name', 'like', "%$searchTerm%");
