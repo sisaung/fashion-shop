@@ -407,20 +407,33 @@ class ShopCategoryController extends Controller
         $brandNames = $request->input('brands'); // array of brand names
 
 
-        $productCategory = ProductCategory::with(['productTypes','productTypes.fits','productTypes.sizes'])->get();
-
-        // if ($brandNames) {
-        //     $query->whereHas('products', function ($query) use ($brandNames) {
-        //         $query->whereHas('brand', function ($query) use ($brandNames) {
-        //             $query->whereIn('brand_name', $brandNames);
-        //         });
-        //     });
-        // }
+        $query = ProductCategory::with(['productTypes','productTypes.fits','productTypes.sizes']);
+        if ($brandNames) {
+            $query->whereHas('products', function ($query) use ($brandNames) {
+                $query->whereHas('brand', function ($query) use ($brandNames) {
+                    $query->whereIn('brand_name', $brandNames);
+                });
+            });
+        }
+        $productCategory = $query->get();
         return response()->json($productCategory);
     }
 
-    public function getProductType() {
-        $productType = ProductType::with(['fits','sizes'])->get();
+    public function getProductType(Request $request) {
+
+        $brandNames = $request->input('brands'); // array of brand names
+
+
+        $query = ProductType::with(['fits','sizes']);
+        if ($brandNames) {
+            $query->whereHas('products', function ($query) use ($brandNames) {
+                $query->whereHas('brand', function ($query) use ($brandNames) {
+                    $query->whereIn('brand_name', $brandNames);
+                });
+            });
+        }
+
+        $productType = $query->get();
         return response()->json($productType);
     }
 

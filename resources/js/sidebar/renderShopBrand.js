@@ -1,6 +1,10 @@
+import { fetchProductCategory } from "../services/fetchProductCategory";
 import { fetchProductShop } from "../services/fetchProductShop";
+import { fetchProductType } from "../services/fetchProductType";
+import renderProductTypeList from "../shop-product/product-type/renderProductTypeLIst";
 import { renderBreadcrumbTotalProduct } from "../shop-product/renderBreadcrumbTotalProduct";
 import { renderPaginationList } from "../shop-product/renderPaginationList";
+import renderProductCategoryList from "../shop-product/renderProductCategoryLIst";
 import renderProductList from "../shop-product/renderProductList";
 import getWishlist from "../shop-product/wishlist/getWishlist";
 
@@ -15,6 +19,12 @@ export const renderShopBrand = async (brand) => {
         "total-product-container"
     );
     const paginationContainer = document.getElementById("pagination-container");
+    const productCategoryContainer = document.getElementById(
+        "filter-product-category-container"
+    );
+    const filterProductTypeContainer = document.getElementById(
+        "filter-product-type-container"
+    );
 
     const checkbox = content.querySelector('input[type="checkbox"]');
     content.querySelector(
@@ -26,9 +36,9 @@ export const renderShopBrand = async (brand) => {
 
     const { search } = location;
 
-    // const selectedBrands = new URLSearchParams(window.location.search).getAll(
-    //     "brands[]"
-    // );
+    const selectedBrands = new URLSearchParams(window.location.search).getAll(
+        "brands[]"
+    );
 
     // console.log(selectedBrands)
 
@@ -39,6 +49,46 @@ export const renderShopBrand = async (brand) => {
 
     // Prepare wishlist for product rendering
     const wishlistProducts = await getWishlist();
+
+    // initial render product category
+
+    if (selectedBrands.length === 0) {
+        const productCategory = await fetchProductCategory(
+            `/shop/get-product-category`
+        );
+        const productType = await fetchProductCategory(
+            `/shop/get-product-type`
+        );
+
+        if (productCategory) {
+            renderProductCategoryList(
+                productCategory,
+                productCategoryContainer
+            );
+        }
+
+        if(productType) {
+            renderProductTypeList(productType, filterProductTypeContainer);
+        }
+    } else {
+        const productCategory = await fetchProductCategory(
+            `/shop/get-product-category?brands[]=${selectedBrands}`
+        );
+
+        const productType = await fetchProductType(
+            `/shop/get-product-type?brands[]=${selectedBrands}`
+        );
+        if (productCategory) {
+            renderProductCategoryList(
+                productCategory,
+                productCategoryContainer
+            );
+        }
+
+        if (productType) {
+            renderProductTypeList(productType, filterProductTypeContainer);
+        }
+    }
 
     // Checkbox change event handler
     checkbox.addEventListener("change", async (e) => {
@@ -52,7 +102,7 @@ export const renderShopBrand = async (brand) => {
         // const url = new URL(window.location);
         // console.log(url)
         const params = new URLSearchParams(search);
-        console.log(params)
+        console.log(params);
 
         // if (search) {
         //     params.append("in_stock", 1);
@@ -68,11 +118,29 @@ export const renderShopBrand = async (brand) => {
         );
 
         const data = await fetchProductShop(`/shop/get?${params.toString()}`);
+        const productCategory = await fetchProductCategory(
+            `/shop/get-product-category?${params.toString()}`
+        );
+
+        const productType = await fetchProductType(
+            `/shop/get-product-type?${params.toString()}`
+        );
 
         if (data?.data) {
             await renderProductList(data.data, container, wishlistProducts);
             renderBreadcrumbTotalProduct(data.total, totalProductContainer);
             renderPaginationList(data.links, paginationContainer);
+        }
+
+        if (productCategory) {
+            renderProductCategoryList(
+                productCategory,
+                productCategoryContainer
+            );
+        }
+
+        if (productType) {
+            renderProductTypeList(productType, filterProductTypeContainer);
         }
     });
 
