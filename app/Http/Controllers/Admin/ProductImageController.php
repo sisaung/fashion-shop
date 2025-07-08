@@ -159,9 +159,7 @@ class ProductImageController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('product.index')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json('Invalid ID');
         }
 
 
@@ -186,6 +184,21 @@ class ProductImageController extends Controller
         $productImage->delete();
 
 
-        return redirect()->route('manage-image.edit', ['id' => $product->id]);
+        return response()->json(['message' => 'Product Image deleted successfully']);
+    }
+
+    public function getProductImage($id) {
+        $validator =  Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:products'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('product.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $product = Product::with('productImages')->find($id);
+        return response()->json($product);
     }
 }

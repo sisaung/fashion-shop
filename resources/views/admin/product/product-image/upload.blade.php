@@ -78,6 +78,7 @@
 
         </div>
         <h1 class="mt-10 text-xl px-5"> Manage Image </h1>
+        <span data-get-product-id="{{ $product->id }}" class="get-product-id"></span>
 
         <section class="mt-5 px-5">
 
@@ -113,34 +114,39 @@
             </div>
         </section>
 
+        <template id="product-image-template">
+            <div class="flex flex-col relative group ">
+                <div class="bg-black/10 absolute top-0 left-0 w-full h-full hidden group-hover:block  duration-500">
+                </div>
+                <div>
+
+                    <button
+                        class="product-image-delete-btn absolute top-2 scale-0 group-hover:scale-100 duration-500  right-2 inline-flex justify-center items-center cursor-pointer size-5 bg-pearl-bush-400 hover:bg-pearl-bush-600 text-white rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
+                            <path
+                                d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+                        </svg>
+
+                    </button>
+                </div>
+                <div class="overflow-hidden ">
+
+                    <img src="https://redthread.uoregon.edu/files/large/affd16fd5264cab9197da4cd1a996f820e601ee4.jpg"
+                        class="product-image h-26 w-24 object-cover object-center  border border-pearl-bush-400 rounded-md"
+                        alt="placeholder">
+                </div>
+
+            </div>
+
+        </template>
+
+        <template id="product-image-skeleton">
+            <div class="skeleton flex bg-gray-200 rounded-md w-24 h-26 mb-4 animate-pulse"></div>
+        </template>
+
         <section class="mt-5 px-5">
-            <div class="flex flex-wrap gap-5">
-                @foreach ($product->productImages as $image)
-                    <div class="col-span-1 flex flex-col relative group ">
-                        <div class="bg-black/10 absolute top-0 left-0 w-full h-full hidden group-hover:block  duration-500">
-                        </div>
-                        <form method="POST" action="{{ route('manage-image.destroy', ['id' => $image->id]) }}">
-                            @csrf
-                            @method('DELETE')
-                            <button
-                                class="absolute top-2 scale-0 group-hover:scale-100 duration-500  right-2 inline-flex justify-center items-center cursor-pointer size-5 bg-pearl-bush-400 hover:bg-pearl-bush-600 text-white rounded-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                    class="size-4">
-                                    <path
-                                        d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
-                                </svg>
+            <div id="product-image-container" class="flex flex-wrap gap-5">
 
-                            </button>
-                        </form>
-                        <div class="overflow-hidden ">
-
-                            <img src="{{ $image->thumbnail }}"
-                                class="h-26 w-24 object-cover object-center  border border-pearl-bush-400 rounded-md"
-                                alt="{{ $product->product_name }}">
-                        </div>
-
-                    </div>
-                @endforeach
             </div>
 
             <div class="flex justify-end gap-3 mt-5 ">

@@ -237,7 +237,7 @@
         {{-- empty section --}}
         <div id="empty-product-container"></div>
 
-        <section>
+        <section class="pt-10 ">
             <div id="pagination-container" class="flex justify-center pb-10"></div>
         </section>
 

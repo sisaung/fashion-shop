@@ -7,14 +7,16 @@ export const renderPaginationList = async (
 ) => {
     container.innerHTML = "";
 
+    if(links[2].url === null) return;
+
     if (!links || links.length === 0) return;
 
-    const firstLink = links.find(link => link.label === "1");
-    const prevLink = links.find(link => link.label.includes("Previous"));
-    const nextLink = links.find(link => link.label.includes("Next"));
+    const firstLink = links.find((link) => link.label === "1");
+    const prevLink = links.find((link) => link.label.includes("Previous"));
+    const nextLink = links.find((link) => link.label.includes("Next"));
     const lastLink = links[links.length - 2]; // Laravel last page is second last before Next
 
-    const activeIndex = links.findIndex(link => link.active);
+    const activeIndex = links.findIndex((link) => link.active);
     const activePage = parseInt(links[activeIndex].label);
     const lastPageNumber = parseInt(lastLink.label);
 
@@ -40,7 +42,6 @@ export const renderPaginationList = async (
         container.appendChild(prevBtn);
     }
 
-
     // Render First page
     if (firstLink) {
         const firstBtn = await renderPagination(firstLink, wishlistProducts);
@@ -57,7 +58,7 @@ export const renderPaginationList = async (
 
     // Render middle page links (max 5 visible pages)
     for (let i = startPage; i <= endPage; i++) {
-        const link = links.find(link => parseInt(link.label) === i);
+        const link = links.find((link) => parseInt(link.label) === i);
         if (link) {
             const pageBtn = await renderPagination(link, wishlistProducts);
             container.appendChild(pageBtn);

@@ -52,43 +52,43 @@ export const renderShopBrand = async (brand) => {
 
     // initial render product category
 
-    if (selectedBrands.length === 0) {
-        const productCategory = await fetchProductCategory(
-            `/shop/get-product-category`
-        );
-        const productType = await fetchProductCategory(
-            `/shop/get-product-type`
-        );
+    // if (selectedBrands.length === 0) {
+    //     const productCategory = await fetchProductCategory(
+    //         `/shop/get-product-category`
+    //     );
+    //     const productType = await fetchProductCategory(
+    //         `/shop/get-product-type`
+    //     );
 
-        if (productCategory) {
-            renderProductCategoryList(
-                productCategory,
-                productCategoryContainer
-            );
-        }
+    //     if (productCategory) {
+    //         renderProductCategoryList(
+    //             productCategory,
+    //             productCategoryContainer
+    //         );
+    //     }
 
-        if(productType) {
-            renderProductTypeList(productType, filterProductTypeContainer);
-        }
-    } else {
-        const productCategory = await fetchProductCategory(
-            `/shop/get-product-category?brands[]=${selectedBrands}`
-        );
+    //     if(productType) {
+    //         renderProductTypeList(productType, filterProductTypeContainer);
+    //     }
+    // } else {
+    //     const productCategory = await fetchProductCategory(
+    //         `/shop/get-product-category?brands[]=${selectedBrands}`
+    //     );
 
-        const productType = await fetchProductType(
-            `/shop/get-product-type?brands[]=${selectedBrands}`
-        );
-        if (productCategory) {
-            renderProductCategoryList(
-                productCategory,
-                productCategoryContainer
-            );
-        }
+    //     const productType = await fetchProductType(
+    //         `/shop/get-product-type?brands[]=${selectedBrands}`
+    //     );
+    //     if (productCategory) {
+    //         renderProductCategoryList(
+    //             productCategory,
+    //             productCategoryContainer
+    //         );
+    //     }
 
-        if (productType) {
-            renderProductTypeList(productType, filterProductTypeContainer);
-        }
-    }
+    //     if (productType) {
+    //         renderProductTypeList(productType, filterProductTypeContainer);
+    //     }
+    // }
 
     // Checkbox change event handler
     checkbox.addEventListener("change", async (e) => {
@@ -118,13 +118,13 @@ export const renderShopBrand = async (brand) => {
         );
 
         const data = await fetchProductShop(`/shop/get?${params.toString()}`);
-        const productCategory = await fetchProductCategory(
-            `/shop/get-product-category?${params.toString()}`
-        );
+        // const productCategory = await fetchProductCategory(
+        //     `/shop/get-product-category?${params.toString()}`
+        // );
 
-        const productType = await fetchProductType(
-            `/shop/get-product-type?${params.toString()}`
-        );
+        // const productType = await fetchProductType(
+        //     `/shop/get-product-type?${params.toString()}`
+        // );
 
         if (data?.data) {
             await renderProductList(data.data, container, wishlistProducts);
@@ -132,16 +132,16 @@ export const renderShopBrand = async (brand) => {
             renderPaginationList(data.links, paginationContainer);
         }
 
-        if (productCategory) {
-            renderProductCategoryList(
-                productCategory,
-                productCategoryContainer
-            );
-        }
+        // if (productCategory) {
+        //     renderProductCategoryList(
+        //         productCategory,
+        //         productCategoryContainer
+        //     );
+        // }
 
-        if (productType) {
-            renderProductTypeList(productType, filterProductTypeContainer);
-        }
+        // if (productType) {
+        //     renderProductTypeList(productType, filterProductTypeContainer);
+        // }
     });
 
     return content;

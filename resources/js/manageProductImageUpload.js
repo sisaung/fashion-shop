@@ -1,14 +1,28 @@
-const initializeManageProductImageUpload = () => {
+import productImageList from "./product-image/productImageList";
+import renderProductImageList from "./product-image/renderProductImageList";
+import renderProductImageSkeleton from "./product-image/renderProductImageSkeletor";
+import destroyProductImage from "./services/destroyProductImage";
+import { fetchProductImages } from "./services/fetchProductImage";
+
+const initializeManageProductImageUpload = async () => {
     const currentUrl = location.search;
     const manageImgeUpload = document.querySelector(".manage-image-upload");
-
+    const productIdSelector = document.querySelector(".get-product-id");
+    const productImageContainer = document.getElementById(
+        "product-image-container"
+    );
     const file = document.querySelector(".file");
     const csrfToken = document
         .querySelector('meta[name="csrf-token"]')
         .getAttribute("content");
 
+    const productId = productIdSelector.dataset.getProductId;
 
-    if (!manageImgeUpload ) return;
+    // initial render
+    renderProductImageSkeleton(productImageContainer);
+    await productImageList(productId, productImageContainer);
+
+    if (!manageImgeUpload) return;
     let currentProductId = null;
 
     const handleClick = (e) => {
@@ -17,14 +31,13 @@ const initializeManageProductImageUpload = () => {
         currentProductId = e.target.dataset.productId;
 
         file.click();
-
     };
 
     const handleFileChange = async (e) => {
         const files = e.target.files;
-        console.log(files);
 
         if (!files || !currentProductId) return;
+        renderProductImageSkeleton(productImageContainer);
 
         const formData = new FormData();
 
@@ -39,7 +52,6 @@ const initializeManageProductImageUpload = () => {
                     method: "POST",
                     headers: {
                         "X-CSRF-TOKEN": csrfToken,
-                        Accept: "application/json",
                     },
                     body: formData,
                     credentials: "same-origin",
@@ -47,7 +59,8 @@ const initializeManageProductImageUpload = () => {
             );
 
             if (res.ok) {
-                location.reload();
+
+                await productImageList(currentProductId, productImageContainer);
             }
         } catch (e) {
             console.log(e);
