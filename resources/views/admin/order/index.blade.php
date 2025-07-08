@@ -74,10 +74,17 @@
                                         {{ $order->order_number }}
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
-                                        <div class="flex flex-col">
-                                            <a href="{{ route('customer.show', ['customer' => $order->customer->id]) }}"
-                                                class="text-base underline underline-offset-2 ">{{ $order->customer->customer_name }}</a>
-                                            <span class="text-xs text-stone-500"> {{ $order->customerAddress->address_detail }} </span>
+                                        <div class="flex gap-x-3">
+                                            <div>
+                                                <img src="{{ $order->customer->profile_image ? $order->customer->profile_image : 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈' }}" class="size-10 rounded-full"
+                                                    alt="{{$order->customer->customer_name}}">
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <a href="{{ route('customer.show', ['customer' => $order->customer->id]) }}"
+                                                    class="text-base underline underline-offset-2 ">{{ $order->customer->customer_name }}</a>
+                                                <span class="text-xs text-stone-500">
+                                                    {{ $order->customerAddress->address_detail }} </span>
+                                            </div>
                                         </div>
                                     </td>
 
@@ -108,7 +115,7 @@
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
                                         @include('components.admin.orderStatusBadge', [
                                             'orderStatus' => $order->order_status,
-                                            'style' => 'justify-center'
+                                            'style' => 'justify-center',
                                         ])
                                     </td>
 

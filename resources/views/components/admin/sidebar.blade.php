@@ -141,7 +141,7 @@
     $inventoryRoutes = ['brand.*', 'product.*', 'product-category.*', 'product-type.*', 'size.*', 'fit.*'];
     $crmRoutes = ['customer.*', 'wishlist.*', 'review.*'];
     $orderRoutes = ['order.*', 'coupon.*'];
-    $reportRoutes = ['report.*'];
+    $reportRoutes = ['report.sale.*', 'report.order.*', 'report.customer.*'];
 
     function isDropdownOpen(array $routes)
     {
@@ -253,13 +253,18 @@
                 </svg>
             </button>
             <div id="reportDropdown" class="ml-6 mt-1 space-y-1 {{ $reportOpen ? '' : 'hidden' }}">
-                <a href="{{ route('reports.showMonthlySaleOrders.index') }}"
-                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('reports.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">
-                    Monthly Sales & Orders </a>
-
-
-                <a href=""> </a>
+                <a href="{{ route('report.sale.index') }}"
+                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('report.sale.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">
+                    Sales </a>
+                <a href="{{ route('report.order.index') }}"
+                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('report.order.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">
+                    Orders </a>
+                <a href="{{ route('report.customer.index') }}"
+                    class="block px-4 py-2 rounded hover:bg-pearl-bush-100 duration-500 {{ Request::routeIs('report.customer.*') ? 'bg-pearl-bush-300 hover:bg-pearl-bush-300 text-white' : '' }}">
+                    Customers </a>
             </div>
+
+
         </div>
     </nav>
     <div class="mt-auto border-t  border-pearl-bush-100 p-4">

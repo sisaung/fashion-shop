@@ -118,8 +118,12 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
             Route::post('/', 'update')->name('admin-profile.update');
         });
 
-        Route::get('/reports',[ReportController::class,'index'])->name('reports.index');
-        Route::get('/reports/showMonthlySaleOrders',[ReportController::class,'showMonthlySaleOrders'])->name('reports.showMonthlySaleOrders.index');
+        Route::get('/report',[ReportController::class,'index'])->name('reports.index');
+        Route::get('/report/sales',[ReportController::class,'showMonthlySales'])->name('report.sale.index');
+        Route::get('/report/orders',[ReportController::class,'showMonthlyOrders'])->name('report.order.index');
+        Route::get('/report/customers',[ReportController::class,'reportCustomers'])->name('report.customer.index');
+
+
 
     });
 });

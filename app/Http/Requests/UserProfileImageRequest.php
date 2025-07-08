@@ -23,7 +23,7 @@ class UserProfileImageRequest extends FormRequest
     {
         return [
 
-            'profile_image' => 'nullable|file|mimes:png,jpg,jpeg,gif,webp,avif|max:2048',
+            'profile_image' => 'nullable|file|mimes:png,jpg,jpeg,gif,webp,avif',
         ];
     }
 }
