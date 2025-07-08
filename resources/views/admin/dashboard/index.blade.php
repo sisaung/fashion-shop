@@ -176,7 +176,7 @@
 
         <div id="order-list-container">
             <section class="mt-10   drop-down-modal ">
-                <h1 class="text-xl font-heading mb-3 text-gray-700"> Latest Orders </h1>
+                <h1 class="text-xl font-heading mb-3 text-gray-700 font-semibold"> Latest Orders </h1>
                 <div class="w-full overflow-x-auto rounded-lg border border-gray-200 ">
                     <table class="w-full divide-y divide-gray-200">
                         <thead class="bg-stone-50 sorting-wrapper">
@@ -235,15 +235,22 @@
 
                             @foreach ($orders as $order)
                                 <tr>
-                                    <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                    <td class="whitespace-nowrap  px-4 py-4 text-sm font-medium text-gray-900">
                                         {{ $order->order_number }}
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
-                                        <div class="flex flex-col">
-                                            <a href="{{ route('customer.show', ['customer' => $order->customer->id]) }}"
-                                                class="text-base underline underline-offset-2 ">{{ $order->customer->customer_name }}</a>
-                                            <span class="text-xs text-stone-500">
-                                                {{ $order->customerAddress->address_detail }} </span>
+                                        <div class="flex gap-x-3">
+                                            <div>
+                                                <img src="{{ $order->customer->profile_image ? $order->customer->profile_image : 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈' }}"
+                                                    class="size-10 rounded-full"
+                                                    alt="{{ $order->customer->customer_name }}">
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <a href="{{ route('customer.show', ['customer' => $order->customer->id]) }}"
+                                                    class="text-base underline underline-offset-2 ">{{ $order->customer->customer_name }}</a>
+                                                <span class="text-xs text-stone-500">
+                                                    {{ $order->customerAddress->address_detail }} </span>
+                                            </div>
                                         </div>
                                     </td>
 
@@ -321,21 +328,104 @@
             </section>
         </div>
 
-        <div class="grid grid-cols-2 gap-5">
-
-        {{-- low stock alert --}}
-        <div>
-            
-        </div>
 
 
+        <div class="grid grid-cols-2 gap-5 mt-8">
 
-        {{-- recent customers --}}
-        {{-- top categories --}}
+            {{-- low stock alert --}}
+            <div class="bg-white rounded-lg shadow">
+                <div class="border-b border-stone-100  p-5 mb-3">
+                    <p class="text-gray-800 text-lg font-semibold font-heading flex items-center gap-3">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5 stroke-2 text-yellow-500">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                        </svg>
+
+                        Low Stock Alert
+                    </p>
+                </div>
+
+                <div class="p-5 ">
+                    @foreach ($lowStockProducts as $product)
+                        <div class="border-l-3 border-red-500 px-5 mb-5">
+                            <a href="{{ route('manage-stock.create', ['id' => $product->id]) }}"
+                                class="text-sm font-medium text-gray-800 underline underline-offset-4">
+                                {{ $product->product_name }} </a>
+                            <div class="flex gap-x-5">
+                                @foreach ($product->stocks as $stock)
+                                    <div>
+                                        <span class="text-xs text-gray-500"> {{ $stock->size->size_name }} </span> :
+                                        <span
+                                            class="text-xs {{ $stock->stock_quantity <= 3 ? 'text-red-500' : 'text-gray-500' }} font-semibold">(
+                                            {{ $stock->stock_quantity }} )</span>
+                                    </div>
+                                @endforeach
+
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- top categories --}}
+            <div class="bg-white rounded-lg shadow">
+                <div class="border-b border-stone-100  p-5 mb-3">
+                    <p class="text-gray-800 text-lg font-semibold font-heading flex items-center gap-3">
+
+
+
+                        Top Categories
+                    </p>
+                </div>
+                <div class="p-5">
+                    <canvas id="topCategoriesChart" height="200"></canvas>
+                </div>
+
+            </div>
+
+
+            {{-- recent customers --}}
+            {{-- top categories --}}
         </div>
 
 
     @endsection
 
     @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+        <!-- Import compatible ChartDataLabels plugin -->
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js">
+        </script>
+
+        <script>
+            const ctx = document.getElementById('topCategoriesChart').getContext('2d');
+
+            const topCategoriesChart = new Chart(ctx, {
+                type: 'bar', // ✅ vertical bar chart by default
+                data: {
+                    labels: @json($categoryNames),
+                    datasets: [{
+                        label: 'Total Sales',
+                        data: @json($categorySales),
+                        backgroundColor: '#36A2EB'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: { // ✅ vertical axis for values
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
     @endpush

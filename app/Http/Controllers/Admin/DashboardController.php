@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Size;
+use App\Models\Stock;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -184,6 +187,36 @@ $order =  Order::latest()->take(5)->get();
         //     ];
         // });
 
+        // low stock product
+
+        $lowStockProducts = Product::with(['stocks' => function($query) {
+            $query->where('stock_quantity', '<=', 3)
+                  ->orderBy('size_id');
+        }])
+        ->whereHas('stocks', function($query) {
+            $query->where('stock_quantity', '<=', 3);
+        })
+        ->orderBy('id')
+        ->get();
+
+        // top categories
+        $topCategories = OrderItem::select(
+            'product_categories.category_name',
+            DB::raw('SUM(order_items.quantity * order_items.sale_price) as total_sales')
+        )
+        ->join('stocks', 'order_items.stock_id', '=', 'stocks.id')
+        ->join('products', 'stocks.product_id', '=', 'products.id')
+        ->join('product_categories', 'products.product_category_id', '=', 'product_categories.id')
+        ->groupBy('product_categories.id', 'product_categories.category_name')
+        ->orderByDesc('total_sales')
+        ->limit(5)
+        ->get();
+
+    // Separate names and sales for chart
+
+    $categoryNames = $topCategories->pluck('category_name');
+    $categorySales = $topCategories->pluck('total_sales');
+
 
     // return $results;
         return view('admin.dashboard.index', [
@@ -196,9 +229,14 @@ $order =  Order::latest()->take(5)->get();
              'customerChange' => $customerChange,
              'revenueChange' => $revenueChange,
              'orders' => $order,
-             'monthlyOrders' => $results
+             'monthlyOrders' => $results,
+             'lowStockProducts' => $lowStockProducts,
+             'categoryNames' => $categoryNames,
+             'categorySales' => $categorySales
             // 'monthlyData' => $finalData,
         ]);
     }
+
+
 
 }
