@@ -84,7 +84,7 @@ class User extends Authenticatable
     }
 
     public function wishlists() {
-        $this->hasMany(Wishlist::class);
+        $this->hasOne(Wishlist::class);
     }
 
     public function getProfileImageAttribute($value) {

@@ -64,7 +64,6 @@ class WishlistController extends Controller
 
 
 
-
         return view('admin.wishlist.index', ['wishlists' => $wishlist]);
     }
 
@@ -108,9 +107,21 @@ class WishlistController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Wishlist $wishlist)
+    public function show($id)
     {
-        //
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:wishlists,id']);
+
+        if($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        $wishlist = Wishlist::with(['products','user','user.address'])->find($id);
+
+        if($wishlist) {
+            return view('admin.wishlist.show', ['wishlist' => $wishlist]);
+        }
+
+        return redirect()->route('wishlist.index')->with('error', 'Wishlist not found.');
     }
 
     /**

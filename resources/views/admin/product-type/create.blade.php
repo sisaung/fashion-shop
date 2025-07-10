@@ -53,17 +53,13 @@
                     <div class="col-span-2"></div>
 
 
-                    <div class="relative mb-4 fit-tags col-span-3">
-                        <label for="fits"
+                    <div class="relative mb-4 fit-tags col-span-3 ">
+                        {{-- <label for="fits"
                             class="@error('fits')
                             text-red-500
                         @enderror leading-7 block text-sm text-gray-600">Fit
                             Name</label>
 
-                        {{-- <input type="text" id="fits" name="fits" value="{{ old('fits') }}"
-                        class="@error('fits')
-                            is-invalid
-                        @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"> --}}
 
                         <input type="hidden" name="fits" class="fit-hidden">
                         <div class="inline-flex flex-wrap items-center gap-2 cursor-pointer  text-pearl-bush-400">
@@ -80,8 +76,23 @@
                                         fit</a> </p>
                             @endif
 
-                        </div>
 
+
+                        </div> --}}
+                        {{-- <input type="hidden" name="fits" class="fit-hidden"> --}}
+                        <label for="fit-select"
+                            class="@error('fits')
+                            text-red-500
+                        @enderror leading-7 block text-sm text-gray-600">Fit
+                            Name</label>
+                        <select id="fit-select" name="fits[]" multiple
+                            class=" w-full  rounded-lg placeholder:border-0 focus:ring-2 focus:ring-pearl-bush-500">
+                            @if ($fits->count() > 0)
+                                @foreach ($fits as $fit)
+                                    <option value="{{ $fit->id }}">{{ $fit->fit_name }}</option>
+                                @endforeach
+                            @endif
+                        </select>
                         @error('fits')
                             <p class="text-sm text-red-500"> {{ $message }}</p>
                         @enderror
@@ -89,7 +100,7 @@
 
 
 
-                    <div class="relative mb-4 size-tags col-span-3">
+                    {{-- <div class="relative mb-4 size-tags col-span-3">
                         <label for="sizes"
                             class="@error('sizes')
                             text-red-500
@@ -111,11 +122,27 @@
                                 </p>
                             @endif
                         </div>
+                        @error('sizes')
+                            <p class="text-sm text-red-500"> {{ $message }}</p>
+                        @enderror
+                    </div> --}}
 
-                        {{-- <input type="text" id="sizes" name="sizes" value="{{ old('sizes') }}"
-                        class="@error('sizes')
-                            is-invalid
-                        @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"> --}}
+                    <div class="relative mb-4 size-tags col-span-3">
+                        <label for="sizes"
+                            class="@error('sizes')
+                            text-red-500
+                        @enderror  leading-7 block text-sm text-gray-600">Size
+                        </label>
+
+                        <select id="size-select" name="sizes[]" multiple
+                            class=" w-full"
+                           >
+                            @if ($sizes->count() > 0)
+                                @foreach ($sizes as $size)
+                                    <option value="{{ $size->id }}">{{ $size->size_name }}</option>
+                                @endforeach
+                            @endif
+                        </select>
                         @error('sizes')
                             <p class="text-sm text-red-500"> {{ $message }}</p>
                         @enderror
@@ -125,7 +152,7 @@
                         <div class="flex  gap-x-5  w-full ">
                             <a href="{{ route('product-type.index') }}"
                                 class="text-stone-500 inline-flex justify-center items-center bg-white py-2 px-8 focus:outline-none hover:bg-pearl-bush-500 w-1/2 hover:text-white border  border-pearl-bush-300 rounded text-sm cursor-pointer duration-300">Cancel</a>
-                            <button
+                            <button type="submit"
                                 class="text-white bg-pearl-bush-400 border-0 py-2 px-8 focus:outline-none hover:bg-pearl-bush-600 rounded text-sm  cursor-pointer w-1/2 duration-300">Create</button>
                         </div>
                     </div>
@@ -137,6 +164,11 @@
 @endsection
 @push('scripts')
     {{-- @vite(['resources/js/fileUpload.js']) --}}
+
+ 
+    {{-- tom js --}}
+    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+
     @vite(['resources/js/fitTag.js'])
     @vite(['resources/js/sizeTag.js'])
 @endpush

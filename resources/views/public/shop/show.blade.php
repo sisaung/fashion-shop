@@ -228,6 +228,7 @@
                         </div>
                         <div>
                             <p id="stockInfo" class="text-sm text-gray-500">Please select a size to see stock info.</p>
+                            {{ $product->stocks == null ? 'Out of Stock' : ''  }}
                             <p id="errorMsg" class="text-sm text-red-500 hidden">Please select a size before changing
                                 quantity.
                             </p>

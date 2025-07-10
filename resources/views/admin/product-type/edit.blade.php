@@ -58,18 +58,9 @@
                     <div class="col-span-2"></div>
 
                     <div class="relative mb-4 fit-tags col-span-3">
-                        <label for="fits"
-                            class="@error('fits')
-                            text-red-500
-                        @enderror leading-7 block text-sm text-gray-600">Fit
-                            Name</label>
 
-                        {{-- <input type="text" id="fits" name="fits" value="{{ old('fits') }}"
-                        class="@error('fits')
-                            is-invalid
-                        @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"> --}}
 
-                        <input type="hidden" name="fits" class="fit-hidden"
+                        {{-- <input type="hidden" name="fits" class="fit-hidden"
                             value={{ implode(',', $productType->fits->pluck('id')->toArray()) }}>
                         <div class="inline-flex flex-wrap items-center gap-2 cursor-pointer  text-pearl-bush-400">
 
@@ -85,7 +76,22 @@
                                         fit</a> </p>
                             @endif
 
-                        </div>
+                        </div> --}}
+
+                        <label for="fit-select"
+                            class="@error('fits')
+                            text-red-500
+                        @enderror leading-7 block text-sm text-gray-600">Fit
+                            Name</label>
+                        <select id="fit-select" name="fits[]" multiple class=" w-full " placeholder="Select fits...">
+                            @if ($fits->count() > 0)
+                                @foreach ($fits as $fit)
+                                    <option value="{{ $fit->id }}"
+                                        {{ in_array($fit->id, $productType->fits->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                        {{ $fit->fit_name }}</option>
+                                @endforeach
+                            @endif
+                        </select>
 
                         @error('fits')
                             <p class="text-sm text-red-500"> {{ $message }}</p>
@@ -94,7 +100,7 @@
 
 
 
-                    <div class="relative mb-4 size-tags col-span-3">
+                    {{-- <div class="relative mb-4 size-tags col-span-3">
                         <label for="sizes"
                             class="@error('sizes')
                             text-red-500
@@ -118,14 +124,32 @@
                             @endif
                         </div>
 
-                        {{-- <input type="text" id="sizes" name="sizes" value="{{ old('sizes') }}"
-                        class="@error('sizes')
-                            is-invalid
-                        @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"> --}}
+                        @error('sizes')
+                            <p class="text-sm text-red-500"> {{ $message }}</p>
+                        @enderror
+                    </div> --}}
+
+                    <div class="relative mb-4 size-tags col-span-3">
+                        <label for="sizes"
+                            class="@error('sizes')
+                            text-red-500
+                        @enderror  leading-7 block text-sm text-gray-600">Size
+                        </label>
+
+                        <select id="size-select" name="sizes[]" multiple class=" w-full" placeholder="Select sizes...">
+                            @if ($sizes->count() > 0)
+                                @foreach ($sizes as $size)
+                                    <option value="{{ $size->id }}"
+                                        {{ in_array($size->id, $productType->sizes->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                        {{ $size->size_name }}</option>
+                                @endforeach
+                            @endif
+                        </select>
                         @error('sizes')
                             <p class="text-sm text-red-500"> {{ $message }}</p>
                         @enderror
                     </div>
+
                     <div class="col-span-2">
                         <div class="flex items-center gap-x-5 w-full">
                             <a href="{{ route('product-type.index', ['sort_by' => $sort_by, 'sort_direction' => $sort_direction, 'limit' => $limit, 'page' => $page, 'q' => $q]) }}"
@@ -141,6 +165,10 @@
     </div>
 @endsection
 @push('scripts')
+
+    {{-- tom select js --}}
+    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+    
     @vite(['resources/js/fitTag.js'])
     @vite(['resources/js/sizeTag.js'])
 @endpush

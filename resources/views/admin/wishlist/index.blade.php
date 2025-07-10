@@ -31,9 +31,7 @@
                                 </th>
                                 <th data-sortby="product_name" scope="col"
                                     class="px-4 py-3 text-left text-sm font-medium text-gray-500">
-                                    @include('components.admin.sortTable', [
-                                        'sortTitle' => 'Product',
-                                    ])
+                                    Wishlist Product
 
                                 </th>
 
@@ -69,15 +67,14 @@
 
 
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
+
                                         <div class="flex items-center gap-x-2">
                                             <div>
-                                                @if ($wishlist->user->profile_imge)
-                                                    <img src="{{ $wishlist->user->profile_imge }}" alt="">
-                                                @else
-                                                    <img src="https://cdn.prod.website-files.com/67891024ed5394ef2059ff76/6795975173dc15b38db607d6_fallback-profile-image_1.jpg"
-                                                        class="size-10 rounded-full object-cover object-center"
-                                                        alt="{{ $wishlist->user->name }}">
-                                                @endif
+
+                                                <img src="{{ $wishlist->user->profile_image ? $wishlist->user->profile_image : 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈' }}"
+                                                    class="size-10 rounded-full object-cover object-center"
+                                                    alt="{{ $wishlist->user->name }}">
+
                                             </div>
 
                                             <div class="flex flex-col">
@@ -88,13 +85,13 @@
                                         </div>
                                     </td>
 
-                                    <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
+                                    <td class="whitespace-wrap px-4 py-4 text-sm text-gray-900">
 
                                         @if ($wishlist->products)
-                                            <div class="space-x-2">
-                                                @foreach ($wishlist->products as $product)
+                                            <div class="inline-flex flex-col gap-2">
+                                                @foreach ($wishlist->products->take(2) as $product)
                                                     <a href="{{ route('product.show', ['product' => $product]) }}"
-                                                        class="hover:text-pearl-bush-700 duration-500 text-pearl-bush-500 underline underline-offset-2 rounded-full">{{ $product->product_name }}
+                                                        class=" bg-pearl-bush-100 px-2 text-xs py-2 hover:text-pearl-bush-800 rounded-md duration-500 text-pearl-bush-500  line-clamp-1">{{ $product->product_name }}
                                                         -
                                                         {{ $product->brand->brand_name }}
                                                     </a>
@@ -119,8 +116,8 @@
                                         class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 text-end flex items-center justify-center">
 
                                         <a href="{{ route('wishlist.show', $wishlist->id) }}"
-                                            class="px-2 py-1 hover:bg-gray-100 inline-flex justify-center items-center"
-                                            href="{{ route('wishlist.show', $wishlist->id) }}">
+                                            class="px-2 py-1 mt-4 hover:bg-gray-100 inline-flex justify-center items-center"
+                                           >
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                                 class="size-5 text-gray-600">
                                                 <path fill-rule="evenodd"

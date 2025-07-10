@@ -92,24 +92,25 @@ class ProductTypeController extends Controller
     public function store(StoreProductTypeRequest $request)
     {
 
-        $fits =  explode(',', $request->fits ?? 0);
-        $sizes = explode(',', $request->sizes);
 
-        $fitIds = [];
+        // $fits =  explode(',', $request->fits ?? 0);
+        // $sizes = explode(',', $request->sizes);
+        // $fitIds = [];
+        // $sizeIds = [];
+        $fits = $request->fits;
+        $sizes = $request->sizes;
 
-        $sizeIds = [];
+    
+        // foreach ($fits as $fit) {
 
-        foreach ($fits as $fit) {
-            // $fitIds[] = Fit::query()->where('fit_name', '=', $fit)->pluck('id')->first();
+        //     $fitIds[] = $fit;
+        // }
 
-            $fitIds[] = $fit;
-        }
 
-        foreach ($sizes as $size) {
+        // foreach ($sizes as $size) {
 
-            $sizeIds[] = $size;
-            // $sizeIds[] = Size::query()->where('size_name', '=', $size)->pluck('id')->first();
-        }
+        //     $sizeIds[] = $size;
+        // }
 
         $productType =  ProductType::create([
 
@@ -118,11 +119,16 @@ class ProductTypeController extends Controller
             'user_id' => Auth::id()
         ]);
 
-       if($fitIds[0] !== '0') {
+    //    if($fitIds[0] !== '0') {
 
-        $productType->fits()->attach($fitIds);
-       }
-        $productType->sizes()->attach($sizeIds);
+    //     $productType->fits()->attach($fitIds);
+    //    }
+    //     $productType->sizes()->attach($sizeIds);
+
+
+
+        $productType->fits()->attach($fits);
+        $productType->sizes()->attach($sizes);
 
         return redirect()->route('product-type.index');
     }
@@ -174,19 +180,27 @@ class ProductTypeController extends Controller
                 ->withInput();
         }
 
-        $fitIds =  explode(',', $request->fits ?? 0);
-        $sizeIds = explode(',', $request->sizes);
+        // $fitIds =  explode(',', $request->fits ?? 0);
+        // $sizeIds = explode(',', $request->sizes);
+        $fits = $request->fits;
+        $sizes = $request->sizes;
 
         $productType = ProductType::find($id);
         $productType->name = $request->name;
         $productType->product_category_id = $request->product_category_id;
 
-        if($fitIds[0] !=='0'){
-        $productType->fits()->sync($fitIds);
+        // if($fitIds[0] !=='0'){
+        // $productType->fits()->sync($fitIds);
 
-        }
+        // }
+        // if($fits[0] !=='0'){
+        //     $productType->fits()->sync($fits);
 
-        $productType->sizes()->sync($sizeIds);
+        //     }
+
+        $productType->fits()->sync($fits ?? null);
+
+        $productType->sizes()->sync($sizes);
         $productType->save();
 
         return redirect()->route('product-type.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);

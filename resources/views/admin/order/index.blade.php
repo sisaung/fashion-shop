@@ -145,7 +145,7 @@
 
                                         <a href ="{{ route('order.show', $order->id) }}"
                                             class="px-2 py-1 hover:bg-gray-100 inline-flex justify-center items-center"
-                                            href="{{ route('order.show', $order->id) }}">
+                                           >
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                                 class="size-5 text-gray-600">
                                                 <path fill-rule="evenodd"

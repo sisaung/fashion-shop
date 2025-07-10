@@ -75,7 +75,7 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-       
+
     }
 
     /**
@@ -93,7 +93,7 @@ class CustomerController extends Controller
                 ->withInput();
         }
 
-        $customer = Customer::find($id);
+        $customer = Customer::with(['orders'])->find($id);
         return view('admin.customer.show', ['customer' => $customer]);
     }
 
