@@ -18,6 +18,7 @@ class BrandSeeder extends Seeder
         $brands = [
             ["brand_name" => "Boss", "brand_image" => null],
             ['brand_name' => 'JJXX', 'brand_image' => null],
+            ['brand_name' => 'Ferragamo', 'brand_image' => null],
             ["brand_name" => "Gucci", "brand_image" => null],
             ["brand_name" => "Prada", "brand_image" => null],
             ["brand_name" => "Louis Vuitton", "brand_image" => null],

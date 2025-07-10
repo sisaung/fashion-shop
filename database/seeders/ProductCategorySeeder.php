@@ -22,7 +22,7 @@ class ProductCategorySeeder extends Seeder
             ["category_name" => "Footwear"],
             ["category_name" => "Accessories"],
             ["category_name" => "Outerwear"],
-            ["category_name" => "Bags"]
+            
         ];
 
         $now = now();

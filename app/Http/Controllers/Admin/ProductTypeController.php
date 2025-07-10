@@ -54,13 +54,13 @@ class ProductTypeController extends Controller
             });
         }
 
-        $query->join('product_categories', 'product_types.product_category_id', '=', 'product_categories.id')
-            ->leftjoin('fit_product_type', 'product_types.id', '=', 'fit_product_type.product_type_id')
-            ->leftJoin('fits', 'fit_product_type.fit_id', '=', 'fits.id')
-            ->join('product_type_size', 'product_types.id', '=', 'product_type_size.product_type_id')
-            ->join('sizes', 'product_type_size.size_id', '=', 'sizes.id')
-            ->select("product_types.*")
-            ->groupBy(['product_types.id', 'name', 'user_id', 'product_category_id', 'created_at', 'updated_at']);
+        // $query->join('product_categories', 'product_types.product_category_id', '=', 'product_categories.id')
+        //     ->leftjoin('fit_product_type', 'product_types.id', '=', 'fit_product_type.product_type_id')
+        //     ->leftJoin('fits', 'fit_product_type.fit_id', '=', 'fits.id')
+        //     ->join('product_type_size', 'product_types.id', '=', 'product_type_size.product_type_id')
+        //     ->join('sizes', 'product_type_size.size_id', '=', 'sizes.id')
+        //     ->select("product_types.*")
+        //     ->groupBy(['product_types.id', 'name', 'user_id', 'product_category_id', 'created_at', 'updated_at']);
 
         $query->orderBy($sortBy, $sortDirection);
 
@@ -71,6 +71,8 @@ class ProductTypeController extends Controller
             'sort_direction' => $sortDirection,
             'limit' => $limit
         ]);
+
+        // return $productType;
         return view('admin.product-type.index', ['productTypes' => $productType]);
     }
 
@@ -100,7 +102,7 @@ class ProductTypeController extends Controller
         $fits = $request->fits;
         $sizes = $request->sizes;
 
-    
+
         // foreach ($fits as $fit) {
 
         //     $fitIds[] = $fit;

@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Fit;
 use App\Models\ProductCategory;
 use App\Models\ProductType;
+use App\Models\Size;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,78 +18,114 @@ class ProductTypeSeeder extends Seeder
      */
      public function run()
     {
-        $productTypes = [
-            "Clothing" => [
-                "T-Shirts",
-                "Jeans",
-                "Dresses",
-                "Shirts"
+        $productTypeData = [
+            [
+                'name' => 'T-Shirt',
+                'category' => 'Clothing',
+                'fits' => ['Slim Fit', 'Regular Fit', 'Stretch Fit'],
+                'sizes' => ['XS', 'S', 'M', 'L', 'XL']
             ],
-            "Footwear" => [
-                "Sneakers",
-                "Boots",
-                "Sandals",
-                "Formal Shoes"
+            [
+                'name' => 'Sweater',
+                'category' => 'Clothing',
+                'fits' => ['Regular Fit', 'Wide Fit'],
+                'sizes' => ['XS', 'M', 'L']
             ],
-            "Accessories" => [
-                "Watches",
-                "Belts",
-                "Jewelry",
-                "Hats"
+            [
+                'name' => 'Skirt',
+                'category' => 'Clothing',
+                'fits' => ['Mini-Skirt Fit', 'Short-Skirt Fit', 'Long-Skirt Fit', 'Regular Fit'],
+                'sizes' => ['XS', 'S', 'M', 'L', 'XL']
             ],
-            "Outerwear" => [
-                "Jackets",
-                "Coats",
-                "Hoodies",
-                "Raincoats"
+            [
+                'name' => 'Tops',
+                'category' => 'Clothing',
+                'fits' => ['Stretch Fit', 'Rib Fit'],
+                'sizes' => ['XS', 'XXS', 'M', 'L', 'XL']
             ],
-            "Bags" => [
-                "Backpacks",
-                "Handbags",
-                "Messenger Bags",
-                "Suitcases"
+            [
+                'name' => 'Trousers',
+                'category' => 'Clothing',
+                'fits' => ['Regular Fit', 'Wide-leg Fit'],
+                'sizes' => ['24', '25', '26', '27', '28', '29', '30', '31', '32']
             ],
+            [
+                'name' => 'Hat',
+                'category' => 'Accessories',
+                'fits' => [],
+                'sizes' => ['free size']
+            ],
+            [
+                'name' => 'Cap',
+                'category' => 'Accessories',
+                'fits' => [],
+
+                'sizes' => ['free size']
+            ],
+            [
+                'name' => 'Scraf',
+                'category' => 'Accessories',
+                'fits' => [],
+
+                'sizes' => ['one size']
+            ],
+            [
+                'name' => 'Sunglasses',
+                'category' => 'Accessories',
+                'fits' => [],
+
+                'sizes' => ['one size']
+            ],
+            [
+                'name' => 'Sunglasses',
+                'category' => 'Accessories',
+                'fits' => [],
+
+                'sizes' => ['one size']
+            ],
+            [
+                'name' => 'Hoodie',
+                'category' => 'Outerwear',
+                'fits' => ['Regular Fit','Slim Fit'],
+                'sizes' => ['XS','S','M','L','XL']
+            ],
+            [
+                'name' => 'Blazor',
+                'category' => 'Outerwear',
+                'fits' => ['Relaxed Fit','Regular Fit','Volume Fit'],
+                'sizes' => ['XXS','XS','S','M','L','XL']
+
+            ],
+            [
+                'name' => 'Jacket',
+                'category' => 'Outerwear',
+                'fits' => [],
+
+                'sizes' => ['XS','S','M','L','XL','XXL']
+
+            ],
+
         ];
 
-        $relatedFits = [
-            "T-Shirts" => ['Slim Fit', 'Regular Fit', 'Oversized Fit'],
-            "Jeans" => ['Slim Fit', 'Relaxed Fit', 'Straight Fit'],
-            "Dresses" => ['Bodycon Fit', 'A-Line Fit', 'Wrap Fit'],
-            "Shirts" => ['Slim Fit', 'Regular Fit', 'Tailored Fit'],
-            "Jackets" => ['Boxy Fit', 'Oversized Fit', 'Regular Fit'],
-            "Hoodies" => ['Relaxed Fit', 'Oversized Fit'],
-        ];
+        foreach ($productTypeData as $data) {
+            // Find category
+            $category = ProductCategory::where('category_name', $data['category'])->first();
 
-        $now = now();
+            // Create product type
+            $productType = ProductType::create([
+                'name' => $data['name'],
+                'product_category_id' => $category->id,
+                'user_id' => 1
+            ]);
 
-        foreach ($productTypes as $categoryName => $types) {
-            $category = ProductCategory::where('category_name', $categoryName)->first();
+            // Attach fits
+            $fitIds = Fit::whereIn('fit_name', $data['fits'])->pluck('id');
+            $productType->fits()->attach($fitIds);
 
-            if ($category) {
-                foreach ($types as $typeName) {
-                    $productType = ProductType::create([
-                        'name' => $typeName,
-                        'product_category_id' => $category->id,
-                        'user_id' => 1,
-                        'created_at' => $now,
-                        'updated_at' => $now,
-                    ]);
-
-                    // Attach related fits if defined
-                    if (isset($relatedFits[$typeName])) {
-                        $fitIds = DB::table('fits')
-                            ->whereIn('fit_name', $relatedFits[$typeName])
-                            ->pluck('id');
-
-                        foreach ($fitIds as $fitId) {
-                            DB::table('fit_product_type')->updateOrInsert([
-                                'fit_id' => $fitId,
-                                'product_type_id' => $productType->id,
-                            ]);
-                        }
-                    }
-                }
-            }
+            // Attach sizes
+            $sizeIds = Size::whereIn('size_name', $data['sizes'])->pluck('id');
+            $productType->sizes()->attach($sizeIds);
         }
     }
-}
+    }
+

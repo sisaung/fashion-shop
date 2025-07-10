@@ -14,9 +14,9 @@ class SizeSeeder extends Seeder
      */
     public function run(): void
     {
-       $sizes = [ 'XS', 'S', 'M', 'L', 'XL', 'XXL','28', '30', '32', '34', '36', '38', '40','EU-35', 'EU-36', 'EU-37', 'EU-38', 'EU-39',
+       $sizes = [ 'XXS','XS', 'S', 'M', 'L', 'XL', 'XXL','28','29', '30','31', '32', '34','35', '36','37','39', '38', '40','EU-35', 'EU-36', 'EU-37', 'EU-38', 'EU-39',
        'EU-40', 'EU-41', 'EU-42', 'EU-43', 'EU-44',
-       'EU-45', 'EU-46', 'EU-47', 'EU-48'];
+       'EU-45', 'EU-46', 'EU-47', 'EU-48','one size','free size'];
 
        $now = now();
        foreach ($sizes as $size) {

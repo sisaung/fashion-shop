@@ -26,6 +26,20 @@ class FitSeeder extends Seeder
             'A-Line Fit',
             'Wrap Fit',
             'Boxy Fit',
+            'Stretch Fit',
+            'Slim-Stretch Fit',
+            'Flared Fit',
+            'Wide-Leg Fit',
+            'Comfort Fit',
+            'Short-Skirt Fit',
+            'Long-Skirt Fit',
+            'Mini-Skirt Fit',
+            'Wide Fit',
+            'Rib Fit',
+            'Classic Fit',
+            'Loose Fit',
+            'Volume Fit'
+
         ];
 
         $now = now();
