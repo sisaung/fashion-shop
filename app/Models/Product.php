@@ -9,7 +9,7 @@ class Product extends Model
 {
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
-    protected $fillable = ['product_name', 'product_code', 'slug', 'description', 'original_price', 'sale_price', 'discount_percentage', 'display_price', 'gender', 'is_new_arrival', 'product_type_id', 'product_category_id', 'brand_id', 'fit_id', 'user_id'];
+    protected $fillable = ['product_name', 'product_code', 'slug', 'description', 'original_price', 'sale_price', 'discount_value','discount_type', 'display_price', 'gender', 'is_new_arrival', 'product_type_id', 'product_category_id', 'brand_id', 'fit_id', 'user_id'];
 
     public function user()
     {

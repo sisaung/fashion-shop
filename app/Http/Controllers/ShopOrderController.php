@@ -146,7 +146,8 @@ public function showOrder($orderNumber) {
     if($validator->fails()) {
         return back()->withErrors($validator)->withInput();
     }
-    $order = Order::with(['orderItems','customerAddress','orderItems.stock','orderItems.stock.product'])->where('order_number',$orderNumber)->first();
+    $order = Order::with(['orderItems','customerAddress','orderItems.stock','orderItems.stock.product','orderItems.stock.product.productImages'])->where('order_number',$orderNumber)->first();
+    
 
     return view('public.account.order.show',['order' => $order]);
 

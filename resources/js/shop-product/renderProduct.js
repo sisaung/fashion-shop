@@ -1,3 +1,4 @@
+import { formatNumber } from "chart.js/helpers";
 import updatUiWishlist from "./wishlist/updateUIWishList";
 
 const renderProduct = async (product, wishlistProducts) => {
@@ -50,7 +51,8 @@ const renderProduct = async (product, wishlistProducts) => {
     clone.querySelector(".product-name").textContent = product.product_name;
     clone.querySelector(".code-text").textContent = product.product_code;
 
-    if (product.discount_percentage > 0) {
+
+    if (product.discount_type) {
         saleProductPrice.textContent = `${Number(
             product.sale_price
         ).toLocaleString()} MMK `;
@@ -63,15 +65,25 @@ const renderProduct = async (product, wishlistProducts) => {
         ).toLocaleString()} MMK `;
     }
 
-    if (product.discount_percentage > 0) {
+    if(product.discount_type == 'percentage') {
+        console.log('percentage')
         productPromo.classList.remove("hidden");
-        productPromo.textContent = `Save ${product.discount_percentage} % OFF`;
+        productPromo.textContent = `Save ${product.discount_value} % OFF`;
         productPromo.classList.add("bg-red-500");
-    } else {
+    }
+    else if(product.discount_type == 'fixed') {
+        console.log('fixed')
+        productPromo.classList.remove("hidden");
+        productPromo.textContent = `Save ${formatNumber(product.discount_value)} MMK OFF`;
+        productPromo.classList.add("bg-red-500");
+
+    }else{
         productPromo.classList.add("hidden");
         productPromo.textContent = ``;
         productPromo.classList.remove("bg-red-500");
     }
+
+
 
     return clone;
 };

@@ -52,7 +52,7 @@ const renderCart = (cartItem) => {
         cartItem.product.display_price * cartItem.quantity
     );
 
-    if (cartItem.product.discount_percentage > 0) {
+    if (cartItem.product.discount_type) {
         cartProductSalePrice.textContent = `${cartItemSalePrice} MMK`;
         cartProductDisplayPrice.textContent = `${cartItemDisplayPrice} MMK`;
     } else {

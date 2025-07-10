@@ -150,12 +150,11 @@
 
                                 <td class=" px-4 py-4 text-sm text-stone-600" colSpan={2}>
                                     Sale Price <span class="text-green-500 pl-1 "> Profit (
-                                        @if ($product->discount_percentage)
-                                            {{ $product->display_price - $product->original_price }}
-                                        @else
-                                            {{ $product->sale_price - $product->original_price }}
-                                        @endif )
 
+                                        @include('components.admin.calculateProfit', [
+                                            'product' => $product,
+                                        ])
+                                        )
                                     </span>
                                 </td>
                                 <td class=" px-4 py-4 text-sm text-stone-600">Discount</td>
@@ -163,17 +162,17 @@
 
                             </tr>
                             <tr>
-                                <td class=" px-4 py-4 "> {{ number_format($product->original_price) }} MMK</td>
+                                <td class=" px-4 py-4 text-wrap"> {{ number_format($product->original_price) }} MMK</td>
                                 <td class=" px-4 py-4" colSpan={2}>
                                     <p class="inline-flex gap-2">
-                                        @if ($product->discount_percentage != 0)
+                                        @if ($product->discount_type)
                                             <span> {{ number_format($product->display_price) }} MMK </span>
                                         @endif
-                                        <span class="{{ $product->discount_percentage ? 'line-through' : '' }}">
-                                            {{ number_format($product->sale_price) }} MMK</span>
+                                        <span class="{{ $product->discount_type ? 'line-through text-gray-400' : '' }} text-wrap ">
+                                            {{ number_format($product->sale_price ) }} MMK</span>
                                     </p>
                                 </td>
-                                <td class=" px-4 py-4"> {{ $product->discount_percentage ?? 0 }} % </td>
+                                <td class=" px-4 py-4 text-nowrap"> @include('components.admin.showDiscount', ['product' => $product]) </td>
                             </tr>
 
                             <tr class="bg-stone-100">

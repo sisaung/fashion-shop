@@ -20,7 +20,7 @@ const renderOrderSummary = (cart) => {
     const subtotal =
         cart.length > 0
             ? cart.reduce((acc, item) => {
-                  const productPrice = item.product.discount_percentage
+                  const productPrice = item.product.discount_type
                       ? item.product.display_price
                       : item.product.sale_price;
                   return acc + productPrice * item.quantity;

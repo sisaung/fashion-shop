@@ -86,13 +86,13 @@ class ProductTypeSeeder extends Seeder
             [
                 'name' => 'Hoodie',
                 'category' => 'Outerwear',
-                'fits' => ['Regular Fit','Slim Fit'],
+                'fits' => ['Regular Fit','Volume Fit','Relaxed Fit'],
                 'sizes' => ['XS','S','M','L','XL']
             ],
             [
                 'name' => 'Blazor',
                 'category' => 'Outerwear',
-                'fits' => ['Relaxed Fit','Regular Fit','Volume Fit'],
+                'fits' => ['Regular Fit','Slim Fit'],
                 'sizes' => ['XXS','XS','S','M','L','XL']
 
             ],
@@ -100,7 +100,6 @@ class ProductTypeSeeder extends Seeder
                 'name' => 'Jacket',
                 'category' => 'Outerwear',
                 'fits' => [],
-
                 'sizes' => ['XS','S','M','L','XL','XXL']
 
             ],

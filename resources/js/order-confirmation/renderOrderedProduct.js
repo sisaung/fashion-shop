@@ -30,7 +30,7 @@ const renderOrderedProduct = (cart) => {
     orderedQuantityValue.textContent = "Qty: " + cart.quantity;
     orderedProducCode.textContent = cart.product.product_code;
 
-    if (cart.product.discount_percentage) {
+    if (cart.product.discount_type) {
         orderedProductSalePrice.textContent =
             numberFormat(cart.product.sale_price) + " MMK";
         orderedProductDisplayPrice.textContent =

@@ -115,7 +115,7 @@ class ShopCategoryController extends Controller
     public function getShop(Request $request) {
 
 
-        $validSortColumns = ['product_name', 'display_price', 'sale_price' ,'brand_name', 'discount_percentage', 'name', 'category_name',  'id'];
+        $validSortColumns = ['product_name'  ,'brand_name', 'discount_value', 'name', 'category_name',  'id'];
         $validFilter = ['male','female','unisex'];
         $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'id';
 
@@ -239,6 +239,24 @@ class ShopCategoryController extends Controller
             }
 
 
+            if($request->input('sort_by') === 'sale_price') {
+
+                $query->orderBy('sale_price',$sortDirection);
+            }
+            else if ($request->input('sort_by') === 'discount_value') {
+                // 🔄 Calculate discount amount for sorting
+                $query->selectRaw("
+                    CASE
+                        WHEN discount_type = 'percentage' THEN sale_price * discount_value / 100
+                        WHEN discount_type = 'fixed' THEN discount_value
+                        ELSE 0
+                    END as discount_amount
+                ")
+                ->orderBy('discount_amount', $sortDirection);
+            } else {
+
+                $query->orderBy($sortBy, $sortDirection);
+            }
 
         $query->orderBy($sortBy, $sortDirection);
 

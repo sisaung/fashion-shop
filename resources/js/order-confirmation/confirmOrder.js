@@ -44,6 +44,7 @@ const initalizeConfirmOrder = () => {
             showErrorToast("Your cart is empty");
             return;
         } else {
+
             const data = {
                 customer: {
                     name: currentUserObj.name,
@@ -58,7 +59,7 @@ const initalizeConfirmOrder = () => {
                 net_total: cart.netTotal,
                 order_items: cart.items.map((item) => ({
                     stock_id: item.stock_id,
-                    price: item.product.discount_percentage
+                    price: item.product.discount_type
                         ? item.product.display_price
                         : item.product.sale_price,
                     quantity: item.quantity,
@@ -66,7 +67,8 @@ const initalizeConfirmOrder = () => {
             };
 
 
-           
+            
+
             const res = await storeOrder("/confirm-order", data, csrfToken);
             const orderData = await res.json();
 

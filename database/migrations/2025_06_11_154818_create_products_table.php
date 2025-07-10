@@ -20,7 +20,8 @@ return new class extends Migration
             $table->float('original_price');
             $table->float('sale_price');
             $table->float('display_price');
-            $table->float('discount_percentage')->nullable();
+            $table-> enum('discount_type', ['percentage', 'fixed'])->nullable();
+            $table->float('discount_value')->nullable();
             $table->enum('gender',['male','female','unisex']);
             $table->string('is_new_arrival')->default(0);
             $table->string('is_popular')->default(0);

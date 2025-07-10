@@ -102,6 +102,7 @@
                                     <strong>Total
                                     </strong>
                                 </td>
+                                
                                 <td> {{ number_format($order->total_amount) }} MMK </td>
 
                             </tr>
