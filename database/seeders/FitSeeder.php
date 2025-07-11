@@ -38,7 +38,9 @@ class FitSeeder extends Seeder
             'Rib Fit',
             'Classic Fit',
             'Loose Fit',
-            'Volume Fit'
+            'Volume Fit',
+            'All Fit',
+            'Bit Fit'
 
         ];
 

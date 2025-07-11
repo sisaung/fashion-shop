@@ -23,13 +23,19 @@ class ProductTypeSeeder extends Seeder
                 'name' => 'T-Shirt',
                 'category' => 'Clothing',
                 'fits' => ['Slim Fit', 'Regular Fit', 'Stretch Fit'],
-                'sizes' => ['XS', 'S', 'M', 'L', 'XL']
+                'sizes' => ['XS', 'S', 'M', 'L', 'XL','XXL']
+            ],
+            [
+                'name' => 'Shirt',
+                'category' => 'Clothing',
+                'fits' => ['Classic Fit', 'All Fit', 'Stretch Fit'],
+                'sizes' => ['XS', 'S', 'M', 'L', 'XL','XXL']
             ],
             [
                 'name' => 'Sweater',
                 'category' => 'Clothing',
-                'fits' => ['Regular Fit', 'Wide Fit'],
-                'sizes' => ['XS', 'M', 'L']
+                'fits' => ['Regular Fit', 'Wide Fit','Big Fit'],
+                'sizes' => ['XS', 'S','M', 'L','XL','XXL']
             ],
             [
                 'name' => 'Skirt',
@@ -50,10 +56,32 @@ class ProductTypeSeeder extends Seeder
                 'sizes' => ['24', '25', '26', '27', '28', '29', '30', '31', '32']
             ],
             [
+                'name' => 'Polo Shirt',
+                'category' => 'Clothing',
+                'fits' => ['All Fit', 'Classic Fit'],
+                'sizes' => ['XS', 'S', 'M', 'L', 'XL','XXL']
+
+
+            ],
+            [
+                'name' => 'Shorts',
+                'category' => 'Clothing',
+                'fits' => ['Relaxed Fit', 'Classic Fit'],
+                'sizes' => ['XS', 'S', 'M', 'L', 'XL','XXL','28','29','30','31','32','33','34','35','36','38','40','42','44','46']
+
+
+            ],
+            [
                 'name' => 'Hat',
                 'category' => 'Accessories',
                 'fits' => [],
                 'sizes' => ['free size']
+            ],
+            [
+                'name' => 'Bag',
+                'category' => 'Accessories',
+                'fits' => [],
+                'sizes' => ['one size']
             ],
             [
                 'name' => 'Cap',
@@ -76,13 +104,7 @@ class ProductTypeSeeder extends Seeder
 
                 'sizes' => ['one size']
             ],
-            [
-                'name' => 'Sunglasses',
-                'category' => 'Accessories',
-                'fits' => [],
 
-                'sizes' => ['one size']
-            ],
             [
                 'name' => 'Hoodie',
                 'category' => 'Outerwear',
@@ -90,7 +112,7 @@ class ProductTypeSeeder extends Seeder
                 'sizes' => ['XS','S','M','L','XL']
             ],
             [
-                'name' => 'Blazor',
+                'name' => 'Blazer',
                 'category' => 'Outerwear',
                 'fits' => ['Regular Fit','Slim Fit'],
                 'sizes' => ['XXS','XS','S','M','L','XL']
@@ -103,6 +125,10 @@ class ProductTypeSeeder extends Seeder
                 'sizes' => ['XS','S','M','L','XL','XXL']
 
             ],
+
+
+
+
 
         ];
 
