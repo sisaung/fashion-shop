@@ -118,16 +118,77 @@ class ProductTypeSeeder extends Seeder
                 'sizes' => ['XXS','XS','S','M','L','XL']
 
             ],
+           
+
+            // footwear
+            [
+                'name' => 'Loafers',
+                'category' => 'Footwear',
+                'fits' => [],
+                'sizes' => ['7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5', '12', '12.5', '13'],
+            ],
+            [
+                'name' => 'Shoes',
+                'category' => 'Footwear',
+                'fits' => [],
+                'sizes' => ['7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5', '12', '12.5', '13', '14', '15'],
+            ],
+
+            [
+                'name' => 'Slides & Sandals',
+                'category' => 'Footwear',
+                'fits' => [],
+                'sizes' => ['7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5', '12', '12.5', '13'],
+            ],
+            [
+                'name' => 'Sneakers',
+                'category' => 'Footwear',
+                'fits' => [],
+                'sizes' => ['7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5', '12', '13', '14', '15', '16', '17'],
+            ],
+            [
+                'name' => 'Blazer',
+                'category' => 'Outerwear',
+                'fits' => ['Regular Fit'],
+                'sizes' => ['32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54'],
+            ],
             [
                 'name' => 'Jacket',
                 'category' => 'Outerwear',
                 'fits' => [],
-                'sizes' => ['XS','S','M','L','XL','XXL']
-
+                'sizes' => ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'],
             ],
 
-
-
+            [
+                'name' => 'Bags',
+                'category' => 'Accessories',
+                'fits' => [],
+                'sizes' => ['One Size'],
+            ],
+            [
+                'name' => 'Belts',
+                'category' => 'Accessories',
+                'fits' => [],
+                'sizes' => ['S', 'M', 'L', 'XL', '32', '34', '36', '38', '40', '42'],
+            ],
+            [
+                'name' => 'Cap',
+                'category' => 'Accessories',
+                'fits' => [],
+                'sizes' => ['One Size'],
+            ],
+            [
+                'name' => 'Wallets',
+                'category' => 'Accessories',
+                'fits' => [],
+                'sizes' => ['One Size'],
+            ],
+            [
+                'name' => 'Socks',
+                'category' => 'Accessories',
+                'fits' => [],
+                'sizes' => ['One Size'],
+            ],
 
 
         ];

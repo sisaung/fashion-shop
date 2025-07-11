@@ -153,6 +153,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const stockCheckbox = document.getElementById("inStockOnly");
 
     const filterBrand = document.getElementById("filter-brand");
+    const sortProductBtn = document.querySelector(".sort-product-btn");
 
     const { search } = location;
 
@@ -200,7 +201,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         const selectedBrands = params.getAll("brands[]");
 
         if (stockCheckbox.checked) {
+            sortProductBtn.textContent = "Sort Product";
+            const allActiveIcons = document.querySelectorAll(
+                ".active-sort-product"
+            );
+            allActiveIcons.forEach((icon) => {
+                icon.innerHTML = "";
+            });
             params.delete("in_stock");
+            params.delete("page");
+            params.delete("sort_by");
+            params.delete("sort_direction");
+            params.delete("limit");
             params.append("in_stock", 1);
         } else {
             params.delete("in_stock");
@@ -231,7 +243,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         const checkbox = document.querySelectorAll('input[type="checkbox"]');
-
 
         checkbox.forEach((el) => {
             if (selectedBrands.includes(el.value)) {

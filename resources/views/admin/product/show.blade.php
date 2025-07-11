@@ -116,7 +116,7 @@
                             </tr>
                             <tr>
                                 <td class=" px-4 py-4">
-                                    <span class=" px-2 rounded-lg bg-pearl-bush-400 text-white py-2 text-sm">
+                                    <span class=" px-2 rounded-lg text-nowrap bg-pearl-bush-400 text-white py-2 text-sm">
                                         {{ $product->brand->brand_name }} </span>
                                 </td>
                                 <td class=" px-4 py-4">

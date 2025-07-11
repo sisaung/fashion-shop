@@ -29,6 +29,10 @@ class FitSeeder extends Seeder
             'Stretch Fit',
             'Slim-Stretch Fit',
             'Flared Fit',
+            'Standard Fit',
+            'Easy Fit',
+            'Tall Fit',
+            'Tailored Fit',
             'Wide-Leg Fit',
             'Comfort Fit',
             'Short-Skirt Fit',
@@ -40,9 +44,10 @@ class FitSeeder extends Seeder
             'Loose Fit',
             'Volume Fit',
             'All Fit',
-            'Bit Fit'
+            'Bit Fit',
 
         ];
+
 
         $now = now();
 
