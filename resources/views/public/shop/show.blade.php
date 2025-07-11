@@ -154,11 +154,11 @@
                     <div class="space-y-2">
                         <div class="text-xl text-gray-800 space-x-2 ">
 
-                            @if ($product->discount_percentage > 0)
+                            @if ($product->discount_type)
                                 <span class="line-through text-gray-500"> {{ $product->sale_price }} MMK </span>
                                 <span> {{ $product->display_price }} MMK </span>
                             @else
-                                <span> {{ $product->sale_price }} MMK </span>
+                                <span> {{ $product->display_price }} MMK </span>
                             @endif
                         </div>
                         {{-- <div class="text-gray-600">Free shipping on orders over 300,000 MMK</div> --}}

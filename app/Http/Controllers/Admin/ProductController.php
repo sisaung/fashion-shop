@@ -25,8 +25,10 @@ class ProductController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
+
     {
-        $validSortColumns = ['product_name', 'display_price','sale_price', 'brand_name', 'name', 'category_name',  'id'];
+
+        $validSortColumns = ['product_name','stock_count', 'display_price','sale_price', 'brand_name', 'name', 'category_name',  'id'];
         $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'id';
 
         $sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
@@ -75,7 +77,24 @@ class ProductController extends Controller
         //     ->select("product_types.*")
         //     ->groupBy(['product_types.id', 'name', 'user_id', 'product_category_id', 'created_at', 'updated_at']);
 
-        $query->orderBy($sortBy, $sortDirection);
+        if($request->input('sort_by') === 'sale_price') {
+
+            $query->orderBy('sale_price',$sortDirection);
+        }
+        else if ($request->input('sort_by') === 'discount_value') {
+            // 🔄 Calculate discount amount for sorting
+            $query->selectRaw("
+                CASE
+                    WHEN discount_type = 'percentage' THEN sale_price * discount_value / 100
+                    WHEN discount_type = 'fixed' THEN discount_value
+                    ELSE 0
+                END as discount_amount
+            ")
+            ->orderBy('discount_amount', $sortDirection);
+        } else {
+
+            $query->orderBy($sortBy, $sortDirection);
+        }
 
         $product = $query->paginate($limit);
         $product->appends([
@@ -93,10 +112,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $brands = Brand::all();
-        $productCategory = ProductCategory::all();
-        $productType = ProductType::all();
-        $fits = Fit::all();
+        $brands = Brand::orderBy('brand_name', 'asc')->get();
+        $productCategory = ProductCategory::orderBy('category_name', 'asc')->get();
+        $productType = ProductType::orderBy('name', 'asc')->get();
+        $fits = Fit::orderBy('fit_name', 'asc')->get();
 
         return view('admin.product.create', ['brands' => $brands, 'productCategories' => $productCategory, 'productTypes' => $productType, 'fits' => $fits]);
     }
@@ -130,7 +149,8 @@ class ProductController extends Controller
             'slug' => Str::slug($request->product_name, '-'),
             'original_price' => $request->original_price,
             'sale_price' => $request->sale_price,
-            'discount_percentage' => $request->discount_percentage,
+            'discount_type' => $request->discount_type,
+            'discount_value' => $request->discount_value,
             'display_price' => $request->display_price,
             'gender' => $request->gender,
             'is_new_arrival' => $newArrival,
@@ -223,7 +243,8 @@ class ProductController extends Controller
         $product->product_name = $request->product_name;
         $product->original_price = $request->original_price;
         $product->sale_price = $request->sale_price;
-        $product->discount_percentage = $request->discount_percentage;
+        $product->discount_type = $request->discount_type;
+        $product->discount_value = $request->discount_value;
         $product->display_price = $request->display_price;
         $product->gender = $request->gender;
         $product->is_new_arrival = $newArrival;

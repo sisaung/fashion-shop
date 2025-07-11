@@ -282,18 +282,47 @@
                         @enderror
                     </div>
 
+                    {{-- discount type --}}
+                    <div class="relative mb-4 w-full col-span-2">
+                        @php
+                            $discountType = ['percentage', 'fixed'];
+                            $discount_type = old('discount_type', $product->discount_type);
+                        @endphp
+                        <label for="discount_type"
+                            class="@error('discount_type')
+                            text-red-500
+                        @enderror leading-7 text-sm text-gray-600">Discount
+                            Type </label>
+
+
+                        <select id="discount-type" name="discount_type"
+                            class=" @error('discount_type')
+                            is-invalid
+                        @enderror block w-full  p-2.5  rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 ">
+                            <option selected class="text-sm text-gray-700" value="">Choose Discount Type</option>
+                            @foreach ($discountType as $type)
+                                <option value="{{ $type }}" @selected($discount_type == $type)>{{ $type }}
+                                </option>
+                            @endforeach
+
+                        </select>
+                        @error('discount_type')
+                            <p class="text-sm text-red-500"> {{ $message }}</p>
+                        @enderror
+                    </div>
+
                     {{-- discount --}}
                     <div class="relative mb-4 col-span-2">
-                        <label for="discount_percentage"
-                            class="@error('discount_percentage')
+                        <label for="discount_value"
+                            class="@error('discount_value')
                             text-red-500
                         @enderror leading-7 text-sm text-gray-600">Discount</label>
-                        <input type="number" id="discount-percentage" name="discount_percentage"
-                            value="{{ old('discount_percentage', $product->discount_percentage) }}"
-                            class="@error('discount_percentage')
+                        <input type="number" id="discount-value" name="discount_value"
+                            value="{{ old('discount_value', $product->discount_value) }}"
+                            class="@error('discount_value')
                             is-invalid
                         @enderror  w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                        @error('discount_percentage')
+                        @error('discount_value')
                             <p class="text-sm text-red-500"> {{ $message }}</p>
                         @enderror
                     </div>
@@ -308,6 +337,7 @@
 
                         <span class="profit text-green-500 text-sm ml-2"> </span>
 
+
                         <input readonly type="text" id="display-price" name="display_price"
                             value="{{ old('display_price', $product->display_price) }}"
                             class="@error('display_price')
@@ -317,6 +347,11 @@
                             <p class="text-sm text-red-500"> {{ $message }}</p>
                         @enderror
                     </div>
+
+                    <div class="col-span-2"></div>
+                    <div class="col-span-2"></div>
+                    <div class="col-span-2"></div>
+
 
                     {{-- description --}}
                     <div class="relative mb-4 col-span-4">

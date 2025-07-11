@@ -18,9 +18,10 @@ export const getCartData = () => {
 
 export const saveCartData = (items) => {
     const subtotal = items.length > 0 ?  items.reduce((acc, item) => {
-        const productPrice = item.product.discount_percentage
+        const productPrice = item.product.discount_type
             ? item.product.display_price
             : item.product.sale_price;
+        
         return acc + productPrice * item.quantity;
     }, 0) : 0
     const tax = subtotal * 0.1;

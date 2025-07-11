@@ -51,10 +51,11 @@
                             <div class="flex gap-4 pb-6">
                                 <div
                                     class="w-50 relative h-50 inline-flex justify-center items-center rounded-lg overflow-hidden flex-shrink-0">
-                                    <img src="{{ $item->stock->product->productImages->first()->preview }}"
+                                  
+                                    <img src="{{ $item->stock->product->productImages->count() > 0 ? $item->stock->product->productImages->first()->preview : 'https://www.mooreseal.com/wp-content/uploads/2013/11/dummy-image-square-300x300.jpg'  }}"
                                         class="ordered-product-image" alt="BOSS Polo Penrose 38"
                                         class="w-full h-full object-cover" />
-                                        <div class="absolute top-0 left-0 w-full h-full bg-black/4"></div>
+                                    <div class="absolute top-0 left-0 w-full h-full bg-black/4"></div>
                                 </div>
 
                                 <div class="flex-1">
@@ -64,8 +65,8 @@
                                         {{ $item->stock->product->product_code }}
                                     </p>
                                     <p class="text-sm text-gray-400 ordered-product-sale-price line-through">
-                                        @if ($item->stock->product->discount_percentage)
-                                            {{ number_format($item->stock->product->sale_price) }}
+                                        @if ($item->stock->product->discount_type)
+                                            {{ number_format($item->stock->product->sale_price) }} MMK
                                         @endif
                                     </p>
 

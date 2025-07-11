@@ -5,8 +5,8 @@
         'id&asc' => 'Oldest to Latest',
         'sale_price&desc' => 'Price: High to Low',
         'sale_price&asc' => 'Price: Low to High',
-        'discount_percentage&asc' => 'Discount: Low to High',
-        'discount_percentage&desc' => 'Discount: High to Low',
+        'discount_value&asc' => 'Discount: Low to High',
+        'discount_value&desc' => 'Discount: High to Low',
     ];
 
 @endphp

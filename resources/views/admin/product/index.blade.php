@@ -50,7 +50,7 @@
 
                                 </th>
 
-                                <th data-sortby="stock_count" scope="col"
+                                <th data-sortby="discount_value" scope="col"
                                     class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
                                     @include('components.admin.sortTable', [
                                         'sortTitle' => 'Discount',
@@ -144,7 +144,7 @@
                                     </td>
 
                                     <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
-                                        {{ $product->discount_percentage ? $product->discount_percentage . '%' : 0 }}
+                                        @include('components.admin.showDiscount',['product' => $product])
                                     </td>
 
                                     <td data-new-arrival-id="{{ $product->id }}"

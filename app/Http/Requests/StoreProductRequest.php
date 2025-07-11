@@ -28,7 +28,8 @@ class StoreProductRequest extends FormRequest
             'product_name' => 'required|string|min:3|max:50|unique:products,product_name',
             'original_price' => 'required|string|min:1|max:999999999',
             'sale_price' => 'required|string|min:1|max:999999999',
-            'discount_percentage' => 'nullable|numeric|min:1|max:100',
+            'discount_type' => 'nullable|in:percentage,fixed|required_with:discount_value',
+            'discount_value' => 'nullable|numeric|min:0|required_with:discount_type',
             'display_price' => 'required|string|min:1|max:999999999',
             'gender' => ['required', Rule::enum(Gender::class)],
             'is_new_arrival' => 'nullable',
@@ -37,6 +38,17 @@ class StoreProductRequest extends FormRequest
             'product_type_id' => 'required|numeric|exists:product_types,id',
             'fit_id' => 'nullable',
             'description' => 'nullable',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'discount_type.required_with' => 'Please select discount type.',
+            'discount_type.in' => 'Discount type must be percentage or fixed.',
+            'discount_value.required_with' => 'Please enter discount value.',
+            'discount_value.numeric' => 'Discount value must be a number.',
+            'discount_value.min' => 'Discount value must be at least 0.',
         ];
     }
 }
