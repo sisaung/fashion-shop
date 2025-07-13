@@ -30,8 +30,8 @@
                         <div
                             class=" grid grid-cols-12 gap-6 pb-4 border-b border-gray-200 text-xs font-medium text-gray-600 uppercase tracking-wider">
                             <div class="col-span-6">Product</div>
-                            <div class="col-span-3 text-center">Price</div>
-                            <div class="col-span-3 text-center">Total</div>
+                            <div class="col-span-3 text-end">Price</div>
+                            <div class="col-span-2 text-end">Total</div>
                         </div>
 
 
@@ -40,20 +40,20 @@
                         {{-- Demo Cart Items --}}
 
                         <template id="cart-item-template">
-                            <div class="flex items-center gap-6 py-6">
+                            <div class="flex  gap-6 py-6">
                                 {{-- Product Image --}}
-                                <div class="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                                <div class="w-28 bg-gray-50 aspect-square  rounded-lg overflow-hidden flex-shrink-0">
                                     <img src="https://via.placeholder.com/100" alt="Product 1"
-                                        class="cart-product-image w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                                        class="cart-product-image w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105">
                                 </div>
 
                                 {{-- Product Info --}}
-                                <div class="flex-1 min-w-0">
-                                    <h3 class="font-semibold text-gray-900 text-lg mb-2 cart-product-name">Cool Sneakers
+                                <div class="flex-1 min-w-0 ">
+                                    <h3 class="font-semibold text-gray-900 text-wrap text-lg mb-2 cart-product-name">Cool Sneakers
                                     </h3>
                                     <div class="flex items-center gap-4 text-sm text-gray-600">
                                         <p>Size: <span class="cart-product-size"></span></p>
-                                        <p>Stock: <span class="cart-product-stock text-green-500"></span></p>
+                                        <p>Stock: <span class="cart-product-stock"></span></p>
 
                                     </div>
 
@@ -72,8 +72,8 @@
                                 </div>
 
                                 {{-- Price --}}
-                                <div class="text-right flex-shrink-0">
-                                    <div class="text-sm text-gray-600 mb-1 cart-product-price">Price</div>
+                                <div class="" >
+                                    {{-- <div class="text-sm text-gray-600 mb-1 cart-product-price">Price</div> --}}
                                     <div class="space-y-1">
                                         <div class="text-sm text-gray-400 line-through cart-product-sale-price"></div>
                                         <div class="font-semibold text-gray-900 cart-product-display-price"></div>
@@ -81,9 +81,9 @@
                                 </div>
 
                                 {{-- Total --}}
-                                <div class="text-right flex-shrink-0 w-24">
-                                    <div class="text-sm text-gray-600 mb-1">Total</div>
-                                    <div class="font-semibold text-gray-900 cart-total">$200.00</div>
+                                <div class="text-right  mt-1 ">
+                                    {{-- <div class="text-sm text-gray-600 mb-1">Total</div> --}}
+                                    <div class="font-semibold  text-gray-900 cart-total"></div>
                                 </div>
                             </div>
                         </template>

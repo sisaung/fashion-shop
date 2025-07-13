@@ -73,7 +73,7 @@
                                                 <p class="text-xs text-stone-700"> Wil Deliver between
                                                     {{ $order->delivery_start_date }} and {{ $order->delivery_end_date }}
                                                 </p> --}}
-                                                @if ($order->order_status === 'confirmed')
+                                            @if ($order->order_status === 'confirmed')
                                                 <p class="text-xs text-stone-700"> Wil Deliver between
                                                     {{ $order->delivery_start_date }} and {{ $order->delivery_end_date }}
                                                 </p>
@@ -112,12 +112,15 @@
 
                             <div class="flex items-center gap-2">
                                 @foreach ($order->orderItems as $item)
-                                    @foreach ($item->stock->product->productImages->take(1) as $image)
-                                        <div class="size-10 border border-pearl-bush-300 rounded-lg overflow-hidden">
-                                            <img src="{{ $image->preview }}" alt="{{ $image->original_name }}"
-                                                class="w-full  h-full object-cover object-center">
-                                        </div>
-                                    @endforeach
+                                    @if ($item->stock->product->productImages->count() > 0)
+                                        @foreach ($item->stock->product->productImages->take(1) as $image)
+                                            <div class="size-10 border border-pearl-bush-300 rounded-lg overflow-hidden">
+                                                <img src="{{ $image->thumbnail ? $image->thumbnail : 'https://www.mooreseal.com/wp-content/uploads/2013/11/dummy-image-square-300x300.jpg' }}"
+                                                    alt="{{ $image->original_name }}"
+                                                    class="w-full aspect-square object-cover object-top">
+                                            </div>
+                                        @endforeach
+                                    @endif
                                 @endforeach
                             </div>
 

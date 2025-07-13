@@ -1,20 +1,22 @@
-<header class="h-18">
+<header class="py-10">
 
 
     <div class="relative">
-        <div class="bg-white shadow border-pearl-bush-400  fixed z-20 top-0 left-0 w-full">
-            <div class="max-w-7xl mx-auto flex justify-between items-center h-18">
-                <a href="{{ url('/') }}" class="flex items-center gap-x-3">
-                    <p>logo</p>
-                    <div class="flex flex-col ">
-                        <h1 class="text-2xl font-medium text-gray-700 font-heading uppercase">
-                            Fashion Shop
-                        </h1>
+        <div class="bg-white shadow border-pearl-bush-400  fixed z-40 top-0 left-0 w-full py-1">
+            <div class="max-w-7xl container px-3 xl:px-0 mx-auto flex justify-between items-center">
+                <a href="{{ url('/') }}" class="flex items-center gap-x-3 py-2">
+                    <div class="">
+                        <img src="{{ asset('/storage/logo/luxury.png') }}" alt="logo" class="h-12">
 
                     </div>
+                    <div class="flex flex-col justify-center leading-tight">
+                        <h1 class="text-lg lg:text-2xl font-medium text-gray-700 font-heading">LoomLuxe</h1>
+                        <p class="text-xs text-gray-500">Fashion Shop</p>
+                    </div>
                 </a>
+
                 {{-- main menu item  --}}
-                <div class="flex gap-x-7">
+                <div class="hidden lg:flex gap-x-7">
                     <a href="{{ route('shop.index') }}"
                         class="text-gray-700 hover:text-black font-medium transition-colors text-sm">
                         Shop</a>
@@ -33,7 +35,7 @@
                 </div>
 
 
-                <div class="flex items-center gap-x-3">
+                <div class="flex items-center gap-x-1 lg:gap-x-3">
                     <button data-modal-target="small-modal-1" data-modal-toggle="small-modal-1"
                         class="hover:border cursor-pointer  inline-flex justify-center items-center hover:border-pearl-bush-400 rounded-full size-10 ">
                         <span>
@@ -109,6 +111,17 @@
                         </button>
                     </div>
 
+                    <div class="px-1 lg:hidden">
+                        <button>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-5 stroke-2 ">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                            </svg>
+
+                        </button>
+                    </div>
+
                     <!-- Dropdown menu -->
                     <div id="dropdown"
                         class="z-20 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 ">
@@ -176,6 +189,8 @@
                     </div>
 
                 </div>
+
+
 
             </div>
 
@@ -268,6 +283,12 @@
     </div>
 
 </header>
+
+{{-- <div class="">
+    <img src="{{ asset('/storage/logo/luxury.png') }}"
+        alt="logo" class="h-12">
+
+</div> --}}
 
 @push('scripts')
     {{-- @vite(['resources/js/flowbite/flowbite.min.js']) --}}

@@ -7,7 +7,7 @@
             @include('components.public.sidebar')
 
 
-            <div class="flex-1">
+            <div class="flex-1 px-5 xl:px-0">
                 @yield('container')
             </div>
         </div>

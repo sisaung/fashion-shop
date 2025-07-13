@@ -181,10 +181,26 @@ class OrderController extends Controller
 
 
 
-            if($stock->stock_quantity >= $item->quantity && $stock->stock_quantity > 0 && $product->stock_count > 0 && $product->stock_count >= $item->quantity) {
+            // next feature update
+
+            
+            // if($stock->stock_quantity >= $item->quantity && $stock->stock_quantity > 0 && $product->stock_count > 0 && $product->stock_count >= $item->quantity) {
+
+            //     $stock->decrement('stock_quantity', $item->quantity);
+            //     $product->decrement('stock_count', $item->quantity);
+            // }
+            // else {
+            //     return back()->withErrors([
+            //         'start_date' => 'Stock is not available.',
+            //         'end_date' => 'Stock is not available.',
+
+            //     ]);
+            // }
+
+            if($stock->stock_quantity >= $item->quantity && $stock->stock_quantity > 0 ) {
 
                 $stock->decrement('stock_quantity', $item->quantity);
-                $product->decrement('stock_count', $item->quantity);
+                // $product->decrement('stock_count', $item->quantity);
             }
             else {
                 return back()->withErrors([

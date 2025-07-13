@@ -14,7 +14,7 @@
 @extends('components.public.pagelayout')
 @section('container')
     <div class="mt-8">
-        <div class="flex justify-between items-center">
+        <div class="flex lg:flex-row flex-col justify-start lg:justify-between items-start lg:items-center lg:gap-0 gap-5">
 
 
             @php
@@ -45,13 +45,28 @@
                 $links = [['name' => 'Shop', 'path' => route('shop.index')]];
             @endphp
 
-            <div>
-                @include('components.breadcrumb', [
-                    'currentPageTitle' => $currentPageTitle,
-                    'links' => $currentPageTitle !== 'Shop' ? $links : null,
-                    'totalProduct' => $products->count(),
-                ])
+            <div class="flex items-center gap-x-3 justify-center">
+                <div class="mt-3">
+                    <button id="openSidebar" class="cursor-pointer lg:**:hidden inline-flex justify-center items-center"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="1.5" stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                        </svg>
+
+                    </button>
+                </div>
+                <div>
+                    @include('components.breadcrumb', [
+                        'currentPageTitle' => $currentPageTitle,
+                        'links' => $currentPageTitle !== 'Shop' ? $links : null,
+                        'totalProduct' => $products->count(),
+                    ])
+                </div>
             </div>
+
+            {{-- sidebar overlay --}}
+            <div id="sidebarOverlay" class="fixed inset-0 bg-black/10 bg-opacity-50 z-40 hidden"></div>
+
+
             <div class="flex items-center gap-3">
 
                 <button data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example"
@@ -130,7 +145,7 @@
 
         {{-- product list --}}
         <section>
-            <div class="grid grid-cols-4 gap-5 mt-8" id="product-container">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-8" id="product-container">
 
 
             </div>
@@ -277,10 +292,10 @@
             class="z-20 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-52 dark:bg-gray-700">
             <div class="sort-product py-2 text-sm text-gray-700 " aria-labelledby="dropdownDefaultButton1">
                 @foreach ($selectProducts as $key => $product)
-                    <button  data-sort-product="{{ $key }}" class="sort-item flex justify-between items-center  hover:bg-gray-100 cursor-pointer w-full ">
-                        <p
-                            class=" px-4 py-2 flex justify-start">{{ $product }}</p>
-                        <span  class="px-3 active-sort-product">
+                    <button data-sort-product="{{ $key }}"
+                        class="sort-item flex justify-between items-center  hover:bg-gray-100 cursor-pointer w-full ">
+                        <p class=" px-4 py-2 flex justify-start">{{ $product }}</p>
+                        <span class="px-3 active-sort-product">
                             {{-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                 class="size-3.5">
                                 <path fill-rule="evenodd"
@@ -300,6 +315,7 @@
 
     @push('scripts')
         {{-- @vite(['resources/js/flowbite/flowbite.min.js']) --}}
+        @vite(['resources/js/sidebar/toggleResponsiveSidebar.js'])
         @vite(['resources/js/shop-product/shopProductList.js'])
         @vite(['resources/js/shop-product/sortProduct.js'])
         @vite(['resources/js/shop-product/getProductCategory.js'])

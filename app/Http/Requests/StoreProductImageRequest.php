@@ -25,7 +25,7 @@ class StoreProductImageRequest extends FormRequest
 
             // 'images' => 'nullable|array|image|mimes:png,jpg,jpeg',
            'images' => 'nullable|array',
-           'images.*' => 'file|mimes:png,jpg,jpeg,gif,webp,avif|max:5120',
+           'images.*' => 'file|mimes:png,jpg,jpeg,gif,webp,avif',
 
         ];
     }

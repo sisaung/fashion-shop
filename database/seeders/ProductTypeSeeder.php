@@ -22,7 +22,7 @@ class ProductTypeSeeder extends Seeder
             [
                 'name' => 'T-Shirt',
                 'category' => 'Clothing',
-                'fits' => ['Slim Fit', 'Regular Fit', 'Stretch Fit'],
+                'fits' => ['Slim Fit', 'Regular Fit', 'Stretch Fit','Classic Fit'],
                 'sizes' => ['XS', 'S', 'M', 'L', 'XL','XXL']
             ],
             [
@@ -77,12 +77,7 @@ class ProductTypeSeeder extends Seeder
                 'fits' => [],
                 'sizes' => ['free size']
             ],
-            [
-                'name' => 'Bag',
-                'category' => 'Accessories',
-                'fits' => [],
-                'sizes' => ['one size']
-            ],
+
             [
                 'name' => 'Cap',
                 'category' => 'Accessories',
@@ -118,7 +113,7 @@ class ProductTypeSeeder extends Seeder
                 'sizes' => ['XXS','XS','S','M','L','XL']
 
             ],
-           
+
 
             // footwear
             [
@@ -160,7 +155,7 @@ class ProductTypeSeeder extends Seeder
             ],
 
             [
-                'name' => 'Bags',
+                'name' => 'Bag',
                 'category' => 'Accessories',
                 'fits' => [],
                 'sizes' => ['One Size'],
@@ -171,12 +166,7 @@ class ProductTypeSeeder extends Seeder
                 'fits' => [],
                 'sizes' => ['S', 'M', 'L', 'XL', '32', '34', '36', '38', '40', '42'],
             ],
-            [
-                'name' => 'Cap',
-                'category' => 'Accessories',
-                'fits' => [],
-                'sizes' => ['One Size'],
-            ],
+           
             [
                 'name' => 'Wallets',
                 'category' => 'Accessories',

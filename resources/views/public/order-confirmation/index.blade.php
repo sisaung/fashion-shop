@@ -66,9 +66,9 @@
                         <template id="ordered-product-list-template">
                             <div class="flex gap-4 pb-6">
                                 <div
-                                    class="w-30 h-30 border border-pearl-bush-300   rounded-lg overflow-hidden flex-shrink-0">
+                                    class="w-30 flex justify-center items-center bg-black/4 border border-pearl-bush-300  rounded-lg overflow-hidden">
                                     <img class="ordered-product-image" alt="BOSS Polo Penrose 38"
-                                        class="w-full h-full object-cover" />
+                                        class="w-42 aspect-square object-cover object-center" />
                                 </div>
 
                                 <div class="flex-1">

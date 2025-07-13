@@ -3,31 +3,12 @@
     $orderCancellationReasons = [
         [
             'id' => 1,
-            'tag' => 'customer_cancelled',
-            'description' => 'The customer cancelled the order',
-        ],
-        [
-            'id' => 2,
-            'tag' => 'payment_failed',
-            'description' => 'Payment was not successful',
-        ],
-        [
-            'id' => 3,
-            'tag' => 'out_of_stock',
-            'description' => 'Product was out of stock',
-        ],
-        [
-            'id' => 4,
             'tag' => 'delayed_shipping',
             'description' => 'Shipping was taking too long',
         ],
+
         [
-            'id' => 5,
-            'tag' => 'duplicate_order',
-            'description' => 'Duplicate order placed',
-        ],
-        [
-            'id' => 6,
+            'id' => 2,
             'tag' => 'wrong_item_ordered',
             'description' => 'Customer ordered the wrong item',
         ],
@@ -50,11 +31,11 @@
                         <div class="bg-white border border-pearl-bush-100 rounded-lg  p-6 ordered-products-list-container">
                             <div class="flex gap-4 pb-6">
                                 <div
-                                    class="w-50 relative h-50 inline-flex justify-center items-center rounded-lg overflow-hidden flex-shrink-0">
-                                  
-                                    <img src="{{ $item->stock->product->productImages->count() > 0 ? $item->stock->product->productImages->first()->preview : 'https://www.mooreseal.com/wp-content/uploads/2013/11/dummy-image-square-300x300.jpg'  }}"
+                                    class="w-30 relative  inline-flex justify-center items-center rounded-lg overflow-hidden border border-pearl-bush-300">
+
+                                    <img src="{{ $item->stock->product->productImages->count() > 0 ? $item->stock->product->productImages->first()->large : 'https://www.svgrepo.com/show/508699/landscape-placeholder.svg' }}"
                                         class="ordered-product-image" alt="BOSS Polo Penrose 38"
-                                        class="w-full h-full object-cover" />
+                                        class="w-42 aspect-square object-cover object-center" />
                                     <div class="absolute top-0 left-0 w-full h-full bg-black/4"></div>
                                 </div>
 
@@ -266,13 +247,13 @@
                                     <p class="text-xs text-red-500"> {{ $message }} </p>
                                 @enderror
 
-                                {{-- <div class="flex  flex-wrap gap-3">
+                                <div class="flex  flex-wrap gap-3">
                                     @foreach ($orderCancellationReasons as $reason)
                                         <p data-reason="{{ $reason['description'] }}"
                                             class="cancel-reason-tag cursor-pointer text-xs border text-pearl-bush-500 border-pearl-bush-400  px-2 py-1 rounded-full">
                                             {{ $reason['tag'] }} </p>
                                     @endforeach
-                                </div> --}}
+                                </div>
 
                                 <div class="mt-3">
                                     <input type="checkbox"

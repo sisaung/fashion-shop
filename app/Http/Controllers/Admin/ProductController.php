@@ -42,6 +42,14 @@ class ProductController extends Controller
 
         $query = Product::with(['brand', 'productCategory', 'productType', 'fit','productImages','sizes']);
 
+        if(!empty($request->input('category'))) {
+
+        $query->whereHas('productCategory',function (Builder $q) use ($request) {
+            return $q->where('category_name','=',$request->input('category'));
+        });
+        }
+
+
         if ($searchTerm) {
 
             $query->where(function (Builder $q) use ($searchTerm) {
@@ -77,6 +85,7 @@ class ProductController extends Controller
         //     ->select("product_types.*")
         //     ->groupBy(['product_types.id', 'name', 'user_id', 'product_category_id', 'created_at', 'updated_at']);
 
+
         if($request->input('sort_by') === 'sale_price') {
 
             $query->orderBy('sale_price',$sortDirection);
@@ -101,10 +110,13 @@ class ProductController extends Controller
             'q' => $searchTerm,
             'sort_by' => $sortBy,
             'sort_direction' => $sortDirection,
-            'limit' => $limit
+            'limit' => $limit,
+            'category' => $request->input('category'),
         ]);
 
-        return view('admin.product.index', ['products' => $product]);
+        $productCategory = ProductCategory::orderBy('category_name','asc')->get();
+
+        return view('admin.product.index', ['products' => $product,'productCategory' => $productCategory,'sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }
 
     /**

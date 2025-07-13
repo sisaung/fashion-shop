@@ -8,7 +8,7 @@
             'currentPageTitle' => 'Product List',
         ])
 
-        @include('admin.product.header')
+        @include('admin.product.header',['productCategory' => $productCategory])
 
         <div id="product-list-container">
             <section class="mt-10 px-5  drop-down-modal ">
@@ -41,14 +41,15 @@
                                 </th>
 
 
+                                {{-- next fature update --}}
 
-                                <th data-sortby="stock_count" scope="col"
+                                {{-- <th data-sortby="stock_count" scope="col"
                                     class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
                                     @include('components.admin.sortTable', [
                                         'sortTitle' => 'Stock Count',
                                     ])
 
-                                </th>
+                                </th> --}}
 
                                 <th data-sortby="discount_value" scope="col"
                                     class="px-4 text-nowrap py-3 text-left text-sm font-medium text-gray-500">
@@ -139,9 +140,10 @@
                                         {{ number_format($product->sale_price) }} MMK
                                     </td>
 
-                                    <td class="whitespace-nowrap text-end  px-4 py-4 text-sm text-gray-900">
+                                    {{-- next feature update --}}
+                                    {{-- <td class="whitespace-nowrap text-end  px-4 py-4 text-sm text-gray-900">
                                         {{ $product->stock_count }}
-                                    </td>
+                                    </td> --}}
 
                                     <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
                                         @include('components.admin.showDiscount',['product' => $product])

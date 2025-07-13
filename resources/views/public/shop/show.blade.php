@@ -40,42 +40,77 @@
 @section('content')
     <div class="min-h-screen bg-white">
 
+
+
         {{-- Main Content --}}
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12  ">
 
-                {{-- product image --}}
-                <div class="space-y-4">
-                    <div class="relative group border border-pearl-bush-300 bg-gray-100 rounded-2xl overflow-hidden">
-                        @if ($product->productImages->count())
-                            <img src="{{ $product->productImages->first()->large }}"
-                                alt="{{ $product->productImages->first()->original_name }}"
-                                class="w-full h-full object-cover object-top">
-                        @else
-                            <img src="https://www.mooreseal.com/wp-content/uploads/2013/11/dummy-image-square-300x300.jpg"
-                                alt="" class="w-full h-full object-cover object-center">
-                        @endif
-                    </div>
+                <div id="default-carousel" class="relative w-full" data-carousel="slide">
+                    <!-- Carousel wrapper -->
+                    <div class="relative h-56 border-transparent overflow-hidden rounded-lg md:h-[700px]">
 
-                    <div class="grid grid-cols-4 gap-4">
 
-                        @if ($product->productImages->count())
-                            @foreach ($product->productImages->skip(1) as $image)
-                                <div class="aspect-square  border border-pearl-bush-300 rounded-xl overflow-hidden">
-                                    <img src="{{ $image->preview }}" alt="{{ $image->original_name }}"
-                                        class="w-full  h-full object-cover object-center">
+                        @if ($product->productImages->count() > 0)
+                            @foreach ($product->productImages->take(5) as $image)
+                                <!-- Item 1 -->
+                                <div class="hidden border border-pearl-bush-400  overflow-hidden duration-700 ease-in-out rounded-lg"
+                                    data-carousel-item>
+                                    <img src="{{ $image->large }}"
+                                        class="absolute  block w-full  -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                        alt="...">
                                 </div>
                             @endforeach
                         @else
-                            <img src="https://www.mooreseal.com/wp-content/uploads/2013/11/dummy-image-square-300x300.jpg"
-                                alt="" class="w-full h-full object-cover object-center">
+                            @foreach ([1, 2, 3, 4, 5] as $image)
+                                <!-- Item 1 -->
+                                <div class="hidden border border-pearl-bush-400  overflow-hidden duration-700 ease-in-out rounded-lg"
+                                    data-carousel-item>
+                                    <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
+                                        class="absolute  block w-full h-full object-cover object-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                        alt="...">
+                                </div>
+                            @endforeach
                         @endif
 
+
                     </div>
+
+                    <!-- Slider controls -->
+                    <button type="button"
+                        class="absolute  -top-8 start-0 z-30  flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                        data-carousel-prev>
+                        <span
+                            class="inline-flex  items-center border-2 border-pearl-bush-500 justify-center size-12 rounded-full bg-white group-hover:bg-gray-100  group-focus:ring-4 group-focus:ring-gray-100 active:scale-70 duration-300 group-focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                class="size-4 text-pearl-bush-400">
+                                <path fill-rule="evenodd"
+                                    d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+
+                        </span>
+                    </button>
+                    <button type="button"
+                        class="absolute -top-8 end-0  z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                        data-carousel-next>
+                        <span
+                            class="inline-flex  items-center border-2 border-pearl-bush-500 justify-center size-12 rounded-full bg-white group-hover:bg-gray-100  group-focus:ring-4 group-focus:ring-gray-100 active:scale-70 duration-300 group-focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                class="size-4 text-pearl-bush-400">
+                                <path fill-rule="evenodd"
+                                    d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+
+
+                        </span>
+                    </button>
                 </div>
 
+
                 {{-- Product Info --}}
-                <div class="space-y-8">
+                <div class="space-y-8 h-screen overflow-y-auto hide-scrollbar">
                     @include('components.breadcrumb', [
                         'currentPageTitle' => 'Product Detail',
                         'links' => [['name' => 'Shop', 'path' => route('shop.index')]],
@@ -212,6 +247,8 @@
                                         </span> --}}
                                     </button>
                                 @endforeach
+                            @else
+                                    <p class="bg-red-100 px-4 py-2 rounded-lg text-sm text-red-500"> Out of Stock </p>
                             @endif
 
                         </div>
@@ -228,9 +265,8 @@
                         </div>
                         <div>
                             <p id="stockInfo" class="text-sm text-gray-500">Please select a size to see stock info.</p>
-                            {{ $product->stocks == null ? 'Out of Stock' : ''  }}
-                            <p id="errorMsg" class="text-sm text-red-500 hidden">Please select a size before changing
-                                quantity.
+                            {{ $product->stocks == null ? 'Out of Stock' : '' }}
+                            <p id="errorMsg" class="text-sm text-red-500 hidden">Please select a size
                             </p>
                         </div>
                     </div>
@@ -267,8 +303,8 @@
 
                         <button data-product-id="{{ $product->id }}"
                             class="add-to-wishlist cursor-pointer font-semibold text-gray-700 py-2  rounded-lg px-4 gap-x-1.5  inline-flex items-center justify-center transition duration-300 ">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="size-5 stroke-2 add-to-wishlist-heart">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-5 stroke-2 add-to-wishlist-heart">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                             </svg>
@@ -605,6 +641,11 @@
 
         </div>
     </div>
+
+
+
+
+
 @endsection
 
 @push('scripts')
@@ -613,6 +654,7 @@
         @vite(['resources/js/shop-product/getProductCategory.js'])
         @vite(['resources/js/shop-product/product-type/getProductType.js'])
         --}}
+    @vite(['resources/js/flowbite/flowbite.min.js'])
 
     @vite(['resources/js/shop-product/product-detail/addToCart.js'])
     @vite(['resources/js/shop-product/product-detail/activeTab.js'])
