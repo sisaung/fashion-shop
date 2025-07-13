@@ -3,9 +3,8 @@ const initializeCancelOrder = () => {
         ".toggle-cancellation-order-form"
     );
     const cancelOrderForm = document.querySelector(".cancel-order-form");
-
-
-
+    const reasonTags = document.querySelectorAll(".cancel-reason-tag");
+    const reasonInput = document.querySelector(".reason-input");
 
     cancelOrderForm.classList.add("hidden");
     if (!toggleCancellationOrderForm) return;
@@ -20,6 +19,16 @@ const initializeCancelOrder = () => {
         }
     };
 
+    if (!reasonTags) return;
+
+    reasonTags.forEach((tag) => {
+        tag.addEventListener("click", (e) => {
+            reasonTags.forEach((t) => t.classList.remove("selected-cancel"));
+
+            e.target.classList.add("selected-cancel");
+            reasonInput.value = e.target.dataset.reason;
+        });
+    });
 
     toggleCancellationOrderForm.addEventListener("change", handleChange);
 };

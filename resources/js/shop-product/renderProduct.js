@@ -44,13 +44,12 @@ const renderProduct = async (product, wishlistProducts) => {
     image.src =
         product?.product_images?.length > 0
             ? product.product_images[0].large
-            : "https://www.mooreseal.com/wp-content/uploads/2013/11/dummy-image-square-300x300.jpg";
+            : "https://www.svgrepo.com/show/508699/landscape-placeholder.svg";
 
     clone.querySelector(".product-brand").textContent =
         product.brand?.brand_name || "";
     clone.querySelector(".product-name").textContent = product.product_name;
     clone.querySelector(".code-text").textContent = product.product_code;
-
 
     if (product.discount_type) {
         saleProductPrice.textContent = `${Number(
@@ -65,25 +64,23 @@ const renderProduct = async (product, wishlistProducts) => {
         ).toLocaleString()} MMK `;
     }
 
-    if(product.discount_type == 'percentage') {
-        console.log('percentage')
+    if (product.discount_type == "percentage") {
+        console.log("percentage");
         productPromo.classList.remove("hidden");
         productPromo.textContent = `Save ${product.discount_value} % OFF`;
         productPromo.classList.add("bg-red-500");
-    }
-    else if(product.discount_type == 'fixed') {
-        console.log('fixed')
+    } else if (product.discount_type == "fixed") {
+        console.log("fixed");
         productPromo.classList.remove("hidden");
-        productPromo.textContent = `Save ${formatNumber(product.discount_value)} MMK OFF`;
+        productPromo.textContent = `Save ${formatNumber(
+            product.discount_value
+        )} MMK OFF`;
         productPromo.classList.add("bg-red-500");
-
-    }else{
+    } else {
         productPromo.classList.add("hidden");
         productPromo.textContent = ``;
         productPromo.classList.remove("bg-red-500");
     }
-
-
 
     return clone;
 };

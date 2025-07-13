@@ -115,7 +115,7 @@ class ShopCategoryController extends Controller
     public function getShop(Request $request) {
 
 
-        $validSortColumns = ['product_name'  ,'brand_name', 'discount_value', 'name', 'category_name',  'id'];
+        $validSortColumns = ['product_name'  ,'brand_name', 'sale_price' , 'display_price', 'discount_value', 'name', 'category_name',  'id'];
         $validFilter = ['male','female','unisex'];
         $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'id';
 
@@ -129,9 +129,9 @@ class ShopCategoryController extends Controller
 
 
 
-        $limit = $request->input('limit', 5);
+        $limit = $request->input('limit', 20);
 
-        $limit = is_numeric($limit) && $limit > 0 ? $limit : 5;
+        $limit = is_numeric($limit) && $limit > 0 ? $limit : 20;
 
         $searchTerm = $request->input('q');
         $brandNames = $request->input('brands');
@@ -243,7 +243,7 @@ class ShopCategoryController extends Controller
 
                 $query->orderBy('sale_price',$sortDirection);
             }
-            else if ($request->input('sort_by') === 'discount_value') {
+            else if ($request->input('sort_by') === 'discount_value' && $request->input('sort_direction') === 'asc') {
                 // 🔄 Calculate discount amount for sorting
                 $query->selectRaw("
                     CASE
@@ -252,8 +252,18 @@ class ShopCategoryController extends Controller
                         ELSE 0
                     END as discount_amount
                 ")
-                ->orderBy('discount_amount', $sortDirection);
-            } else {
+                ->orderBy('discount_amount', 'asc');
+            } else if($request->input('sort_by') === 'discount_value' && $request->input('sort_direction') === 'desc'){
+
+                $query->selectRaw("
+                    CASE
+                        WHEN discount_type = 'percentage' THEN sale_price * discount_value / 100
+                        WHEN discount_type = 'fixed' THEN discount_value
+                        ELSE 0
+                    END as discount_amount
+                ")
+                ->orderBy('discount_amount', 'desc');
+            }else{
 
                 $query->orderBy($sortBy, $sortDirection);
             }

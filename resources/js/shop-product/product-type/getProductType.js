@@ -325,7 +325,6 @@ const initializeProductType = async () => {
                     selectedProductSize.value
                 );
             }
-            
 
             const url = `shop?${params.toString()}`;
 
@@ -414,6 +413,15 @@ const initializeProductType = async () => {
             selectedFilters.productType_id = null;
             selectedFilters.productFit_id = null;
             selectedFilters.productSize_id = null;
+
+            const sortProductBtn = document.querySelector(".sort-product-btn");
+            sortProductBtn.textContent = "Sort Product";
+            const allActiveIcons = document.querySelectorAll(
+                ".active-sort-product"
+            );
+            allActiveIcons.forEach((icon) => {
+                icon.innerHTML = "";
+            });
 
             //  Uncheck all radios
             document

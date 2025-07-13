@@ -28,9 +28,15 @@ const initializeAddToCart = () => {
             quantity = 1;
 
             quantityValue.textContent = quantity;
-            stockInfo.textContent = `Stock available for size ${btn.dataset.size}: ${stock}`;
-            stockInfo.classList.add("text-green-500", "font-medium");
-            stockInfo.setAttribute('data-stock-id', btn.dataset.stockId);
+
+            if (stock <= 3) {
+                stockInfo.textContent = `Only ${stock} left in stock for size ${btn.dataset.size}`;
+                stockInfo.classList.add("text-red-500", "font-medium");
+            } else {
+                stockInfo.textContent = `Stock available for size ${btn.dataset.size}: ${stock}`;
+                stockInfo.classList.add("text-green-500", "font-medium");
+            }
+            stockInfo.setAttribute("data-stock-id", btn.dataset.stockId);
             errorMsg.classList.add("hidden");
 
             updateButtons();
@@ -85,7 +91,7 @@ const initializeAddToCart = () => {
             subtotal: 0,
             tax: 0,
             netTotal: 0,
-            stock_id:null
+            stock_id: null,
         };
 
         const cartPrice =
@@ -122,7 +128,7 @@ const initializeAddToCart = () => {
                 quantity: quantity,
                 size: selectedSize,
                 cost: cartPrice * quantity,
-                stock_id:stockInfo.getAttribute('data-stock-id')
+                stock_id: stockInfo.getAttribute("data-stock-id"),
             });
         }
 

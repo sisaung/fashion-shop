@@ -9,7 +9,7 @@ export const renderBreadcrumb = (total) => {
     const totalProduct = content.querySelector(".total-product");
     totalProduct.textContent = "0";
 
-    totalProduct.textContent = `Total Product ${total}`;
+    totalProduct.textContent = `Total Products ${total}`;
 
     return content;
 };

@@ -37,6 +37,7 @@ const initializeManageProductImageUpload = async () => {
         const files = e.target.files;
 
         if (!files || !currentProductId) return;
+        console.log(files)
         renderProductImageSkeleton(productImageContainer);
 
         const formData = new FormData();

@@ -1,9 +1,5 @@
-
-
 <aside id="sidebar"
-    class="fixed mt-10 lg:sticky top-0 left-0 z-50 lg:z-0 w-80 lg:w-64 h-full lg:h-auto bg-white rounded-md transform transition-transform duration-300 ease-in-out
-    {{ request()->query('sidebar', true) ? 'translate-x-0' : '-translate-x-full lg:translate-x-0' }}
-    overflow-y-auto">
+    class="fixed mt-10 lg:sticky top-0 left-0 z-50 lg:z-0 w-80 lg:w-64 h-full lg:h-auto bg-white rounded-md transform transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0 overflow-y-auto">
     <div class="p-6">
         {{-- Mobile Header --}}
         <div class="lg:hidden flex items-center justify-between mb-6">
@@ -70,7 +66,7 @@
 </aside>
 
 <template id="brand-list-template">
-    
+
     <label class="flex items-center cursor-pointer group">
         <input type="checkbox"
             class="filter-brand-check w-4 h-4 text-gray-900 border-gray-300 rounded focus:ring-gray-900 focus:ring-2" />
@@ -81,7 +77,7 @@
 </template>
 
 @push('scripts')
+    @vite(['resources/js/sidebar/toggleResponsiveSidebar.js'])
     @vite(['resources/js/sidebar/toggleSidebar.js'])
     @vite(['resources/js/sidebar/getBrand.js'])
-
 @endpush

@@ -16,144 +16,99 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $totalRevenue = Order::where('order_status', 'completed')->sum('net_total');
-        $totalOrder = Order::count();
+        $filter = $request->input('filter', 'last_month'); // default last month
+
+        // Set date ranges based on filter
+        switch ($filter) {
+            case 'today':
+                $start = Carbon::today();
+                $end = Carbon::today()->endOfDay();
+
+                break;
+
+            case 'yesterday':
+                $start = Carbon::yesterday()->startOfDay();
+                $end = Carbon::yesterday()->endOfDay();
+
+                break;
+
+            case 'last_7_days':
+                $start = Carbon::now()->subDays(7)->startOfDay();
+                $end = Carbon::now()->endOfDay();
+                break;
+
+            case 'this_month':
+                $start = Carbon::now()->startOfMonth();
+                $end = Carbon::now()->endOfMonth();
+                break;
+
+            case 'last_month':
+                $start = Carbon::now()->subMonth()->startOfMonth();
+                $end = Carbon::now()->subMonth()->endOfMonth();
+                break;
+
+            case 'this_year':
+                $start = Carbon::now()->startOfYear();
+                $end = Carbon::now()->endOfYear();
+                break;
+
+            case 'last_year':
+                $start = Carbon::now()->subYear()->startOfYear();
+                $end = Carbon::now()->subYear()->endOfYear();
+                break;
+
+            default:
+                $start = Carbon::now()->subMonth()->startOfMonth();
+                $end = Carbon::now()->subMonth()->endOfMonth();
+                break;
+        }
+
+        // Comparison period (previous period)
+
+        $periodDays = $start->diffInDays($end) + 1;
+        $previousStart = $start->copy()->subDays($periodDays);
+        $previousEnd = $start->copy()->subDay();
+
+        // return $previousStart . "." . $previousEnd;
+
+        // Totals
+        $totalRevenue = $totalRevenue = Order::where('order_status', 'completed')
+        ->whereBetween('created_at', [$start, $end])
+        ->sum('net_total');
+        $totalOrder = Order::whereBetween('created_at',[$start,$end])->count();
         $totalProduct = Product::count();
-        $totalCustomer = Customer::count();
+        $totalCustomer = Customer::whereBetween('created_at',[$start,$end])->count();
 
-        $currentMonthStart = Carbon::now()->startOfMonth();
-        $currentMonthEnd = Carbon::now()->endOfMonth();
+        // Revenue in selected period vs previous period
+        $periodRevenue = Order::where('order_status','completed')->whereBetween('created_at', [$start, $end])->sum('net_total');
 
+        $previousRevenue = Order::where('order_status','completed')->whereBetween('created_at', [$previousStart, $previousEnd])->sum('net_total');
+        // return "period revenue is $periodRevenue and previous revenue is $previousRevenue";
 
-        // Get last month start and end
-        $lastMonthStart = Carbon::now()->subMonth()->startOfMonth();
-        $lastMonthEnd = Carbon::now()->subMonth()->endOfMonth();
+        // Orders
+        $periodOrders = Order::whereBetween('created_at', [$start, $end])->count();
+        $previousOrders = Order::whereBetween('created_at', [$previousStart, $previousEnd])->count();
 
+        // Customers
+        $periodCustomers = Customer::whereBetween('created_at', [$start, $end])->count();
+        $previousCustomers = Customer::whereBetween('created_at', [$previousStart, $previousEnd])->count();
 
-        //Get last 6months
-
-       // Last 6 months start (January start)
-        $sixMonthsAgo = Carbon::now()->subMonths(6)->startOfMonth();
-
-
-        // Last month end (June end)
-        $lastMonthEnd = Carbon::now()->subMonth()->endOfMonth();
-
-
-         // Current month revenue count
-         $currentMonthRevenue = Order::where('order_status','completed')->whereBetween('created_at',[$currentMonthStart,$currentMonthEnd])->sum('net_total');
-
-         $lastMonthRevenue =  Order::where('order_status','completed')->whereBetween('created_at',[$lastMonthStart,$lastMonthEnd])->sum('net_total');
+        // Calculate % changes safely
+        $revenueChange = ($previousRevenue != 0) ? (($periodRevenue - $previousRevenue) / $previousRevenue) * 100 : null;
+        $orderChange = ($previousOrders != 0) ? (($periodOrders - $previousOrders) / $previousOrders) * 100 : null;
+        $customerChange = ($previousCustomers != 0) ? (($periodCustomers - $previousCustomers) / $previousCustomers) * 100 : null;
 
 
-        // Current month orders count
-        $currentMonthOrders = Order::whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
-        ->count();
+        $sparklineRevenue = [100, 200, 150, 250, 300, 280, 350];
+        $sparklineOrders = [10, 15, 12, 18, 20, 19, 25];
+        $sparklineCustomers = [5, 6, 5, 7, 8, 7, 9];
 
-        //current month customer count
-        $currentMonthCustomers = Customer::whereBetween('created_at',[$currentMonthStart,$currentMonthEnd])->count();
-
-        //last month customer count
-        $lastMonthCustomers = Customer::whereBetween('created_at',[$lastMonthStart,$lastMonthEnd])->count();
-
-
-        // Last month orders count
-        $lastMonthOrders = Order::whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])->count();
-
-        // Calculate percentage change safely
-        if ($lastMonthRevenue > 0 ) {
-
-            if($currentMonthRevenue == 0) {
-
-                $revenueChange = null;
-            }else{
-
-            $revenueChange = (($currentMonthRevenue - $lastMonthRevenue) / $lastMonthRevenue) * 100;
-
-            }
-
-        } else {
-            $revenueChange = null; // or set as 100% if no orders last month
-        }
-
-
-        // Calculate percentage change safely
-        if ($lastMonthOrders > 0 ) {
-
-            if($currentMonthOrders == 0) {
-
-                $orderChange = null;
-            }else{
-
-            $orderChange = (($currentMonthOrders - $lastMonthOrders) / $lastMonthOrders) * 100;
-
-            }
-
-        } else {
-            $orderChange = null; // or set as 100% if no orders last month
-        }
-
-        if ($lastMonthCustomers > 0 ) {
-
-            if($currentMonthCustomers == 0) {
-                $customerChange = null;
-            }
-            else {
-
-                $customerChange = (($currentMonthCustomers - $lastMonthCustomers) / $lastMonthCustomers) * 100;
-            }
-        } else {
-            $customerChange = null; // or set as 100% if no orders last month
-        }
-
-
-
-    //    last 6 month orders
-
-    $monthlyOrders = Order::select(
-        DB::raw('MONTH(created_at) as month'),
-        DB::raw('COUNT(*) as total_orders')
-    )
-    ->whereBetween('created_at', [
-        Carbon::now()->subMonths(6)->startOfMonth(), // January start
-        Carbon::now()->subMonth()->endOfMonth() // June end
-    ])
-    ->groupBy(DB::raw('MONTH(created_at)'))
-    ->orderBy(DB::raw('MONTH(created_at)'))
-    ->get();
-
-
-    $previousTotal = null;
-$results = [];
-
-foreach ($monthlyOrders as $order) {
-    $monthName = Carbon::create()->month($order->month)->format('F');
-    $currentTotal = $order->total_orders;
-
-    if ($previousTotal !== null) {
-        if($previousTotal == 0){
-            $change = null; // avoid divide by zero
-        }else{
-            $change = (($currentTotal - $previousTotal) / $previousTotal) * 100;
-        }
-    } else {
-        $change = null; // first month has no previous
-    }
-
-    $results[] = [
-        'month' => $monthName,
-        'total_orders' => $currentTotal,
-        'change_percentage' => $change
-    ];
-
-    $previousTotal = $currentTotal;
-
-}
-
-
-$order =  Order::latest()->take(5)->get();
+        $latestOrders = Order::whereBetween('created_at', [$start, $end])
+        ->orderByDesc('created_at')
+        ->limit(5)
+        ->get();
 
 
 
@@ -170,7 +125,6 @@ $order =  Order::latest()->take(5)->get();
         ->orderBy('id')
         ->get();
 
-        // top categories
         $topCategories = OrderItem::select(
             'product_categories.category_name',
             DB::raw('SUM(order_items.quantity * order_items.sale_price) as total_sales')
@@ -178,15 +132,18 @@ $order =  Order::latest()->take(5)->get();
         ->join('stocks', 'order_items.stock_id', '=', 'stocks.id')
         ->join('products', 'stocks.product_id', '=', 'products.id')
         ->join('product_categories', 'products.product_category_id', '=', 'product_categories.id')
+        ->join('orders', 'order_items.order_id', '=', 'orders.id') // to access created_at
+        ->whereBetween('orders.created_at', [$start, $end]) // filter by selected date range
+        ->where('orders.order_status', 'completed') // only completed orders
         ->groupBy('product_categories.id', 'product_categories.category_name')
         ->orderByDesc('total_sales')
         ->limit(5)
         ->get();
 
-    // Separate names and sales for chart
+    // 8. Prepare data for charts
+    $categoryNames = $topCategories->pluck('category_name')->toArray();
+    $categorySales = $topCategories->pluck('total_sales')->toArray();
 
-    $categoryNames = $topCategories->pluck('category_name');
-    $categorySales = $topCategories->pluck('total_sales');
 
 
     // return $results;
@@ -195,12 +152,17 @@ $order =  Order::latest()->take(5)->get();
             'totalOrder' => $totalOrder,
             'totalProduct' => $totalProduct,
             'totalCustomer' => $totalCustomer,
-            'currentMonthOrders' => $currentMonthOrders,
-             'orderChange' => $orderChange,
+            'revenueChange' => $revenueChange,
+            'orderChange' => $orderChange,
+            'customerChange' => $customerChange,
+            'sparklineRevenue' => $sparklineRevenue,
+            'sparklineOrders' => $sparklineOrders,
+            'sparklineCustomers' => $sparklineCustomers,
+            'filter' => $filter,
              'customerChange' => $customerChange,
              'revenueChange' => $revenueChange,
-             'orders' => $order,
-             'monthlyOrders' => $results,
+             'orders' => $latestOrders,
+
              'lowStockProducts' => $lowStockProducts,
              'categoryNames' => $categoryNames,
              'categorySales' => $categorySales
