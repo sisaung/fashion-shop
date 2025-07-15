@@ -58,7 +58,7 @@ $userAddress = UserAddress::where('id', $request->address_id)
 ->firstOrFail();
 
 // 3. Create customer address (snapshot)
-$customerAddress = CustomerAddress::create([
+$customerAddress = CustomerAddress::firstOrCreate([
 'customer_id' => $customer->id,
 'phone_number' => $userAddress->phone_number,
 'city' => $userAddress->city,
@@ -87,6 +87,7 @@ foreach($request->order_items as $item) {
         'order_id' => $orderId,
         'stock_id' => $item['stock_id'],
         'sale_price' => $item['price'],
+        'total_price' => $item['total_price'],
         'quantity' => $item['quantity'],
     ]);
 }
@@ -147,7 +148,7 @@ public function showOrder($orderNumber) {
         return back()->withErrors($validator)->withInput();
     }
     $order = Order::with(['orderItems','customerAddress','orderItems.stock','orderItems.stock.product','orderItems.stock.product.productImages'])->where('order_number',$orderNumber)->first();
-    
+
 
     return view('public.account.order.show',['order' => $order]);
 

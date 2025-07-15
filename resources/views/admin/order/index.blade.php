@@ -51,6 +51,11 @@
                                     Order Status
 
                                 </th>
+                                <th scope="col" class="px-4 py-3  text-sm font-medium text-gray-500">
+
+                                    Payment Received
+
+                                </th>
 
                                 <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500">
                                     <div class="flex items-center justify-end cursor-pointer">
@@ -65,7 +70,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
+                        <tbody class="divide-y divide-gray-200 bg-white overflow-hidden">
 
 
                             @foreach ($orders as $order)
@@ -76,8 +81,9 @@
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
                                         <div class="flex gap-x-3">
                                             <div>
-                                                <img src="{{ $order->customer->profile_image ? $order->customer->profile_image : 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈' }}" class="size-10 rounded-full"
-                                                    alt="{{$order->customer->customer_name}}">
+                                                <img src="{{ $order->customer->profile_image ? $order->customer->profile_image : 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈' }}"
+                                                    class="size-10 rounded-full"
+                                                    alt="{{ $order->customer->customer_name }}">
                                             </div>
                                             <div class="flex flex-col">
                                                 <a href="{{ route('customer.show', ['customer' => $order->customer->id]) }}"
@@ -118,6 +124,16 @@
                                             'style' => 'justify-center',
                                         ])
                                     </td>
+                                    <td class="whitespace-nowrap flex justify-end px-4 py-4 text-sm text-gray-900">
+                                        @if ($order->payment_received_at)
+                                            <div class="flex flex-col items-end">
+                                                <p> {{ date('j M Y', strtotime($order->payment_received_at)) }} </p>
+                                                <p> {{ date('g:i A', strtotime($order->payment_received_at)) }} </p>
+                                            </div>
+                                        @else
+                                            <span class="text-red-500 text-xs">Not Received</span>
+                                        @endif
+                                    </td>
 
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 text-end">
                                         <div class="">
@@ -143,9 +159,23 @@
 
                                         </button> --}}
 
+                                        @if ($order->is_paid == 1)
+                                            <span class="px-2 py-1 rounded-lg bg-green-500 text-white text-xs">Paid</span>
+                                        @else
+                                            <form action="{{ route('order.markAsPaid', ['id' => $order->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button
+                                                    class="px-2 py-1.5 border text-sm border-gray-200 cusor-pointer text-gray-500 hover:bg-green-400 hover:text-white cursor-pointer duration-300 inline-flex justify-center items-center">
+                                                    Mark as Paid
+                                                </button>
+                                            </form>
+                                        @endif
+
+
                                         <a href ="{{ route('order.show', $order->id) }}"
-                                            class="px-2 py-1 hover:bg-gray-100 inline-flex justify-center items-center"
-                                           >
+                                            class="px-2 py-1 hover:bg-gray-100 inline-flex justify-center items-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                                 class="size-5 text-gray-600">
                                                 <path fill-rule="evenodd"
@@ -155,6 +185,7 @@
 
 
                                         </a>
+
 
 
                                     </td>

@@ -17,7 +17,7 @@ const initializeSearchProduct = () => {
 
     const handleKeyUp = async (e) => {
         const searchValue = e.target.value;
-        const data = await fetchProductShop(`/shop/get?q=${searchValue}`);
+        const data = await fetchProductShop(`/shop/get?q=${searchValue}&limit=5`);
         if (searchValue) {
             if (data?.data) {
                 debounce(

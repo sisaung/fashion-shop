@@ -38,25 +38,29 @@ class OrderController extends Controller
 
         $query = Order::with(['orderItems.stock.product','orderItems.stock.size','customer','coupon']);
 
+
+
         if ($searchTerm) {
 
             $query->where(function (Builder $q) use ($searchTerm) {
 
-                return $q->where('order_number', 'like', "%$searchTerm%")
-                ->orWhere('total_amount', 'like', "%$searchTerm%")
-                ->orWhere('order_status','like',"%$searchTerm%")
+                return $q->where('order_number', 'LIKE', "%$searchTerm%")
+                ->orWhere('total_amount', 'LIKE', "%$searchTerm%")
+                ->orWhere('order_status','LIKE',"%$searchTerm%")
 
                     ->orWhereHas('coupon', function (Builder $q) use ($searchTerm) {
-                        return $q->where('coupon_title', 'like', "%$searchTerm%")
-                        ->$q->where('coupon_code', 'like', "%$searchTerm%");
+                        return $q->where('coupon_title', 'LIKE', "%$searchTerm%")
+                        ->orWhere('coupon_code', 'LIKE', "%$searchTerm%");
                     })
                     ->orWhereHas('customer', function (Builder $q) use ($searchTerm) {
-                        return $q->where('customer_name', 'like', "%$searchTerm%")
-                        ->orWhere('customer_email', 'like', "%$searchTerm%");
+                        return $q->where('customer_name', 'LIKE', "%$searchTerm%")
+                        ->orWhere('customer_email', 'LIKE', "%$searchTerm%");
                     })
                     ->orWhereHas('orderItems', function (Builder $q) use ($searchTerm) {
-                        return $q->whereHas('product', function (Builder $q) use ($searchTerm) {
-                            return $q->where('product_name', 'like', "%$searchTerm%");
+                        return $q->whereHas('stock', function (Builder $q) use ($searchTerm) {
+                            return $q->whereHas('product', function (Builder $q) use ($searchTerm) {
+                                return $q->where('product_name', 'LIKE', "%$searchTerm%");
+                            });
                         });
                     });
 
@@ -183,24 +187,11 @@ class OrderController extends Controller
 
             // next feature update
 
-            
-            // if($stock->stock_quantity >= $item->quantity && $stock->stock_quantity > 0 && $product->stock_count > 0 && $product->stock_count >= $item->quantity) {
 
-            //     $stock->decrement('stock_quantity', $item->quantity);
-            //     $product->decrement('stock_count', $item->quantity);
-            // }
-            // else {
-            //     return back()->withErrors([
-            //         'start_date' => 'Stock is not available.',
-            //         'end_date' => 'Stock is not available.',
-
-            //     ]);
-            // }
-
-            if($stock->stock_quantity >= $item->quantity && $stock->stock_quantity > 0 ) {
+            if($stock->stock_quantity >= $item->quantity && $stock->stock_quantity > 0 && $product->stock_count > 0 && $product->stock_count >= $item->quantity) {
 
                 $stock->decrement('stock_quantity', $item->quantity);
-                // $product->decrement('stock_count', $item->quantity);
+                $product->decrement('stock_count', $item->quantity);
             }
             else {
                 return back()->withErrors([
@@ -348,6 +339,27 @@ class OrderController extends Controller
 
 
                 }
+
+
+    public function markAsPaid ($id) {
+
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|numeric|exists:orders,id'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('order.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+
+        $order = Order::findOrFail($id);
+        $order->is_paid = 1;
+        $order->payment_received_at = now();
+        $order->save();
+        return redirect()->route('order.index');
+    }
 
 }
 

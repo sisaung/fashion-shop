@@ -31,6 +31,8 @@ return new class extends Migration
             $table->string('customer_address_id')->conspotrained('customer_addresses')->onDelete('cascade');
 
             $table->foreignId('coupon_id')->nullable()->constrained('coupons')->onDelete('cascade');
+            $table->integer('is_paid')->default(0);
+            $table->timestamp('payment_received_at')->nullable();
             $table->timestamps();
         });
     }

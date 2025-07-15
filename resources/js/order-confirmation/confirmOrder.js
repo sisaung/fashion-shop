@@ -1,3 +1,5 @@
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 import storeOrder from "../services/storeOrder";
 import { emptyCart } from "../utils/cart";
 import { showErrorToast, showSuccessToast } from "../utils/handleToast";
@@ -38,13 +40,39 @@ const initalizeConfirmOrder = () => {
         };
 
         if (!addressId) {
-            showErrorToast("Please select an address to place the order");
+            // showErrorToast("Please select an address to place the order");
+            Toastify({
+                text: "Please select an address to place the order",
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                stopOnFocus: false,
+                style: {
+                    background: "#fee2e2",
+                    fontSize: "14px",
+                    color: "red",
+                    boxShadow: "0px",
+                },
+            }).showToast();
             return;
         } else if (cart.items.length == 0) {
-            showErrorToast("Your cart is empty");
+            // showErrorToast("Your cart is empty");
+            Toastify({
+                text: "Your cart is empty",
+                duration: 3000,
+                stopOnFocus: false,
+                gravity: "top",
+                position: "right",
+                style: {
+                    background: "#fee2e2",
+                    fontSize: "14px",
+                    color: "red",
+                    boxShadow: "0px",
+                },
+            }).showToast();
+
             return;
         } else {
-
             const data = {
                 customer: {
                     name: currentUserObj.name,
@@ -63,12 +91,13 @@ const initalizeConfirmOrder = () => {
                         ? item.product.display_price
                         : item.product.sale_price,
                     quantity: item.quantity,
+                    total_price: item.product.discount_type
+                        ? item.product.display_price
+                        : item.product.sale_price * item.quantity,
                 })),
             };
 
-
             
-
             const res = await storeOrder("/confirm-order", data, csrfToken);
             const orderData = await res.json();
 

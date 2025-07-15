@@ -1,4 +1,4 @@
-@extends('layout.dashboard')
+{{-- @extends('layout.dashboard')
 @section('content')
     <div class="mt-5">
         <div class="bg-white p-4 rounded shadow mb-8">
@@ -13,10 +13,9 @@
     </div>
 @endsection
 @push('scripts')
-    <!-- Import Chart.js v4 -->
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 
-    <!-- Import compatible ChartDataLabels plugin -->
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js">
     </script>
 
@@ -118,5 +117,202 @@
             plugins: [ChartDataLabels]
 
         });
+    </script>
+@endpush --}}
+
+@extends('layout.dashboard')
+@section('content')
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold">Sales Report</h1>
+        <form method="GET" class="flex gap-2">
+            <input type="date" name="start_date" value="{{ $startDate }}" class="input input-bordered">
+            <input type="date" name="end_date" value="{{ $endDate }}" class="input input-bordered">
+            <button class="btn btn-primary">Filter</button>
+        </form>
+    </div>
+
+    {{-- KPI Cards --}}
+    <div class="grid grid-cols-3 gap-4 mb-8">
+        <div class="bg-green-100 rounded p-4">
+            <div class="text-sm text-gray-600">Total Revenue</div>
+
+
+            <div class="text-2xl font-bold">{{ number_format(array_sum($monthlySalesData->toArray()), 2, '') }} MMK</div>
+
+        </div>
+        <div class="bg-blue-100 rounded p-4">
+            <div class="text-sm text-gray-600">Total Orders</div>
+            <div class="text-2xl font-bold">{{ array_sum($monthlyOrdersData->toArray()) }}</div>
+        </div>
+        <div class="bg-yellow-100 rounded p-4">
+            <div class="text-sm text-gray-600">Avg Order Value</div>
+            <div class="text-2xl font-bold">
+                {{ number_format(array_sum($monthlySalesData->toArray()) / max(array_sum($monthlyOrdersData->toArray()), 1), 2, '') }} MMK </div>
+        </div>
+    </div>
+
+    {{-- Monthly Sales Revenue Chart --}}
+    <div class="bg-white shadow rounded p-4 mb-8">
+        <h2 class="text-lg font-semibold mb-2">Monthly Sales Revenue</h2>
+        <canvas id="monthlySalesChart"></canvas>
+    </div>
+
+    {{-- Best Selling Products --}}
+
+    <div class="bg-white shadow rounded p-4 mb-8">
+        {{-- <div class="w-full md:w-1/2 mx-auto"> --}}
+        <canvas id="bestSellingChart"></canvas>
+        {{-- </div> --}}
+    </div>
+
+    <div class="bg-white shadow rounded p-4">
+        <h2 class="text-lg font-semibold mb-2">Best Selling Products</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            @foreach ($bestSellingProducts as $product)
+                <div class="flex items-center gap-4 border border-pearl-bush-100 shadow px-3 py-2 rounded-md">
+                    <div class="relative">
+                        <img src="{{ $product->preview ? asset('/storage/' . $product->preview) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1362px-Placeholder_view_vector.svg.png?20220519031949' }}"
+                            class="size-16 object-cover object-center rounded">
+                        <div class="absolute top-0 left-0 w-full h-full bg-black/4"></div>
+                    </div>
+                    <div>
+                        <div class="font-semibold">{{ $product->product_name }}</div>
+                        <div class="text-sm text-gray-500">Sold: {{ $product->total_sold }}</div>
+                        <div class="text-sm text-gray-500">Revenue: {{ $product->total_revenue }}</div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+@endsection
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js">
+    </script>
+
+    <script>
+        const ctx = document.getElementById('monthlySalesChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: @json($monthlySalesLabels),
+                datasets: [{
+                        label: 'This Year Revenue',
+                        data: @json($monthlySalesData),
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.3,
+                        fill: true
+                    },
+                    {
+                        label: 'Last Year Revenue',
+                        data: @json($monthlyLastYearData),
+                        borderColor: 'rgb(255, 99, 132)',
+                        tension: 0.3,
+                        fill: false
+                    }
+                ]
+            }
+        });
+
+        // const ctxBestSelling = document.getElementById('bestSellingChart').getContext('2d');
+
+        // const data = {
+        //     labels: {!! json_encode($bestSellingProducts->pluck('product_name')) !!},
+        //     datasets: [{
+        //         label: 'Units Sold',
+        //         data: {!! json_encode($bestSellingProducts->pluck('total_sold')) !!},
+        //         backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        //         borderColor: 'rgba(54, 162, 235, 1)',
+        //         borderWidth: 1
+        //     }]
+        // };
+
+        // const config = {
+        //     type: 'bar',
+        //     data: data,
+        //     options: {
+        //         indexAxis: 'y', // horizontal bar chart
+        //         scales: {
+        //             x: {
+        //                 beginAtZero: true
+        //             }
+        //         },
+        //         plugins: {
+        //             legend: {
+        //                 display: true
+        //             },
+        //             tooltip: {
+        //                 callbacks: {
+        //                     label: function(context) {
+        //                         return context.parsed.x + ' units sold';
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     },
+        // };
+
+        // new Chart(ctxBestSelling, config);
+
+        const ctxBestSelling = document.getElementById('bestSellingChart').getContext('2d');
+
+        const labels = {!! json_encode($bestSellingProducts->pluck('product_name')) !!};
+        const quantities = {!! json_encode($bestSellingProducts->pluck('total_sold')) !!};
+
+        // const colors = [
+        //     '#f9f6f3',
+        //     '#ebe3db',
+        //     '#e0d3c8',
+        //     '#ccb6a5',
+        //     '#b79580',
+        //     '#a87d67',
+        //     '#9b6c5b',
+        //     '#81584d',
+        //     '#694943',
+        //     '#563e38',
+        //     '#2e1f1c',
+        // ];
+
+        const colors = [
+
+
+            '#a87d67',
+            '#b79580',
+            '#ccb6a5',
+            '#e0d3c8',
+            '#ebe3db',
+            '#f9f6f3',
+
+
+        ];
+
+        // Use first N colors based on products count
+        const barColors = colors.slice(0, quantities.length);
+
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Units Sold',
+                data: quantities,
+                backgroundColor: barColors,
+                borderWidth: 1
+            }]
+        };
+
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                indexAxis: 'y', // horizontal bar chart
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        new Chart(ctxBestSelling, config);
     </script>
 @endpush

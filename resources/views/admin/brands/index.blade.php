@@ -91,8 +91,6 @@
                                     <td
                                         class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 text-end flex justify-center">
 
-
-
                                         <button id="dropdownDefaultButton-{{ $brand->id }}"
                                             data-dropdown-toggle="dropdown-{{ $brand->id }}" class="cursor-pointer"
                                             type="button">

@@ -110,7 +110,7 @@ class ProductTypeSeeder extends Seeder
                 'name' => 'Blazer',
                 'category' => 'Outerwear',
                 'fits' => ['Regular Fit','Slim Fit'],
-                'sizes' => ['XXS','XS','S','M','L','XL']
+                'sizes' => ['XXS','XS','S','M','L','XL','32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54']
 
             ],
 
@@ -141,12 +141,7 @@ class ProductTypeSeeder extends Seeder
                 'fits' => [],
                 'sizes' => ['7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5', '12', '13', '14', '15', '16', '17'],
             ],
-            [
-                'name' => 'Blazer',
-                'category' => 'Outerwear',
-                'fits' => ['Regular Fit'],
-                'sizes' => ['32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54'],
-            ],
+
             [
                 'name' => 'Jacket',
                 'category' => 'Outerwear',
@@ -166,7 +161,7 @@ class ProductTypeSeeder extends Seeder
                 'fits' => [],
                 'sizes' => ['S', 'M', 'L', 'XL', '32', '34', '36', '38', '40', '42'],
             ],
-           
+
             [
                 'name' => 'Wallets',
                 'category' => 'Accessories',

@@ -116,21 +116,21 @@
 
 /* tom select */
 .ts-control {
-  @apply border-gray-300 py-3 rounded-md ps-3 focus:ring-2 focus:ring-pearl-bush-500;
+    @apply border-gray-300 py-3 rounded-md ps-3 focus:ring-2 focus:ring-pearl-bush-500;
 }
 .ts-dropdown {
-  @apply border py-2 border-pearl-bush-300 rounded-lg;
+    @apply border py-2 border-pearl-bush-300 rounded-lg;
 }
 .ts-dropdown .option {
-  @apply hover:bg-pearl-bush-100 hover:text-pearl-bush-800 cursor-pointer py-3;
+    @apply hover:bg-pearl-bush-100 hover:text-pearl-bush-800 cursor-pointer py-3;
 }
 .ts-control .item {
-  /* #ebe3db */
-  /* #e0d3c8 */
-  background-color: #e0d3c8  !important;
-  color: #694943 !important;
-  padding: 1px 10px !important;
-  border-radius: 30px !important;
+    /* #ebe3db */
+    /* #e0d3c8 */
+    background-color: #e0d3c8 !important;
+    color: #694943 !important;
+    padding: 1px 10px !important;
+    border-radius: 30px !important;
 }
 
 .transition-max-height {
@@ -160,3 +160,5 @@
 .active-filter {
     @apply bg-pearl-bush-400  text-white text-sm  rounded-full  font-medium;
 }
+
+

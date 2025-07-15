@@ -7,8 +7,8 @@
 
         <form method="GET" action="{{ route('dashboard.index') }}" class="mb-4 ">
             <select name="filter" onchange="this.form.submit()" class="border p-2 rounded w-40">
-                <option value="today" {{ $filter == 'today' ? 'selected' : '' }}>Today</option>
-                <option value="yesterday" {{ $filter == 'yesterday' ? 'selected' : '' }}>Yesterday</option>
+                {{-- <option value="today" {{ $filter == 'today' ? 'selected' : '' }}>Today</option>
+                <option value="yesterday" {{ $filter == 'yesterday' ? 'selected' : '' }}>Yesterday</option> --}}
                 <option value="last_7_days" {{ $filter == 'last_7_days' ? 'selected' : '' }}>Last 7 Days</option>
                 <option value="this_month" {{ $filter == 'this_month' ? 'selected' : '' }}>This Month</option>
                 <option value="last_month" {{ $filter == 'last_month' ? 'selected' : '' }}>Last Month</option>
@@ -17,7 +17,7 @@
             </select>
         </form>
 
-        <div class="grid grid-cols-4 gap-5">
+        <div class="grid grid-cols-3 gap-5">
 
             <!-- Example Card -->
             {{-- @php
@@ -48,10 +48,24 @@
             @php
                 $cards = [
                     [
+                        'title' => 'Total Sale',
+                        'value' => number_format($totalSale) . ' MMK',
+                        'change' => $revenueChange,
+                        'sparkline_data' => $sparklineSale,
+                    ],
+
+                    [
                         'title' => 'Total Revenue',
                         'value' => number_format($totalRevenue) . ' MMK',
                         'change' => $revenueChange,
                         'sparkline_data' => $sparklineRevenue,
+                    ],
+
+                    [
+                        'title' => 'Total Outstanding',
+                        'value' => number_format($outstanding) . ' MMK',
+                        'change' => null,
+                        'sparkline_data' => null,
                     ],
                     [
                         'title' => 'Total Orders',
@@ -78,7 +92,8 @@
                 <div class="bg-white shadow p-5 space-y-3 rounded-lg">
                     <div class="flex justify-between items-center">
                         <div class="bg-blue-50 p-3 rounded-lg">
-                            <!-- Replace with relevant icon for each card if needed -->
+
+
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-6 stroke-blue-500 stroke-2">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -141,6 +156,8 @@
                         <p class="text-2xl font-semibold">{{ $card['value'] }}</p>
                         <p class="text-stone-600 text-sm">{{ $card['title'] }}</p>
                     </div>
+
+
 
                     {{--  Sparkline container --}}
                     {{-- <div id="sparkline-{{ $index }}"></div> --}}
@@ -367,7 +384,7 @@
             </div>
 
             {{-- top categories --}}
-            <div class="bg-white rounded-lg shadow">
+            {{-- <div class="bg-white rounded-lg shadow">
                 <div class="border-b border-stone-100  p-5 mb-3">
                     <p class="text-gray-800 text-lg font-semibold font-heading flex items-center gap-3">
 
@@ -377,7 +394,23 @@
                     </p>
                 </div>
                 <div class="p-5">
+                        <canvas id="topCategoriesChart"></canvas>
+                </div>
 
+            </div> --}}
+
+            {{-- top product type --}}
+            <div class="bg-white rounded-lg shadow">
+                <div class="border-b border-stone-100  p-5 mb-3">
+                    <p class="text-gray-800 text-lg font-semibold font-heading flex items-center gap-3">
+
+
+
+                        Top Product Types
+                    </p>
+                </div>
+                <div class="p-5">
+                    <canvas id="topProductTypesChart"></canvas>
                 </div>
 
             </div>
@@ -400,19 +433,17 @@
 
 
         <script>
-            const ctx = document.getElementById('topCategoriesChart').getContext('2d');
+            // product types
 
-
-
-
+            const ctx = document.getElementById('topProductTypesChart').getContext('2d');
 
             const topCategoriesChart = new Chart(ctx, {
                 type: 'bar', // ✅ vertical bar chart by default
                 data: {
-                    labels: @json($categoryNames),
+                    labels: @json($productTypeNames),
                     datasets: [{
                         label: 'Total Sales',
-                        data: @json($categorySales),
+                        data: @json($productTypeSales),
                         backgroundColor: '#ccb6a5'
                     }]
                 },
@@ -424,7 +455,7 @@
                         }
                     },
                     scales: {
-                        y: { // ✅ vertical axis for values
+                        y: { //  vertical axis for values
                             beginAtZero: true
                         }
                     }
@@ -432,7 +463,36 @@
             });
         </script>
     @endpush
-     {{-- @foreach ($cards as $index => $card)
+
+    {{-- top categories --}}
+    {{-- const ctx = document.getElementById('topCategoriesChart').getContext('2d');
+
+    const topCategoriesChart = new Chart(ctx, {
+        type: 'bar', // ✅ vertical bar chart by default
+        data: {
+            labels: @json($categoryNames),
+            datasets: [{
+                label: 'Total Sales',
+                data: @json($categorySales),
+                backgroundColor: '#ccb6a5'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: { //  vertical axis for values
+                    beginAtZero: true
+                }
+            }
+        }
+    }); --}}
+
+    {{-- @foreach ($cards as $index => $card)
 
 
          var options{{ $index }} = {

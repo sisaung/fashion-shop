@@ -91,6 +91,8 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         Route::post('/order/{id}/deliver', [OrderController::class, 'deliverOrder'])->name('order.deliver');
         Route::post('/order/{id}/complete', [OrderController::class, 'completeOrder'])->name('order.complete');
         Route::post('/order/{id}/cancel', [OrderController::class, 'cancelOrder'])->name('order.cancel');
+        Route::patch('/order/{id}', [OrderController::class, 'markAsPaid'])->name('order.markAsPaid');
+
 
 
 

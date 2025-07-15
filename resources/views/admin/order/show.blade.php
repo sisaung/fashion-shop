@@ -102,7 +102,7 @@
                                     <strong>Total
                                     </strong>
                                 </td>
-                                
+
                                 <td> {{ number_format($order->total_amount) }} MMK </td>
 
                             </tr>
@@ -253,6 +253,21 @@
                         <tr class="divide-y divide-gray-200 bg-stone-50">
                             <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Item Count</td>
                             <td class="text-gray-500">{{ $order->orderItems->count() }}</td>
+                        </tr>
+                        <tr class="divide-y divide-gray-200 bg-stone-50">
+                            <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Payment Received</td>
+                            <td class="text-gray-500">
+
+                                @if ($order->payment_received_at)
+
+                                         {{ date('j M Y', strtotime($order->payment_received_at)) }} 
+                                         {{ date('g:i A', strtotime($order->payment_received_at)) }} 
+
+                                @else
+                                    <span class="text-red-500 text-xs">Not Received</span>
+                                @endif
+
+                            </td>
                         </tr>
                     </table>
 

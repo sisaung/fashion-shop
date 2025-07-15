@@ -18,21 +18,56 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
-        $filter = $request->input('filter', 'last_month'); // default last month
+        $filter = $request->input('filter', 'this_month'); // default last month
 
         // Set date ranges based on filter
+        // switch ($filter) {
+        //     case 'today':
+        //         $start = Carbon::today();
+        //         $end = Carbon::today()->endOfDay();
+
+        //         break;
+
+        //     case 'yesterday':
+        //         $start = Carbon::yesterday()->startOfDay();
+        //         $end = Carbon::yesterday()->endOfDay();
+
+        //         break;
+
+        //     case 'last_7_days':
+        //         $start = Carbon::now()->subDays(7)->startOfDay();
+        //         $end = Carbon::now()->endOfDay();
+        //         break;
+
+        //     case 'this_month':
+        //         $start = Carbon::now()->startOfMonth();
+        //         $end = Carbon::now()->endOfMonth();
+        //         break;
+
+        //     case 'last_month':
+        //         $start = Carbon::now()->subMonth()->startOfMonth();
+        //         $end = Carbon::now()->subMonth()->endOfMonth();
+        //         break;
+
+        //     case 'this_year':
+        //         $start = Carbon::now()->startOfYear();
+        //         $end = Carbon::now()->endOfYear();
+        //         break;
+
+        //     case 'last_year':
+        //         $start = Carbon::now()->subYear()->startOfYear();
+        //         $end = Carbon::now()->subYear()->endOfYear();
+        //         break;
+
+        //     default:
+        //         $start = Carbon::now()->subMonth()->startOfMonth();
+        //         $end = Carbon::now()->subMonth()->endOfMonth();
+        //         break;
+        // }
+
+
         switch ($filter) {
-            case 'today':
-                $start = Carbon::today();
-                $end = Carbon::today()->endOfDay();
 
-                break;
-
-            case 'yesterday':
-                $start = Carbon::yesterday()->startOfDay();
-                $end = Carbon::yesterday()->endOfDay();
-
-                break;
 
             case 'last_7_days':
                 $start = Carbon::now()->subDays(7)->startOfDay();
@@ -59,11 +94,12 @@ class DashboardController extends Controller
                 $end = Carbon::now()->subYear()->endOfYear();
                 break;
 
-            default:
-                $start = Carbon::now()->subMonth()->startOfMonth();
-                $end = Carbon::now()->subMonth()->endOfMonth();
+                default:
+                $start = Carbon::now()->startOfMonth();
+                $end = Carbon::now()->endOfMonth();
                 break;
         }
+
 
         // Comparison period (previous period)
 
@@ -71,21 +107,48 @@ class DashboardController extends Controller
         $previousStart = $start->copy()->subDays($periodDays);
         $previousEnd = $start->copy()->subDay();
 
-        // return $previousStart . "." . $previousEnd;
 
-        // Totals
-        $totalRevenue = $totalRevenue = Order::where('order_status', 'completed')
+        // Sales
+        $totalSale = Order::where('order_status', 'completed')
         ->whereBetween('created_at', [$start, $end])
         ->sum('net_total');
+
+
+        //revenue
+        $totalRevenue = Order::where('order_status', 'completed')
+    ->whereNotNull('payment_received_at')
+    ->whereBetween('payment_received_at', [$start, $end])
+    ->sum('net_total');
+
+
+    //outstanding
+
+    $outstanding = Order::where('order_status', 'completed')
+    ->whereNull('payment_received_at')
+    ->sum('net_total');
+
+
         $totalOrder = Order::whereBetween('created_at',[$start,$end])->count();
         $totalProduct = Product::count();
         $totalCustomer = Customer::whereBetween('created_at',[$start,$end])->count();
 
-        // Revenue in selected period vs previous period
-        $periodRevenue = Order::where('order_status','completed')->whereBetween('created_at', [$start, $end])->sum('net_total');
+        // revenue in selected period vs previous period
+        $periodRevenue = Order::where('order_status', 'completed')
+        ->whereNotNull('payment_received_at')
+        ->whereBetween('payment_received_at', [$start, $end])
+        ->sum('net_total');
 
-        $previousRevenue = Order::where('order_status','completed')->whereBetween('created_at', [$previousStart, $previousEnd])->sum('net_total');
-        // return "period revenue is $periodRevenue and previous revenue is $previousRevenue";
+
+        $previousRevenue = Order::where('order_status', 'completed')
+        ->whereNotNull('payment_received_at')
+        ->whereBetween('payment_received_at', [$previousStart, $previousEnd])
+        ->sum('net_total');
+
+
+          // sale in selected period vs previous period
+          $periodSale = Order::where('order_status','completed')->whereBetween('created_at', [$start, $end])->sum('net_total');
+
+          $previousSale = Order::where('order_status','completed')->whereBetween('created_at', [$previousStart, $previousEnd])->sum('net_total');
 
         // Orders
         $periodOrders = Order::whereBetween('created_at', [$start, $end])->count();
@@ -96,11 +159,15 @@ class DashboardController extends Controller
         $previousCustomers = Customer::whereBetween('created_at', [$previousStart, $previousEnd])->count();
 
         // Calculate % changes safely
+
         $revenueChange = ($previousRevenue != 0) ? (($periodRevenue - $previousRevenue) / $previousRevenue) * 100 : null;
+
+        $saleChange = ($previousSale != 0) ? (($periodSale - $previousSale) / $previousSale) * 100 : null;
         $orderChange = ($previousOrders != 0) ? (($periodOrders - $previousOrders) / $previousOrders) * 100 : null;
         $customerChange = ($previousCustomers != 0) ? (($periodCustomers - $previousCustomers) / $previousCustomers) * 100 : null;
 
 
+        $sparklineSale = [100, 200, 150, 250, 300, 280, 350];
         $sparklineRevenue = [100, 200, 150, 250, 300, 280, 350];
         $sparklineOrders = [10, 15, 12, 18, 20, 19, 25];
         $sparklineCustomers = [5, 6, 5, 7, 8, 7, 9];
@@ -125,48 +192,73 @@ class DashboardController extends Controller
         ->orderBy('id')
         ->get();
 
-        $topCategories = OrderItem::select(
-            'product_categories.category_name',
-            DB::raw('SUM(order_items.quantity * order_items.sale_price) as total_sales')
+        // $topCategories = OrderItem::select(
+        //     'product_categories.category_name',
+        //     DB::raw('SUM(order_items.quantity * order_items.sale_price) as total_sales')
+        // )
+        // ->join('stocks', 'order_items.stock_id', '=', 'stocks.id')
+        // ->join('products', 'stocks.product_id', '=', 'products.id')
+        // ->join('product_categories', 'products.product_category_id', '=', 'product_categories.id')
+        // ->join('orders', 'order_items.order_id', '=', 'orders.id') // to access created_at
+        // ->whereBetween('orders.created_at', [$start, $end]) // filter by selected date range
+        // ->where('orders.order_status', 'completed') // only completed orders
+        // ->groupBy('product_categories.id', 'product_categories.category_name')
+        // ->orderByDesc('total_sales')
+        // ->limit(5)
+        // ->get();
+
+    // 8. Prepare data for charts
+    // $categoryNames = $topCategories->pluck('category_name')->toArray();
+    // $categorySales = $topCategories->pluck('total_sales')->toArray();
+
+
+
+     $topProductType = OrderItem::select(
+            'product_types.name',
+            DB::raw('SUM(order_items.total_price) as total_sales')
         )
         ->join('stocks', 'order_items.stock_id', '=', 'stocks.id')
         ->join('products', 'stocks.product_id', '=', 'products.id')
-        ->join('product_categories', 'products.product_category_id', '=', 'product_categories.id')
+        ->join('product_types', 'products.product_type_id', '=', 'product_types.id')
         ->join('orders', 'order_items.order_id', '=', 'orders.id') // to access created_at
         ->whereBetween('orders.created_at', [$start, $end]) // filter by selected date range
         ->where('orders.order_status', 'completed') // only completed orders
-        ->groupBy('product_categories.id', 'product_categories.category_name')
+        ->groupBy('product_types.id', 'product_types.name')
         ->orderByDesc('total_sales')
         ->limit(5)
         ->get();
 
-    // 8. Prepare data for charts
-    $categoryNames = $topCategories->pluck('category_name')->toArray();
-    $categorySales = $topCategories->pluck('total_sales')->toArray();
-
-
+        $productTypeNames = $topProductType->pluck('name')->toArray();
+        $productTypeSales = $topProductType->pluck('total_sales')->toArray();
 
     // return $results;
         return view('admin.dashboard.index', [
             'totalRevenue' => $totalRevenue,
+            'totalSale' => $totalSale,
+            'outstanding' => $outstanding,
             'totalOrder' => $totalOrder,
             'totalProduct' => $totalProduct,
             'totalCustomer' => $totalCustomer,
+            'saleChange' => $saleChange,
             'revenueChange' => $revenueChange,
             'orderChange' => $orderChange,
             'customerChange' => $customerChange,
+            'sparklineSale' => $sparklineSale,
             'sparklineRevenue' => $sparklineRevenue,
+
             'sparklineOrders' => $sparklineOrders,
             'sparklineCustomers' => $sparklineCustomers,
             'filter' => $filter,
              'customerChange' => $customerChange,
-             'revenueChange' => $revenueChange,
+
              'orders' => $latestOrders,
 
              'lowStockProducts' => $lowStockProducts,
-             'categoryNames' => $categoryNames,
-             'categorySales' => $categorySales
-            // 'monthlyData' => $finalData,
+
+             'productTypeNames' => $productTypeNames,
+             'productTypeSales' => $productTypeSales,
+            //  'categoryNames' => $categoryNames,
+            //  'categorySales' => $categorySales
         ]);
     }
 

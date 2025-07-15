@@ -1,3 +1,5 @@
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 const initializeAddToCart = () => {
     let selectedStock = null;
     let selectedSize = null;
@@ -31,9 +33,11 @@ const initializeAddToCart = () => {
 
             if (stock <= 3) {
                 stockInfo.textContent = `Only ${stock} left in stock for size ${btn.dataset.size}`;
+                stockInfo.classList.remove("text-green-500", "font-medium");
                 stockInfo.classList.add("text-red-500", "font-medium");
             } else {
                 stockInfo.textContent = `Stock available for size ${btn.dataset.size}: ${stock}`;
+                stockInfo.classList.remove("text-red-500", "font-medium");
                 stockInfo.classList.add("text-green-500", "font-medium");
             }
             stockInfo.setAttribute("data-stock-id", btn.dataset.stockId);
@@ -47,10 +51,19 @@ const initializeAddToCart = () => {
     function updateButtons() {
         decreaseBtn.disabled = quantity <= 1;
         increaseBtn.disabled = !selectedStock || quantity >= selectedStock;
+        decreaseBtn.classList.add("pointer-events-none");
+        increaseBtn.classList.add("pointer-events-none");
+        if (quantity > 1) {
+            decreaseBtn.classList.remove("pointer-events-none");
+        }
+        if (quantity < selectedStock) {
+            increaseBtn.classList.remove("pointer-events-none");
+        }
     }
 
     increaseBtn.addEventListener("click", () => {
         if (!selectedStock) {
+            console.log("remove");
             errorMsg.classList.remove("hidden");
             return;
         }
@@ -63,8 +76,10 @@ const initializeAddToCart = () => {
     });
 
     decreaseBtn.addEventListener("click", () => {
+        console.log("dec");
         if (!selectedStock) {
             errorMsg.classList.remove("hidden");
+
             return;
         }
 
@@ -79,7 +94,21 @@ const initializeAddToCart = () => {
 
     addToCartBtn.addEventListener("click", () => {
         if (!selectedStock && quantity > selectedStock) {
-            errorMsg.classList.remove("hidden");
+            // errorMsg.classList.remove("hidden");
+            Toastify({
+                text: "❗ Please select size first",
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                style: {
+                    background: "#fee2e2",
+                    fontSize: "14px",
+                    color: "red",
+                    boxShadow: "0px",
+                },
+                close: true,
+                avatar:""
+            }).showToast();
             return;
         }
 

@@ -68,7 +68,9 @@ class StockController extends Controller
 
     if ($existingStock) {
         $existingStock->increment('stock_quantity', $request->stock_quantity);
-        $product->stock_count = $product->stock_count + $request->stock_quantity;
+        // $product->stock_count = $product->stock_count + $request->stock_quantity;
+        $product->stock_count = Stock::where('product_id', $product->id)->sum('stock_quantity');
+
         $product->save();
     } else {
         // ✅ If not, create new stock row
@@ -79,7 +81,8 @@ class StockController extends Controller
             'size_id' => $request->size_id
         ]);
 
-        $product->stock_count = $product->stock_count + $stock->stock_quantity;
+        // $product->stock_count = $product->stock_count + $stock->stock_quantity;
+        $product->stock_count = Stock::where('product_id', $product->id)->sum('stock_quantity');
         $product->save();
     }
 

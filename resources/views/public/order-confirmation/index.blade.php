@@ -29,7 +29,7 @@
         {{-- toast error --}}
 
         <div id="toast-error"
-            class="transition fixed top-5  left-1/2 -translate-x-1/2  ease-out  transform opacity-0 -translate-y-10  duration-500">
+            class="transition fixed top-5 z-50 left-1/2 -translate-x-1/2  ease-out  transform opacity-0 -translate-y-10  duration-500">
             <div class="max-w-sm  mx-auto bg-red-100 border border-red-200 text-sm text-red-800 rounded-lg  " role="alert"
                 tabindex="-1" aria-labelledby="hs-toast-soft-color-red-label">
                 <div id="hs-toast-soft-color-red-label" class="flex p-4">
