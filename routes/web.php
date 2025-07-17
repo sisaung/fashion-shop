@@ -86,10 +86,8 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         Route::get('/stock-analysis/stockByProductType',[StockAnalysisController::class,'stockByProductType'])->name('stock-analysis.stockByProductType');
         Route::get('/stock-analysis/stockByBrand',[StockAnalysisController::class,'stockByBrand'])->name('stock-analysis.stockByBrand');
         Route::get('/stock-analysis/stockBySize',[StockAnalysisController::class,'stockBySize'])->name('stock-analysis.stockBySize');
-
-
-
-
+        Route::get('/stock-analysis/calculatePrice',[StockAnalysisController::class,'calculatePrice'])->name('stock-analysis.calculatePrice');
+        Route::get('/stock-analysis/totalStock',[StockAnalysisController::class,'totalStock'])->name('stock-analysis.totalStock');
 
         Route::resource('coupon', CouponController::class);
         Route::resource('customer', CustomerController::class)->only(['index', 'show']);

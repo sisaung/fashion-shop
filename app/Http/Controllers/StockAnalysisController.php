@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
+use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\ProductType;
 use App\Models\Size;
 use App\Models\Stock;
@@ -49,7 +51,7 @@ class StockAnalysisController extends Controller
         if ($productTypeId) {
             $query->where('product_type_id', $productTypeId);
         }
-       
+
         $query->with('stocks');
     }])->get();
 
@@ -73,7 +75,7 @@ class StockAnalysisController extends Controller
     }
 
     public function stockBySize(Request $request)
-{
+    {
     $productTypeId = $request->input('stock_by_product_type');
     $brandId = $request->input('stock_by_brand');
 
@@ -96,8 +98,6 @@ class StockAnalysisController extends Controller
         });
     }])->get();
 
-
-
     $result = $sizes->map(function($size) {
         $totalStock = $size->stocks->sum('stock_quantity');
 
@@ -109,5 +109,73 @@ class StockAnalysisController extends Controller
 
 
     return response()->json($result);
+
+}
+
+public function calculatePrice(Request $request) {
+
+    $productTypeId = $request->input('stock_by_product_type');
+    $brandId = $request->input('stock_by_brand');
+
+    if (!$productTypeId && !$brandId) {
+        // Both are null, do not calculate
+        return response()->json([
+            'totalSalePrice' => 0,
+            'totalOriginalPrice' => 0,
+            'totalProfit' => 0,
+        ]);
+    }
+
+    $query = Product::query();
+
+    if ($productTypeId) {
+        $query->where('product_type_id', $productTypeId);
+    }
+
+    if ($brandId) {
+        $query->where('brand_id', $brandId);
+    }
+
+    $products = $query->get();
+
+    $totalSalePrice = $products->sum('sale_price');
+    $totalOriginalPrice = $products->sum('original_price');
+    $totalProfit = $totalSalePrice - $totalOriginalPrice;
+
+
+
+    return response()->json([
+        'totalSalePrice' => $totalSalePrice,
+        'totalOriginalPrice' => $totalOriginalPrice,
+        'totalProfit' => $totalProfit,
+
+    ]);
+}
+
+public function totalStock() {
+
+    $totalStock = Stock::sum('stock_quantity');
+
+    $productCategories = ProductCategory::with('products.stocks')->get();
+
+    $categoryStock = [];
+
+    foreach ($productCategories as $category) {
+        $stockSum = 0;
+
+        foreach ($category->products as $product) {
+            $stockSum += $product->stocks->sum('stock_quantity');
+        }
+
+        $categoryStock[] = [
+            'name' => $category->category_name,
+            'stock' => $stockSum
+        ];
+    }
+
+    return response()->json([
+        'totalStock' => $totalStock,
+        'categories' => $categoryStock,
+    ]);
 }
 }

@@ -140,13 +140,17 @@
 //     clearProductType.addEventListener("click", handleClearProductType);
 // };
 // document.addEventListener("DOMContentLoaded", initializeStockAnalysis);
+import fetchAllTotalPrice from "../services/fetchAllTotalPrice.js";
 import fetchStockByBrand from "../services/fetchStockbyBrand.js";
 import fetchStockByProductType from "../services/fetchStockByProductType.js";
 import fetchStockSizeChart from "../services/fetchStockSizeChart.js";
+import fetchTotalStock from "../services/fetchTotalStock.js";
 import highlightSelectedBrand from "../utils/highlightSelectBrand.js";
+import showAllTotalPrice from "../utils/showAllTotalPrice.js";
 import renderStockByBrandList from "./renderStockByBrandList.js";
 import renderStockByProductTypeList from "./renderStockByTypeList.js";
 import Chart, { plugins } from "chart.js/auto";
+import renderStockCategoryList from "./renderStockCategoryList.js";
 
 const initializeStockAnalysis = async () => {
     const productTypeContainer = document.querySelector(
@@ -158,11 +162,17 @@ const initializeStockAnalysis = async () => {
     );
 
     const clearBrand = document.querySelector(".clear-stock-by-brand");
+    const categoryContainer = document.querySelector(
+        ".total-stock-by-category-container"
+    );
+
+    const stockTotal = document.querySelector(".stock-total");
 
     // Fetch initial data
-    const [productTypes, brands] = await Promise.all([
+    const [productTypes, brands, allTotalStock] = await Promise.all([
         fetchStockByProductType(),
         fetchStockByBrand(),
+        fetchTotalStock(),
     ]);
 
     // Render product type buttons
@@ -174,9 +184,82 @@ const initializeStockAnalysis = async () => {
     // Render brand list initially
     if (brands) {
         await renderStockByBrandList(brands, brandContainer);
-
         setupBrandButtons();
     }
+
+    // total stock category
+    const stockCategories = await fetchTotalStock();
+    stockTotal.textContent = stockCategories.totalStock;
+    renderStockCategoryList(stockCategories.categories, categoryContainer);
+
+    console.log(stockCategories);
+
+    function renderCategoryChart(data) {
+        data.categories.sort((a, b) => b.stock - a.stock);
+
+        // ✅ Your fixed colors
+        const fixedColors = [
+            "#9b6c5b",
+            "#a87d67",
+            "#b79580",
+            "#ccb6a5",
+            "#e0d3c8",
+        ];
+
+        // ✅ Find max stock
+        const maxStock = data.categories[0].stock;
+
+        // ✅ Assign colors in sorted order
+        data.categories.forEach((category, index) => {
+            if (category.stock === maxStock) {
+                category.color = "#81584d"; // bright gold for highest
+            } else {
+                category.color = fixedColors[index % fixedColors.length];
+            }
+        });
+
+        // ✅ Prepare data for Chart.js
+        const labels = data.categories.map((c) => c.name);
+        const stocks = data.categories.map((c) => c.stock);
+        const colors = data.categories.map((c) => c.color);
+
+        // ✅ Render Chart.js donut
+        const ctx = document
+            .getElementById("categoryStockChart")
+            .getContext("2d");
+
+        new Chart(ctx, {
+            type: "doughnut",
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        data: stocks,
+                        backgroundColor: colors,
+                        borderWidth: 1,
+                        hoverOffset: 10,
+                    },
+                ],
+            },
+            options: {
+                rotation: -90, // ✅ starts from left side
+                circumference: 360,
+                plugins: {
+                    datalabels: {
+                        display: false,
+                    },
+                    legend: { display: false },
+                    tooltip: { enabled: false },
+                    title: {
+                        display: true,
+                        
+                    },
+                },
+            },
+        });
+    }
+
+    renderCategoryChart(allTotalStock);
 
     // Set up clear button
     clearProductType.addEventListener("click", handleClearProductType);
@@ -195,15 +278,13 @@ const initializeStockAnalysis = async () => {
             clearProductType.classList.remove("hidden");
             productTypeBtns.forEach((btn) => {
                 if (btn.dataset.productTypeId === selectedProductTypeId) {
-                    btn.classList.add(
-                        "bg-pearl-bush-100",
-                        "text-pearl-bush-700",
-                        "border",
-                        "border-pearl-bush-300"
-                    );
+                    btn.classList.add("active-selected-stock");
                 }
             });
             await updateBrandAndChart(selectedProductTypeId);
+            const data = await fetchAllTotalPrice(params.toString());
+
+            showAllTotalPrice(data);
         }
 
         productTypeBtns.forEach((btn) => {
@@ -226,6 +307,9 @@ const initializeStockAnalysis = async () => {
 
                 // Update brand list and chart
                 await updateBrandAndChart(productTypeId, null);
+                const data = await fetchAllTotalPrice(searchParams.toString());
+
+                showAllTotalPrice(data);
             });
         });
     }
@@ -299,6 +383,10 @@ const initializeStockAnalysis = async () => {
 
                 // Update brand list and chart
                 await updateBrandAndChart(null, brandId);
+                console.log(searchParams.toString());
+                const data = await fetchAllTotalPrice(searchParams.toString());
+                console.log(data);
+                showAllTotalPrice(data);
             }
         });
     }
@@ -328,8 +416,8 @@ const initializeStockAnalysis = async () => {
         highlightSelectedBrand();
 
         // Fetch and render chart
-        const chartData = await fetchStockSizeChart(searchParam);
-        renderChart(chartData);
+        const data = await fetchStockSizeChart(searchParam);
+        renderChart(data);
     }
 
     // Function to render chart
@@ -358,7 +446,7 @@ const initializeStockAnalysis = async () => {
 
                 plugins: {
                     datalabels: {
-                        anchor: "end", // position at top
+                        anchor: "left", // position at top
                         align: "end", // align text at top
                         color: "#694943", // label text color
                     },
@@ -376,13 +464,15 @@ const initializeStockAnalysis = async () => {
         window.sizeStockChart = new Chart(ctx, config);
     }
 
+    // function to render category chart
+
     // Function to handle clearing selected product type
     async function handleClearProductType() {
-        // const searchParams = new URLSearchParams(location.search);
-        // searchParams.delete("stock_by_product_type");
-        // const newUrl = searchParams.toString()
-        //     ? "?" + searchParams.toString()
-        //     : location.pathname;
+        const searchParams = new URLSearchParams(location.search);
+        searchParams.delete("stock_by_product_type");
+        searchParams.delete("stock_by_brand");
+
+        // history.pushState(null, null, location.origin + location.pathname);
         history.pushState(null, null, location.origin + location.pathname);
 
         clearProductType.classList.add("hidden");
@@ -396,11 +486,12 @@ const initializeStockAnalysis = async () => {
             ".stock-by-product-type-btn"
         );
 
-        productTypeBtns.forEach((btn) =>
-            btn.classList.remove("active-selected-stock")
-        );
-
         highlightSelectedBrand();
+
+        productTypeBtns.forEach((btn) => {
+            console.log("false");
+            btn.classList.remove("active-selected-stock");
+        });
 
         // Destroy chart if exists
         if (
@@ -410,6 +501,10 @@ const initializeStockAnalysis = async () => {
             window.sizeStockChart.destroy();
             window.sizeStockChart = null;
         }
+
+        const data = await fetchAllTotalPrice();
+        console.log(data);
+        showAllTotalPrice(data);
     }
 
     async function handleClearBrand() {
@@ -441,6 +536,10 @@ const initializeStockAnalysis = async () => {
             window.sizeStockChart.destroy();
             window.sizeStockChart = null;
         }
+
+        console.log(searchParams.toString());
+        const data = await fetchAllTotalPrice(searchParams.toString());
+        showAllTotalPrice(data);
     }
 };
 
