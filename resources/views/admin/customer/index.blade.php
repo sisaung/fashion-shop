@@ -61,10 +61,10 @@
                         <tbody class="divide-y divide-gray-200 bg-white">
 
 
-                            @foreach ($customers as $customer)
+                            @foreach ($customers as $index => $customer)
                                 <tr>
                                     <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                        {{ $customer->id }}
+                                        {{ $index + 1 }}
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
                                         {{ $customer->customer_name }}
@@ -73,10 +73,6 @@
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
                                         {{ $customer->customer_email }}
                                     </td>
-
-
-
-
 
 
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 text-end">

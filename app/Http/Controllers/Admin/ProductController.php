@@ -116,6 +116,7 @@ class ProductController extends Controller
 
         $productCategory = ProductCategory::orderBy('category_name','asc')->get();
 
+
         return view('admin.product.index', ['products' => $product,'productCategory' => $productCategory,'sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
     }
 

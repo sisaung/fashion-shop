@@ -52,6 +52,9 @@
                         'value' => number_format($totalSale) . ' MMK',
                         'change' => $revenueChange,
                         'sparkline_data' => $sparklineSale,
+                        'icon' => `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                  <path stroke-linecap="round" stroke-linejoin="round" d="m8.99 14.993 6-6m6 3.001c0 1.268-.63 2.39-1.593 3.069a3.746 3.746 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043 3.745 3.745 0 0 1-3.068 1.593c-1.268 0-2.39-.63-3.068-1.593a3.745 3.745 0 0 1-3.296-1.043 3.746 3.746 0 0 1-1.043-3.297 3.746 3.746 0 0 1-1.593-3.068c0-1.268.63-2.39 1.593-3.068a3.746 3.746 0 0 1 1.043-3.297 3.745 3.745 0 0 1 3.296-1.042 3.745 3.745 0 0 1 3.068-1.594c1.268 0 2.39.63 3.068 1.593a3.745 3.745 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.297 3.746 3.746 0 0 1 1.593 3.068ZM9.74 9.743h.008v.007H9.74v-.007Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm4.125 4.5h.008v.008h-.008v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                                                </svg>`,
                     ],
 
                     [
@@ -59,6 +62,7 @@
                         'value' => number_format($totalRevenue) . ' MMK',
                         'change' => $revenueChange,
                         'sparkline_data' => $sparklineRevenue,
+                        'icon' => '',
                     ],
 
                     [
@@ -66,24 +70,28 @@
                         'value' => number_format($outstanding) . ' MMK',
                         'change' => null,
                         'sparkline_data' => null,
+                        'icon' => '',
                     ],
                     [
                         'title' => 'Total Orders',
                         'value' => $totalOrder,
                         'change' => $orderChange,
                         'sparkline_data' => $sparklineOrders,
+                        'icon' => '',
                     ],
                     [
                         'title' => 'Total Products',
                         'value' => number_format($totalProduct),
                         'change' => null,
                         'sparkline_data' => null,
+                        'icon' => '',
                     ],
                     [
                         'title' => 'Total Customers',
                         'value' => $totalCustomer,
                         'change' => $customerChange,
                         'sparkline_data' => $sparklineCustomers,
+                        'icon' => '',
                     ],
                 ];
             @endphp
@@ -93,12 +101,12 @@
                     <div class="flex justify-between items-center">
                         <div class="bg-blue-50 p-3 rounded-lg">
 
-
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            {{ $card['icon'] }}
+                            {{-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-6 stroke-blue-500 stroke-2">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
+                            </svg> --}}
                         </div>
 
                         @if (!is_null($card['change']))
@@ -313,8 +321,8 @@
                                         <a href ="{{ route('order.show', $order->id) }}"
                                             class="px-2 py-1 hover:bg-gray-100 inline-flex justify-center items-center"
                                             href="{{ route('order.show', $order->id) }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                fill="currentColor" class="size-5 text-gray-600">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                                class="size-5 text-gray-600">
                                                 <path fill-rule="evenodd"
                                                     d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
                                                     clip-rule="evenodd" />
@@ -362,24 +370,28 @@
                 </div>
 
                 <div class="p-5 ">
-                    @foreach ($lowStockProducts as $product)
-                        <div class="border-l-3 border-red-500 px-5 mb-5">
-                            <a href="{{ route('manage-stock.create', ['id' => $product->id]) }}"
-                                class="text-sm font-medium text-gray-800 underline underline-offset-4">
-                                {{ $product->product_name }} </a>
-                            <div class="flex gap-x-5">
-                                @foreach ($product->stocks as $stock)
-                                    <div>
-                                        <span class="text-xs text-gray-500"> {{ $stock->size->size_name }} </span> :
-                                        <span
-                                            class="text-xs {{ $stock->stock_quantity <= 3 ? 'text-red-500' : 'text-gray-500' }} font-semibold">(
-                                            {{ $stock->stock_quantity }} )</span>
-                                    </div>
-                                @endforeach
+                    @if ($lowStockProducts->count() > 0)
+                        @foreach ($lowStockProducts as $product)
+                            <div class="border-l-3 border-red-500 px-5 mb-5">
+                                <a href="{{ route('manage-stock.create', ['id' => $product->id]) }}"
+                                    class="text-sm font-medium text-gray-800 underline underline-offset-4">
+                                    {{ $product->product_name }} </a>
+                                <div class="flex gap-x-5">
+                                    @foreach ($product->stocks as $stock)
+                                        <div>
+                                            <span class="text-xs text-gray-500"> {{ $stock->size->size_name }} </span> :
+                                            <span
+                                                class="text-xs {{ $stock->stock_quantity <= 3 ? 'text-red-500' : 'text-gray-500' }} font-semibold">(
+                                                {{ $stock->stock_quantity }} )</span>
+                                        </div>
+                                    @endforeach
 
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    @else
+                            <p class="text-gray-500 text-center"> There is no low stock product... </p>
+                    @endif
                 </div>
             </div>
 

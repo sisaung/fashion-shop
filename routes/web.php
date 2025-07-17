@@ -21,6 +21,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderedCustomerController;
 use App\Http\Controllers\ShopCategoryController;
 use App\Http\Controllers\ShopOrderController;
+use App\Http\Controllers\StockAnalysisController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserReviewController;
@@ -79,6 +80,15 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         // stock
         Route::get('/product/{id}/edit/manage-stock', [StockController::class, 'create'])->name('manage-stock.create');
         Route::post('/product/{id}/edit/manage-stock', [StockController::class, 'store'])->name('manage-stock.store');
+        Route::delete('/product/{id}/delete/manage-stock/${stockId}', [StockController::class, 'destroy'])->name('manage-stock.destroy');
+
+        Route::get('/stock-analysis',[StockAnalysisController::class,'index'])->name('stock-analysis.index');
+        Route::get('/stock-analysis/stockByProductType',[StockAnalysisController::class,'stockByProductType'])->name('stock-analysis.stockByProductType');
+        Route::get('/stock-analysis/stockByBrand',[StockAnalysisController::class,'stockByBrand'])->name('stock-analysis.stockByBrand');
+        Route::get('/stock-analysis/stockBySize',[StockAnalysisController::class,'stockBySize'])->name('stock-analysis.stockBySize');
+
+
+
 
 
         Route::resource('coupon', CouponController::class);

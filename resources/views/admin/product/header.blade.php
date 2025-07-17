@@ -45,6 +45,8 @@
             </p>
         </button>
 
+       
+
 
         <a href="{{ route('product.create') }}"
             class="inline-flex items-center gap-x-2 text-sm bg-pearl-bush-400 text-white px-4 py-2 rounded-md cursor-pointer  hover:bg-pearl-bush-500 duration-300">
@@ -56,17 +58,22 @@
 
             Add Product </a>
     </div>
+
+
 </div>
 <div id="dropdown1" class="z-20 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-40 dark:bg-gray-700">
     <div class="sort-product py-2 text-sm text-gray-700 " aria-labelledby="dropdownDefaultButton1">
 
         @foreach ($productCategory as $category)
-            <button data-category-name="{{ $category->category_name }}"
-                class="filter-category-btn inline-block text-start cursor-pointer w-full  px-4 py-2 hover:bg-gray-100 "> {{ $category->category_name }} </button>
+            <button data-category-id="{{ $category->id }}" data-category-name="{{ $category->category_name }}"
+                class="filter-category-btn inline-block text-start cursor-pointer w-full  px-4 py-2 hover:bg-gray-100 ">
+                {{ $category->category_name }} </button>
         @endforeach
 
     </div>
 </div>
+
+
 @push('scripts')
     @vite(['resources/js/filterProductList.js'])
 @endpush

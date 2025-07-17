@@ -121,20 +121,52 @@
 @endpush --}}
 
 @extends('layout.dashboard')
+
+@php
+    $timefilter = [
+        ['value' => 'today', 'label' => 'Today'],
+        ['value' => 'yesterday', 'label' => 'Yesterday'],
+        ['value' => 'last_7_days', 'label' => 'Last 7 Days'],
+        ['value' => 'this_month', 'label' => 'This Month'],
+        ['value' => 'last_month', 'label' => 'Last Month'],
+        ['value' => 'this_year', 'label' => 'This Year'],
+        ['value' => 'last_year', 'label' => 'Last Year'],
+    ];
+@endphp
+
 @section('content')
+    <div class="mt-5 -mx-5 mb-5">
+        @include('components.admin.breadcrumb', [
+            'currentPageTitle' => 'Sales Report',
+        ])
+    </div>
     <div class="flex justify-between items-center mb-6">
+
         <h1 class="text-2xl font-bold">Sales Report</h1>
-        <form method="GET" class="flex gap-2">
-            <input type="date" name="start_date" value="{{ $startDate }}" class="input input-bordered">
-            <input type="date" name="end_date" value="{{ $endDate }}" class="input input-bordered">
-            <button class="btn btn-primary">Filter</button>
-        </form>
+        {{-- <form method="GET" action="{{ route('dashboard.index') }}" class="mb-4 ">
+            <select name="filter" onchange="this.form.submit()" class="border p-2 rounded w-40">
+                <option value="today" {{ $filter == 'today' ? 'selected' : '' }}>Today</option>
+                <option value="yesterday" {{ $filter == 'yesterday' ? 'selected' : '' }}>Yesterday</option>
+                <option value="last_7_days" {{ $filter == 'last_7_days' ? 'selected' : '' }}>Last 7 Days</option>
+                <option value="this_month" {{ $filter == 'this_month' ? 'selected' : '' }}>This Month</option>
+                <option value="last_month" {{ $filter == 'last_month' ? 'selected' : '' }}>Last Month</option>
+                <option value="this_year" {{ $filter == 'this_year' ? 'selected' : '' }}>This Year</option>
+                <option value="last_year" {{ $filter == 'last_year' ? 'selected' : '' }}>Last Year</option>
+            </select>
+        </form> --}}
+
+        <select name="timefilter" id="time-filter">
+            @foreach ($timefilter as $filter)
+                <option value="{{ $filter['value'] }}" {{ $timefilter == $filter['value'] ? 'selected' : '' }}>
+                    {{ $filter['label'] }}</option>
+            @endforeach
+        </select>
     </div>
 
     {{-- KPI Cards --}}
     <div class="grid grid-cols-3 gap-4 mb-8">
         <div class="bg-green-100 rounded p-4">
-            <div class="text-sm text-gray-600">Total Revenue</div>
+            <div class="text-sm text-gray-600">Total Sale</div>
 
 
             <div class="text-2xl font-bold">{{ number_format(array_sum($monthlySalesData->toArray()), 2, '') }} MMK</div>
@@ -147,13 +179,14 @@
         <div class="bg-yellow-100 rounded p-4">
             <div class="text-sm text-gray-600">Avg Order Value</div>
             <div class="text-2xl font-bold">
-                {{ number_format(array_sum($monthlySalesData->toArray()) / max(array_sum($monthlyOrdersData->toArray()), 1), 2, '') }} MMK </div>
+                {{ number_format(array_sum($monthlySalesData->toArray()) / max(array_sum($monthlyOrdersData->toArray()), 1), 2, '') }}
+                MMK </div>
         </div>
     </div>
 
     {{-- Monthly Sales Revenue Chart --}}
     <div class="bg-white shadow rounded p-4 mb-8">
-        <h2 class="text-lg font-semibold mb-2">Monthly Sales Revenue</h2>
+        <h2 class="text-lg font-semibold mb-2">Monthly Sales</h2>
         <canvas id="monthlySalesChart"></canvas>
     </div>
 
@@ -178,7 +211,7 @@
                     <div>
                         <div class="font-semibold">{{ $product->product_name }}</div>
                         <div class="text-sm text-gray-500">Sold: {{ $product->total_sold }}</div>
-                        <div class="text-sm text-gray-500">Revenue: {{ $product->total_revenue }}</div>
+                        <div class="text-sm text-gray-500">Sale: {{ $product->total_sale }} </div>
                     </div>
                 </div>
             @endforeach
@@ -198,14 +231,14 @@
             data: {
                 labels: @json($monthlySalesLabels),
                 datasets: [{
-                        label: 'This Year Revenue',
+                        label: 'This Year Sale',
                         data: @json($monthlySalesData),
                         borderColor: 'rgb(75, 192, 192)',
                         tension: 0.3,
                         fill: true
                     },
                     {
-                        label: 'Last Year Revenue',
+                        label: 'Last Year Sale',
                         data: @json($monthlyLastYearData),
                         borderColor: 'rgb(255, 99, 132)',
                         tension: 0.3,
@@ -315,4 +348,5 @@
 
         new Chart(ctxBestSelling, config);
     </script>
+    @vite(['resources/js/timeFilter.js'])
 @endpush

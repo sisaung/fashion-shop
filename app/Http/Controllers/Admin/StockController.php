@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateStockRequest;
 use App\Models\Product;
 use App\Models\Size;
 use App\Models\Stock;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class StockController extends Controller
@@ -73,7 +74,7 @@ class StockController extends Controller
 
         $product->save();
     } else {
-        // ✅ If not, create new stock row
+        //  If not, create new stock row
       $stock =  Stock::create([
             'product_id' => $id,
             'sku' => $sku,
@@ -117,8 +118,28 @@ class StockController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Stock $stock)
+    public function destroy($id,$stockId)
     {
-        //
+        $validator = Validator::make(['id' => $stockId], [
+            'id' => 'required|numeric|exists:stocks'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('manage-stock.create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $product = Product::find($id);
+        $stock = Stock::find($stockId);
+        $product->decrement('stock_count', $stock->stock_quantity);
+        $stock->delete();
+
+        return redirect()->route('manage-stock.create',['id' => $id]);
     }
+
+    // public function stockAnalysis()
+    // {
+    //     return view('admin.stock.stock-analysis.index');
+    // }
 }

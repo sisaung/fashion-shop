@@ -23,5 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductTypeSeeder::class);
         $this->call(ProductSeeder::class);
         $this->call(StockSeeder::class);
+        $this->call(UserAddressSeeder::class);
+        $this->call(CustomerSeeder::class);
+        $this->call(CustomerAddressSeeder::class);
+        $this->call(OrderSeeder::class);
     }
 }

@@ -231,12 +231,12 @@
                 <div class="w-full overflow-x-auto mb-5 rounded-lg border border-gray-200">
 
                     <table class=" w-full divide-y divide-gray-200 ">
-                        <tr class="divide-y divide-gray-200">
+                        <tr>
                             <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700"><strong>Order Number</strong>
                             </td>
                             <td class="text-gray-500">{{ $order->order_number }}</td>
                         </tr>
-                        <tr class="divide-y divide-gray-200 bg-stone-50">
+                        <tr class="divide-y divide-gray-200 w-full bg-stone-50">
                             <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Order At</td>
                             <td class="text-gray-500"> {{ date('j M Y', strtotime($order->created_at)) }}
                                 {{ date('g:i A', strtotime($order->created_at)) }} </td>
@@ -254,15 +254,13 @@
                             <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Item Count</td>
                             <td class="text-gray-500">{{ $order->orderItems->count() }}</td>
                         </tr>
-                        <tr class="divide-y divide-gray-200 bg-stone-50">
+                        <tr>
                             <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Payment Received</td>
                             <td class="text-gray-500">
 
                                 @if ($order->payment_received_at)
-
-                                         {{ date('j M Y', strtotime($order->payment_received_at)) }} 
-                                         {{ date('g:i A', strtotime($order->payment_received_at)) }} 
-
+                                    {{ date('j M Y', strtotime($order->payment_received_at)) }}
+                                    {{ date('g:i A', strtotime($order->payment_received_at)) }}
                                 @else
                                     <span class="text-red-500 text-xs">Not Received</span>
                                 @endif
@@ -277,7 +275,7 @@
                 <div class="w-full overflow-x-auto rounded-lg border border-gray-200">
 
                     <table class=" w-full divide-y divide-gray-200 mt-5">
-                        <tr class="divide-y divide-gray-200">
+                        <tr class="">
                             <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Name</td>
                             <td class="text-gray-500 underline underline-offset-4"> <a
                                     href="{{ route('customer.show', ['customer' => $order->customer->id]) }}">{{ $order->customer->customer_name }}</a>
@@ -287,14 +285,23 @@
                             <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Email</td>
                             <td class="text-gray-500 ">{{ $order->customer->customer_email }}</td>
                         </tr>
-                        <tr>
+                        <tr >
                             <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Phone</td>
                             <td class="text-gray-500">
 
                                 {{ $order->customerAddress->phone_number }}
                             </td>
                         </tr>
+
                         <tr class="divide-y divide-gray-200 bg-stone-50">
+                            <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Address</td>
+                            <td class="text-gray-500">
+
+                                {{ $order->customerAddress->address_detail }}
+                            </td>
+                        </tr>
+
+                        <tr>
                             <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Item Count</td>
                             <td>{{ $order->orderItems->count() }}</td>
                         </tr>

@@ -1,6 +1,6 @@
 <div class="mt-10 px-5 flex justify-between items-center">
     <div>
-        <div class="relative bg-red-600 ">
+        <div class="relative  ">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor"
                 class="size-4.5 stroke-stone-400 absolute top-0
@@ -19,5 +19,42 @@
         </div>
 
     </div>
-   
+    <div>
+        <button id="dropdownDefaultButton1" data-dropdown-toggle="dropdown1"
+            class=" focus:ring-1 border border-gray-200 bg-gray-50 focus:ring-gray-400  text-gray-800 font-medium rounded-lg text-sm px-4 py-2.5 text-center flex items-center justify-between gap-x-5 "
+            type="button">
+
+            <p class="inline-flex items-center gap-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-4.5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+                </svg>
+
+
+                <span class="filter-payment">Filter Payment</span>
+            </p>
+
+            <p>
+                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 4 4 4-4" />
+                </svg>
+            </p>
+        </button>
+    </div>
+
+    <div id="dropdown1"
+        class="z-20 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-52 dark:bg-gray-700">
+        <div class="sort-product py-2 text-sm text-gray-700 " aria-labelledby="dropdownDefaultButton1">
+
+            @foreach (['Paid', 'Unpaid'] as $payment)
+                <button data-payment="{{ $payment }}"
+                    class="filter-payment-btn inline-block text-start cursor-pointer w-full  px-4 py-2 hover:bg-gray-100 ">
+                    {{ $payment }} </button>
+            @endforeach
+
+        </div>
+    </div>
 </div>
