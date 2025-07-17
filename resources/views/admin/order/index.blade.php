@@ -199,10 +199,10 @@
                                                     <input type="hidden" class="page" name="page">
 
 
-                                                    <p
+                                                    <button
                                                         class="px-2 py-1.5 border text-sm border-gray-200 cusor-pointer text-gray-500 hover:bg-green-400 hover:text-white cursor-pointer duration-300 inline-flex justify-center items-center">
                                                         Mark as Paid
-                                                    </p>
+                                                    </button>
                                                 </form>
 
 

@@ -168,6 +168,8 @@ const initializeStockAnalysis = async () => {
 
     const stockTotal = document.querySelector(".stock-total");
 
+    const searchParam = new URLSearchParams(location.search);
+
     // Fetch initial data
     const [productTypes, brands, allTotalStock] = await Promise.all([
         fetchStockByProductType(),
@@ -187,12 +189,59 @@ const initializeStockAnalysis = async () => {
         setupBrandButtons();
     }
 
+    function renderChart(data) {
+        const ctx = document.getElementById("sizeStockChart").getContext("2d");
+        const labels = data?.map((i) => i.size_name);
+        const stocks = data?.map((i) => i.total_stock);
+
+        const config = {
+            type: "bar",
+            data: {
+                labels,
+                datasets: [
+                    {
+                        label: "Stock Count",
+                        data: stocks,
+                        backgroundColor: "#ccb6a5",
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true },
+                },
+
+                plugins: {
+                    datalabels: {
+                        anchor: "left", // position at top
+                        align: "end", // align text at top
+                        color: "#694943", // label text color
+                    },
+                },
+            },
+        };
+
+        // Destroy existing chart before creating new one
+        if (
+            window.sizeStockChart &&
+            typeof window.sizeStockChart.destroy === "function"
+        ) {
+            window.sizeStockChart.destroy();
+        }
+        window.sizeStockChart = new Chart(ctx, config);
+    }
+
+    renderChart(
+        searchParam.toString()
+            ? await fetchStockSizeChart(searchParam.toString())
+            : null
+    );
+
     // total stock category
     const stockCategories = await fetchTotalStock();
     stockTotal.textContent = stockCategories.totalStock;
     renderStockCategoryList(stockCategories.categories, categoryContainer);
-
-    console.log(stockCategories);
 
     function renderCategoryChart(data) {
         data.categories.sort((a, b) => b.stock - a.stock);
@@ -242,8 +291,8 @@ const initializeStockAnalysis = async () => {
                 ],
             },
             options: {
-                rotation: -90, // ✅ starts from left side
-                circumference: 360,
+                // rotation: -90, // ✅ starts from left side
+                // circumference: 360,
                 plugins: {
                     datalabels: {
                         display: false,
@@ -252,7 +301,6 @@ const initializeStockAnalysis = async () => {
                     tooltip: { enabled: false },
                     title: {
                         display: true,
-                        
                     },
                 },
             },
@@ -421,48 +469,6 @@ const initializeStockAnalysis = async () => {
     }
 
     // Function to render chart
-    function renderChart(data) {
-        const ctx = document.getElementById("sizeStockChart").getContext("2d");
-        const labels = data.map((i) => i.size_name);
-        const stocks = data.map((i) => i.total_stock);
-
-        const config = {
-            type: "bar",
-            data: {
-                labels,
-                datasets: [
-                    {
-                        label: "Stock Count",
-                        data: stocks,
-                        backgroundColor: "#ccb6a5",
-                    },
-                ],
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: { beginAtZero: true },
-                },
-
-                plugins: {
-                    datalabels: {
-                        anchor: "left", // position at top
-                        align: "end", // align text at top
-                        color: "#694943", // label text color
-                    },
-                },
-            },
-        };
-
-        // Destroy existing chart before creating new one
-        if (
-            window.sizeStockChart &&
-            typeof window.sizeStockChart.destroy === "function"
-        ) {
-            window.sizeStockChart.destroy();
-        }
-        window.sizeStockChart = new Chart(ctx, config);
-    }
 
     // function to render category chart
 
@@ -486,6 +492,8 @@ const initializeStockAnalysis = async () => {
             ".stock-by-product-type-btn"
         );
 
+        renderChart(null);
+
         highlightSelectedBrand();
 
         productTypeBtns.forEach((btn) => {
@@ -494,13 +502,13 @@ const initializeStockAnalysis = async () => {
         });
 
         // Destroy chart if exists
-        if (
-            window.sizeStockChart &&
-            typeof window.sizeStockChart.destroy === "function"
-        ) {
-            window.sizeStockChart.destroy();
-            window.sizeStockChart = null;
-        }
+        // if (
+        //     window.sizeStockChart &&
+        //     typeof window.sizeStockChart.destroy === "function"
+        // ) {
+        //     window.sizeStockChart.destroy();
+        //     window.sizeStockChart = null;
+        // }
 
         const data = await fetchAllTotalPrice();
         console.log(data);
@@ -521,6 +529,16 @@ const initializeStockAnalysis = async () => {
         const brands = await fetchStockByBrand();
         await renderStockByBrandList(brands, brandContainer);
 
+        //refetch and render chart
+        if (!searchParams.toString()) {
+            renderChart(null);
+        } else {
+            const dataStockSize = await fetchStockSizeChart(
+                searchParams.toString()
+            );
+            renderChart(dataStockSize);
+        }
+
         // Remove highlight from all buttons
         const brandBtns = document.querySelectorAll(".stock-by-brand-btn");
 
@@ -529,13 +547,13 @@ const initializeStockAnalysis = async () => {
         );
 
         // Destroy chart if exists
-        if (
-            window.sizeStockChart &&
-            typeof window.sizeStockChart.destroy === "function"
-        ) {
-            window.sizeStockChart.destroy();
-            window.sizeStockChart = null;
-        }
+        // if (
+        //     window.sizeStockChart &&
+        //     typeof window.sizeStockChart.destroy === "function"
+        // ) {
+        //     window.sizeStockChart.destroy();
+        //     window.sizeStockChart = null;
+        // }
 
         console.log(searchParams.toString());
         const data = await fetchAllTotalPrice(searchParams.toString());

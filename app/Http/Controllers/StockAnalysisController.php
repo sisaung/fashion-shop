@@ -107,6 +107,7 @@ class StockAnalysisController extends Controller
         ];
     });
 
+    
 
     return response()->json($result);
 

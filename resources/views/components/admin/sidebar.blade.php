@@ -225,18 +225,6 @@
                 <a href="{{ route('product.index') }}"
                     class="block px-4 py-2 rounded  text-sm duration-500 {{ Request::routeIs('product.*') ? 'bg-pearl-bush-100 hover:bg-pearl-bush-100 text-pearl-bush-700' : 'hover:bg-stone-100 hover:text-pearl-bush-700' }}">
                     <span class="inline-flex items-center gap-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="size-4 stroke-2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
-                        </svg>
-
-                        Product
-                    </span>
-                </a>
-                <a href="{{ route('product-category.index') }}"
-                    class="block px-4 py-2 text-sm rounded  duration-500 {{ Request::routeIs('product-category.*') ? 'bg-pearl-bush-100 hover:bg-pearl-bush-100 text-pearl-bush-700' : 'hover:bg-stone-100 hover:text-pearl-bush-600' }}">
-                    <span class="inline-flex items-center gap-x-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
                             stroke-linejoin="round" class="lucide lucide-boxes-icon lucide-boxes">
@@ -255,6 +243,23 @@
                             <path d="M12 8 7.26 5.15" />
                             <path d="m12 8 4.74-2.85" />
                             <path d="M12 13.5V8" />
+                        </svg>
+
+                        Product
+                    </span>
+                </a>
+                <a href="{{ route('product-category.index') }}"
+                    class="block px-4 py-2 text-sm rounded  duration-500 {{ Request::routeIs('product-category.*') ? 'bg-pearl-bush-100 hover:bg-pearl-bush-100 text-pearl-bush-700' : 'hover:bg-stone-100 hover:text-pearl-bush-600' }}">
+                    <span class="inline-flex items-center gap-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="lucide lucide-group-icon lucide-group">
+                            <path d="M3 7V5c0-1.1.9-2 2-2h2" />
+                            <path d="M17 3h2c1.1 0 2 .9 2 2v2" />
+                            <path d="M21 17v2c0 1.1-.9 2-2 2h-2" />
+                            <path d="M7 21H5c-1.1 0-2-.9-2-2v-2" />
+                            <rect width="7" height="5" x="7" y="7" rx="1" />
+                            <rect width="7" height="5" x="10" y="12" rx="1" />
                         </svg>
                         Category
                     </span>
@@ -461,14 +466,10 @@
                 <a href="{{ route('report.sale.index') }}"
                     class="block text-sm px-4 py-2 rounded  duration-500 {{ Request::routeIs('report.sale.*') ? 'bg-pearl-bush-100 hover:bg-pearl-bush-100 text-pearl-bush-700' : 'hover:bg-stone-100 hover:text-pearl-bush-700' }}">
                     <span class="inline-flex items-center gap-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="lucide lucide-chart-column-increasing-icon lucide-chart-column-increasing">
-                            <path d="M13 17V9" />
-                            <path d="M18 17V5" />
-                            <path d="M3 3v16a2 2 0 0 0 2 2h16" />
-                            <path d="M8 17v-3" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="1.5" stroke="currentColor" class="size-5 stroke-2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
                         </svg>
                         Sales</span>
                 </a>

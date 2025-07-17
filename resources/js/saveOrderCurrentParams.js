@@ -7,17 +7,24 @@ const initializeOrderCurrentParam = () => {
 
     const currentUrl = location.search;
 
-
     const searchParam = new URLSearchParams(currentUrl);
 
     const paramObj = Object.fromEntries(searchParam);
 
-    sortBy.value = paramObj.sort_by;
-    sortDirection.value = paramObj.sort_direction;
-    limit.value = paramObj.limit;
-    page.value = paramObj.page;
+   
 
-    console.log(page.value)
+    const forms = document.querySelectorAll("form[id^='mark-as-paid-']");
+    forms.forEach((form) => {
+        const sortBy = form.querySelector(".sort-by");
+        const sortDirection = form.querySelector(".sort-direction");
+        const limit = form.querySelector(".limit");
+        const page = form.querySelector(".page");
+
+        if (sortBy) sortBy.value = paramObj.sort_by || "";
+        if (sortDirection) sortDirection.value = paramObj.sort_direction || "";
+        if (limit) limit.value = paramObj.limit || "";
+        if (page) page.value = paramObj.page || "";
+    });
 
     orderDetails.forEach((order) => {
         const handleOrderDetail = () => {
