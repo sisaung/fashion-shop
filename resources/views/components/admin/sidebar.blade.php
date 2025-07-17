@@ -138,7 +138,15 @@
 
 @php
     // Define route groups for dropdowns
-    $inventoryRoutes = ['brand.*', 'product.*', 'product-category.*', 'product-type.*', 'size.*', 'fit.*'];
+    $inventoryRoutes = [
+        'brand.*',
+        'product.*',
+        'product-category.*',
+        'product-type.*',
+        'size.*',
+        'fit.*',
+        'stock-analysis.*',
+    ];
     $customerRoutes = ['customer.*', 'wishlist.*', 'review.*'];
     $orderRoutes = ['order.*', 'coupon.*'];
     $reportRoutes = ['report.sale.*', 'report.order.*', 'report.customer.*'];
@@ -296,6 +304,23 @@
                             <rect x="3" y="3" width="18" height="18" rx="2" />
                         </svg>
                         Fitting
+                    </span>
+                </a>
+
+                <a href="{{ route('stock-analysis.index') }}"
+                    class="block px-4 py-2 text-sm rounded  duration-500 {{ Request::routeIs('stock-analysis.*') ? 'bg-pearl-bush-100 hover:bg-pearl-bush-100 text-pearl-bush-700' : 'hover:bg-stone-100 hover:text-pearl-bush-600' }}">
+
+                    <span class="inline-flex items-center gap-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-chart-column-increasing-icon lucide-chart-column-increasing">
+                            <path d="M13 17V9" />
+                            <path d="M18 17V5" />
+                            <path d="M3 3v16a2 2 0 0 0 2 2h16" />
+                            <path d="M8 17v-3" />
+                        </svg>
+                        Stock Analysis
                     </span>
                 </a>
             </div>

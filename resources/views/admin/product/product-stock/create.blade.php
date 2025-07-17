@@ -183,16 +183,22 @@
                                 </div>
                             </th>
 
+                            <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500">
+                                <div class="flex items-center justify-center cursor-pointer">
+                                    Action
+                                </div>
+                            </th>
+
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white body-container">
 
 
 
-                        @foreach ($stocks as $stock)
+                        @foreach ($stocks as $index => $stock)
                             <tr>
                                 <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                    {{ $stock->id }}
+                                    {{ $index + 1 }}
                                 </td>
                                 <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
                                     {{ $stock->size->size_name }}
@@ -212,6 +218,89 @@
                                         <p> {{ date('j M Y', strtotime($stock->created_at)) }} </p>
                                         <p> {{ date('h:i A', strtotime($stock->created_at)) }} </p>
                                     </div>
+                                </td>
+
+                                <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 text-center">
+
+                                    <button class="cursor-pointer" data-modal-target="popup-modal-{{ $stock->id }}"
+                                        data-modal-toggle="popup-modal-{{ $stock->id }}">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor"
+                                            class="size-6 stroke-pearl-bush-500">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+
+
+
+                                    </button>
+                                    {{-- modal for delete confirmation --}}
+                                    <div id="popup-modal-{{ $stock->id }}" tabindex="-1"
+                                        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                        <div class="relative p-4 w-full max-w-md max-h-full">
+                                            <div class="relative bg-white rounded-lg shadow-sm">
+                                                <button type="button"
+                                                    class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-full cursor-pointer text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-400 duration-300 dark:hover:text-white"
+                                                    data-modal-hide="popup-modal-{{ $stock->id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="size-5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M6 18 18 6M6 6l12 12" />
+                                                    </svg>
+
+
+                                                    <span class="sr-only">Close modal</span>
+                                                </button>
+                                                <div class="p-4 md:p-5 text-center">
+                                                    <svg class="mx-auto mb-4 text-gray-400 size-10 dark:text-yellow-300"
+                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none" viewBox="0 0 20 20">
+                                                        <path stroke="currentColor" stroke-linecap="round"
+                                                            stroke-linejoin="round" stroke-width="2"
+                                                            d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                    </svg>
+                                                    <h3 class="mb-5   text-gray-500 dark:text-gray-400">
+                                                        Are you sure you want to delete this stock for size <span
+                                                            class="text-pearl-bush-500">{{ $stock->size->size_name }}
+                                                            ?
+                                                        </span>
+                                                    </h3>
+                                                    <button
+                                                        onclick="document.getElementById('delete-form-{{ $stock->id }}').submit()"
+                                                        data-modal-hide="popup-modal-{{ $stock->id }}" type="button"
+                                                        class="delete-form-btn text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 cursor-pointer dark:focus:ring-red-600 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                        Yes, I'm sure
+                                                    </button>
+                                                    <button data-modal-hide="popup-modal-{{ $stock->id }}"
+                                                        type="button"
+                                                        class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-600 focus:outline-none bg-white rounded-lg border cursor-pointer border-pearl-bush-200 hover:bg-pearl-bush-500 hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-100 ">No,
+                                                        cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <form class="hidden"
+                                    id="delete-form-{{ $stock->id }}"
+                                        action="{{ route('manage-stock.destroy', ['id' => $product->id, 'stockId' => $stock->id]) }}"
+                                        method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="cursor-pointer">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor"
+                                                class="size-6 stroke-pearl-bush-500">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                            </svg>
+
+
+
+                                        </button>
+                                    </form>
                                 </td>
 
                             </tr>

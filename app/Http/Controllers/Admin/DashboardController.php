@@ -107,7 +107,6 @@ class DashboardController extends Controller
         $previousStart = $start->copy()->subDays($periodDays);
         $previousEnd = $start->copy()->subDay();
 
-
         // Sales
         $totalSale = Order::where('order_status', 'completed')
         ->whereBetween('created_at', [$start, $end])
@@ -133,17 +132,16 @@ class DashboardController extends Controller
         $totalCustomer = Customer::whereBetween('created_at',[$start,$end])->count();
 
         // revenue in selected period vs previous period
-        $periodRevenue = Order::where('order_status', 'completed')
-        ->whereNotNull('payment_received_at')
+        $periodRevenue = Order::
+        whereNotNull('payment_received_at')
         ->whereBetween('payment_received_at', [$start, $end])
         ->sum('net_total');
 
 
-        $previousRevenue = Order::where('order_status', 'completed')
-        ->whereNotNull('payment_received_at')
+        $previousRevenue = Order::
+        whereNotNull('payment_received_at')
         ->whereBetween('payment_received_at', [$previousStart, $previousEnd])
         ->sum('net_total');
-
 
           // sale in selected period vs previous period
           $periodSale = Order::where('order_status','completed')->whereBetween('created_at', [$start, $end])->sum('net_total');

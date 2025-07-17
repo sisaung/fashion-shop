@@ -78,17 +78,17 @@
                                     <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
                                         {{ $order->order_number }}
                                     </td>
-                                    <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
-                                        <div class="flex gap-x-3">
-                                            <div>
+                                    <td class="whitespace-wrap px-4  py-4 text-sm text-gray-900">
+                                        <div class="grid grid-cols-4">
+                                            <div class="">
                                                 <img src="{{ $order->customer->profile_image ? $order->customer->profile_image : 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈' }}"
                                                     class="size-10 rounded-full"
                                                     alt="{{ $order->customer->customer_name }}">
                                             </div>
-                                            <div class="flex flex-col">
+                                            <div class="flex flex-col col-span-3">
                                                 <a href="{{ route('customer.show', ['customer' => $order->customer->id]) }}"
                                                     class="text-base underline underline-offset-2 ">{{ $order->customer->customer_name }}</a>
-                                                <span class="text-xs text-stone-500">
+                                                <span class="text-xs text-stone-500 line-clamp-1">
                                                     {{ $order->customerAddress->address_detail }} </span>
                                             </div>
                                         </div>
@@ -142,50 +142,79 @@
                                         </div>
                                     </td>
 
-
                                     <td
                                         class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 text-end flex items-center justify-center">
 
-                                        {{-- <button data-detail="{{ route('order.show', $order->id) }}"
-                                            class="px-2 py-1 hover:bg-gray-100 inline-flex justify-center items-center"
-                                            href="{{ route('order.show', $order->id) }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                                class="size-5 text-gray-600">
-                                                <path fill-rule="evenodd"
-                                                    d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
 
 
-                                        </button> --}}
+                                        <div class="flex items-center gap-x-3">
 
-                                        @if ($order->is_paid == 1)
-                                            <span class="px-2 py-1 rounded-lg bg-green-500 text-white text-xs">Paid</span>
-                                        @else
-                                            <form action="{{ route('order.markAsPaid', ['id' => $order->id]) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button
-                                                    class="px-2 py-1.5 border text-sm border-gray-200 cusor-pointer text-gray-500 hover:bg-green-400 hover:text-white cursor-pointer duration-300 inline-flex justify-center items-center">
-                                                    Mark as Paid
+                                            <button id="dropdownDefaultButton-{{ $order->id }}"
+                                                data-dropdown-toggle="dropdown-{{ $order->id }}" class="cursor-pointer"
+                                                type="button">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                                </svg>
+
+                                            </button>
+                                        </div>
+
+
+                                        <!-- Dropdown menu -->
+                                        <div id="dropdown-{{ $order->id }}"
+                                            class="z-10 hidden bg-white menu-box-shadow -translate-x-6 divide-y divide-gray-100 rounded-lg w-40">
+                                            <div class="py-3 flex flex-col justify-start items-start text-sm text-gray-600"
+                                                aria-labelledby="dropdownDefaultButton-{{ $order->id }}">
+
+
+                                                @if ($order->is_paid != 1)
+                                                    {{-- mark as paid btn for modal --}}
+                                                    <button
+                                                        onclick="document.getElementById('mark-as-paid-{{ $order->id }}').submit()"
+                                                        class=" w-full px-5 hover:bg-gray-100 inline-flex py-2 items-center gap-x-3 cursor-pointer"
+                                                        type="button">
+
+
+                                                        Mark as Paid
+                                                    </button>
+                                                @else
+                                                    <span
+                                                        class="inline-flex justify-start px-5 py-1 rounded-lg  text-green-500">Paid</span>
+                                                @endif
+
+                                                <form class="hidden" id="mark-as-paid-{{ $order->id }}"
+                                                    action="{{ route('order.markAsPaid', ['id' => $order->id]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+
+                                                    <input type="hidden" class="sort-by" name="sortBy">
+
+                                                    <input type="hidden" class="sort-direction" name="sortDirection">
+
+                                                    <input type="hidden" class="limit" name="limit">
+
+                                                    <input type="hidden" class="page" name="page">
+
+
+                                                    <p
+                                                        class="px-2 py-1.5 border text-sm border-gray-200 cusor-pointer text-gray-500 hover:bg-green-400 hover:text-white cursor-pointer duration-300 inline-flex justify-center items-center">
+                                                        Mark as Paid
+                                                    </p>
+                                                </form>
+
+
+                                                <button type="button"
+                                                    class="order-detail w-full px-5 hover:bg-gray-100 inline-flex py-2 items-center gap-x-3 cursor-pointer"
+                                                    data-order-detail-url="{{ route('order.show', ['order' => $order->id]) }}">
+
+                                                    Detail
                                                 </button>
-                                            </form>
-                                        @endif
 
-
-                                        <a href ="{{ route('order.show', $order->id) }}"
-                                            class="px-2 py-1 hover:bg-gray-100 inline-flex justify-center items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                                class="size-5 text-gray-600">
-                                                <path fill-rule="evenodd"
-                                                    d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
-
-
-                                        </a>
-
+                                            </div>
+                                        </div>
 
 
                                     </td>
@@ -221,5 +250,10 @@
     {{-- @vite(['resources/js/flowbite/flowbite.min.js']) --}}
     @vite(['resources/js/sorting.js'])
     @vite(['resources/js/search.js'])
+    @vite(['resources/js/saveOrderCurrentParams.js'])
+    @vite(['resources/js/filterPaymentOrder.js'])
+
+
+
     {{-- @vite(['resources/js/pagination.js']) --}}
 @endpush

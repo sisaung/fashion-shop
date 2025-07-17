@@ -68,6 +68,14 @@ class OrderController extends Controller
             });
         }
 
+        if($request->input('filter') == 'Paid') {
+            $query->where('is_paid',1);
+
+        }else if($request->input('filter') == 'Unpaid') {
+
+            $query->where('is_paid',0);
+        }
+
 
         $query->orderBy($sortBy, $sortDirection);
 
@@ -76,7 +84,8 @@ class OrderController extends Controller
             'q' => $searchTerm,
             'sort_by' => $sortBy,
             'sort_direction' => $sortDirection,
-            'limit' => $limit
+            'limit' => $limit,
+            'filter' => $request->input('filter')
         ]);
 
 
@@ -341,7 +350,8 @@ class OrderController extends Controller
                 }
 
 
-    public function markAsPaid ($id) {
+    public function markAsPaid ($id,Request $request) {
+
 
         $validator = Validator::make(['id' => $id], [
             'id' => 'required|numeric|exists:orders,id'
@@ -354,11 +364,15 @@ class OrderController extends Controller
         }
 
 
+
+
+
         $order = Order::findOrFail($id);
         $order->is_paid = 1;
         $order->payment_received_at = now();
         $order->save();
-        return redirect()->route('order.index');
+
+        return redirect()->route('order.index',['sort_by' => $request->sortBy,'sort_direction' => $request->sortDirection,'limit' => $request->limit,'page' => $request->page]);
     }
 
 }

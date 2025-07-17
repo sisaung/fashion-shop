@@ -161,4 +161,6 @@
     @apply bg-pearl-bush-400  text-white text-sm  rounded-full  font-medium;
 }
 
-
+.active-selected-stock {
+    @apply bg-pearl-bush-100 text-pearl-bush-700 border border-pearl-bush-300;
+}

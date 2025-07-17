@@ -18,8 +18,9 @@ const initializeFilterProductList = () => {
     // if()
 
     filterCategoryBtn.forEach((category) => {
-        const handleFilterCategory = () => {
+        const handleFilterCategory = async() => {
             const categoryName = category.dataset.categoryName;
+
 
             const search = location.search;
             const urlSearchParams = new URLSearchParams(search);
@@ -32,6 +33,9 @@ const initializeFilterProductList = () => {
 
             const queryString = new URLSearchParams(newParams).toString();
             location.href = "?" + queryString;
+
+
+
         };
 
         category.addEventListener("click", handleFilterCategory);

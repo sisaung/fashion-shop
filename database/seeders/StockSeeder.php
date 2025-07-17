@@ -26,7 +26,7 @@ class StockSeeder extends Seeder
             // Loop through each size of the product
             foreach ($product->productType->sizes as $size) {
                 $sku = $product->product_code . '-' . $size->size_name;
-                $quantity = rand(5, 15);
+                $quantity = rand(4,7);
 
                 // Create stock for this size
                 Stock::create([
