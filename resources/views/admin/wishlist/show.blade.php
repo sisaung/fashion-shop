@@ -15,7 +15,7 @@
 
         </div>
 
-        <h1 class="mt-10 text-xl px-5"> Customer Detail </h1>
+        <h1 class="mt-10 text-xl px-5"> Wishlist Detail </h1>
         <section class="px-5 grid grid-cols-2 gap-x-5">
 
 
@@ -76,25 +76,33 @@
                         <tbody class="divide-y divide-gray-200 bg-white">
 
 
-                            @foreach ($wishlist->user->address as $address)
-                                <tr>
-                                    <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                        {{ $address->id }} </td>
-                                    <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                        {{ $address->phone_number }}
-                                    </td>
-                                    <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                        {{ $address->address_detail }}
-                                    </td>
+                            @if ($wishlist->user->addresses)
+                                @foreach ($wishlist->user->address as $address)
+                                    <tr>
+                                        <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                            {{ $address->id }} </td>
+                                        <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                            {{ $address->phone_number }}
+                                        </td>
+                                        <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                            {{ $address->address_detail }}
+                                        </td>
 
-                                    <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                        {{ $address->city }}
-                                    </td>
-                                    <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                        {{ $address->township }}
+                                        <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                            {{ $address->city }}
+                                        </td>
+                                        <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                            {{ $address->township }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="7" class="text-center py-5 text-gray-500 text-sm"> There is no
+                                        address.
                                     </td>
                                 </tr>
-                            @endforeach
+                            @endif
 
                         </tbody>
                     </table>

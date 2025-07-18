@@ -69,6 +69,7 @@ class CouponController extends Controller
        Coupon::create([
         'coupon_title' => $request->coupon_title,
         'coupon_code' => strtoupper($request->coupon_code),
+        'discount_type' => $request->discount_type,
         'coupon_discount' => $request->coupon_discount,
         'coupon_expire_date' => $request->coupon_expire_date,
         'is_active' => false,
@@ -125,6 +126,7 @@ class CouponController extends Controller
 
         $coupon->coupon_title = $request->coupon_title;
         $coupon->coupon_code = $request->coupon_code;
+        $coupon->discount_type = $request->discount_type;
         $coupon->coupon_discount = $request->coupon_discount;
         $coupon->coupon_expire_date = $request->coupon_expire_date;
         $coupon->save();

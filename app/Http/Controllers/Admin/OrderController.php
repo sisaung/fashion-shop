@@ -68,13 +68,24 @@ class OrderController extends Controller
             });
         }
 
-        if($request->input('filter') == 'Paid') {
-            $query->where('is_paid',1);
+        switch ($request->input('filter')) {
+            case 'Paid':
+                $query->where('is_paid', 1);
+                break;
 
-        }else if($request->input('filter') == 'Unpaid') {
+            case 'Unpaid':
+                $query->where('is_paid', 0);
+                break;
 
-            $query->where('is_paid',0);
+            case 'Pending':
+            case 'Confirmed':
+            case 'Delivered':
+            case 'Completed':
+            case 'Cancelled':
+                $query->where('order_status', strtolower($request->input('filter')));
+                break;
         }
+
 
 
         $query->orderBy($sortBy, $sortDirection);
@@ -364,7 +375,7 @@ class OrderController extends Controller
         }
 
 
-        
+
 
 
         $order = Order::findOrFail($id);

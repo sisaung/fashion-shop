@@ -118,9 +118,15 @@
                             <tr>
                                 <td colspan="3" class=" whitespace-nowrap px-4 py-4  font-medium text-gray-900">
                                     <strong>Coupon Dis</strong>
-                                    (%)
+
                                 </td>
-                                <td> {{ number_format($order->coupon->coupon_discount ?? 0) }} %</td>
+                                <td>
+                                    @if ($order->coupon)
+                                        {{ $order->coupon->discount_type == 'percentage' ? $order->coupon->coupon_discount . ' %' : number_format($order->coupon->coupon_discount) . ' MMK' }}
+                                    @else
+                                        0
+                                    @endif
+                                </td>
 
                             </tr>
 
@@ -129,7 +135,7 @@
                                     <strong>Net Total</strong>
                                     (%)
                                 </td>
-                                <td> {{ number_format($order->net_total) }}</td>
+                                <td> {{ number_format($order->net_total) }} MMK </td>
 
                             </tr>
                         </tfoot>
@@ -149,8 +155,8 @@
                                 </label>
 
                                 <input type="date"
-                                    class="text-sm w-full border border-gray-300 rounded focus:ring-2 focus:ring-pearl-bush-500 font-medium text-gray-500 "
-                                    name="start_date" id="start_date">
+                                    class="text-sm w-full border  placeholder:text-gray-400 border-gray-300 rounded focus:ring-2 focus:ring-pearl-bush-500 font-medium text-gray-500 "
+                                    name="start_date" id="start_date" placeholder="Select date">
                                 @error('start_date')
                                     <p class="text-sm text-red-500">{{ $message }}</p>
                                 @enderror
@@ -161,8 +167,8 @@
                                 </label>
 
                                 <input type="date"
-                                    class="text-sm w-full border border-gray-300 rounded focus:ring-2 focus:ring-pearl-bush-500 font-medium text-gray-500 "
-                                    name="end_date" id="end_date">
+                                    class="text-sm w-full placeholder:text-gray-400 border border-gray-300 rounded focus:ring-2 focus:ring-pearl-bush-500 font-medium text-gray-500 "
+                                    name="end_date" id="end_date" placeholder="Select date">
                                 @error('end_date')
                                     <p class="text-sm text-red-500">{{ $message }}</p>
                                 @enderror
@@ -285,7 +291,7 @@
                             <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Email</td>
                             <td class="text-gray-500 ">{{ $order->customer->customer_email }}</td>
                         </tr>
-                        <tr >
+                        <tr>
                             <td class="whitespace-nowrap px-4 py-2  font-medium text-gray-700">Phone</td>
                             <td class="text-gray-500">
 
@@ -378,4 +384,5 @@
 @endsection
 @push('scripts')
     @vite(['resources/js/cancelOrder.js'])
+    @vite(['resources/js/selectDate.js'])
 @endpush

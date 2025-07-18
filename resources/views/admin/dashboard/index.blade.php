@@ -269,6 +269,12 @@
 
                                 </th>
 
+                                <th scope="col" class="px-4 py-3  text-sm font-medium text-gray-500">
+
+                                    Payment Received
+
+                                </th>
+
                                 <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500">
                                     <div class="flex items-center justify-end cursor-pointer">
                                         Created
@@ -290,17 +296,17 @@
                                     <td class="whitespace-nowrap  px-4 py-4 text-sm font-medium text-gray-900">
                                         {{ $order->order_number }}
                                     </td>
-                                    <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
-                                        <div class="flex gap-x-3">
-                                            <div>
+                                    <td class="whitespace-wrap px-4  py-4 text-sm text-gray-900">
+                                        <div class="grid grid-cols-4">
+                                            <div class="">
                                                 <img src="{{ $order->customer->profile_image ? $order->customer->profile_image : 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈' }}"
                                                     class="size-10 rounded-full"
                                                     alt="{{ $order->customer->customer_name }}">
                                             </div>
-                                            <div class="flex flex-col">
+                                            <div class="flex flex-col col-span-3">
                                                 <a href="{{ route('customer.show', ['customer' => $order->customer->id]) }}"
                                                     class="text-base underline underline-offset-2 ">{{ $order->customer->customer_name }}</a>
-                                                <span class="text-xs text-stone-500">
+                                                <span class="text-xs text-stone-500 line-clamp-1">
                                                     {{ $order->customerAddress->address_detail }} </span>
                                             </div>
                                         </div>
@@ -335,6 +341,17 @@
                                             'orderStatus' => $order->order_status,
                                             'style' => 'justify-center',
                                         ])
+                                    </td>
+
+                                    <td class="whitespace-nowrap flex justify-end px-4 py-4 text-sm text-gray-900">
+                                        @if ($order->payment_received_at)
+                                            <div class="flex flex-col items-end">
+                                                <p> {{ date('j M Y', strtotime($order->payment_received_at)) }} </p>
+                                                <p> {{ date('g:i A', strtotime($order->payment_received_at)) }} </p>
+                                            </div>
+                                        @else
+                                            <span class="text-red-500 text-xs">Not Received</span>
+                                        @endif
                                     </td>
 
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 text-end">

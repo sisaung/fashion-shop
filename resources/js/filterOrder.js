@@ -1,8 +1,8 @@
-const initializeFilterPaymentOrder = () => {
+const initializeFiltertOrder = () => {
     const filterPaymentBtn = document.querySelectorAll(".filter-payment-btn");
     const filterText = document.querySelector(".filter-payment");
 
-    filterText.textContent = 'Filter Payment'
+    filterText.textContent = 'Filter'
 
     const { search } = location;
     const param = new URLSearchParams(search);
@@ -37,4 +37,4 @@ const initializeFilterPaymentOrder = () => {
     });
 };
 
-document.addEventListener("DOMContentLoaded", initializeFilterPaymentOrder);
+document.addEventListener("DOMContentLoaded", initializeFiltertOrder);

@@ -1,5 +1,7 @@
 import checkCoupon from "../services/checkCoupon";
 import numberFormat from "../utils/numberFormat";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 const renderOrderSummary = (cart) => {
     const template = document.getElementById("summary-template");
@@ -59,7 +61,45 @@ const renderOrderSummary = (cart) => {
         const couponCode = couponInput.value.trim();
         const data = await checkCoupon(couponCode);
 
-        if (data?.coupon_discount && data?.coupon_id) {
+        if (data === "Invalid Coupon") {
+            Toastify({
+                text: "❗" + data,
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                style: {
+                    background: "#fee2e2",
+                    fontSize: "14px",
+                    color: "red",
+                    boxShadow: "0px",
+                },
+                close: true,
+                avatar: "",
+            }).showToast();
+            couponInput.value = "";
+            applyBtn.disabled = true;
+
+            return;
+        } else {
+            Toastify({
+                text: "Coupon Added successfully",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                style: {
+                    background: "#f9f6f3",
+                    fontSize: "14px",
+                    color: "#694943",
+                    boxShadow: "0px",
+                },
+                close: true,
+                avatar: "",
+            }).showToast();
+            couponInput.value = "";
+            applyBtn.disabled = true;
+        }
+
+        if (data?.discount_type == "percentage" && data?.coupon_id) {
             const discountPrice = (data.coupon_discount / 100) * subtotal;
             couponDiscount.textContent = `${numberFormat(discountPrice)} MMK`;
             const total = subtotal - discountPrice;
@@ -67,6 +107,16 @@ const renderOrderSummary = (cart) => {
             taxEl.textContent = `${numberFormat(total * 0.05)} MMK`;
             netTotalEl.textContent = `${numberFormat(total * 1.05)} MMK`;
             couponId.value = data.coupon_id;
+            applyBtn.disabled = true;
+        } else {
+            const discountPrice = data.coupon_discount;
+            couponDiscount.textContent = `${numberFormat(discountPrice)} MMK`;
+            const total = subtotal - discountPrice;
+            subtotalEl.textContent = `${numberFormat(total)} MMK`;
+            taxEl.textContent = `${numberFormat(total * 0.05)} MMK`;
+            netTotalEl.textContent = `${numberFormat(total * 1.05)} MMK`;
+            couponId.value = data.coupon_id;
+            applyBtn.disabled = true;
         }
         couponInput.value = "";
     });
