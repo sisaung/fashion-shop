@@ -2,19 +2,31 @@
 @section('content')
     <div class="mt-5">
 
-        <form method="GET" action="{{ route('report.customer.index') }}" style="margin-bottom: 20px;">
-            <label for="filter">Select Time Filter:</label>
-            <select name="filter" id="filter" onchange="this.form.submit()">
-                <option value="today" {{ $filter == 'today' ? 'selected' : '' }}>Today</option>
-                <option value="last_7_days" {{ $filter == 'last_7_days' ? 'selected' : '' }}>Last 7 Days</option>
-                <option value="this_month" {{ $filter == 'this_month' ? 'selected' : '' }}>This Month</option>
-                <option value="last_month" {{ $filter == 'last_month' ? 'selected' : '' }}>Last Month</option>
-                <option value="this_year" {{ $filter == 'this_year' ? 'selected' : '' }}>This Year</option>
-                <option value="last_year" {{ $filter == 'last_year' ? 'selected' : '' }}>Last Year</option>
-            </select>
+        <form method="GET" action="{{ route('report.customer.index') }}" class="mb-3 text-end">
+
+            <div class="inline-block relative w-42">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-5 h-5 text-gray-500 absolute left-3  transform translate-y-1/2 pointer-events-none">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M8.25 6v-1.5m7.5 1.5V4.5M3.75 9h16.5M4.5 7.5h15a.75.75 0 0 1 .75.75v12a.75.75 0 0 1-.75.75h-15a.75.75 0 0 1-.75-.75v-12a.75.75 0 0 1 .75-.75z" />
+                </svg>
+
+                <select name="filter" id="filter" onchange="this.form.submit()"
+                    class="appearance-none border rounded-md p-2 pl-10 cursor-pointer border-gray-200 text-gray-600  w-full">
+                    <option value="today" {{ $filter == 'today' ? 'selected' : '' }}>Today</option>
+                    <option value="last_7_days" {{ $filter == 'last_7_days' ? 'selected' : '' }}>Last 7 Days</option>
+                    <option value="this_month" {{ $filter == 'this_month' ? 'selected' : '' }}>This Month</option>
+                    <option value="last_month" {{ $filter == 'last_month' ? 'selected' : '' }}>Last Month</option>
+                    <option value="this_year" {{ $filter == 'this_year' ? 'selected' : '' }}>This Year</option>
+                    <option value="last_year" {{ $filter == 'last_year' ? 'selected' : '' }}>Last Year</option>
+                </select>
+            </div>
+
+
         </form>
 
-        <div>
+        <div class="grid grid-cols-2 gap-3">
             <div class="bg-white p-4 rounded shadow mb-8 ">
                 <h2 class="text-lg font-semibold mb-4"> Top Customer </h2>
                 {{-- <table border="1" cellpadding="10" cellspacing="0">
@@ -139,9 +151,11 @@
             </div> --}}
 
             <div class="bg-white rounded shadow h-[500px] mb-10">
-                <div class=" p-4  mb-8 max-w-2xl max-h-[380px]">
+                <div class=" p-4   mb-8 max-w-2xl max-h-[380px]">
                     <h2 class="text-lg font-semibold mb-4"> Repeat vs New Customers </h2>
-                    <canvas id="customerChart" height="80"></canvas>
+                    <div class="flex justify-center items-start max-w-2xl max-h-[380px]">
+                        <canvas id="customerChart" height="80"></canvas>
+                    </div>
                 </div>
             </div>
 

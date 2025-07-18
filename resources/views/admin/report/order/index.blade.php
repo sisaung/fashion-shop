@@ -3,15 +3,24 @@
     <div class="mt-5">
         <div>
             <div class="bg-white p-4 rounded shadow mb-8 ">
-                <h2 class="text-lg font-semibold mb-4"> Monthly Order Count</h2>
-                <form method="GET" action="{{ route('report.order.index') }}">
-                    <select name="time_filter" onchange="this.form.submit()">
-                        @foreach (['today', 'yesterday', 'last_7_days', 'this_month', 'last_month', 'this_year', 'last_year'] as $filter)
-                            <option value="{{ $filter }}" {{ $timeFilter == $filter ? 'selected' : '' }}>
-                                {{ ucfirst(str_replace('_', ' ', $filter)) }}
-                            </option>
-                        @endforeach
-                    </select>
+                <h2 class="text-lg font-semibold mb-4"> Order Counts</h2>
+                <form method="GET" action="{{ route('report.order.index') }}" class="text-end mb-3">
+                    <div class="relative inline-block w-42">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5 text-gray-500 absolute left-3  transform translate-y-1/2 pointer-events-none">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M8.25 6v-1.5m7.5 1.5V4.5M3.75 9h16.5M4.5 7.5h15a.75.75 0 0 1 .75.75v12a.75.75 0 0 1-.75.75h-15a.75.75 0 0 1-.75-.75v-12a.75.75 0 0 1 .75-.75z" />
+                        </svg>
+                        <select name="time_filter" onchange="this.form.submit()"
+                            class="appearance-none border rounded-md p-2 pl-10 cursor-pointer border-gray-200 text-gray-600  w-full">
+                            @foreach (['today', 'yesterday', 'last_7_days', 'this_month', 'last_month', 'this_year', 'last_year'] as $filter)
+                                <option value="{{ $filter }}" {{ $timeFilter == $filter ? 'selected' : '' }}>
+                                    {{ ucfirst(str_replace('_', ' ', $filter)) }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                 </form>
 
                 <canvas id="orderRevenueChart" width="800" height="400"></canvas>
@@ -36,29 +45,53 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js">
     </script>
     <script>
-        // const ctx = document.getElementById('monthlyOrderChart').getContext('2d');
         const ctx = document.getElementById('orderRevenueChart').getContext('2d');
-        const orderStatusCtx = document.getElementById('orderStatusChart').getContext('2d');
 
         const orderCounts = @json($orderCounts);
         const sales = @json($sales);
         const labels = @json($labels);
 
-        // order and sale count chart
         const data = {
             labels: labels,
             datasets: [{
                     label: 'Orders',
                     data: orderCounts,
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    backgroundColor: 'rgba(204, 182, 165, 0.6)', // Tailwind blue-500 with opacity
+                    borderRadius: 4, // rounded bar corners
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'end',
+                        color: '#1f2937', // gray-800
+                        font: {
+                            weight: 'bold'
+                        },
+                        formatter: Math.round
+                    },
                     yAxisID: 'orders'
                 },
                 {
                     label: 'Sale (MMK)',
                     data: sales,
                     type: 'line',
-                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderColor: 'rgba(239, 68, 68, 1)', // Tailwind red-500
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    tension: 0.3, // smooth curve
                     fill: false,
+                    pointBackgroundColor: 'rgba(239, 68, 68, 1)',
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    borderWidth: 2,
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'top',
+                        color: '#ef4444',
+                        font: {
+                            weight: 'bold'
+                        },
+                        formatter: function(value) {
+                            return value.toLocaleString(); // formatted MMK value
+                        }
+                    },
                     yAxisID: 'sale'
                 }
             ]
@@ -73,15 +106,43 @@
                     mode: 'index',
                     intersect: false
                 },
-                stacked: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function(context) {
+                                if (context.dataset.label === 'Sale (MMK)') {
+                                    return 'Sale: ' + context.parsed.y.toLocaleString() + ' MMK';
+                                }
+                                return context.dataset.label + ': ' + context.parsed.y;
+                            }
+                        }
+                    },
+                    datalabels: {
+                        display: true
+                    }
+                },
                 scales: {
                     orders: {
                         type: 'linear',
                         position: 'left',
                         beginAtZero: true,
+                        suggestedMax: 5,
                         title: {
                             display: true,
                             text: 'Orders'
+                        },
+                        grid: {
+                            color: 'rgba(209, 213, 219, 0.3)' // Tailwind gray-300
                         }
                     },
                     sale: {
@@ -94,14 +155,22 @@
                         },
                         grid: {
                             drawOnChartArea: false
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString();
+                            }
                         }
                     }
                 }
-            }
+            },
+            plugins: [ChartDataLabels]
         };
 
 
         //order status chart
+
+        const orderStatusCtx = document.getElementById('orderStatusChart').getContext('2d');
 
         const dataValues = {!! json_encode($orderedStatus->values()) !!};
         const dataLabels = {!! json_encode($orderedStatus->keys()) !!};

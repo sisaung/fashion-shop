@@ -34,7 +34,7 @@
 
             @include('components.admin.sidebar')
 
-            <div class="w-full h-screen overflow-auto">
+            <div class="w-full h-screen overflow-auto hide-scrollbar">
 
                 @include('components.admin.header')
                 {{-- <div class="bg-white mt-5 py-5 mx-5 rounded-md shadow">

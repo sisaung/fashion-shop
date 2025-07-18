@@ -189,10 +189,59 @@ const initializeStockAnalysis = async () => {
         setupBrandButtons();
     }
 
+    // function renderChart(data) {
+    //     const ctx = document.getElementById("sizeStockChart").getContext("2d");
+    //     const labels = data?.map((i) => i.size_name);
+    //     const stocks = data?.map((i) => i.total_stock);
+
+    //     const config = {
+    //         type: "bar",
+    //         data: {
+    //             labels,
+    //             datasets: [
+    //                 {
+    //                     label: "Stock Count",
+    //                     data: stocks,
+    //                     backgroundColor: "#ccb6a5",
+    //                 },
+    //             ],
+    //         },
+    //         options: {
+    //             responsive: true,
+    //             scales: {
+    //                 y: { beginAtZero: true },
+    //             },
+
+    //             plugins: {
+    //                 datalabels: {
+    //                     anchor: "end", // position at top
+    //                     align: "end", // align text at top
+    //                     color: "#694943", // label text color
+    //                 },
+    //             },
+    //         },
+    //     };
+
+    //     // Destroy existing chart before creating new one
+    //     if (
+    //         window.sizeStockChart &&
+    //         typeof window.sizeStockChart.destroy === "function"
+    //     ) {
+    //         window.sizeStockChart.destroy();
+    //     }
+    //     window.sizeStockChart = new Chart(ctx, config);
+    // }
+
     function renderChart(data) {
         const ctx = document.getElementById("sizeStockChart").getContext("2d");
-        const labels = data?.map((i) => i.size_name);
-        const stocks = data?.map((i) => i.total_stock);
+        const labels = data?.map((i) => i.size_name) || [];
+        const stocks = data?.map((i) => i.total_stock) || [];
+
+        // Decide bar size based on number of labels
+        // Smaller bar if only one label, else normal size
+        const isSingleSize = labels.length === 1;
+        const barThickness = isSingleSize ? 60 : undefined; // 20px if single, else automatic
+        const maxBarThickness = isSingleSize ? 60 : 60; // smaller max width if single
 
         const config = {
             type: "bar",
@@ -203,6 +252,9 @@ const initializeStockAnalysis = async () => {
                         label: "Stock Count",
                         data: stocks,
                         backgroundColor: "#ccb6a5",
+                        barThickness, // fixed thickness if single
+                        maxBarThickness, // max width of bar
+
                     },
                 ],
             },
@@ -211,12 +263,11 @@ const initializeStockAnalysis = async () => {
                 scales: {
                     y: { beginAtZero: true },
                 },
-
                 plugins: {
                     datalabels: {
-                        anchor: "left", // position at top
-                        align: "end", // align text at top
-                        color: "#694943", // label text color
+                        anchor: "end",
+                        align: "end",
+                        color: "#694943",
                     },
                 },
             },
@@ -229,6 +280,7 @@ const initializeStockAnalysis = async () => {
         ) {
             window.sizeStockChart.destroy();
         }
+
         window.sizeStockChart = new Chart(ctx, config);
     }
 
