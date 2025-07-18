@@ -363,7 +363,9 @@
 
 
                                     <td
-                                        class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 text-end flex items-center justify-center">
+                                        class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 text-end flex items-center  justify-center">
+
+
 
 
 
@@ -400,6 +402,8 @@
 
                                                         Mark as Paid
                                                     </button>
+                                                
+
                                                 @else
                                                     <span
                                                         class="inline-flex justify-start px-5 py-1 rounded-lg  text-green-500">Paid</span>

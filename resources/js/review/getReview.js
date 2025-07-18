@@ -27,6 +27,8 @@ const initializeGetReview = async () => {
                 `/get-review/${id}?filter-rating=${ratingCount}`
             );
 
+           
+
             await renderReviewList(data?.data, container, reviewCountContainer);
             await renderReviewPaginationList(data?.links, paginationContainer);
             postReviewTime()

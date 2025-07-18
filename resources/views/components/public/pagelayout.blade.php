@@ -7,7 +7,7 @@
             @include('components.public.sidebar')
 
 
-            <div class="flex-1 px-5 xl:px-0 h-screen overflow-y-scroll hide-scrollbar">
+            <div class="flex-1 px-5 xl:px-0 h-screen overflow-y-scroll hide-scrollbar pagelayout-container">
                 @yield('container')
             </div>
         </div>

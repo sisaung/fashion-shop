@@ -42,15 +42,15 @@ const initalizeConfirmOrder = () => {
         if (!addressId) {
             // showErrorToast("Please select an address to place the order");
             Toastify({
-                text: "Please select an address to place the order",
+                text: "❗ Please select an address to place the order",
                 duration: 3000,
                 gravity: "top",
                 position: "center",
                 stopOnFocus: false,
                 style: {
-                    background: "#fee2e2",
+                    background: "#fff0f0",
                     fontSize: "14px",
-                    color: "red",
+                    color: "#e60000",
                     boxShadow: "0px",
                 },
             }).showToast();
@@ -58,15 +58,15 @@ const initalizeConfirmOrder = () => {
         } else if (cart.items.length == 0) {
             // showErrorToast("Your cart is empty");
             Toastify({
-                text: "Your cart is empty",
+                text: "❗ Your cart is empty",
                 duration: 3000,
                 stopOnFocus: false,
                 gravity: "top",
-                position: "right",
+                position: "center",
                 style: {
-                    background: "#fee2e2",
+                    background: "#fff0f0",
                     fontSize: "14px",
-                    color: "red",
+                    color: "#e60000",
                     boxShadow: "0px",
                 },
             }).showToast();
@@ -97,17 +97,38 @@ const initalizeConfirmOrder = () => {
                 })),
             };
 
-            
             const res = await storeOrder("/confirm-order", data, csrfToken);
             const orderData = await res.json();
 
-            console.log(orderData);
-
             if (orderData.success) {
-                showSuccessToast(orderData.message);
+
+                Toastify({
+                    text: "Order placed successfully",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    style: {
+                        background: "#ecfdf3",
+                        fontSize: "14px",
+                        color: "#008a2e",
+                    },
+                }).showToast();
                 window.location.href = location.origin + "/account/orders";
             } else {
-                showErrorToast(orderData.message);
+                Toastify({
+                    text: orderData.message,
+                    duration: 3000,
+                    stopOnFocus: false,
+                    gravity: "top",
+                    position: "center",
+                    style: {
+                        background: "#fff0f0",
+                        fontSize: "14px",
+                        color: "#e60000",
+                        boxShadow: "0px",
+                    },
+                }).showToast();
             }
             couponId.value = "";
             selectedAddress.classList.remove("active-address");
@@ -127,7 +148,6 @@ const initalizeConfirmOrder = () => {
 
             localStorage.removeItem("cartItems");
 
-            console.log(res);
         }
     };
     container.addEventListener("click", handleOrderConfirmBtn);

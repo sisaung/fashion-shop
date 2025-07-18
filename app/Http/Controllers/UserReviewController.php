@@ -68,6 +68,7 @@ class UserReviewController extends Controller
             'rating' => $request->rating
         ]);
 
-        return redirect()->route('shop.show', ['slug' => $product->slug]);
+        return back()->with('success','Review provided successfully');
+        ;
     }
 }

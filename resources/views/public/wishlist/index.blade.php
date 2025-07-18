@@ -3,10 +3,20 @@
     <div class="max-w-7xl mx-auto container">
 
         <div class="py-5">
-            <h1 class="font-heading text-2xl text-uppercase"> Your Wishlist ({{ $wishlist->products->count() }}) </h1>
+            <h1 class="font-heading text-2xl text-uppercase"> Your Wishlist
+                ({{ $wishlist ? $wishlist->products->count() : 0 }}) </h1>
             <p class=" text-gray-500">Your saved favorites are here, waiting for their moment</p>
         </div>
+        @if ($wishlist->products->count() > 0)
+            <form action="{{ route('wishlist.removeAllWishlist') }}" method="POST">
+                @csrf
+                <button type="submit" class="remove-all-btn text-gray-500 hover:text-gray-600 cursor-pointer text-sm"> Remove
+                    All</button>
+
+            </form>
+        @endif
         <div class="mt-5 space-y-3">
+
             {{-- @if ($wishlist->products->count() > 0)
                 @foreach ($wishlist->products as $item)
                     <div class="bg-white border border-pearl-bush-100 rounded-lg p-6 ordered-products-list-container">
@@ -171,6 +181,28 @@
         </div>
 
     </div>
+
+
+
+
 @endsection
 @push('scripts')
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    @if (session('success'))
+        <script>
+            console.log('{{ session('success') }}');
+            Toastify({
+                text: '{{ session('success') }}',
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                style: {
+                    background: "#ecfdf3",
+                    fontSize: "14px",
+                    color: "#008a2e",
+                },
+            }).showToast();
+        </script>
+    @endif
 @endpush

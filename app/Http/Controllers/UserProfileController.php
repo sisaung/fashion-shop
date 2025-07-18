@@ -22,7 +22,7 @@ class UserProfileController extends Controller
 
 
     public function store(UserAddressRequest $request) {
-      
+
         UserAddress::create([
             'user_id' => Auth::id(),
             'name' => $request->name,
@@ -84,7 +84,9 @@ class UserProfileController extends Controller
 
 
 
-        return redirect()->route('account.addressIndex');
+        // return redirect()->route('account.addressIndex');
+        return redirect()->back()->with('success', 'Address added successfully.');
+
 }
 
 public function destroyAddress($id) {
@@ -96,7 +98,9 @@ public function destroyAddress($id) {
     }
     $address = UserAddress::find($id);
     $address->delete();
-    return redirect()->route('account.addressIndex');
+    // return redirect()->route('account.addressIndex');
+    return redirect()->back()->with('success', 'Address deleted successfully.');
+
 }
 
 public function updateAddress(UpdateUserAddressRequest $request,$id) {
@@ -113,6 +117,8 @@ public function updateAddress(UpdateUserAddressRequest $request,$id) {
     $address->township = $request->township;
     $address->address_detail = $request->address_detail;
     $address->save();
-    return redirect()->route('account.addressIndex');
+    // return redirect()->route('account.addressIndex');
+    return redirect()->back()->with('success', 'Address updated successfully.');
+
 }
 }

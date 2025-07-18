@@ -102,9 +102,6 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         Route::patch('/order/{id}', [OrderController::class, 'markAsPaid'])->name('order.markAsPaid');
 
 
-
-
-
         Route::resource('review', ReviewController::class)->only(['index', 'show', 'destroy']);
         Route::patch('/review/{id}/show', [ReviewController::class, 'showReview'])->name('review.show-review');
 
@@ -187,6 +184,8 @@ Route::middleware(['auth',Authenticate::class])->group(function () {
     Route::get('/wishlist',[WishlistController::class,'showWishlistShow'])->name('wishlist.showWishlistShow');
     Route::delete('/wishlist/{productId}',[WishlistController::class,'destroy'])->name('wishlist.destroy');
     Route::delete('/wishlist-destroy/{productId}',[WishlistController::class,'destroyWishlist'])->name('wishlist.destroyWishlist');
+    Route::post('/wishlist/remove-all', [WishlistController::class, 'removeAllWishlist'])->name('wishlist.removeAllWishlist');
+
 
 
 

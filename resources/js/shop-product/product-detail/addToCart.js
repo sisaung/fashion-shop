@@ -71,6 +71,7 @@ const initializeAddToCart = () => {
         if (quantity < selectedStock) {
             quantity++;
             quantityValue.textContent = quantity;
+            quantity = quantity;
             updateButtons();
         }
     });
@@ -93,21 +94,23 @@ const initializeAddToCart = () => {
     updateButtons(); // Initialize
 
     addToCartBtn.addEventListener("click", () => {
-        if (!selectedStock && quantity > selectedStock) {
+        console.log(selectedStock,quantity)
+        if (!selectedStock || quantity > selectedStock) {
             // errorMsg.classList.remove("hidden");
+            console.log('eror')
             Toastify({
                 text: "❗ Please select size first",
                 duration: 3000,
                 gravity: "top",
                 position: "center",
                 style: {
-                    background: "#fee2e2",
+                    background: "#fff0f0",
                     fontSize: "14px",
-                    color: "red",
+                    color: "#e60000",
                     boxShadow: "0px",
                 },
                 close: true,
-                avatar:""
+                avatar: "",
             }).showToast();
             return;
         }
@@ -166,6 +169,7 @@ const initializeAddToCart = () => {
         if (cartItems.classList.contains("hidden")) {
             cartItems.classList.remove("hidden");
         }
+       
         // console.log(JSON.parse(localStorage.getItem("cartItems")));
 
         // window.location.href = "/cart";

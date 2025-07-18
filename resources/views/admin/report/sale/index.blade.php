@@ -372,6 +372,146 @@
         //     }
         // });
 
+        // const ctx = document.getElementById('monthlySalesChart').getContext('2d');
+
+        // new Chart(ctx, {
+        //     type: 'line',
+        //     data: {
+        //         labels: @json($monthlySalesLabels),
+        //         datasets: [{
+        //                 label: 'This Year Sale',
+        //                 data: @json($monthlySalesData),
+        //                 borderColor: '#4bc0c0',
+        //                 backgroundColor: 'rgba(75, 192, 192, 0.1)',
+        //                 tension: 0.3,
+        //                 fill: true,
+        //                 pointRadius: 3,
+        //                 pointHoverRadius: 5,
+        //             },
+        //             {
+        //                 label: 'Last Year Sale',
+        //                 data: @json($monthlyLastYearData),
+        //                 borderColor: '#ff6384',
+        //                 tension: 0.3,
+        //                 fill: false,
+        //                 borderDash: [4, 4],
+        //                 pointRadius: 3,
+        //                 pointHoverRadius: 5,
+        //             }
+        //         ]
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         // maintainAspectRatio: false,
+        //         plugins: {
+        //             legend: {
+        //                 position: 'top'
+        //             },
+        //             tooltip: {
+        //                 callbacks: {
+        //                     label: function(context) {
+        //                         const value = context.parsed.y;
+        //                         if (value >= 1000) {
+        //                             return context.dataset.label + ': ' + (value / 1000).toFixed(1) + ' K Ks';
+        //                         }
+        //                         return context.dataset.label + ': ' + value + ' Ks';
+        //                     }
+        //                 }
+        //             },
+        //         },
+        //         scales: {
+        //             x: {
+        //                 grid: {
+        //                     display: false
+        //                 }
+        //             },
+        //             y: {
+        //                 beginAtZero: true,
+        //                 ticks: {
+        //                     callback: function(value) {
+        //                         if (value >= 1000) {
+        //                             return (value / 1000).toFixed(1) + ' K';
+        //                         }
+        //                         return value + ' Ks';
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // });
+
+        // const ctx = document.getElementById('monthlySalesChart').getContext('2d');
+
+        // new Chart(ctx, {
+        //     type: 'line',
+        //     data: {
+        //         labels: @json($monthlySalesLabels),
+        //         datasets: [{
+        //                 label: 'This Year Sale',
+        //                 data: @json($monthlySalesData), // include nulls for future months
+        //                 borderColor: '#4bc0c0',
+        //                 backgroundColor: 'rgba(75, 192, 192, 0.1)',
+        //                 tension: 0.3,
+        //                 fill: true,
+        //                 pointRadius: 3,
+        //                 pointHoverRadius: 5,
+        //                 spanGaps: false
+        //             },
+        //             {
+        //                 label: 'Last Year Sale',
+        //                 data: @json($monthlyLastYearData),
+        //                 borderColor: '#ff6384',
+        //                 borderDash: [6, 6],
+        //                 tension: 0.3,
+        //                 fill: false,
+        //                 pointRadius: 3,
+        //                 pointHoverRadius: 5,
+        //             }
+        //         ]
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         plugins: {
+        //             legend: {
+        //                 position: 'top'
+        //             },
+        //             tooltip: {
+        //                 callbacks: {
+        //                     label: function(context) {
+        //                         const value = context.parsed.y;
+        //                         if (value >= 1000000) return context.dataset.label + ': ' + (value / 1000000)
+        //                             .toFixed(1) + ' M Ks';
+        //                         if (value >= 1000) return context.dataset.label + ': ' + (value / 1000).toFixed(
+        //                             1) + ' K Ks';
+        //                         return context.dataset.label + ': ' + value + ' Ks';
+        //                     }
+        //                 }
+        //             }
+        //         },
+        //         scales: {
+        //             x: {
+        //                 grid: {
+        //                     display: false
+        //                 }
+        //             },
+        //             y: {
+        //                 beginAtZero: true,
+        //                 ticks: {
+        //                     callback: function(value) {
+        //                         if (value >= 1000000) return (value / 1000000).toFixed(1) + ' M Ks';
+        //                         if (value >= 1000) return (value / 1000).toFixed(1) + ' K Ks';
+        //                         return value + ' Ks';
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // });
+
+
+
+
+        //sure
         const ctx = document.getElementById('monthlySalesChart').getContext('2d');
 
         new Chart(ctx, {
@@ -387,14 +527,15 @@
                         fill: true,
                         pointRadius: 3,
                         pointHoverRadius: 5,
+                        spanGaps: false
                     },
                     {
                         label: 'Last Year Sale',
                         data: @json($monthlyLastYearData),
                         borderColor: '#ff6384',
+                        borderDash: [6, 6],
                         tension: 0.3,
                         fill: false,
-                        borderDash: [4, 4],
                         pointRadius: 3,
                         pointHoverRadius: 5,
                     }
@@ -402,7 +543,6 @@
             },
             options: {
                 responsive: true,
-                // maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         position: 'top'
@@ -411,13 +551,10 @@
                         callbacks: {
                             label: function(context) {
                                 const value = context.parsed.y;
-                                if (value >= 1000) {
-                                    return context.dataset.label + ': ' + (value / 1000).toFixed(1) + ' K Ks';
-                                }
-                                return context.dataset.label + ': ' + value + ' Ks';
+                                return context.dataset.label + ': ' + value.toLocaleString() + ' Ks';
                             }
                         }
-                    },
+                    }
                 },
                 scales: {
                     x: {
@@ -429,20 +566,13 @@
                         beginAtZero: true,
                         ticks: {
                             callback: function(value) {
-                                if (value >= 1000) {
-                                    return (value / 1000).toFixed(1) + ' K';
-                                }
-                                return value + ' Ks';
+                                return value.toLocaleString() + ' Ks';
                             }
                         }
                     }
                 }
             }
         });
-
-
-
-
 
 
         // const ctxBestSelling = document.getElementById('bestSellingChart').getContext('2d');

@@ -217,6 +217,27 @@ class WishlistController extends Controller
                 $query->orderBy('id', 'desc');
             }]);
         }
+
+
         return view('public.wishlist.index',['wishlist' => $wishlist]);
     }
+
+    public function removeAllWishlist() {
+        if (!Auth::check()) {
+            return response()->json([
+               'message' => 'Unauthenticated'
+            ], 401);
+        }
+
+        $user = Auth::user();
+
+        $wishlist = Wishlist::where('user_id', $user->id)->first();
+
+        if ($wishlist) {
+            $wishlist->products()->detach();
+        }
+
+        return redirect()->back()->with('success', 'All wishlist items removed successfully.');
+    }
+
 }

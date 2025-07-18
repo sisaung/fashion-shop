@@ -421,4 +421,22 @@
     @endsection
     @push('scripts')
         @vite(['resources/js/orders/cancelOrder.js'])
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+        @if (session('success'))
+            <script>
+                console.log('{{ session('success') }}');
+                Toastify({
+                    text: '{{ session('success') }}',
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    style: {
+                        background: "#ecfdf3",
+                        fontSize: "14px",
+                        color: "#008a2e",
+                    },
+                }).showToast();
+            </script>
+        @endif
     @endpush

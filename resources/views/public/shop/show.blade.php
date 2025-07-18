@@ -248,7 +248,7 @@
                                     </button>
                                 @endforeach
                             @else
-                                    <p class="bg-red-100 px-4 py-2 rounded-lg text-sm text-red-500"> Out of Stock </p>
+                                <p class="bg-red-100 px-4 py-2 rounded-lg text-sm text-red-500"> Out of Stock </p>
                             @endif
 
                         </div>
@@ -662,4 +662,23 @@
     @vite(['resources/js/review/getReview.js'])
 
     @vite(['resources/js/wishList/wishList.js'])
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    @if (session('success'))
+        <script>
+            console.log('{{ session('success') }}');
+            Toastify({
+                text: '{{ session('success') }}',
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                style: {
+                    background: "#ecfdf3",
+                    fontSize: "14px",
+                    color: "#008a2e",
+                },
+            }).showToast();
+        </script>
+    @endif
 @endpush

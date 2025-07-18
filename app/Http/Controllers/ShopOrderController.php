@@ -176,7 +176,7 @@ public function cancelOrder(ShopOrderCancelRequest $request,$id) {
         $order->order_status = 'cancelled';
         $order->cancel_message = $request->cancel_reason;
         $order->save();
-        return back()->with('success','Order is cancelled');
+        return back()->with('success','Order is cancelled successfully');
 
     }
 
