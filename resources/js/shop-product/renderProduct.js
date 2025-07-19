@@ -20,6 +20,7 @@ const renderProduct = async (product, wishlistProducts) => {
     const wishlistBtn = clone.querySelector(".wishlist-btn");
     const wishlistIcon = clone.querySelector(".wishlist-icon");
 
+
     wishlistBtn.setAttribute("data-product-id", product.id);
     wishlistIcon.setAttribute("data-product-icon-id", product.id);
 
@@ -70,7 +71,7 @@ const renderProduct = async (product, wishlistProducts) => {
         productPromo.textContent = `Save ${product.discount_value} % OFF`;
         productPromo.classList.add("bg-red-500");
     } else if (product.discount_type == "fixed") {
-        console.log("fixed");
+        ;
         productPromo.classList.remove("hidden");
         productPromo.textContent = `Save ${formatNumber(
             product.discount_value

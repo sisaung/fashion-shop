@@ -33,6 +33,7 @@ class StoreProductRequest extends FormRequest
             'display_price' => 'required|string|min:1|max:999999999',
             'gender' => ['required', Rule::enum(Gender::class)],
             'is_new_arrival' => 'nullable',
+            'is_trending' => 'nullable',
             'brand_id' => 'required|numeric|exists:brands,id',
             'product_category_id' => 'required|numeric|exists:product_categories,id',
             'product_type_id' => 'required|numeric|exists:product_types,id',

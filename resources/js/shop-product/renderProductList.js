@@ -8,7 +8,9 @@ const renderProductList = async (data, container, wishlistProducts) => {
         "product-empty-template"
     );
     container.innerHTML = "";
-    emptyProductContainer.innerHTML = "";
+    if (emptyProductContainer) {
+        emptyProductContainer.innerHTML = "";
+    }
 
     if (data.length > 0) {
         for (let product of data) {

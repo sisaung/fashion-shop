@@ -219,7 +219,6 @@
                             text-red-500
                         @enderror leading-7 text-sm text-gray-600">Discount</label>
                         <input type="number" id="discount-value" name="discount_value"
-                          
                             class="@error('discount_value')
                             is-invalid
                         @enderror  w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
@@ -310,12 +309,20 @@
                             @enderror
                         </div>
 
-                        <div class="flex gap-x-2 mt-2 items-center">
+                        <div class="flex gap-x-2 items-center">
                             <input type="checkbox"
                                 class="text-sm focus:ring-2 focus:ring-pearl-bush-500 font-medium text-pearl-bush-500 "
                                 name="is_new_arrival" id="is_new_arrival">
                             <label for="is_new_arrival" class="leading-7 text-sm text-gray-600">New
                                 Arrival</label>
+                        </div>
+
+                        <div class="flex gap-x-2 items-center">
+                            <input type="checkbox"
+                                class="text-sm focus:ring-2 focus:ring-pearl-bush-500 font-medium text-pearl-bush-500 "
+                                name="is_trending" id="is_trending">
+                            <label for="is_trending" class="leading-7 text-sm text-gray-600">
+                                Trendy</label>
                         </div>
 
 

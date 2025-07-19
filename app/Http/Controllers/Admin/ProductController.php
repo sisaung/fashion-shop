@@ -167,6 +167,7 @@ class ProductController extends Controller
             'display_price' => $request->display_price,
             'gender' => $request->gender,
             'is_new_arrival' => $newArrival,
+            'is_trending' => $request->is_trending,
             'brand_id' => $request->brand_id,
             'product_category_id' => $request->product_category_id,
             'product_type_id' => $request->product_type_id,
@@ -243,8 +244,13 @@ class ProductController extends Controller
         }
 
         $newArrival = 1;
+        $trendy = 1;
         if(!$request->is_new_arrival){
             $newArrival = 0;
+        }
+
+        if(!$request->is_trending){
+            $trendy = 0;
         }
 
         $fitId = $request->fit_id;
@@ -261,6 +267,7 @@ class ProductController extends Controller
         $product->display_price = $request->display_price;
         $product->gender = $request->gender;
         $product->is_new_arrival = $newArrival;
+        $product->is_trending = $trendy;
         $product->brand_id = $request->brand_id;
         $product->product_category_id = $request->product_category_id;
         $product->product_type_id = $request->product_type_id;

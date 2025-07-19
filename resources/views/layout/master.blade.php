@@ -25,7 +25,7 @@
 
 <body>
 
-    <main class="bg-white">
+    <main class="bg-white flex flex-col min-h-screen">
 
 
         @include('components.public.header')
@@ -34,6 +34,8 @@
 
             @yield('content')
         </div>
+
+        @include('components.public.footer')
     </main>
     @stack('scripts')
 

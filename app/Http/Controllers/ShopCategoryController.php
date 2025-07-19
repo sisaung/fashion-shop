@@ -387,7 +387,13 @@ class ShopCategoryController extends Controller
 
     $brand->orderBy('brand_name', 'asc');
 
-    return response()->json($brand->get());
+    if($request->ajax()) {
+
+        return response()->json($brand->get());
+    }
+
+    return view('public.shop.index');
+
 }
 
 

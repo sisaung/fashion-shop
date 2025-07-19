@@ -1,6 +1,6 @@
 @extends('layout.master')
 @section('content')
-    <div class="max-w-7xl mx-auto container">
+    <div class="max-w-7xl mx-auto container py-10">
 
         <div class="py-5">
             <h1 class="font-heading text-2xl text-uppercase"> Your Wishlist
@@ -63,7 +63,7 @@
                 </div>
             @endif --}}
 
-            @if ($wishlist->products->count() > 0)
+            @if ($wishlist)
                 <div class="grid grid-cols-5 gap-5">
                     {{-- @foreach ($wishlist->products as $item)
                     <div class="bg-white border border-pearl-bush-100 rounded-lg p-6 ordered-products-list-container">

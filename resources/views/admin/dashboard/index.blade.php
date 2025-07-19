@@ -226,7 +226,14 @@
                 <div class="flex justify-between items-center">
                     <h1 class="text-xl font-heading mb-3 text-gray-700 font-semibold"> Latest Orders </h1>
                     <a href="{{ route('order.index') }}"
-                        class="text-pearl-bush-500 hover:text-pearl-bush-600 duration-300">View All</a>
+                        class="text-gray-500 inline-flex items-center gap-x-2 hover:text-gray-700 duration-300">View All
+
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5 text-gray-700">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                        </svg>
+
+                    </a>
                 </div>
 
                 <div class="w-full overflow-x-auto rounded-lg border border-gray-200 ">
@@ -402,8 +409,6 @@
 
                                                         Mark as Paid
                                                     </button>
-                                                
-
                                                 @else
                                                     <span
                                                         class="inline-flex justify-start px-5 py-1 rounded-lg  text-green-500">Paid</span>

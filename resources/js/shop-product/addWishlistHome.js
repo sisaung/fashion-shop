@@ -1,10 +1,10 @@
-import destroyWishlist from "../../services/destroyWishlist";
-import getWishlist from "./getWishlist";
-import updatUiWishlist from "./updateUIWishList";
-import storeWishList from "../../services/storeWishList";
-import initializeSort from "../shopProductList";
 
-const initializeAddShopWishlist = async () => {
+import destroyWishlist from "../services/destroyWishlist";
+import storeWishList from "../services/storeWishList";
+import getWishlist from "./wishlist/getWishlist";
+import updatUiWishlist from "./wishlist/updateUIWishList";
+
+const initializeAddWishListHome = async () => {
     const container = document.getElementById("product-container");
 
 
@@ -61,4 +61,4 @@ const initializeAddShopWishlist = async () => {
     });
 };
 
-document.addEventListener("DOMContentLoaded", initializeAddShopWishlist);
+document.addEventListener("DOMContentLoaded", initializeAddWishListHome);

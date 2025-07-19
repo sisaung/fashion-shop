@@ -318,7 +318,7 @@
 
 
                     {{-- Features --}}
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8 border-t border-gray-200">
+                    {{-- <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8 border-t border-gray-200">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
                                 <svg class="w-5 h-5 text-green-600"><!-- Truck Icon --></svg>
@@ -346,7 +346,7 @@
                                 <div class="text-sm text-gray-600">30 days policy</div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 

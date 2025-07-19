@@ -419,6 +419,14 @@
                                 Arrival</label>
                         </div>
 
+                        <div class="flex gap-x-2 mt-2 items-center">
+                            <input type="checkbox" @checked(old('is_trending', $product->is_trending) == 1)
+                                class="text-sm focus:ring-2 focus:ring-pearl-bush-500 font-medium text-pearl-bush-500 "
+                                name="is_trending" id="is_trending">
+                            <label for="is_trending" class="leading-7 text-sm text-gray-600">
+                                Trendy</label>
+                        </div>
+
 
                         <div class="flex  gap-x-5  w-full ">
                             <a href="{{ route('product.index', ['sort_by' => $sort_by, 'sort_direction' => $sort_direction, 'limit' => $limit, 'page' => $page, 'q' => $q]) }}"

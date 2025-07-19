@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\StockController;
 use App\Http\Controllers\Admin\WishlistController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderedCustomerController;
 use App\Http\Controllers\ShopCategoryController;
 use App\Http\Controllers\ShopOrderController;
@@ -29,8 +30,20 @@ use App\Http\Middleware\MustBeAdmin;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
+Route::get('/', [HomeController::class, 'index'])->name(
+    'home'
+);
+
+Route::get('/get-latest-style', [HomeController::class, 'getLatestStyle'])->name(
+    'home.getLatestStyle'
+);
+
+Route::get('/about-us', function () {
+    return view('public.about-us.index');
+});
+
+Route::get('/contact-us', function () {
+    return view('public.contact-us.index');
 });
 
 
