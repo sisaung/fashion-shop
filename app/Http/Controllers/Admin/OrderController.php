@@ -11,7 +11,9 @@ use App\Http\Requests\DeliverOrderRequest;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\Stock;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
@@ -290,7 +292,19 @@ class OrderController extends Controller
 
                         $order->confirm_message = "Your orders completed";
                     }
+
+                    $productIds = OrderItem::join('stocks', 'order_items.stock_id', '=', 'stocks.id')
+                    ->where('order_items.order_id', $order->id)
+                    ->pluck('stocks.product_id')
+                    ->toArray();
+                    
                         $order->confirm_message = "Your order completed";
+                        Review::where('user_id', $order->customer_id)
+                        ->whereIn('product_id', $productIds)
+                        ->update([
+                            'is_verified' => true,
+                            'is_show' => 1
+                        ]);
                     $order->save();
 
                     return redirect()->route('order.show',['order' => $order->id]);

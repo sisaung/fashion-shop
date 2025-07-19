@@ -25,7 +25,8 @@ class StoreReviewRequest extends FormRequest
 
             'review' => 'required|string|min:3',
             'rating' => 'required',
-            'is_show' => 'nullable'
+            'is_show' => 'nullable',
+           
         ];
     }
 }

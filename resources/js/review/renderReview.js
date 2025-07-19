@@ -7,6 +7,7 @@ const renderReview = async (review) => {
     const name = content.querySelector(".user-name");
     const reviewDescription = content.querySelector(".review-description");
     const rating = content.querySelectorAll(".rating");
+    const isVerified = content.querySelector(".verified-badge");
 
     rating.forEach((count) => {
         const countStar = count.dataset.countStar;
@@ -22,6 +23,11 @@ const renderReview = async (review) => {
     reviewDescription.textContent = review.review;
 
     reviewDescription.setAttribute("data-review-created-at", review.created_at);
+
+    console.log(review);
+    if (review.is_verified == 1) {
+        isVerified.textContent = "Verified Purchase";
+    }
 
     return content;
 };

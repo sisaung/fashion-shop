@@ -28,6 +28,7 @@ class HomeController extends Controller
 
         $products =  Product::where('is_new_arrival',1)
         ->orWhere('is_trending',1)
+        ->take(5)
         ->get();
 
         return response()->json($products);

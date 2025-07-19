@@ -49,18 +49,18 @@
                 <div>
                     <p class="font-medium font-heading mb-3 text-lg tracking-wide">Shop</p>
                     <div class="flex flex-col gap-1">
-                        <a href="#"
+                        <a href="{{ url('/shop') . '?' . http_build_query(['gender' => 'male']) }}"
                             class="text-sm text-gray-500 hover:text-gray-700 duration-300 font-thin tracking-wide leading-8">Men
                         </a>
-                        <a href="#"
+                        <a href="{{ url('/shop') . '?' . http_build_query(['gender' => 'female']) }}"
                             class="text-sm text-gray-500 hover:text-gray-700 duration-300 font-thin tracking-wide leading-8">Women
                         </a>
 
-                        <a href="#"
+                        <a href="{{ url('/shop') . '?' . http_build_query(['gender' => 'unisex']) }}"
                             class="text-sm text-gray-500 hover:text-gray-700 duration-300 font-thin tracking-wide leading-8">Unisex
                         </a>
 
-                        <a href="#"
+                        <a href="{{ url('/shop') . '?' . http_build_query(['on_sale' => 1 ]) }}"
                             class="text-sm text-gray-500 hover:text-gray-700 duration-300 font-thin tracking-wide leading-8">Sale
                         </a>
 
@@ -107,9 +107,6 @@
                 </div>
 
             </div>
-
-
-
 
         </div>
     </x-public.container-layout>

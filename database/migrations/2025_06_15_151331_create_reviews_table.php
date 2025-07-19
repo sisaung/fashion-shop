@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('rating');
             $table->string('is_show')->default(0);
+            $table->integer('is_verified')->default(0);
             $table->timestamps();
         });
     }

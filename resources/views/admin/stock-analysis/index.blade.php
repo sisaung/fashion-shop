@@ -94,7 +94,7 @@
 
 
         <div class="px-5">
-            <h1 class="mt-5 text-stone-500">Stock by size with category and brand filtered</h1>
+            <h1 class="mt-5 text-stone-500">Stock by size with product type and brand filtered</h1>
             <canvas id="sizeStockChart"></canvas>
         </div>
 

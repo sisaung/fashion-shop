@@ -20,6 +20,7 @@
             @php
                 $item = request()->query('item');
                 $gender = request()->query('gender');
+                $onSale = request()->query('on_sale');
                 $currentPageTitle = 'Shop'; // default
 
                 // Determine title based on query
@@ -28,6 +29,14 @@
                         $currentPageTitle = 'New Arrival';
                     } else {
                         $currentPageTitle = ucwords(str_replace('-', ' ', $item));
+                    }
+                }
+
+                if ($onSale) {
+                    if ($onSale === 1 || $onSale === 'true') {
+                        $currentPageTitle = 'Sale';
+                    } else {
+                        $currentPageTitle = ucwords(str_replace('-', ' ', 'Sale'));
                     }
                 }
 
@@ -47,8 +56,9 @@
 
             <div class="flex items-center gap-x-3 justify-center">
                 <div class="mt-3">
-                    <button id="openSidebar" class="cursor-pointer lg:**:hidden inline-flex justify-center items-center"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke-width="1.5" stroke="currentColor" class="size-5">
+                    <button id="openSidebar" class="cursor-pointer lg:**:hidden inline-flex justify-center items-center"> <svg
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                         </svg>
 

@@ -17,9 +17,6 @@
 
                 {{-- main menu item  --}}
                 <div class="hidden lg:flex gap-x-7">
-                    <a href="{{ route('shop.index') }}"
-                        class="text-gray-700 hover:text-black font-medium transition-colors text-sm">
-                        Shop</a>
                     <a href="{{ route('shop.index', ['item' => 'new_arrival']) }}"
                         class="text-gray-700 hover:text-black font-medium transition-colors text-sm">New
                         Arrival</a>
@@ -31,6 +28,10 @@
                         class="text-gray-700 hover:text-black font-medium transition-colors text-sm">Women</a>
                     <a href="{{ route('shop.index', ['gender' => 'unisex']) }}"
                         class="text-gray-700 hover:text-black font-medium transition-colors text-sm">Unisex</a>
+
+                    <a href="{{ route('shop.index', ['on_sale' => 1]) }}"
+                        class="text-gray-700 hover:text-black font-medium transition-colors text-sm">
+                        Sale</a>
 
                 </div>
 

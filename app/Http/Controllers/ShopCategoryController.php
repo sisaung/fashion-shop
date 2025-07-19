@@ -126,7 +126,7 @@ class ShopCategoryController extends Controller
         $filters = $request->input('filters',[]);
 
         $item = $request->input('item');
-
+        $onSale = $request->input('on_sale');
 
 
         $limit = $request->input('limit', 20);
@@ -224,6 +224,13 @@ class ShopCategoryController extends Controller
 
 
 
+            if(!empty($onSale)) {
+
+                $query->where('discount_value','!=',0);
+            }
+
+
+
             if(!empty($filterByGender)) {
                 $query->where('gender',$filterByGender);
 
@@ -244,7 +251,7 @@ class ShopCategoryController extends Controller
                 $query->orderBy('sale_price',$sortDirection);
             }
             else if ($request->input('sort_by') === 'discount_value' && $request->input('sort_direction') === 'asc') {
-                // 🔄 Calculate discount amount for sorting
+                //  Calculate discount amount for sorting
                 $query->selectRaw("
                     CASE
                         WHEN discount_type = 'percentage' THEN sale_price * discount_value / 100
@@ -263,9 +270,6 @@ class ShopCategoryController extends Controller
                     END as discount_amount
                 ")
                 ->orderBy('discount_amount', 'desc');
-            }else{
-
-                $query->orderBy($sortBy, $sortDirection);
             }
 
         $query->orderBy($sortBy, $sortDirection);
@@ -291,12 +295,13 @@ class ShopCategoryController extends Controller
 {
     $gender = $request->input('gender');
     $item = $request->input('item');
+    $onSale = $request->input('on_sale');
     $inStock = $request->input('in_stock');
     $filters = $request->input('filters',[]);
 
 
     // Initialize brand query with products relation, filtered based on in_stock
-    $brand = Brand::with(['products' => function ($query) use ($inStock, $gender, $item,$filters) {
+    $brand = Brand::with(['products' => function ($query) use ($inStock, $gender, $item,$onSale,$filters) {
         if (!empty($inStock) && $inStock == 1) {
             $query->where('stock_count', '>', 0);
         }
@@ -307,6 +312,10 @@ class ShopCategoryController extends Controller
 
         if (!empty($item) && $item == 'new_arrival') {
             $query->where('is_new_arrival', 1);
+        }
+
+        if (!empty($onSale)) {
+            $query->where('discount_value' ,'!=',0);
         }
 
          // 🔹 Filter by product category
@@ -341,7 +350,7 @@ class ShopCategoryController extends Controller
     }]);
 
     // Always filter brands that have at least one product (matching the same conditions)
-    $brand->whereHas('products', function ($query) use ($inStock, $gender, $item,$filters) {
+    $brand->whereHas('products', function ($query) use ($inStock, $gender, $item,$onSale,$filters) {
         if (!empty($inStock) && $inStock == 1) {
             $query->where('stock_count', '>', 0);
         }
@@ -352,6 +361,10 @@ class ShopCategoryController extends Controller
 
         if (!empty($item) && $item == 'new_arrival') {
             $query->where('is_new_arrival', 1);
+        }
+
+        if (!empty($onSale)) {
+            $query->where('discount_value' ,'!=',0);
         }
 
          // 🔹 Filter by product category
