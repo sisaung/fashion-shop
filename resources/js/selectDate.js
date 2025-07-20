@@ -7,6 +7,11 @@ const initializeSelectDate = () => {
         minDate: "today",
     });
 
+    flatpickr("#coupon_start_date", {
+
+        dateFormat: "Y-m-d",
+    });
+
     flatpickr("#coupon_expire_date", {
 
         dateFormat: "Y-m-d",

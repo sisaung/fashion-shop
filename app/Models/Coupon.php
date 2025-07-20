@@ -9,7 +9,7 @@ class Coupon extends Model
 {
     /** @use HasFactory<\Database\Factories\CouponFactory> */
     use HasFactory;
-    protected $fillable = ['coupon_title','coupon_code','discount_type','coupon_discount','coupon_expire_date','user_id'];
+    protected $fillable = ['coupon_title','coupon_code','discount_type','coupon_discount','coupon_start_date','coupon_expire_date','user_id'];
 
     public function user() {
         return $this->belongsTo(User::class);

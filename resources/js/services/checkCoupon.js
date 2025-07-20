@@ -8,7 +8,7 @@ const checkCoupon = async (couponCode) => {
         // if (!res.ok) {
         //     console.log(res)
         // }
-        console.log(res)
+        
         const data = await res.json();
         return data;
     } catch (e) {

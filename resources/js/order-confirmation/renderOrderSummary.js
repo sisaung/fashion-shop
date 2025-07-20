@@ -61,9 +61,9 @@ const renderOrderSummary = (cart) => {
         const couponCode = couponInput.value.trim();
         const data = await checkCoupon(couponCode);
 
-        if (data === "Invalid Coupon") {
+        if (data.status === 404 || data.status === 401) {
             Toastify({
-                text: "❗" + data,
+                text: "❗" + data.message,
                 duration: 3000,
                 gravity: "top",
                 position: "right",

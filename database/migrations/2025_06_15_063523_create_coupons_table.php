@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('coupon_discount');
             $table-> enum('discount_type', ['percentage', 'fixed'])->nullable();
             $table->boolean('is_active')->default(false);
+            $table->string('coupon_start_date');
             $table->string('coupon_expire_date');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();

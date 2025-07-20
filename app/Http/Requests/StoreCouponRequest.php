@@ -27,6 +27,7 @@ class StoreCouponRequest extends FormRequest
             'coupon_code' => 'required|string|min:3|max:50|unique:coupons,coupon_code',
             'discount_type' => 'required|in:percentage,fixed',
             'coupon_discount' => 'required|numeric|min:1|max:99999999',
+            'coupon_start_date' => 'required|string',
             'coupon_expire_date' => 'required|string',
         ];
     }

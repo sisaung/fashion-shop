@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ShopOrderCancelRequest;
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\Coupon;
+use App\Models\CouponUsage;
 use App\Models\Customer;
 use App\Models\CustomerAddress;
 use App\Models\Order;
@@ -95,30 +96,80 @@ foreach($request->order_items as $item) {
     ]);
 }
 
+if($request->coupon_id) {
+    CouponUsage::create([
+        'user_id' => $customer->id,
+        'coupon_id' => $request->coupon_id,
+    ]);
+}
+
 return response()->json(['message' => 'Order created successfully','data'=>$order,'success'=> true]);
 
    }
 
-   public function checkCoupon(Request $request) {
+//    public function checkCoupon(Request $request) {
 
+//     $couponCode = $request->input('coupon_code');
+//     $coupon = Coupon::where('coupon_code',$couponCode)->first();
+
+//    $currentDate = now()->format('Y-m-d');
+
+
+//     if(!$coupon ) {
+
+//       return response()->json('Invalid Coupon');
+
+//     }
+//     if($coupon->coupon_expire_date < $currentDate) {
+
+//       return response()->json('Coupon Expired');
+//     }
+//     return response()->json(['message' => 'Valid Coupon','coupon_id' => $coupon->id,'coupon_discount' => $coupon->coupon_discount]);
+
+//    }
+
+public function checkCoupon(Request $request)
+{
     $couponCode = $request->input('coupon_code');
-    $coupon = Coupon::where('coupon_code',$couponCode)->first();
+    $userId = Auth::id(); // Make sure user is authenticated
+    $currentDate = now()->format('Y-m-d');
 
-   $currentDate = now()->format('Y-m-d');
-
-
-    if(!$coupon ) {
-
-      return response()->json('Invalid Coupon');
-
+    //  Check coupon exists
+    $coupon = Coupon::where('coupon_code', $couponCode)->first();
+    if (!$coupon) {
+        return response()->json('Invalid Coupon');
     }
-    if($coupon->coupon_expire_date < $currentDate) {
 
-      return response()->json('Coupon Expired');
+    //  Check start date if exists
+    if ($coupon->start_date && $coupon->start_date > $currentDate) {
+        return response()->json(['message' => 'This coupon is not active yet.','status' => 404]);
     }
-    return response()->json(['message' => 'Valid Coupon','coupon_id' => $coupon->id,'coupon_discount' => $coupon->coupon_discount]);
 
-   }
+    //  Check expire date
+    if ($coupon->coupon_expire_date < $currentDate) {
+        return response()->json(['message' => 'Coupon Expired','status' => 404]);
+    }
+
+    //  Check daily usage limit using Eloquent model
+    $usageCount = CouponUsage::where('user_id', $userId)
+        ->where('coupon_id', $coupon->id)
+        ->whereDate('created_at', $currentDate)
+        ->count();
+
+    if ($usageCount >= 3) { // change 3 to your limit
+        return response()->json(['message' => 'You have reached the daily usage limit for this coupon.','status' => 404]);
+    }
+
+    //  Save usage record with Eloquent
+
+
+    //  Return success
+    return response()->json([
+        'message' => 'Valid Coupon',
+        'coupon_id' => $coupon->id,
+        'coupon_discount' => $coupon->coupon_discount
+    ]);
+}
 
    public function getDeliveryAddress() {
     $userAddress =  UserAddress::all();

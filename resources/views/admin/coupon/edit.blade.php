@@ -63,6 +63,8 @@
                         <div class="col-span-1"></div>
 
 
+
+
                         <div class="relative mb-4 w-full col-span-1">
                             <label for="discount_type"
                                 class="@error('discount_type')
@@ -108,6 +110,22 @@
 
 
                         <div class="relative mb-4">
+                            <label for="coupon_start_date"
+                                class="@error('coupon_start_date')
+                            text-red-500
+                        @enderror leading-7 text-sm text-gray-600">Coupon
+                                Expire Date</label>
+                            <input type="date" id="coupon_start_date" name="coupon_start_date"
+                                value="{{ old('coupon_start_date', $coupon->coupon_start_date) }}"
+                                class="@error('coupon_start_date')
+                            is-invalid
+                        @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            @error('coupon_start_date')
+                                <p class="text-sm text-red-500"> {{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="relative mb-4">
                             <label for="coupon_expire_date"
                                 class="@error('coupon_expire_date')
                             text-red-500
@@ -125,7 +143,7 @@
 
                         <div class="col-span-1"></div>
                         <div class="col-span-1"></div>
-                        <div class="col-span-1"></div>
+
 
 
                         <div class="flex items-center gap-x-5 w-full">

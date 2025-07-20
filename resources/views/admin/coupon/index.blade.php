@@ -46,10 +46,22 @@
 
                                 </th>
 
-                                <th data-sortby="coupon_code" scope="col"
+                                <th data-sortby="coupon_start_date" scope="col"
                                     class="px-4 py-3 text-end text-sm font-medium text-gray-500">
 
-                                    Coupon Expire Date
+                                    @include('components.admin.sortTable', [
+                                        'sortTitle' => 'Coupon Start Date',
+                                    ])
+
+
+                                </th>
+
+                                <th data-sortby="coupon_expire_date" scope="col"
+                                    class="px-4 py-3 text-end text-sm font-medium text-gray-500">
+                                    @include('components.admin.sortTable', [
+                                        'sortTitle' => 'Coupon Expire Date',
+                                    ])
+
 
                                 </th>
 
@@ -89,6 +101,10 @@
 
                                         <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
                                             {{ $coupon->discount_type == 'percentage' ? $coupon->coupon_discount . ' %' : number_format($coupon->coupon_discount) . ' MMK' }}
+                                        </td>
+
+                                        <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
+                                            {{ $coupon->coupon_start_date }}
                                         </td>
 
                                         <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
