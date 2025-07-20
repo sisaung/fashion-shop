@@ -29,8 +29,14 @@
                             <td class="px-6 py-3 font-bold border border-stone-200 text-start">Image</td>
                             <td class="px-6 py-3 border border-stone-200 text-start">
                                 @if ($wishlist->user->profile_image)
-                                    <img src="{{ $wishlist->user->profile_image }}" alt="{{ $wishlist->user->name }}"
-                                        class="w-18 rounded-full object-cover object-center">
+                                    @if (Str::startsWith($wishlist->user->profile_image, 'https'))
+                                        <img src="{{ $wishlist->user->profile_image }}" alt="{{ $wishlist->user->name }}"
+                                            class="w-18 rounded-full object-cover object-center">
+                                    @else
+                                        <img src="{{ asset('/storage/' . $wishlist->user->profile_image) }}"
+                                            alt="{{ $wishlist->user->name }}"
+                                            class="w-18 rounded-full object-cover object-center">
+                                    @endif
                                 @else
                                     <img class="w-20 rounded-full"
                                         src="https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1"

@@ -81,14 +81,28 @@
                                         </td>
                                         <td class="whitespace-wrap px-4 w-[230px] py-4 text-sm text-gray-900">
                                             <div class="grid grid-cols-4">
+
                                                 <div class="">
-                                                    <img src="{{ $order->customer->profile_image ? $order->customer->profile_image : 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈' }}"
-                                                        class="size-10 rounded-full"
-                                                        alt="{{ $order->customer->customer_name }}">
+                                                    @if ($order->customer->profile_image)
+                                                        @if (Str::startsWith($order->customer->profile_image, 'https'))
+                                                            <img src="{{ $order->customer->profile_image }}"
+                                                                class="size-10
+                                                            rounded-full"
+                                                                alt="{{ $order->customer->customer_name }}" />
+                                                        @else
+                                                            <img src="{{ asset('/storage/' . $order->customer->profile_image) }}"
+                                                                class="size-10
+                                                            rounded-full"
+                                                                alt="{{ $order->customer->customer_name }}" />
+                                                        @endif
+                                                    @else
+                                                        <img src="https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈"
+                                                    class="size-10 rounded-full" alt="{{ $order->customer->customer_name }}" />
+                                                    @endif
                                                 </div>
                                                 <div class="flex flex-col col-span-3">
                                                     <a href="{{ route('customer.show', ['customer' => $order->customer->id]) }}"
-                                                        class="text-base underline underline-offset-2 ">{{ $order->customer->customer_name }}</a>
+                                                        class="text-base underline underline-offset-2 ">{{ $order->customer_name }}</a>
                                                     <span class="text-xs text-stone-500 line-clamp-1">
                                                         {{ $order->customerAddress->address_detail }} </span>
                                                 </div>
@@ -226,7 +240,8 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="9" class="py-5 text-center text-sm text-gray-500"> There are no orders.
+                                    <td colspan="9" class="py-5 text-center text-sm text-gray-500"> There are no
+                                        orders.
 
                                     </td>
                                 </tr>

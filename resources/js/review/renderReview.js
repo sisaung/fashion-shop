@@ -17,9 +17,20 @@ const renderReview = async (review) => {
         );
     });
 
-    img.src = review.user.profile_image
-        ? review.user.profile_image
-        : "https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈";
+    console.log();
+
+    if (review.user.profile_image) {
+
+        if (review.user.profile_image.includes("https")) {
+            img.src = review.user.profile_image;
+        } else {
+            img.src = img.dataset.asset + '/' + review.user.profile_image
+        }
+    } else {
+        img.src =
+            "https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈";
+    }
+
     name.textContent = review.user.name;
     reviewDescription.textContent = review.review;
 

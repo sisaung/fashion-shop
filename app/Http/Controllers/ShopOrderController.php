@@ -46,6 +46,8 @@ class ShopOrderController extends Controller
     ]
 );
 
+
+
 if (!empty($request->customer['profile_image'])) {
     $customer->profile_image = $request->customer['profile_image'];
     $customer->save();
@@ -70,8 +72,9 @@ $customerAddress = CustomerAddress::firstOrCreate([
 
 $order = Order::create([
     'order_number' => generateOrderNumber(),
-   'order_date' => $request->order_date,
+    'order_date' => $request->order_date,
     'customer_id' => $customer->id,
+    'customer_name' => $request->customer['name'],
     'customer_address_id' => $customerAddress->id,
     'coupon_id' => $request->coupon_id,
     'total_amount' => $request->total_amount,

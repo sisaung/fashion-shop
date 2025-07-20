@@ -25,8 +25,7 @@ return new class extends Migration
             $table->string('is_cancel')->default(0);
             $table->double('tax_amount')->default(0);
             $table->double('net_total')->default(0);
-           
-
+            $table->string('customer_name');
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
             $table->string('customer_address_id')->conspotrained('customer_addresses')->onDelete('cascade');
 

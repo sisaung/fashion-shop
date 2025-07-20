@@ -22,15 +22,22 @@
             <div class="col-span-1 mt-5">
                 <h3 class="text-sm font-semibold me-3 text-stone-600 mb-3">
                     Customer Information
+
                 </h3>
+
                 <table class="w-full text-sm text-left rtl:text-right text-stone-600 mb-10">
                     <tbody>
                         <tr>
                             <td class="px-6 py-3 font-bold border border-stone-200 text-start">Image</td>
                             <td class="px-6 py-3 border border-stone-200 text-start">
+
                                 @if ($customer->profile_image)
-                                    <img src="{{ $customer->profile_image }}" alt="{{ $customer->customer_name }}"
-                                        class="w-18 rounded-full object-cover object-center">
+                                    @if (Str::startsWith($customer->profile_image, 'https'))
+                                        <img class="w-20 rounded-full" src="{{ $customer->profile_image }}" alt="Demo" />
+                                    @else
+                                        <img class="w-20 rounded-full"
+                                            src="{{ asset('storage/' . $customer->profile_image) }}" alt="Demo" />
+                                    @endif
                                 @else
                                     <img class="w-20 rounded-full"
                                         src="https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1"
@@ -223,8 +230,7 @@
                                         </button> --}}
 
                                         <a href ="{{ route('order.show', $order->id) }}"
-                                            class="px-2 py-1 hover:bg-gray-100 inline-flex justify-center items-center"
-                                           >
+                                            class="px-2 py-1 hover:bg-gray-100 inline-flex justify-center items-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                                 class="size-5 text-gray-600">
                                                 <path fill-rule="evenodd"

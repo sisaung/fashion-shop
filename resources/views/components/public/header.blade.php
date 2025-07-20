@@ -93,10 +93,16 @@
                             type="button" class="inline-flex  justify-center items-center">
                             @auth
                                 @if (Auth::user()->profile_image)
-                                    <span
-                                        class="inline-flex justify-center items-center size-10  border border-pearl-bush-300 rounded-full overflow-hidden">
-                                        <img src="{{ Auth::user()->profile_image }}" alt="avatar" />
-                                    </span>
+                                    @if (Str::startsWith(Auth::user()->profile_image, 'https'))
+                                        <span
+                                            class="inline-flex justify-center items-center size-10  border border-pearl-bush-300 rounded-full overflow-hidden">
+                                            <img src="{{ Auth::user()->profile_image }}" alt="avatar" />
+
+                                        </span>
+                                    @else
+                                        <img src="{{ asset('/storage/' . Auth::user()->profile_image) }}" alt="avatar"
+                                            class="inline-flex justify-center items-center size-10  border border-pearl-bush-300 rounded-full overflow-hidden" />
+                                    @endif
                                 @else
                                     <span
                                         class="inline-flex  justify-center items-center size-10 border border-pearl-bush-300 rounded-full overflow-hidden">

@@ -159,9 +159,9 @@
                                                             </svg>
 
                                                             @if ($address->name)
-                                                            <p class="text-sm"> {{ $address->name }} </p>
+                                                            <p class="text-sm shipping-address-name"> {{ $address->name }} </p>
                                                             @else
-                                                            <p class="text-sm"> {{ Auth::user()->name }} </p>
+                                                            <p class="text-sm shipping-address-name"> {{ Auth::user()->name }} </p>
                                                             @endif
 
                                                         </div>

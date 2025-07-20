@@ -109,14 +109,26 @@
 
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
-                                        <div class="flex gap-x-3">
+                                        <div class="grid grid-cols-5">
                                             <div>
-                                                <img src="{{ $customer->customer->profile_image ? $customer->customer->profile_image : 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈' }}"
-                                                    class="size-10 rounded-full"
-                                                    alt="{{ $customer->customer->customer_name }}">
+                                                @if ($customer->customer->profile_image)
+                                                    @if (Str::startsWith($customer->customer->profile_image, 'https:'))
+                                                        <img src="{{ $customer->customer->profile_image }}"
+                                                        class="size-10 rounded-full"
+                                                            alt="{{ $customer->customer->customer_name }}">
+                                                    @else
+                                                        <img src="{{ asset('storage/' . $customer->customer->profile_image) }}"
+                                                        class="size-10 rounded-full"
+                                                            alt="{{ $customer->customer->customer_name }}">
+                                                    @endif
+                                                @else
+                                                    <img src="https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈"
+                                                        class="size-10 rounded-full"
+                                                        alt="{{ $customer->customer->customer_name }}">
+                                                @endif
                                             </div>
 
-                                            <div class="flex flex-col">
+                                            <div class="flex flex-col col-span-1">
                                                 <a href="{{ route('customer.show', ['customer' => $customer->customer_id]) }}"
                                                     class="underline underline-offset-4 hover:text-stone-700 duration-300">
                                                     {{ $customer->customer->customer_name ?? 'N/A' }}</a>

@@ -5,8 +5,13 @@
         <div class="mb-5 size-24 relative rounded-full inline-flex justify-center items-center">
             <input type="file" class="hidden image-file-upload">
             @if ($user->profile_image)
-                <img src="{{ $user->profile_image }}" class="w-full h-full object-cover object-center rounded-full"
-                    alt="{{ $user->name }}">
+                @if (Str::startsWith($user->profile_image, 'https'))
+                    <img src="{{ $user->profile_image }}" class="w-full h-full object-cover object-center rounded-full"
+                        alt="{{ $user->name }}">
+                @else
+                    <img src="{{ asset('/storage/' . Auth::user()->profile_image) }}"
+                        class="w-full h-full object-cover object-center rounded-full" alt="{{ $user->name }}">
+                @endif
                 <button data-user-profile="{{ route('account.showProfileInformation') }}"
                     class="change-profile-btn cursor-pointer absolute border-2 border-white  bottom-0 right-0 bg-pearl-bush-400 size-6 rounded-full inline-flex justify-center items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

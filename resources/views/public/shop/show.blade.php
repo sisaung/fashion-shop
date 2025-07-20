@@ -627,7 +627,7 @@
                     <div class="border border-gray-200 rounded-lg p-5">
                         <div class="flex gap-4">
                             <!-- User Avatar -->
-                            <img class="size-12 profile-image object-cover rounded-full" alt="">
+                            <img  data-asset="{{ asset('/storage/') }}" class="size-12 profile-image object-cover rounded-full" alt="">
 
                             <div class="flex-1">
                                 <!-- Username + Time + Verified -->

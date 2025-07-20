@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -68,6 +69,41 @@ class AuthController extends Controller
 
 
     }
+
+    public function redirectToGoogle() {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback() {
+        $user =  Socialite::driver('google')->user();
+
+
+        $finduser = User::where('email', $user->email)->first();
+
+        if(!is_null($finduser)) {
+
+            Auth::login($finduser);
+
+
+    }else{
+
+            $finduser = User::create([
+                'name' => $user->name,
+                'email' => $user->email,
+                'password' => Hash::make('asdffdsa'),
+                'google_id' => $user->id,
+                'profile_image' => $user->avatar,
+            ]);
+
+            Auth::login($finduser);
+
+        }
+
+        return redirect('/');
+    }
+
+
+
 }
 
 

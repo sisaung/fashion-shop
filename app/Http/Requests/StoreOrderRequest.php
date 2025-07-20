@@ -24,6 +24,7 @@ class StoreOrderRequest extends FormRequest
         return [
 
             'customer' => 'required|array',
+            'customer_name' => 'required|string|max:255',
             'customer.name' => 'required|string|max:255',
             'customer.email' => 'required|email|max:255',
             'customer.profile_image' => 'nullable|string',

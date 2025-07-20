@@ -73,10 +73,21 @@
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
                                         <div class="flex gap-x-2">
+                                            
                                             <div>
-                                                <img class="h-10 w-10 rounded-full"
-                                                    src="{{ $review->user->profile_image ? $review->user->profile_image : 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1' }}"
-                                                    alt="{{ $review->user->name }}">
+                                                @if ($review->user->profile_image)
+                                                    @if (Str::startsWith($review->user->profile_image, 'https'))
+                                                        <img src="{{ $review->user->profile_image }}"
+                                                            class="h-10 w-10 rounded-full" alt="{{ $review->user->name }}">
+                                                    @else
+                                                        <img src="{{ asset('/storage/' . $review->user->profile_image) }}"
+                                                            class="h-10 w-10 rounded-full" alt="{{ $review->user->name }}">
+                                                    @endif
+                                                @else
+                                                    <img class="h-10 w-10 rounded-full"
+                                                        src="https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1"
+                                                        alt="{{ $review->user->name }}">
+                                                @endif
                                             </div>
                                             <div class="flex flex-col gap-1">
                                                 <span>{{ $review->user->name }}</span>

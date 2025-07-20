@@ -14,6 +14,7 @@ class Order extends Model
         'coupon_id',
         'customer_address_id',
         'order_number',
+        'customer_name',
         'order_date',
         'total_amount',
         'order_status',

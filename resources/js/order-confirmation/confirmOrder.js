@@ -9,7 +9,12 @@ import renderOrderSummary from "./renderOrderSummary";
 const initalizeConfirmOrder = () => {
     const container = document.querySelector(".confirm-order");
     const currentUser = document.querySelector(".current-user");
+    const shippingAddressName = document.querySelectorAll(
+        ".shipping-address-name"
+    );
+
     const currentUserObj = JSON.parse(currentUser?.value) || {};
+    console.log();
     const csrfToken = document
         .querySelector('meta[name="csrf-token"]')
         .getAttribute("content");
@@ -73,12 +78,18 @@ const initalizeConfirmOrder = () => {
 
             return;
         } else {
+
+            const selectedName = document.querySelector(
+                ".select-address.active-address .shipping-address-name"
+            );
+
             const data = {
                 customer: {
-                    name: currentUserObj.name,
+                    name: selectedName.textContent,
                     email: currentUserObj.email,
                     profile_image: currentUserObj.profile_image,
                 },
+                customer_name: selectedName.textContent,
                 address_id: addressId,
                 coupon_id: couponId?.value,
                 order_date: new Date().toLocaleDateString("en-US"),
@@ -97,11 +108,12 @@ const initalizeConfirmOrder = () => {
                 })),
             };
 
+           
+
             const res = await storeOrder("/confirm-order", data, csrfToken);
             const orderData = await res.json();
 
             if (orderData.success) {
-
                 Toastify({
                     text: "Order placed successfully",
                     duration: 3000,
@@ -147,7 +159,6 @@ const initalizeConfirmOrder = () => {
             emptyCart(0, cartItems);
 
             localStorage.removeItem("cartItems");
-
         }
     };
     container.addEventListener("click", handleOrderConfirmBtn);

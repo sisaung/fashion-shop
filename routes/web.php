@@ -54,6 +54,9 @@ Route::controller(AuthController::class)->group(function () {
         Route::post('login', 'login')->name('login.post');
         Route::get('register', 'showRegister')->name('register');
         Route::post('register', 'register')->name('register.post');
+        Route::get('/auth/redirect',[AuthController::class,'redirectToGoogle'])->name('redirect.google');
+        Route::get('auth/google/callback',[AuthController::class,'handleGoogleCallback'])->name('callback.google');
+
     });
     Route::post('logout', 'logout')->name('logout')->middleware('auth');
 });

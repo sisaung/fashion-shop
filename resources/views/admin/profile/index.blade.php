@@ -12,8 +12,13 @@
                     <h1 class="text-xl font-heading mb-5"> Profile Settings </h1>
                     <div class="relative inline-block">
                         @if (Auth::user()->profile_image)
-                            <img src="{{ Auth::user()->profile_image }}" alt="avatar"
-                                class="size-18 object-cover object-center rounded-full">
+                            @if (Auth::user()->google_id)
+                                <img src="{{ Auth::user()->profile_image }}" alt="avatar"
+                                    class="size-18 object-cover object-center rounded-full">
+                            @else
+                                <img src="{{ asset('/storage/' . Auth::user()->profile_image) }}" alt="avatar"
+                                    class="size-18 object-cover object-center rounded-full">
+                            @endif
                             <button data-admin-profile="{{ route('admin-profile.index') }}"
                                 class="change-profile-btn cursor-pointer absolute border-2 border-white  bottom-0 right-0 bg-pearl-bush-400 size-6 rounded-full inline-flex justify-center items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

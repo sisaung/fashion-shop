@@ -70,11 +70,26 @@
                                         <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
 
                                             <div class="flex items-center gap-x-2">
+
                                                 <div>
 
-                                                    <img src="{{ $wishlist->user->profile_image ? $wishlist->user->profile_image : 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈' }}"
-                                                        class="size-10 rounded-full object-cover object-center"
-                                                        alt="{{ $wishlist->user->name }}">
+                                                    @if ($wishlist->user->profile_image)
+                                                        @if (Str::startsWith($wishlist->user->profile_image, 'https'))
+                                                            <img src="{{ $wishlist->user->profile_image }}"
+                                                                class="size-10 rounded-full object-cover object-center"
+                                                                alt="{{ $wishlist->user->name }}">
+                                                        @else
+                                                            <img src="{{ asset('/storage/' . $wishlist->user->profile_image) }}"
+                                                                class="size-10 rounded-full object-cover object-center"
+                                                                alt="{{ $wishlist->user->name }}">
+                                                        @endif
+                                                    @else
+                                                        <img src="https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1"
+                                                            class="size-10 rounded-full object-cover object-center"
+                                                            alt="{{ $wishlist->user->name }}">
+                                                    @endif
+
+                                                   
 
                                                 </div>
 

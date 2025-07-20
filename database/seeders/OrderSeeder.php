@@ -60,6 +60,7 @@ class OrderSeeder extends Seeder
             'order_date' => $date->toDateString(),
             'delivery_start_date' => $date->copy()->addDays(1)->toDateString(),
             'delivery_end_date' => $date->copy()->addDays(3)->toDateString(),
+            'customer_name' => $customer->customer_name,
             'customer_id' => $customer->id,
             'customer_address_id' => $customerAddress ? $customerAddress->id : null,
             'net_total' => 0,

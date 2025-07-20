@@ -23,7 +23,8 @@ class User extends Authenticatable
         'email',
         'password',
         'profile_image',
-        'user_address_id'
+        'user_address_id',
+        'google_id',
     ];
 
     /**
@@ -87,9 +88,9 @@ class User extends Authenticatable
         $this->hasOne(Wishlist::class);
     }
 
-    public function getProfileImageAttribute($value) {
-        return $value ? asset(Storage::url($value)) : null;
-    }
+    // public function getProfileImageAttribute($value) {
+    //     return $value ? asset(Storage::url($value)) : null;
+    // }
 
     public function address() {
         return $this->hasMany(UserAddress::class);
