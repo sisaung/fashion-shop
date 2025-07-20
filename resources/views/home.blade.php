@@ -44,14 +44,14 @@
                                         class="absolute  block w-full h-full object-center object-cover"
                                         alt="...">
                                     <div class="absolute top-0 left-0 w-full h-full bg-black/35"></div>
-                                    <div class="absolute bottom-30 left-20">
-                                        <p class="text-4xl md:text-6xl tracking-wide font-heading text-white font-bold">
+                                    <div class="absolute bottom-15 md:bottom-30 left-5 md:left-5 lg::left-10 xl:left-20">
+                                        <p class="text-3xl sm:text-4xl md:text-6xl tracking-wide font-heading text-white font-bold">
                                             Carry Confidence
                                         </p>
-                                        <p class="text-4xl md:text-6xl tracking-wide font-heading font-bold text-white">
+                                        <p class="text-2xl sm:text-4xl md:text-6xl tracking-wide font-heading font-bold text-white">
                                             Wear Grace
                                         </p>
-                                        <p class=" text-lg tracking-wider text-white"> Step into outfit that brings comfort,confidence, and a sense of belonging. </p>
+                                        <p class="text-base md:text-lg tracking-wide md:tracking-wider text-white"> Step into outfit that brings comfort,confidence, and a sense of belonging. </p>
                                     </div>
 
                                 </div>
@@ -64,13 +64,13 @@
                     </div>
 
 
-                    <div class="absolute bottom-30 left-10">
+                    {{-- <div class="absolute bottom-30 left-10">
                         <p class="text-4xl md:text-6xl font-black leading-tight tracking-wide text-white"> Own your look
                         </p>
                         <p class="text-4xl md:text-6xl font-black leading-tight tracking-wide text-white"> Own your moment
                         </p>
                         <p class="text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque eligendi </p>
-                    </div>
+                    </div> --}}
 
                 </div>
             </section>
@@ -81,7 +81,7 @@
             <div class="mb-10 xl:px-0 px-5">
                 <x-public.container-layout>
 
-                    <div class="mb-5">
+                    <div class="mb-5 flex flex-col justify-center items-center lg:items-start">
                         <h1 class="text-4xl font-heading tracking-wide font-semibold"> Featured Brands </h1>
                         <p class="text-gray-500 font-thin tracking-wide">Explore our exclusive partnerships with the world's
                             most
@@ -91,10 +91,10 @@
                     @include('components.public.fearturedBrand', ['brands' => $brands])
 
 
-                    <section class="space-y-5">
-                        <div class="">
-                            <h1 class="text-4xl font-heading tracking-wide font-semibold"> Explore Our Latest Style </h1>
-                            <p class="text-gray-500 font-thin tracking-wide"> Find clothes that match your vibe and every
+                    <section class="space-y-10 md:space-y-5">
+                        <div class="space-y-5 md:space-y-0">
+                            <h1 class="text-3xl text-center md:text-start md:text-4xl font-heading  tracking-wide font-semibold"> Explore Our Latest Style </h1>
+                            <p class="text-gray-500 text-center md:text-start font-thin md:text-base text-sm tracking-wide"> Find clothes that match your vibe and every
                                 day
                                 better. </p>
                         </div>
@@ -193,7 +193,7 @@
                     </section>
 
                     <section class="mt-10">
-                        <div class="flex justify-around  py-4">
+                        <div class="flex flex-col md:flex-row gap-5 md:gap-0 md:justify-around  py-4">
                             <div class="flex flex-col items-center gap-3">
                                 <div class="bg-pearl-bush-50 size-20 rounded-full flex justify-center items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

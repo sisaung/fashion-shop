@@ -25,7 +25,7 @@
                                 <th data-sortby="user_name" scope="col"
                                     class="px-4 py-3 text-left text-sm font-medium text-gray-500">
 
-                                    @include('components.admin.sortTable', ['sortTitle' => 'User Name'])
+                                    @include('components.admin.sortTable', ['sortTitle' => 'User'])
 
                                 </th>
 
@@ -72,9 +72,16 @@
                                         {{ $review->id }}
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                        <div class="flex flex-col gap-1">
-                                            <span>{{ $review->user->name }}</span>
-                                            <span class="text-gray-400"> {{ substr($review->review, 0, 20) }}... </span>
+                                        <div class="flex gap-x-2">
+                                            <div>
+                                                <img class="h-10 w-10 rounded-full"
+                                                    src="{{ $review->user->profile_image ? $review->user->profile_image : 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1' }}"
+                                                    alt="{{ $review->user->name }}">
+                                            </div>
+                                            <div class="flex flex-col gap-1">
+                                                <span>{{ $review->user->name }}</span>
+                                                <span class="text-gray-400"> {{ substr($review->review, 0, 20) }}... </span>
+                                            </div>
                                         </div>
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">

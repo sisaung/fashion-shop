@@ -76,7 +76,7 @@
                         <tbody class="divide-y divide-gray-200 bg-white">
 
 
-                            @if ($wishlist->user->addresses)
+                            @if ($wishlist->user->address)
                                 @foreach ($wishlist->user->address as $address)
                                     <tr>
                                         <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">

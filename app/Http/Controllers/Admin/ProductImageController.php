@@ -66,7 +66,7 @@ class ProductImageController extends Controller
 
             $largePath = $image->storeAs('/product_images/large', $fileName, 'public');
 
-            $previewImage = $imageManager->resize(2000, 2000, function ($c) {
+            $previewImage = $imageManager->resize(1000, 1000, function ($c) {
 
                 $c->aspectRatio();
                 $c->upsize();
@@ -76,7 +76,7 @@ class ProductImageController extends Controller
             Storage::disk('public')->put($previewPath, $previewImage->encode());
 
 
-            $thumbNailImage = $imageManager->cover(400, 400);
+            $thumbNailImage = $imageManager->cover(200, 200);
             $thumbnailPath = 'product_images/thumbnail/' . $uuid . '.jpg';
 
             Storage::disk('public')->put($thumbnailPath, $thumbNailImage->encode());

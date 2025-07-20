@@ -2,16 +2,20 @@
 
 
     <div class="relative">
-        <div class="bg-white shadow border-pearl-bush-400  fixed z-40 top-0 left-0 w-full py-1">
+        <div class="bg-white shadow border-pearl-bush-400  fixed z-40 top-0 left-0 w-full py-3 sm:py-1">
             <div class="max-w-7xl container px-3 xl:px-0 mx-auto flex justify-between items-center">
                 <a href="{{ url('/') }}" class="flex items-center gap-x-3 py-2">
-                    <div class="">
-                        <img src="{{ asset('/storage/logo/luxury.png') }}" alt="logo" class="h-12">
+                    <div class="sm:block hidden">
+                        <img src="{{ asset('/storage/logo/luxury.png') }}" alt="logo" class="h-10 md:h-12">
 
                     </div>
                     <div class="flex flex-col justify-center leading-tight">
-                        <h1 class="text-lg lg:text-2xl font-medium text-gray-700 font-heading">LoomLuxe</h1>
-                        <p class="text-xs text-gray-500">Fashion Shop</p>
+                        <h1 class="text-lg hidden sm:block lg:text-2xl font-medium text-gray-700 font-heading">LoomLuxe
+                        </h1>
+
+                        <p class="sm:hidden block">ＬＵＸＥ</p>
+
+                        <p class="text-xs text-gray-500 sm:block hidden">Fashion Shop</p>
                     </div>
                 </a>
 
@@ -113,7 +117,8 @@
                     </div>
 
                     <div class="px-1 lg:hidden">
-                        <button>
+                        <button data-drawer-target="drawer-right-example-1" data-drawer-show="drawer-right-example-1"
+                            data-drawer-placement="right" aria-controls="drawer-right-example-1">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="size-5 stroke-2 ">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -285,15 +290,80 @@
 
 </header>
 
-{{-- <div class="">
-    <img src="{{ asset('/storage/logo/luxury.png') }}"
-        alt="logo" class="h-12">
+{{-- menu item for mobile view --}}
+<div id="drawer-right-example-1"
+    class="fixed top-0 right-0 z-50 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 "
+    tabindex="-1" aria-labelledby="drawer-right-label">
+    <h5 id="drawer-right-label" class="inline-flex items-center gap-x-2 mb-4 text-base font-semibold text-gray-700">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="size-5 stroke-2 ">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+        Menu
+    </h5>
+    <button type="button" data-drawer-hide="drawer-right-example-1" aria-controls="drawer-right-example-1"
+        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center ">
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+        </svg>
+        <span class="sr-only">Close menu</span>
+    </button>
 
-</div> --}}
+    {{-- main menu item  --}}
+    <div id="mobile-main-menu" class="mt-5 px-1 flex flex-col gap-7">
+        <a href="{{ route('shop.index', ['item' => 'new_arrival']) }}"
+            class="text-gray-700 hover:text-black font-medium transition-colors text-sm">New
+            Arrival</a>
+
+        <a href="{{ route('shop.index', ['gender' => 'male']) }}"
+            class="text-gray-700 hover:text-black font-medium transition-colors text-sm">Men</a>
+
+        <a href="{{ route('shop.index', ['gender' => 'female']) }}"
+            class="text-gray-700 hover:text-black font-medium transition-colors text-sm">Women</a>
+        <a href="{{ route('shop.index', ['gender' => 'unisex']) }}"
+            class="text-gray-700 hover:text-black font-medium transition-colors text-sm">Unisex</a>
+
+        <a href="{{ route('shop.index', ['on_sale' => 1]) }}"
+            class="text-gray-700 hover:text-black font-medium transition-colors text-sm">
+            Sale</a>
+
+    </div>
+
+</div>
+
 
 @push('scripts')
     {{-- @vite(['resources/js/flowbite/flowbite.min.js']) --}}
     @vite(['resources/js/shop-product/search/searchProduct.js'])
     @vite(['resources/js/cart/cartHeader.js'])
     @vite(['resources/js/wishlist/wishListHeader.js'])
+    <script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js"></script>
+    <script>
+        const {
+            animate,
+            scroll
+        } = Motion
+        const menuItems = document.querySelectorAll('#mobile-main-menu a');
+        const drawer = document.getElementById('drawer-right-example-1');
+        console.log('menuItems')
+
+        // Observe drawer open event
+        drawer.addEventListener('transitionend', () => {
+            if (!drawer.classList.contains('translate-x-full')) {
+                // Drawer is open, animate menu items
+                menuItems.forEach((item, index) => {
+                    animate(item, {
+                        opacity: [0, 1],
+                        y: [-20, 0]
+                    }, {
+                        duration: 0.4,
+                        delay: index * 0.1,
+                        ease: 'ease-out'
+                    });
+                });
+            }
+        });
+    </script>
 @endpush

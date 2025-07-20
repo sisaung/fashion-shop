@@ -634,9 +634,19 @@
                                 <div class="flex flex-col">
                                     <div class="flex items-center gap-2">
                                         <p class="text-lg font-semibold user-name"></p>
-                                        <span class="text-green-600 text-xs verified-badge"></span>
+                                        <div class="flex gap-x-0.5 items-center">
+                                            <span class="verified-badge-check">
+
+                                            </span>
+                                            <span class="text-green-600 text-xs verified-badge">
+                                            </span>
+                                        </div>
+
                                     </div>
-                                    <span class="text-gray-500 text-sm review-time"></span>
+                                    <span class="text-gray-500 text-sm review-time">
+
+
+                                    </span>
                                 </div>
 
                                 <!-- Star Rating -->

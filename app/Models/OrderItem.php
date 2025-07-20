@@ -23,4 +23,6 @@ class OrderItem extends Model
     public function stock() {
         return $this->belongsTo(Stock::class);
     }
+
+
 }

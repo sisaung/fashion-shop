@@ -26,7 +26,7 @@ class HomeController extends Controller
 
     public function getLatestStyle() {
 
-        $products =  Product::where('is_new_arrival',1)
+        $products =  Product::with('productImages')->where('is_new_arrival',1)
         ->orWhere('is_trending',1)
         ->take(5)
         ->get();

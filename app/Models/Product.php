@@ -65,4 +65,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Wishlist::class);
     }
+
+    public function orderItems()
+{
+    return $this->hasManyThrough(OrderItem::class, Stock::class);
+}
 }

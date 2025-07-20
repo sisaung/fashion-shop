@@ -77,7 +77,7 @@
                 {{-- Text Content --}}
                 <div>
                     <h2 class="text-4xl md:text-5xl font-serif text-gray-900 mb-6">
-                        Our Story 
+                        Our Story
                     </h2>
                     <div class="space-y-5 text-gray-700 text-lg leading-relaxed">
                         <p>
@@ -101,7 +101,7 @@
         </section>
 
         {{-- Values Section --}}
-        <section class="py-20 bg-gray-50">
+        <section class="py-20 ">
             <div class="max-w-7xl mx-auto px-4 text-center">
                 <h2 class="text-4xl md:text-5xl font-serif text-gray-900 mb-4">Our Values</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
