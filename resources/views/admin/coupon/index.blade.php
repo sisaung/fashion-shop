@@ -46,6 +46,8 @@
 
                                 </th>
 
+
+
                                 <th data-sortby="coupon_start_date" scope="col"
                                     class="px-4 py-3 text-end text-sm font-medium text-gray-500">
 
@@ -65,16 +67,25 @@
 
                                 </th>
 
+                                <th data-sortby="coupon_expire_date" scope="col"
+                                    class="px-4 py-3 text-end text-sm font-medium text-gray-500">
+                                    @include('components.admin.sortTable', [
+                                        'sortTitle' => 'Daily Usage',
+                                    ])
+
+
+                                </th>
+
                                 <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500">
                                     <div class="flex items-center justify-end cursor-pointer">
                                         Created
                                     </div>
                                 </th>
-                                <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500">
+                                {{-- <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500">
                                     <div class="flex items-center justify-end cursor-pointer">
                                         Updated
                                     </div>
-                                </th>
+                                </th> --}}
                                 <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500">
                                     <div class="flex items-center justify-center cursor-pointer">
                                         Action
@@ -103,6 +114,8 @@
                                             {{ $coupon->discount_type == 'percentage' ? $coupon->coupon_discount . ' %' : number_format($coupon->coupon_discount) . ' MMK' }}
                                         </td>
 
+
+
                                         <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
                                             {{ $coupon->coupon_start_date }}
                                         </td>
@@ -111,18 +124,22 @@
                                             {{ $coupon->coupon_expire_date }}
                                         </td>
 
+                                        <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
+                                            {{ $coupon->daily_usage }}
+                                        </td>
+
                                         <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 text-end">
                                             <div class="">
                                                 <p> {{ date('j M Y', strtotime($coupon->created_at)) }} </p>
                                                 <p> {{ date('g:i A', strtotime($coupon->created_at)) }} </p>
                                             </div>
                                         </td>
-                                        <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 text-end">
+                                        {{-- <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 text-end">
                                             <div class="">
                                                 <p> {{ date('j M Y', strtotime($coupon->created_at)) }} </p>
                                                 <p> {{ date('h:i A', strtotime($coupon->created_at)) }} </p>
                                             </div>
-                                        </td>
+                                        </td> --}}
 
                                         <td
                                             class="whitespace-nowrap px-4 py-4 text-sm text-gray-900 text-end flex justify-center">

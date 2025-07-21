@@ -17,7 +17,7 @@ class CouponController extends Controller
      */
     public function index(Request $request)
     {
-        $validSortColumns = ['coupon_title','coupon_code','coupon_discount' ,'coupon_start_date','coupon_expire_date','id'];
+        $validSortColumns = ['coupon_title','coupon_code','daily_usage','coupon_discount' ,'coupon_start_date','coupon_expire_date','id'];
         $sortBy = in_array($request->input('sort_by'), $validSortColumns) ? $request->input('sort_by') : 'id';
 
         $sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
@@ -70,6 +70,7 @@ class CouponController extends Controller
         'coupon_title' => $request->coupon_title,
         'coupon_code' => strtoupper($request->coupon_code),
         'discount_type' => $request->discount_type,
+        'daily_usage' => $request->daily_usage,
         'coupon_discount' => $request->coupon_discount,
         'coupon_start_date' => $request->coupon_start_date,
         'coupon_expire_date' => $request->coupon_expire_date,
@@ -129,6 +130,7 @@ class CouponController extends Controller
         $coupon->coupon_code = $request->coupon_code;
         $coupon->discount_type = $request->discount_type;
         $coupon->coupon_discount = $request->coupon_discount;
+        $coupon->daily_usage = $request->daily_usage;
         $coupon->coupon_start_date = $request->coupon_start_date;
         $coupon->coupon_expire_date = $request->coupon_expire_date;
         $coupon->save();

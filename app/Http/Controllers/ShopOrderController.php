@@ -101,6 +101,8 @@ if($request->coupon_id) {
         'user_id' => $customer->id,
         'coupon_id' => $request->coupon_id,
     ]);
+
+    // Coupon::where('id',$request->coupon_id)->decrement('daily_usage');
 }
 
 return response()->json(['message' => 'Order created successfully','data'=>$order,'success'=> true]);
@@ -131,19 +133,24 @@ return response()->json(['message' => 'Order created successfully','data'=>$orde
 public function checkCoupon(Request $request)
 {
     $couponCode = $request->input('coupon_code');
+
     $userId = Auth::id(); // Make sure user is authenticated
     $currentDate = now()->format('Y-m-d');
 
     //  Check coupon exists
     $coupon = Coupon::where('coupon_code', $couponCode)->first();
     if (!$coupon) {
-        return response()->json('Invalid Coupon');
+        return response()->json(['message' => 'Invalid Coupn','status' => 404]);
     }
 
+
+
     //  Check start date if exists
-    if ($coupon->start_date && $coupon->start_date > $currentDate) {
+    if ($coupon->coupon_start_date && $coupon->coupon_start_date > $currentDate) {
         return response()->json(['message' => 'This coupon is not active yet.','status' => 404]);
     }
+
+   
 
     //  Check expire date
     if ($coupon->coupon_expire_date < $currentDate) {
@@ -156,7 +163,8 @@ public function checkCoupon(Request $request)
         ->whereDate('created_at', $currentDate)
         ->count();
 
-    if ($usageCount >= 3) { // change 3 to your limit
+
+    if ($usageCount >= $coupon->daily_usage) {
         return response()->json(['message' => 'You have reached the daily usage limit for this coupon.','status' => 404]);
     }
 
@@ -167,6 +175,7 @@ public function checkCoupon(Request $request)
     return response()->json([
         'message' => 'Valid Coupon',
         'coupon_id' => $coupon->id,
+        'discount_type' => $coupon->discount_type,
         'coupon_discount' => $coupon->coupon_discount
     ]);
 }

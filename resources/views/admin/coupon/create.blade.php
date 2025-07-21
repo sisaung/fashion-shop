@@ -44,7 +44,20 @@
                             @enderror
                         </div>
 
-                        <div class="col-span-1"></div>
+                        <div class="relative mb-4">
+                            <label for="daily_usage"
+                                class="@error('daily_usage')
+                            text-red-500
+                        @enderror leading-7 text-sm text-gray-600">Daily Usage
+                                </label>
+                            <input type="number" id="daily_usage" name="daily_usage" value="{{ old('daily_usage') }}"
+                                class="@error('daily_usage')
+                            is-invalid
+                        @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            @error('daily_usage')
+                                <p class="text-sm text-red-500"> {{ $message }}</p>
+                            @enderror
+                        </div>
                         <div class="col-span-1"></div>
 
                         <div class="relative mb-4 w-full col-span-1">
@@ -124,7 +137,7 @@
 
                         <div class="col-span-1"></div>
                         <div class="col-span-1"></div>
-                       
+
 
 
                         <div class="flex items-center gap-x-5 w-full">

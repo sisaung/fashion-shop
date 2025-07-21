@@ -82,24 +82,23 @@ const renderOrderSummary = (cart) => {
             return;
         } else {
             Toastify({
-                text: "Coupon Added successfully",
+                text: "Order added successfully",
                 duration: 3000,
+                close: true,
                 gravity: "top",
                 position: "right",
                 style: {
-                    background: "#f9f6f3",
+                    background: "#ecfdf3",
                     fontSize: "14px",
-                    color: "#694943",
-                    boxShadow: "0px",
+                    color: "#008a2e",
                 },
-                close: true,
-                avatar: "",
             }).showToast();
             couponInput.value = "";
             applyBtn.disabled = true;
         }
 
-        if (data?.discount_type == "percentage" && data?.coupon_id) {
+
+        if (data?.discount_type == "percentage" && data.coupon_id) {
             const discountPrice = (data.coupon_discount / 100) * subtotal;
             couponDiscount.textContent = `${numberFormat(discountPrice)} MMK`;
             const total = subtotal - discountPrice;
