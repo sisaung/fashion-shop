@@ -74,7 +74,7 @@
                     </div>
                     <button type="submit"
                         class="text-white bg-pearl-bush-400 border-0 py-2 px-8 focus:outline-none hover:bg-pearl-bush-600 rounded text-sm cursor-pointer duration-300">Register</button>
-                    <p class="text-xs text-gray-500 mt-3"> Already have an account? <span> <a href="{{ route('login') }}"
+                    <p class="text-xs text-center text-gray-500 mt-3"> Already have an account? <span> <a href="{{ route('login') }}"
                                 class="text-pearl-bush-400 hover:text-pearl-bush-600 underline underline-offset-4">Login</a>
                         </span> </p>
                 </div>

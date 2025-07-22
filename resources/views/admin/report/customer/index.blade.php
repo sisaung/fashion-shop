@@ -143,7 +143,7 @@
                                     <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
                                         {{ $customer->total_orders }}</td>
                                     <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
-                                        ${{ number_format($customer->total_spent, 2, '', ',') }} MMK</td>
+                                        ${{ number_format($customer->total_spent) }} MMK</td>
 
                                 </tr>
                             @endforeach

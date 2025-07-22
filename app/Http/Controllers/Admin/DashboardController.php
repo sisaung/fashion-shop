@@ -229,6 +229,8 @@ class DashboardController extends Controller
         $productTypeNames = $topProductType->pluck('name')->toArray();
         $productTypeSales = $topProductType->pluck('total_sales')->toArray();
 
+        // return $totalSale;
+
     // return $results;
         return view('admin.dashboard.index', [
             'totalRevenue' => $totalRevenue,

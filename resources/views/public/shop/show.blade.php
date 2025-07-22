@@ -48,7 +48,7 @@
 
                 <div id="default-carousel" class="relative w-full" data-carousel="slide">
                     <!-- Carousel wrapper -->
-                    <div class="relative h-56 border-transparent overflow-hidden rounded-lg md:h-[700px]">
+                    <div class="relative h-56 border-transparent overflow-hidden rounded-lg md:h-[1000px]  lg:h-[700px]">
 
 
                         @if ($product->productImages->count() > 0)
@@ -57,7 +57,7 @@
                                 <div class="hidden border border-pearl-bush-400  overflow-hidden duration-700 ease-in-out rounded-lg"
                                     data-carousel-item>
                                     <img src="{{ $image->large }}"
-                                        class="absolute  block w-full  -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                        class="absolute object-center object-cover  block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                                         alt="...">
                                 </div>
                             @endforeach
@@ -110,13 +110,13 @@
 
 
                 {{-- Product Info --}}
-                <div class="space-y-8 h-screen overflow-y-auto hide-scrollbar">
+                <div class="space-y-8 h-screen sm:overflow-y-auto hide-scrollbar">
                     @include('components.breadcrumb', [
                         'currentPageTitle' => 'Product Detail',
                         'links' => [['name' => 'Shop', 'path' => route('shop.index')]],
                     ])
                     <div>
-                        <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-2"> {{ $product->product_name }} </h1>
+                        <h1 class="text-xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2"> {{ $product->product_name }} </h1>
                         <div class="flex items-center gap-x-1 mb-4">
 
                             <div class="flex items-center">
@@ -165,7 +165,7 @@
 
 
                     {{-- Tags --}}
-                    <div class="flex flex-wrap gap-2">
+                    <div class="flex flex-nowrap overflow-x-scroll justify-start items-start text-nowrap hide-scrollbar gap-2">
 
                         <span
                             class="bg-pearl-bush-400 text-white text-xs px-3 py-1 rounded-full  font-medium">{{ $product->brand->brand_name }}</span>
@@ -273,9 +273,9 @@
 
 
                     {{-- Buttons --}}
-                    <div class="flex items-center gap-3">
+                    <div class="flex max-[350px]:flex-col  items-center gap-3">
                         <button data-product="{{ $product }}"
-                            class="add-to-cart-btn cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 text-white py-2.5  rounded-full px-5 text-sm gap-x-3  inline-flex items-center justify-center transition duration-300 ">
+                            class="add-to-cart-btn text-nowrap cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 max-[350px]:w-full text-white py-2.5  rounded-full px-5 text-sm gap-x-3  inline-flex items-center justify-center transition duration-300 ">
                             <span>Add to Cart</span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-4">
@@ -309,7 +309,7 @@
                                     d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                             </svg>
 
-                            <span class="status-wishlist">Add to Wishlist</span>
+                            <span class="status-wishlist" class="">Add to Wishlist</span>
 
 
                         </button>
@@ -354,7 +354,7 @@
 
 
             <div id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content"
-                class="flex gap-x-15 mb-10 border-b border-stone-200 " data-tabs-active-classes="active-tab"
+                class="flex gap-x-15 mb-10 mt-14 sm:mt-0 border-b border-stone-200 " data-tabs-active-classes="active-tab"
                 data-tabs-inactive-classes="text-stone-600">
                 <button id="review-styled-tab" data-tabs-target="#styled-review" role="tab" aria-controls="review"
                     aria-selected="false" class="tab text-stone-600 cursor-pointer py-3 active-tab"> Review </button>
@@ -366,10 +366,8 @@
             <div class="tab-content mb-5" id="default-styled-tab-content">
                 {{-- Review Tab --}}
                 <div id="styled-review" role="tabpanel" aria-labelledby="review-tab"
-                    class="bg-white border grid grid-cols-2 border-stone-200 rounded-lg p-8">
+                    class="bg-white border gap-4 xl:gap-0 grid grid-cols-1  xl:grid-cols-2 border-stone-200 rounded-lg p-8">
                     <div class="flex items-center gap-x-3">
-
-
 
                         {{-- {{ number_format($product->reviews->avg('rating'), 2, '.', '') }} --}}
                         <span class="text-4xl font-semibold">
@@ -425,7 +423,7 @@
                     </div>
 
 
-                    <div class="col-span-1 flex flex-col">
+                    <div class="col-span-1 flex flex-col pr-5 sm:pr-0">
                         @foreach (range(5, 1) as $star)
                             @php
                                 if (Auth::check()) {
@@ -449,11 +447,11 @@
                                 $percentage = $totalReviews > 0 ? ($starCount / $totalReviews) * 100 : 0;
                             @endphp
 
-                            <div class="flex items-center gap-x-8">
+                            <div class="flex  items-center  gap-x-2 sm:gap-x-5 md:gap-x-8">
 
                                 <div>
                                     <button class="inline-flex items-center text-stone-600 cursor-pointer">
-                                        <span>{{ $star }}</span>
+                                        <span class="text-sm sm:text-base">{{ $star }}</span>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor"
                                             class="size-4 fill-yellow-400 stroke-none">
@@ -464,11 +462,12 @@
                                 </div>
 
                                 <div class="flex items-center gap-2 w-full">
-                                    <div class="bg-stone-300 h-2.5 w-96 rounded-full">
+                                    <div class="bg-stone-300 h-2.5 w-62 sm:w-96 rounded-full">
                                         <div class="bg-yellow-400 rounded-full h-2.5"
                                             style="width: {{ $percentage }}%"></div>
                                     </div>
-                                    <span>{{ number_format($percentage) }} %</span>
+                                    <span class="text-sm sm:text-base text-nowrap">{{ number_format($percentage) }}
+                                        %</span>
                                 </div>
                             </div>
                         @endforeach
@@ -480,6 +479,7 @@
                     <h2 class="text-2xl font-bold text-gray-900 mb-6">Product Description</h2>
                     <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 space-y-6">
                         <div>
+
                             <h3 class="text-lg font-semibold text-gray-900 mb-3"> {{ $product->product_name }} -
                                 {{ $product->product_code }} </h3>
                             <p class="text-gray-700 leading-relaxed">{{ $product->description }}</p>
@@ -516,10 +516,10 @@
                     <span>All Reviews</span>
                 </div> --}}
 
-                <div class="flex  gap-x-3 items-center">
+                <div class="flex  flex-wrap gap-3 items-center">
                     @foreach ($filterStars as $key => $count)
                         <button data-count="{{ $count['count'] }}"
-                            class="flex cursor-pointer hover:bg-pearl-bush-400 hover:text-white gap-x-1 filter-btn items-center bg-gray-100 text-gray-600 text-sm px-3.5 py-1.5 rounded-full">
+                            class="flex cursor-pointer hover:bg-pearl-bush-400 hover:text-white gap-x-1 filter-btn items-center bg-gray-100 text-gray-600 text-xs sm:text-sm px-3.5 py-1.5 rounded-full">
                             {{ $count['count'] }}
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="size-4 ">
@@ -527,14 +527,13 @@
                                     d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
                             </svg>
 
-
                         </button>
                     @endforeach
                 </div>
 
 
             </div>
-            <div class="grid grid-cols-2">
+            <div class="grid grid-cols-1 lg:grid-cols-2">
                 <form action="{{ route('review.store', ['productId' => $product->id]) }}" method="POST">
                     @csrf
                     <h3 class="font-heading font-semibold text-lg mb-3"> Write Reviews </h3>
@@ -542,31 +541,35 @@
                         <textarea name="review" id="" cols="60" rows="10"
                             class="border border-pearl-bush-400 focus:ring-1 focus:ring-pearl-bush-500 mb-3 w-full rounded-lg "></textarea>
 
-                        <div class="flex items-center gap-x-5 justify-end">
-                            <p>Rate this product</p>
+                        <div class="flex items-center gap-x-5 justify-start xl:justify-end">
                             <div>
-                                <input type="hidden" name="rating" class="rating">
-                                @foreach (range(1, 5) as $star => $value)
-                                    <button data-rating="{{ $value }}"
-                                        class="rating-btn cursor-pointer inline-flex items-center ">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor"
-                                            class="size-6 stroke-none fill-gray-400 star">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
-                                        </svg>
-                                    </button>
-                                @endforeach
+                                <p>Rate this product</p>
+                                <div>
+                                    <input type="hidden" name="rating" class="rating">
+                                    @foreach (range(1, 5) as $star => $value)
+                                        <button data-rating="{{ $value }}"
+                                            class="rating-btn cursor-pointer inline-flex items-center ">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor"
+                                                class="size-6 stroke-none fill-gray-400 star">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                                            </svg>
+                                        </button>
+                                    @endforeach
+                                </div>
                             </div>
-                            @auth
-                                <button
-                                    class=" cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 text-white py-2.5  rounded-full px-5 text-sm gap-x-1  inline-flex items-center justify-center transition duration-300 ">Post
-                                    Review</button>
-                            @endauth
-                            @guest
-                                <a class=" cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 text-white py-2.5  rounded-full px-5 text-sm gap-x-1  inline-flex items-center justify-center transition duration-300 "
-                                    href="{{ route('login') }}">Login Review </a>
-                            @endguest
+                            <div>
+                                @auth
+                                    <button
+                                        class=" cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 text-white py-2.5  rounded-full px-5 text-sm gap-x-1  inline-flex items-center justify-center transition duration-300 ">Post
+                                        Review</button>
+                                @endauth
+                                @guest
+                                    <a class=" cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 text-white py-2.5  rounded-full px-5 text-sm gap-x-1  inline-flex items-center justify-center transition duration-300 "
+                                        href="{{ route('login') }}">Login Review </a>
+                                @endguest
+                            </div>
                         </div>
 
                     </div>
@@ -580,7 +583,7 @@
                 <h1 class="review-count-container mb-5"></h1>
 
                 <template id="review-count-template">
-                    <h1 class="review-count"> All Reviews ( {{ $reviewCount }} ) </h1>
+                    <h1 class="review-count mt-5"> All Reviews ( {{ $reviewCount }} ) </h1>
 
                 </template>
                 <div class="review-container space-y-5">
@@ -627,7 +630,8 @@
                     <div class="border border-gray-200 rounded-lg p-5">
                         <div class="flex gap-4">
                             <!-- User Avatar -->
-                            <img  data-asset="{{ asset('/storage/') }}" class="size-12 profile-image object-cover rounded-full" alt="">
+                            <img data-asset="{{ asset('/storage/') }}"
+                                class="size-12 profile-image object-cover rounded-full" alt="">
 
                             <div class="flex-1">
                                 <!-- Username + Time + Verified -->

@@ -278,8 +278,9 @@ $bestSelling = DB::table('order_items')
     $chartData = Order::select(
         DB::raw($groupBy . ' as period'),
         DB::raw('COUNT(*) as total_orders'),
-        DB::raw('SUM(total_amount) as total_sale')
+        DB::raw('SUM(net_total) as total_sale')
     )
+    ->where('order_status', 'completed')
     ->whereBetween('created_at', [$startDate, $endDate])
     ->groupBy(DB::raw($groupBy))
     ->orderBy(DB::raw($groupBy))
@@ -363,68 +364,88 @@ $bestSelling = DB::table('order_items')
         return $query;
     }
 
+    // public function reportCustomers(Request $request) {
+    //     $filter = $request->input('filter', 'this_month');
+
+    //     // Top customers query
+    //     $topCustomersQuery = Order::select(
+    //         'customer_id',
+    //         DB::raw('COUNT(*) as total_orders'),
+    //         DB::raw('SUM(total_amount) as total_spent')
+    //     )
+    //     ->groupBy('customer_id')
+    //     ->orderByDesc('total_spent');
+
+    //     // Apply time filter (your custom method)
+    //     $topCustomersQuery = $this->timeFilter($filter, $topCustomersQuery);
+
+    //     // Get top 5 customers
+    //     $topCustomers = $topCustomersQuery->limit(5)->get();
+
+    //     // Eager load customer data for top customers (best way)
+    //     $topCustomers->load('customer');
+
+    //     // Count new and repeat customers
+    //     $customerOrdersQuery = Order::select(
+    //         'customer_id',
+    //         DB::raw('COUNT(*) as order_count')
+    //     )
+    //     ->groupBy('customer_id');
+
+    //     $customerOrdersQuery = $this->timeFilter($filter, $customerOrdersQuery);
+    //     $customerOrders = $customerOrdersQuery->get();
+
+    //     $newCustomers = $customerOrders->where('order_count', 1)->count();
+    //     $repeatCustomers = $customerOrders->where('order_count', '>', 1)->count();
+
+    //     return view('admin.report.customer.index', [
+    //         'topCustomers' => $topCustomers,
+    //         'newCustomers' => $newCustomers,
+    //         'repeatCustomers' => $repeatCustomers,
+    //         'filter' => $filter
+    //     ]);
+    // }
+
     public function reportCustomers(Request $request) {
-        // $topCustomers = Order::select(
-        //     'customer_id',
-        //     DB::raw('COUNT(*) as total_orders'),
-        //     DB::raw('SUM(total_amount) as total_spent')
-        // )
-        // ->groupBy('customer_id')
-        // ->orderByDesc('total_spent')
-        // ->with('customer') // eager load customer relationship
-        // ->limit(10)
-        // ->get();
-
-        // $customerOrders = Order::select(
-        //     'customer_id',
-        //     DB::raw('COUNT(*) as order_count')
-        // )
-        // ->groupBy('customer_id')
-        // ->get();
-
         $filter = $request->input('filter', 'this_month');
+
+        // Top customers query
         $topCustomersQuery = Order::select(
             'customer_id',
             DB::raw('COUNT(*) as total_orders'),
             DB::raw('SUM(total_amount) as total_spent')
         )
+        ->where('order_status','!=','cancelled')
         ->groupBy('customer_id')
-        ->orderByDesc('total_spent')
-        ->with('customer');
+        ->orderByDesc('total_spent');
 
-        $topCustomersQuery = $this->timeFilter($filter,$topCustomersQuery);
+        // Apply time filter (your custom method)
+        $topCustomersQuery = $this->timeFilter($filter, $topCustomersQuery);
+
+        // Get top 5 customers
         $topCustomers = $topCustomersQuery->limit(5)->get();
 
-
+        // Eager load customer data for top customers (best way)
+        $topCustomers->load('customer');
 
         // Count new and repeat customers
-        // $newCustomers = $customerOrders->where('order_count', 1)->count();
-        // $repeatCustomers = $customerOrders->where('order_count', '>', 1)->count();
-
-        // new and repeat customer
         $customerOrdersQuery = Order::select(
             'customer_id',
             DB::raw('COUNT(*) as order_count')
         )
         ->groupBy('customer_id');
 
-        $customerOrdersQuery = $this->timeFilter($filter,$customerOrdersQuery);
+        $customerOrdersQuery = $this->timeFilter($filter, $customerOrdersQuery);
         $customerOrders = $customerOrdersQuery->get();
 
         $newCustomers = $customerOrders->where('order_count', 1)->count();
         $repeatCustomers = $customerOrders->where('order_count', '>', 1)->count();
 
-
-
-        return view('admin.report.customer.index',
-        [
-            'topCustomers' => $topCustomers,
+        return view('admin.report.customer.index', [
             'topCustomers' => $topCustomers,
             'newCustomers' => $newCustomers,
             'repeatCustomers' => $repeatCustomers,
-            'filter' => $filter,
-            // 'newCustomers' => $newCustomers,
-            // 'repeatCustomers' => $repeatCustomers
+            'filter' => $filter
         ]);
     }
 

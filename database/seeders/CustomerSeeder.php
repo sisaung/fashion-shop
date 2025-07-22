@@ -15,7 +15,7 @@ class CustomerSeeder extends Seeder
     public function run(): void
     {
          // Get all users
-         $users = User::all();
+         $users = User::where('is_admin', '!=', 'admin')->get();
 
          foreach ($users as $user) {
              Customer::create([

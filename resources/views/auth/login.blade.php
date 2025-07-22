@@ -45,17 +45,24 @@
                             <p class="text-sm text-red-500"> {{ $message }}</p>
                         @enderror
                     </div>
-                    <div>
-                        <a href="{{ route('redirect.google') }}"> Login with google </a>
-                    </div>
+
                     <button
-                        class="text-white bg-pearl-bush-400 border-0 py-2 px-8 focus:outline-none hover:bg-pearl-bush-600 rounded text-sm cursor-pointer duration-300">Login</button>
+                        class="text-white mb-5 bg-pearl-bush-400 border-0 py-2.5 px-8 focus:outline-none hover:bg-pearl-bush-600 rounded text-sm cursor-pointer duration-300">Login</button>
+
+
+                    <div class="cursor-pointer border border-pearl-bush-200 rounded flex justify-center items-center py-2.5 text-sm ">
+                        <a href="{{ route('redirect.google') }}" class="w-full gap-x-3 inline-flex justify-center items-center">
+                                <img src="{{ asset('/storage/logo/google.png') }}" alt="google" class="size-5">
+                            Login with google </a>
+                    </div>
+
                     <p class="text-xs text-center text-gray-500 mt-3"> Don't have an account? <span> <a
                                 href="{{ route('register') }}"
                                 class="text-pearl-bush-400 hover:text-pearl-bush-600 underline underline-offset-4">Register</a>
                         </span> </p>
                 </div>
             </form>
+
         </div>
         {{-- <form action="{{ route('login.post') }}" method="POST">
             @csrf

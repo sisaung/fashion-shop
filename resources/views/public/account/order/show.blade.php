@@ -22,7 +22,7 @@
 
             <div class="grid lg:grid-cols-3 gap-8 px-5">
                 {{-- Left Column --}}
-                <div class="lg:col-span-2  space-y-8 h-screen overflow-y-auto hide-scrollbar pb-10">
+                <div class="lg:col-span-2  space-y-8 h-auto lg:h-screen overflow-y-auto hide-scrollbar pb-10">
 
 
                     {{-- Ordered Products List --}}
@@ -79,15 +79,15 @@
 
                     {{-- Delivery Info --}}
                     <div class="bg-white rounded-lg ">
-                        <h2 class="  text-gray-600 font-heading mb-3">Delivery Information</h2>
+                        <h2 class="text-gray-600 font-heading mb-3">Delivery Information</h2>
                         <div class="space-y-4">
 
                             <div class="delivery-address-container space-y-4">
 
                                 <div class="border border-pearl-bush-300 rounded-lg px-6 py-4 select-address">
-                                    <div class="mb-3">
-                                        <h3 class="font-heading font-semibold"> Customer Contact </h3>
-                                        <div class="flex items-center gap-x-5 ">
+                                    <div class="mb-5 md:mb-3">
+                                        <h3 class="font-heading font-semibold mb-3 md:mb-0"> Customer Contact </h3>
+                                        <div class="flex md:flex-row flex-col items-start gap-3 md:gap-0 md:items-center gap-x-5 ">
                                             <div class="flex items-center gap-x-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="1.5" stroke="currentColor"
@@ -124,7 +124,7 @@
                                     </div>
 
                                     <div>
-                                        <h1 class="font-heading font-semibold"> Shipping Address </h1>
+                                        <h1 class="font-heading font-semibold mb-2 md:mb-0"> Shipping Address </h1>
                                         <div class="flex items-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke-width="1.5" stroke="currentColor" class="size-5 text-pearl-bush-500">
@@ -134,7 +134,7 @@
                                                     d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                                             </svg>
 
-                                            <p class="text-sm"> {{ $order->customerAddress->address_detail }} </p>
+                                            <p class="text-sm text-nowrap"> {{ $order->customerAddress->address_detail }} </p>
                                         </div>
                                     </div>
                                 </div>

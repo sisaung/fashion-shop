@@ -53,15 +53,15 @@
         </div>
 
 
-        <div class="min-h-screen bg-white overflow-y-scroll hide-scrollbar pb-14">
-            <div class="max-w-7xl mx-auto py-8">
+        <div class="min-h-screen overflow-y-scroll hide-scrollbar pb-14">
+            <div class="max-w-7xl mx-auto py-8 px-5">
                 {{-- current user --}}
                 <input type="hidden" name="user" value="{{ auth()->user() }}" class="current-user">
                 {{-- <form action="#" method="POST">
                     @csrf --}}
-                <div class="grid lg:grid-cols-3 gap-8">
+                <div class="grid lg:grid-cols-3 gap-8 px:5">
                     {{-- Left Column --}}
-                    <div class="lg:col-span-2  space-y-8 h-screen overflow-y-auto hide-scrollbar">
+                    <div class="lg:col-span-2  space-y-8 h-auto lg:h-screen overflow-y-auto hide-scrollbar">
 
                         <template id="ordered-product-list-template">
                             <div class="flex gap-4 pb-6">
@@ -72,8 +72,11 @@
                                 </div>
 
                                 <div class="flex-1">
-                                    <h3 class="font-semibold text-gray-800 text-lg mb-2 ordered-product-name "></h3>
-                                    <p class="text-amber-600 text-sm mb-2 ordered-product-code"></p>
+                                    <h3
+                                        class="font-medium text-gray-800 font-heading md:text-lg mb-2 max-[375px]:line-clamp-1 ordered-product-name ">
+                                    </h3>
+                                    <p class="text-amber-600 text-sm mb-2 ordered-product-code max-[375px]:line-clamp-1">
+                                    </p>
                                     <p class="text-sm text-gray-400 ordered-product-sale-price line-through">
                                     </p>
 
@@ -90,11 +93,11 @@
 
                                     <div class="flex gap-3">
                                         <button type="button"
-                                            class="ordered-product-remove text-gray-500 hover:text-gray-700 text-sm underline transition-colors">
+                                            class="ordered-product-remove text-gray-500 max-[375px]:text-xs hover:text-gray-700 text-sm underline transition-colors">
                                             Remove
                                         </button>
                                         <button type="button"
-                                            class="redirect-to-detail bg-pearl-bush-400 hover:bg-pearl-bush-600 text-white px-4 py-2 rounded-full cursor-pointer  font-medium transition-colors text-xs">
+                                            class="redirect-to-detail text-nowrap bg-pearl-bush-400 hover:bg-pearl-bush-600 text-white px-4 py-2 rounded-full cursor-pointer  font-medium transition-colors text-xs">
                                             See More
                                         </button>
                                     </div>
@@ -104,7 +107,7 @@
 
                         {{-- Ordered Products List --}}
                         <h2 class="font-heading text-gray-700 mb-3">Ordered Products List</h2>
-                        <div class="bg-white border border-pearl-bush-100 rounded-lg  p-6 ordered-products-list-container">
+                        <div class="bg-white  rounded-lg   ordered-products-list-container">
 
                         </div>
 
@@ -119,11 +122,11 @@
 
                         {{-- Delivery Info --}}
                         <div class="bg-white rounded-lg ">
-                            <h2 class="  text-gray-600 font-heading mb-3">Delivery Information</h2>
+                            <h2 class="text-gray-600 font-heading mb-3">Delivery Information</h2>
                             <div class="space-y-4">
 
 
-                                <div class="delivery-address-container space-y-4 px-3">
+                                <div class="delivery-address-container space-y-4">
                                     @if (Auth::check() && Auth::user()->address->count() > 0)
                                         @foreach (Auth::user()->address as $address)
                                             <div data-address-id="{{ $address->id }}"
@@ -149,7 +152,8 @@
 
                                                         </div>
                                                     </div>
-                                                    <div class="flex items-center gap-x-5 ">
+                                                    <div
+                                                        class="flex sm:flex-row flex-col items-start sm:items-center gap-3 sm:gap-5 ">
                                                         <div class="flex items-center gap-x-1">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                                 viewBox="0 0 24 24" stroke-width="1.5"
@@ -159,9 +163,11 @@
                                                             </svg>
 
                                                             @if ($address->name)
-                                                            <p class="text-sm shipping-address-name"> {{ $address->name }} </p>
+                                                                <p class="text-sm shipping-address-name">
+                                                                    {{ $address->name }} </p>
                                                             @else
-                                                            <p class="text-sm shipping-address-name"> {{ Auth::user()->name }} </p>
+                                                                <p class="text-sm shipping-address-name">
+                                                                    {{ Auth::user()->name }} </p>
                                                             @endif
 
                                                         </div>
@@ -211,12 +217,12 @@
                                             <div class="grid md:grid-cols-2 gap-4">
                                                 <div>
                                                     <label for="name" id="name"
-                                                    class="@error('name')
+                                                        class="@error('name')
                                                     text-red-500
                                                         @enderror leading-7 text-sm text-gray-600">Full
                                                         Name</label>
                                                     <input type="text" name="name" id="name"
-                                                    class="@error('name')
+                                                        class="@error('name')
 
                                                     is-invalid
                                                 @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
@@ -249,7 +255,7 @@
                         text-red-500
                     @enderror leading-7 text-sm text-gray-600">City</label>
                                                     <input type="text" name="city"
-                                                    class="@error('city')
+                                                        class="@error('city')
                                                     is-invalid
                                                 @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     @error('city')
@@ -258,11 +264,11 @@
                                                 </div>
                                                 <div>
                                                     <label
-                                                    class="@error('township')
+                                                        class="@error('township')
                                                     text-red-500
                                                 @enderror leading-7 text-sm text-gray-600">Township</label>
                                                     <input type="text" name="township"
-                                                    class="@error('township')
+                                                        class="@error('township')
                                                     is-invalid
                                                 @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                     @error('township')
@@ -272,12 +278,13 @@
                                             </div>
 
                                             <div>
-                                                <label class="@error('address_detail')
+                                                <label
+                                                    class="@error('address_detail')
                                                 text-red-500
                                             @enderror leading-7 text-sm text-gray-600">Full
                                                     Address</label>
                                                 <textarea name="address_detail" rows="4"
-                                                class="@error('address_detail')
+                                                    class="@error('address_detail')
 
                                                 is-invalid
                                             @enderror w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
@@ -324,7 +331,7 @@
 
                     {{-- Right Column --}}
                     <div class="space-y-4">
-                        <div class=" rounded-2xl bg-white   p-6 space-y-4 summary-container">
+                        <div class=" rounded-2xl bg-white  xl:px-6 py-6 space-y-4 summary-container">
                             <h2 class="text-lg font-semibold text-gray-900 border-b pb-4">Order Summary</h2>
 
 
@@ -372,7 +379,7 @@
                     {{-- Bottom Actions - Sticky --}}
                     <div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 shadow-md px-4 py-4 z-50">
                         <div class="max-w-7xl mx-auto flex justify-between items-center">
-                            <a href="{{route('shop.index')}}"
+                            <a href="{{ route('shop.index') }}"
                                 class="flex items-center gap-2 text-pearl-bush-400 hover:text-pearl-bush-600 font-medium transition-colors">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
                                     viewBox="0 0 24 24">
