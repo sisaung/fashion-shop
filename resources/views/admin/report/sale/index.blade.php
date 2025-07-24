@@ -185,7 +185,7 @@
 
             </div>
 
-            <div class="text-2xl font-bold">{{ number_format(array_sum($monthlySalesData->toArray()), 2, '') }} MMK</div>
+            <div class="text-2xl font-bold">{{ number_format(array_sum($monthlySalesData->toArray())) }} MMK</div>
             <div class="text-sm text-gray-600">Total Sale</div>
 
         </div>
@@ -222,7 +222,7 @@
             </div>
 
             <div class="text-2xl font-bold">
-                {{ number_format(array_sum($monthlySalesData->toArray()) / max(array_sum($monthlyOrdersData->toArray()), 1), 2, '') }}
+                {{ number_format(array_sum($monthlySalesData->toArray()) / max(array_sum($monthlyOrdersData->toArray()), 1)) }}
                 MMK </div>
             <div class="text-sm text-gray-600">Avg Order Value</div>
 

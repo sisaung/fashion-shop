@@ -218,7 +218,7 @@ class ProductSeeder extends Seeder
 
              // Accessories - Hats
     [
-        'product_name' => 'XLU Bucket hat',
+        'product_name' => 'JXLU Bucket hat',
         'category' => 'Accessories',
         'type' => 'Hat',
         'brand' => 'JJXX',
@@ -228,7 +228,7 @@ class ProductSeeder extends Seeder
         'gender' => 'unisex',
     ],
     [
-        'product_name' => 'XMORA Bucket hat',
+        'product_name' => 'JXMORA Bucket hat',
         'category' => 'Accessories',
         'type' => 'Hat',
         'brand' => 'JJXX',
@@ -240,7 +240,7 @@ class ProductSeeder extends Seeder
 
     // Accessories - Caps
     [
-        'product_name' => 'JXX JXSUZANNE Baseball Cap',
+        'product_name' => 'JJXX JXSUZANNE Baseball Cap',
         'category' => 'Accessories',
         'type' => 'Cap',
         'brand' => 'JJXX',
@@ -250,7 +250,7 @@ class ProductSeeder extends Seeder
         'gender' => 'unisex',
     ],
     [
-        'product_name' => 'XBASIC Baseball cap',
+        'product_name' => 'JXBASIC Baseball cap',
         'category' => 'Accessories',
         'type' => 'Cap',
         'brand' => 'JJXX',
@@ -260,7 +260,7 @@ class ProductSeeder extends Seeder
         'gender' => 'unisex',
     ],
     [
-        'product_name' => 'XLU Baseball cap',
+        'product_name' => 'JXLU Baseball cap',
         'category' => 'Accessories',
         'type' => 'Cap',
         'brand' => 'JJXX',
@@ -270,7 +270,7 @@ class ProductSeeder extends Seeder
         'gender' => 'unisex',
     ],
     [
-        'product_name' => 'XMORA Baseball cap',
+        'product_name' => 'JXMORA Baseball cap',
         'category' => 'Accessories',
         'type' => 'Cap',
         'brand' => 'JJXX',
@@ -282,7 +282,7 @@ class ProductSeeder extends Seeder
 
     // Accessories - Scarf
     [
-        'product_name' => 'XMORENO Scarf',
+        'product_name' => 'JXMORENO Scarf',
         'category' => 'Accessories',
         'type' => 'Scarf',
         'brand' => 'JJXX',
@@ -294,7 +294,7 @@ class ProductSeeder extends Seeder
 
     // Sunglasses
     [
-        'product_name' => 'JXX JXRACHEL Sunglasses',
+        'product_name' => 'JJXX JXRACHEL Sunglasses',
         'category' => 'Accessories',
         'type' => 'Sunglasses',
         'brand' => 'JJXX',
@@ -304,7 +304,7 @@ class ProductSeeder extends Seeder
         'gender' => 'unisex',
     ],
     [
-        'product_name' => 'XKENT Sunglasses',
+        'product_name' => 'JXKENT Sunglasses',
         'category' => 'Accessories',
         'type' => 'Sunglasses',
         'brand' => 'JJXX',
@@ -314,7 +314,7 @@ class ProductSeeder extends Seeder
         'gender' => 'unisex',
     ],
     [
-        'product_name' => 'XKRISTINA Sunglasses',
+        'product_name' => 'JXKRISTINA Sunglasses',
         'category' => 'Accessories',
         'type' => 'Sunglasses',
         'brand' => 'JJXX',
@@ -324,7 +324,7 @@ class ProductSeeder extends Seeder
         'gender' => 'unisex',
     ],
     [
-        'product_name' => 'XPHEOBE Sunglasses',
+        'product_name' => 'JXPHEOBE Sunglasses',
         'category' => 'Accessories',
         'type' => 'Sunglasses',
         'brand' => 'JJXX',
@@ -334,7 +334,7 @@ class ProductSeeder extends Seeder
         'gender' => 'unisex',
     ],
     [
-        'product_name' => 'XROSANNA Sunglasses',
+        'product_name' => 'JXROSANNA Sunglasses',
         'category' => 'Accessories',
         'type' => 'Sunglasses',
         'brand' => 'JJXX',
@@ -480,17 +480,7 @@ class ProductSeeder extends Seeder
         'gender' => 'male',
     ],
     [
-        'product_name' => '8.5-inch London Double-Exit Short',
-        'category' => 'Clothing',
-        'type' => 'Shorts',
-        'brand' => 'Ralph Lauren Corporation',
-        'fit' => '',
-        'original_price' => 60000,
-        'sale_price' => 95000, // +35000
-        'gender' => 'male',
-    ],
-    [
-        'product_name' => '10-inch Classic Fit Ribbon Carpo Short',
+        'product_name' => '8-Inch Classic Fit Ripstop Cargo Short',
         'category' => 'Clothing',
         'type' => 'Shorts',
         'brand' => 'Ralph Lauren Corporation',
@@ -500,7 +490,18 @@ class ProductSeeder extends Seeder
         'gender' => 'male',
     ],
     [
-        'product_name' => '12-inch Relaxed Fit Carpenter Short',
+        'product_name' => '8.5-Inch London Double-Knit Short',
+        'category' => 'Clothing',
+        'type' => 'Shorts',
+        'brand' => 'Ralph Lauren Corporation',
+        'fit' => '',
+        'original_price' => 60000,
+        'sale_price' => 95000, // +35000
+        'gender' => 'male',
+    ],
+
+    [
+        'product_name' => '9-Inch Relaxed Fit Carpenter Short',
         'category' => 'Clothing',
         'type' => 'Shorts',
         'brand' => 'Ralph Lauren Corporation',
@@ -1091,6 +1092,167 @@ class ProductSeeder extends Seeder
                     'sale_price' => 74000,
                     'gender' => 'male',
                 ],
+
+                //brand:versace
+
+                [
+                    'product_name' => 'MEDUSA LOGO T-SHIRT WHITE',
+                    'category' => 'Clothing',
+                    'type' => 'T-shirt',
+                    'brand' => 'Versace',
+                    'fit' => 'Regular Fit',
+                    'original_price' => 140000,
+                    'sale_price' => 230000,
+                    'gender' => 'male',
+                ],
+
+                [
+                    'product_name' => 'MEDUSA ROCK T-SHIRT BLACK',
+                    'category' => 'Clothing',
+                    'type' => 'T-shirt',
+                    'brand' => 'Versace',
+                    'fit' => 'Regular Fit',
+                    'original_price' => 150000,
+                    'sale_price' => 240000,
+                    'gender' => 'male',
+                ],
+
+                // Bag
+                [
+                    'product_name' => 'BLACK NYLON BACKPACK WITH BLUE  STRIPE',
+                    'category' => 'Accessories',
+                    'type' => 'Bag',
+                    'brand' => 'Versace',
+                    'fit' => '',
+                    'original_price' => 150000,
+                    'sale_price' => 240000,
+                    'gender' => 'unisex',
+                ],
+
+                // valentino
+
+                // trouser
+                [
+                    'product_name' => 'Double-Compact-Drill-Trousers',
+                    'category' => 'Clothing',
+                    'type' => 'Trousers',
+                    'brand' => 'Valentino',
+                    'fit' => 'Straight Fit',
+                    'original_price' => 200000,
+                    'sale_price' => 280000,
+                    'gender' => 'female',
+                ],
+
+                [
+                    'product_name' => 'Mohair-Wool-Trousers',
+                    'category' => 'Clothing',
+                    'type' => 'Trousers',
+                    'brand' => 'Valentino',
+                    'fit' => 'Straight Fit',
+                    'original_price' => 200000,
+                    'sale_price' => 280000,
+                    'gender' => 'female',
+                ],
+
+                // top
+                [
+                    'product_name' => 'Embroidered-Top',
+                    'category' => 'Clothing',
+                    'type' => 'Tops',
+                    'brand' => 'Valentino',
+                    'fit' => 'Stretch Fit',
+                    'original_price' => 200000,
+                    'sale_price' => 280000,
+                    'gender' => 'female',
+                ],
+
+                // skirt
+
+
+                [
+                    'product_name' => 'Crepe-Couture-Midi-Skirt',
+                    'category' => 'Clothing',
+                    'type' => 'Skirt',
+                    'brand' => 'Valentino',
+                    'fit' => 'Short-Skirt Fit',
+                    'original_price' => 140000,
+                    'sale_price' => 210000,
+                    'gender' => 'female',
+                ],
+
+                [
+                    'product_name' => 'Twill-Skirt-With-Plus-De-Pois-Print',
+                    'category' => 'Clothing',
+                    'type' => 'Skirt',
+                    'brand' => 'Valentino',
+                    'fit' => 'Long-Skirt Fit',
+                    'original_price' => 140000,
+                    'sale_price' => 210000,
+                    'gender' => 'female',
+                ],
+
+                // only
+
+                // jeans
+                [
+                    'product_name' => 'ONLMADISON High waist Wide Leg Fit Jeans',
+                    'category' => 'Clothing',
+                    'type' => 'Jeans',
+                    'brand' => 'Only',
+                    'fit' => 'Wide-Leg Fit',
+                    'original_price' => 140000,
+                    'sale_price' => 210000,
+                    'gender' => 'female',
+                ],
+
+                [
+                    'product_name' => 'ONLBLUSH Mid waist Flared Fit Jeans',
+                    'category' => 'Clothing',
+                    'type' => 'Jeans',
+                    'brand' => 'Only',
+                    'fit' => 'Flared Fit',
+                    'original_price' => 140000,
+                    'sale_price' => 210000,
+                    'gender' => 'female',
+                ],
+
+                [
+                    'product_name' => 'ONLANN-MADISON High waist Cropped Fit Jeans',
+                    'category' => 'Clothing',
+                    'type' => 'Jeans',
+                    'brand' => 'Only',
+                    'fit' => 'Wide Fit',
+                    'original_price' => 140000,
+                    'sale_price' => 210000,
+                    'gender' => 'female',
+                ],
+
+                // trouser
+
+
+                [
+                    'product_name' => 'ONLFIONA Flared Fit Trousers',
+                    'category' => 'Clothing',
+                    'type' => 'Jeans',
+                    'brand' => 'Only',
+                    'fit' => 'Flared Fit',
+                    'original_price' => 140000,
+                    'sale_price' => 210000,
+                    'gender' => 'female',
+                ],
+
+                [
+                    'product_name' => 'NEOENIELCA Straight Fit Cargo trousers',
+                    'category' => 'Clothing',
+                    'type' => 'Jeans',
+                    'brand' => 'Only',
+                    'fit' => 'Straight Fit',
+                    'original_price' => 140000,
+                    'sale_price' => 210000,
+                    'gender' => 'female',
+                ]
+
+
         ];
 
 

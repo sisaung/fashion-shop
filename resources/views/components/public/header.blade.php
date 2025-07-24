@@ -346,7 +346,7 @@
     @vite(['resources/js/cart/cartHeader.js'])
     @vite(['resources/js/wishlist/wishListHeader.js'])
     <script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js"></script>
-    <script>
+    {{-- <script>
         const {
             animate,
             scroll
@@ -364,12 +364,12 @@
                         opacity: [0, 1],
                         y: [-20, 0]
                     }, {
-                        duration: 0.4,
+                        duration: 0.5,
                         delay: index * 0.1,
                         ease: 'ease-out'
                     });
                 });
             }
         });
-    </script>
+    </script> --}}
 @endpush

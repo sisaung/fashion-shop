@@ -26,7 +26,7 @@ export const renderPagination = async (link, wishlistProducts) => {
         "total-product-container"
     );
     const paginationContainer = document.getElementById("pagination-container");
-    const pagelayoutContainer = document.querySelector('.pagelayout-container')
+    const pagelayoutContainer = document.querySelector(".pagelayout-container");
 
     if (!paginationTemplate) return;
 
@@ -89,13 +89,14 @@ export const renderPagination = async (link, wishlistProducts) => {
 
         if (data?.data) {
             await renderProductList(data.data, container, wishlistProducts);
-            pagelayoutContainer.scrollTo(0, 0, { behavior: "smooth" });
             renderBreadcrumbTotalProduct(data.total, totalProductContainer);
             await renderPaginationList(
                 data.links,
                 paginationContainer,
                 wishlistProducts
             );
+
+            pagelayoutContainer.scrollTo(0, 0, { behavior: "smooth" });
         }
     };
 

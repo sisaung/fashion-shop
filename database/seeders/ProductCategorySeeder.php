@@ -18,11 +18,10 @@ class ProductCategorySeeder extends Seeder
 
         $productCategories = [
             ["category_name" => "Clothing"],
-            ['category_name' => "Denim"],
             ["category_name" => "Footwear"],
             ["category_name" => "Accessories"],
             ["category_name" => "Outerwear"],
-            
+
         ];
 
         $now = now();

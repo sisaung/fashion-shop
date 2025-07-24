@@ -34,6 +34,8 @@ class BrandSeeder extends Seeder
             ["brand_name" => "Burberry", "brand_image" => null],
             ["brand_name" => "Saint Laurent", "brand_image" => null],
             ["brand_name" => "Ralph Lauren Corporation", "brand_image" => null],
+            ["brand_name" => "Only", "brand_image" => null],
+
 
 
         ];

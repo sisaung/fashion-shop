@@ -2,6 +2,10 @@
 @section('content')
     <div class="max-w-7xl mx-auto container py-10">
 
+        @include('components.breadcrumb', [
+            'currentPageTitle' => 'Wishlist',
+        ])
+
         <div class="py-5">
             <h1 class="font-heading text-2xl text-uppercase"> Your Wishlist
                 ({{ $wishlist ? $wishlist->products->count() : 0 }}) </h1>

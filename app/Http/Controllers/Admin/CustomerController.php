@@ -93,7 +93,9 @@ class CustomerController extends Controller
                 ->withInput();
         }
 
-        $customer = Customer::with(['orders'])->find($id);
+        $customer = Customer::with(['orders' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        }])->find($id);
         return view('admin.customer.show', ['customer' => $customer]);
     }
 

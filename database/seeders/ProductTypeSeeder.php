@@ -41,19 +41,19 @@ class ProductTypeSeeder extends Seeder
                 'name' => 'Skirt',
                 'category' => 'Clothing',
                 'fits' => ['Mini-Skirt Fit', 'Short-Skirt Fit', 'Long-Skirt Fit', 'Regular Fit'],
-                'sizes' => ['XS', 'S', 'M', 'L', 'XL']
+                'sizes' => ['36','38','40','42','44']
             ],
             [
                 'name' => 'Tops',
                 'category' => 'Clothing',
                 'fits' => ['Stretch Fit', 'Rib Fit'],
-                'sizes' => ['XS', 'XXS', 'M', 'L', 'XL']
+                'sizes' => ['36','38','40','42','44']
             ],
             [
                 'name' => 'Trousers',
                 'category' => 'Clothing',
-                'fits' => ['Regular Fit', 'Wide-leg Fit'],
-                'sizes' => ['24', '25', '26', '27', '28', '29', '30', '31', '32']
+                'fits' => ['Regular Fit', 'Wide-leg Fit','Flared Fit','Loose Fit','Straight Fit'],
+                'sizes' => ['XS','S','M','L','XL','XXL','30', '24', '34','36','38','40','42','44']
             ],
             [
                 'name' => 'Polo Shirt',
@@ -69,6 +69,13 @@ class ProductTypeSeeder extends Seeder
                 'fits' => ['Relaxed Fit', 'Classic Fit'],
                 'sizes' => ['XS', 'S', 'M', 'L', 'XL','XXL','28','29','30','31','32','33','34','35','36','38','40','42','44','46']
 
+
+            ],
+            [
+                'name' => 'Jeans',
+                'category' => 'Clothing',
+                'fits' => ['Wide-Leg Fit','Flared fit','Wide Fit','Flared Fit'],
+                'sizes' => ['XXS','XS','S','M','L','XL','32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54']
 
             ],
             [
@@ -113,6 +120,8 @@ class ProductTypeSeeder extends Seeder
                 'sizes' => ['XXS','XS','S','M','L','XL','32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54']
 
             ],
+
+
 
 
             // footwear
