@@ -97,7 +97,8 @@
                                                         @endif
                                                     @else
                                                         <img src="https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈"
-                                                    class="size-10 rounded-full" alt="{{ $order->customer->customer_name }}" />
+                                                            class="size-10 rounded-full"
+                                                            alt="{{ $order->customer->customer_name }}" />
                                                     @endif
                                                 </div>
                                                 <div class="flex flex-col col-span-3">
@@ -212,7 +213,7 @@
 
                                                         <input type="hidden" class="sort-direction" name="sortDirection">
 
-                                                        <input type="hidden" class="limit" name="limit">
+                                                        <input type="hidden" class="limit_value" name="limit">
 
                                                         <input type="hidden" class="page" name="page">
 
@@ -255,12 +256,13 @@
             </section>
 
 
-            <div class="pagination-wrapper">
-                @include('components.pagination', ['paginator' => $orders])
 
-            </div>
         </div>
 
+        <div class="pagination-wrapper">
+            @include('components.pagination', ['paginator' => $orders])
+
+        </div>
 
 
     </div>

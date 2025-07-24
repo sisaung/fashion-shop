@@ -4,6 +4,9 @@ const initializeSorting = () => {
     const wrapper = document.querySelector(".sorting-wrapper");
     const limit = document.querySelector(".limit");
 
+
+
+    console.log(limit)
     const params = new URLSearchParams(window.location.search);
 
     const rowLimit = params.get("limit");
@@ -32,6 +35,7 @@ const initializeSorting = () => {
     });
 
     const handleChangeLimit = (e) => {
+        console.log(e.target.value)
         const currentParam = new URLSearchParams(window.location.search);
 
         const currentObj = Object.fromEntries(currentParam);
