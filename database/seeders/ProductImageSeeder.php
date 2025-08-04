@@ -813,6 +813,50 @@ class ProductImageSeeder extends Seeder
         'JXTAMPA Shoulder bag.webp'],
     ],
 
+    //versace T shirt
+
+    [
+        'product_name' => 'MEDUSA LOGO T-SHIRT WHITE',
+        'brand' => 'Versace',
+        'type' => 'T-shirts',
+        'images' => [
+           'MEDUSA LOGO T-SHIRT WHITE.webp',
+        'medusa-logo-back.webp',
+        'medusa-logo.webp'],
+        ],
+
+        [
+            'product_name' => 'MEDUSA ROCK T-SHIRT BLACK',
+            'brand' => 'Versace',
+            'type' => 'T-shirts',
+
+              'images' => [
+                 'versace-T-SHIRT.webp',
+        'versace-T-SHIRT-back.webp',
+        'versace-T-SHIRT-front.webp',
+
+    ],
+            ],
+
+            //bag
+
+            [
+                'product_name' => 'BLACK NYLON BACKPACK WITH BLUE STRIPE',
+                'brand' => 'Versace',
+                'type' => 'Bag',
+
+                  'images' => [
+                    'BLACK NYLON BACKPACK WITH BLUE STRIPE.webp',
+                    'backbag.webp',
+                    'bagback.webp',
+
+
+        ],
+                ],
+
+        //valentino
+
+
         ];
 
 

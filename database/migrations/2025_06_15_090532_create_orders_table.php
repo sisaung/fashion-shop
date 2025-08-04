@@ -27,7 +27,7 @@ return new class extends Migration
             $table->double('net_total')->default(0);
             $table->string('customer_name');
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
-            $table->string('customer_address_id')->conspotrained('customer_addresses')->onDelete('cascade');
+            $table->string('customer_address_id')->constrained('customer_addresses')->onDelete('cascade');
 
             $table->foreignId('coupon_id')->nullable()->constrained('coupons')->onDelete('cascade');
             $table->integer('is_paid')->default(0);

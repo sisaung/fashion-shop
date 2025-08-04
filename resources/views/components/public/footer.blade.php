@@ -29,9 +29,12 @@
                         class="text-sm text-gray-500 hover:text-gray-700 duration-300 font-thin tracking-wide leading-8">About
                         us</a>
                     @auth
-                        <a href="{{route('logout')}}"
-                            class="text-sm text-gray-500 hover:text-gray-700 duration-300 font-thin tracking-wide leading-8">
-                            Logout {{ Auth::user()->name }} </a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            <button
+                            type="submit"
+                                class="text-sm text-gray-500 hover:text-gray-700 duration-300 font-thin tracking-wide leading-8">
+                                Logout {{ Auth::user()->name }} </button>
+                        </form>
                     @endauth
                     @guest
                         <a href="{{ route('login') }}"

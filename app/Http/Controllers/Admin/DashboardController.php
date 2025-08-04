@@ -124,6 +124,7 @@ class DashboardController extends Controller
 
     $outstanding = Order::where('order_status', 'completed')
     ->whereNull('payment_received_at')
+    ->whereBetween('created_at', [$start, $end])
     ->sum('net_total');
 
 

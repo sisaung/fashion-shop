@@ -331,7 +331,9 @@
                                     <td class="whitespace-nowrap flex justify-end px-4 py-4 text-sm text-gray-900">
                                         @if ($order->coupon)
                                             <div class="flex flex-col items-end justify-center">
-                                                <span class="text-lg"> {{ $order->coupon->coupon_discount }} % </span>
+                                                <span class="text-lg">
+                                                    {{ $order->coupon->discount_type == 'percentage' ? $order->coupon->coupon_discount . '%' : number_format($order->coupon->coupon_discount) }}
+                                                    MMK </span>
                                                 <span class="text-xs  text-gray-500">
                                                     {{ $order->coupon->coupon_code }}</span>
                                             </div>

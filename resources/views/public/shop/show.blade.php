@@ -116,7 +116,8 @@
                         'links' => [['name' => 'Shop', 'path' => route('shop.index')]],
                     ])
                     <div>
-                        <h1 class="text-xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2"> {{ $product->product_name }} </h1>
+                        <h1 class="text-xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+                            {{ $product->product_name }} </h1>
                         <div class="flex items-center gap-x-1 mb-4">
 
                             <div class="flex items-center">
@@ -165,7 +166,8 @@
 
 
                     {{-- Tags --}}
-                    <div class="flex flex-nowrap overflow-x-scroll justify-start items-start text-nowrap hide-scrollbar gap-2">
+                    <div
+                        class="flex flex-nowrap overflow-x-scroll justify-start items-start text-nowrap hide-scrollbar gap-2">
 
                         <span
                             class="bg-pearl-bush-400 text-white text-xs px-3 py-1 rounded-full  font-medium">{{ $product->brand->brand_name }}</span>
@@ -397,7 +399,32 @@
                             @endguest
                         </span>
                         <div>
-                            @foreach (range(1, 5) as $star)
+
+                            @php
+                                if (auth()->check()) {
+                                    $userId = auth()->id();
+
+                                    $approvedReviews = $product->reviews->where('is_show', 1);
+                                    $userOwnReview = $product->reviews
+                                        ->where('user_id', $userId)
+                                        ->filter(fn($review) => $review->is_show != 1);
+
+                                    $allRelevantReviews = $approvedReviews->merge($userOwnReview);
+
+                                    $rating = $allRelevantReviews->avg('rating');
+                                } else {
+                                    $rating = $product->reviews->where('is_show', 1)->avg('rating');
+                                }
+
+                                $rating = (float) number_format($rating, 2, '.', '');
+
+                                $fullStars = floor($rating);
+                                $decimal = $rating - $fullStars;
+                                $hasHalf = $decimal >= 0.25 && $decimal < 0.75;
+                                $emptyStars = 5 - $fullStars - ($hasHalf ? 1 : 0);
+                            @endphp
+
+                            {{-- @foreach (range(1, 5) as $star)
                                 <button>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor"
@@ -406,7 +433,42 @@
                                             d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
                                     </svg>
                                 </button>
-                            @endforeach
+                            @endforeach --}}
+                            <div class="flex items-center">
+                                {{-- Full yellow stars --}}
+                                @for ($i = 0; $i < $fullStars; $i++)
+                                    <svg class="w-6 h-6 fill-yellow-400" viewBox="0 0 24 24">
+                                        <path
+                                            d="M11.48 3.5a.562.562 0 011.04 0l2.13 5.11a.56.56 0 00.42.3l5.52.44a.56.56 0 01.32.99l-4.2 3.6a.56.56 0 00-.18.56l1.29 5.38a.56.56 0 01-.84.61l-4.72-2.89a.56.56 0 00-.59 0l-4.72 2.89a.56.56 0 01-.84-.61l1.29-5.38a.56.56 0 00-.18-.56L2.13 10.34a.56.56 0 01.32-.99l5.52-.44a.56.56 0 00.42-.3L11.48 3.5z" />
+                                    </svg>
+                                @endfor
+
+                                {{-- Half-filled star --}}
+                                @if ($hasHalf)
+                                    <div class="relative w-6 h-6">
+                                        {{-- Bottom full gray star --}}
+                                        <svg class="absolute top-0 left-0 w-6 h-6 fill-gray-300" viewBox="0 0 24 24">
+                                            <path
+                                                d="M11.48 3.5a.562.562 0 011.04 0l2.13 5.11a.56.56 0 00.42.3l5.52.44a.56.56 0 01.32.99l-4.2 3.6a.56.56 0 00-.18.56l1.29 5.38a.56.56 0 01-.84.61l-4.72-2.89a.56.56 0 00-.59 0l-4.72 2.89a.56.56 0 01-.84-.61l1.29-5.38a.56.56 0 00-.18-.56L2.13 10.34a.56.56 0 01.32-.99l5.52-.44a.56.56 0 00.42-.3L11.48 3.5z" />
+                                        </svg>
+                                        {{-- Top half yellow star clipped --}}
+                                        <div class="absolute top-0 left-0 w-3 h-6 overflow-hidden">
+                                            <svg class="w-6 h-6 fill-yellow-400" viewBox="0 0 24 24">
+                                                <path
+                                                    d="M11.48 3.5a.562.562 0 011.04 0l2.13 5.11a.56.56 0 00.42.3l5.52.44a.56.56 0 01.32.99l-4.2 3.6a.56.56 0 00-.18.56l1.29 5.38a.56.56 0 01-.84.61l-4.72-2.89a.56.56 0 00-.59 0l-4.72 2.89a.56.56 0 01-.84-.61l1.29-5.38a.56.56 0 00-.18-.56L2.13 10.34a.56.56 0 01.32-.99l5.52-.44a.56.56 0 00.42-.3L11.48 3.5z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                @endif
+
+                                {{-- Remaining gray stars --}}
+                                @for ($i = 0; $i < $emptyStars; $i++)
+                                    <svg class="w-6 h-6 fill-gray-300" viewBox="0 0 24 24">
+                                        <path
+                                            d="M11.48 3.5a.562.562 0 011.04 0l2.13 5.11a.56.56 0 00.42.3l5.52.44a.56.56 0 01.32.99l-4.2 3.6a.56.56 0 00-.18.56l1.29 5.38a.56.56 0 01-.84.61l-4.72-2.89a.56.56 0 00-.59 0l-4.72 2.89a.56.56 0 01-.84-.61l1.29-5.38a.56.56 0 00-.18-.56L2.13 10.34a.56.56 0 01.32-.99l5.52-.44a.56.56 0 00.42-.3L11.48 3.5z" />
+                                    </svg>
+                                @endfor
+                            </div>
                             <p class="text-gray-600 text-sm">
                                 @auth
                                     Base on
