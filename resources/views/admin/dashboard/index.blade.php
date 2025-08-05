@@ -305,11 +305,20 @@
                                     </td>
                                     <td class="whitespace-wrap px-4  py-4 text-sm text-gray-900">
                                         <div class="grid grid-cols-4">
-                                            <div class="">
-                                                <img src="{{ $order->customer->profile_image ? $order->customer->profile_image : 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈' }}"
-                                                    class="size-10 rounded-full"
-                                                    alt="{{ $order->customer->customer_name }}">
-                                            </div>
+                                            @if ($order->customer->profile_image)
+                                                @if (Str::startsWith($order->customer->profile_image, 'https'))
+                                                    <img class="size-12 rounded-full object-cover object-center" src="{{ $order->customer->profile_image }}"
+                                                        alt="Demo" />
+                                                @else
+                                                    <img class="size-12 rounded-full object-cover object-center"
+                                                        src="{{ asset('storage/' . $order->customer->profile_image) }}"
+                                                        alt="Demo" />
+                                                @endif
+                                            @else
+                                                <img class="size-12 rounded-full"
+                                                    src="https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1"
+                                                    alt="Demo" />
+                                            @endif
                                             <div class="flex flex-col col-span-3">
                                                 <a href="{{ route('customer.show', ['customer' => $order->customer->id]) }}"
                                                     class="text-base underline underline-offset-2 ">{{ $order->customer->customer_name }}</a>
@@ -466,7 +475,7 @@
         <div class="grid grid-cols-2 gap-5 mt-8">
 
             {{-- low stock alert --}}
-            <div class="bg-white rounded-lg shadow">
+            <div class="bg-white rounded-lg shadow h-96 overflow-y-scroll hide-scrollbar">
                 <div class="border-b border-stone-100  p-5 mb-3">
                     <p class="text-gray-800 text-lg font-semibold font-heading flex items-center gap-3">
 

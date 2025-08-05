@@ -297,7 +297,7 @@ class OrderController extends Controller
                     ->where('order_items.order_id', $order->id)
                     ->pluck('stocks.product_id')
                     ->toArray();
-                    
+
                         $order->confirm_message = "Your order completed";
                         Review::where('user_id', $order->customer_id)
                         ->whereIn('product_id', $productIds)
