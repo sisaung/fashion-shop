@@ -35,7 +35,7 @@
                                     @if (Str::startsWith($customer->profile_image, 'https'))
                                         <img class="w-20 rounded-full" src="{{ $customer->profile_image }}" alt="Demo" />
                                     @else
-                                        <img class="w-20 rounded-full"
+                                        <img class="size-18 object-cover object-center rounded-full"
                                             src="{{ asset('storage/' . $customer->profile_image) }}" alt="Demo" />
                                     @endif
                                 @else

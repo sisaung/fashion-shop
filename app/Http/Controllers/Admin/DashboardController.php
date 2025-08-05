@@ -130,7 +130,10 @@ class DashboardController extends Controller
 
         $totalOrder = Order::whereBetween('created_at',[$start,$end])->count();
         $totalProduct = Product::count();
-        $totalCustomer = Customer::whereBetween('created_at',[$start,$end])->count();
+        // $totalCustomer = Customer::whereBetween('created_at',[$start,$end])->count();
+        $totalCustomer = Customer::whereHas('orders', function ($query) use ($start, $end) {
+            $query->whereBetween('created_at', [$start, $end]);
+        })->count();
 
         // revenue in selected period vs previous period
         $periodRevenue = Order::
@@ -154,8 +157,16 @@ class DashboardController extends Controller
         $previousOrders = Order::whereBetween('created_at', [$previousStart, $previousEnd])->count();
 
         // Customers
-        $periodCustomers = Customer::whereBetween('created_at', [$start, $end])->count();
-        $previousCustomers = Customer::whereBetween('created_at', [$previousStart, $previousEnd])->count();
+        // $periodCustomers = Customer::whereBetween('created_at', [$start, $end])->count();
+        // $previousCustomers = Customer::whereBetween('created_at', [$previousStart, $previousEnd])->count();
+
+        $periodCustomers = Customer::whereHas('orders', function ($query) use ($start, $end) {
+            $query->whereBetween('created_at', [$start, $end]);
+        })->count();
+
+        $previousCustomers = Customer::whereHas('orders', function ($query) use ($previousStart, $previousEnd) {
+            $query->whereBetween('created_at', [$previousStart, $previousEnd]);
+        })->count();
 
         // Calculate % changes safely
 

@@ -106,7 +106,7 @@ if($request->coupon_id) {
 
 
 
-    // Coupon::where('id',$request->coupon_id)->decrement('daily_usage');
+    
 }
 OrderNotification::create([
     'order_id' => $order->id,
