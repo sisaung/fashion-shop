@@ -14,7 +14,6 @@ use Illuminate\Queue\SerializesModels;
 class OrderPlaced implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
     public $order;
 
     /**
@@ -31,17 +30,21 @@ class OrderPlaced implements ShouldBroadcast
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-
-     public function broadcastOn()
-     {
-         return new PrivateChannel('admin.orders'); // only admins can listen
-     }
-
-
-    public function broadcastWith()
+    public function broadcastOn(): array
     {
         return [
+            new PrivateChannel('admin.orders'),
+        ];
+    }
 
+
+
+    public function broadcastAs() {
+        return 'order.placed';
+    }
+
+    public function broadcastWith() {
+        return [
             'order_id' => $this->order->id,
             'markAsRead' => false,
             'order_number' => $this->order->order_number,
@@ -54,10 +57,5 @@ class OrderPlaced implements ShouldBroadcast
             'order_items' => $this->order->orderItems, // assuming relation is correct
             'created_at' => $this->order->created_at->toDateTimeString(),
         ];
-    }
-
-    public function broadcastAs()
-    {
-        return 'order.placed';
     }
 }

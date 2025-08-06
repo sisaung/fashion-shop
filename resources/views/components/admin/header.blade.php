@@ -22,9 +22,9 @@
             <div class="flex border-b px-5 py-4 border-gray-200 justify-between items-center">
                 <div class="text-sm font-semibold text-gray-700">Notifications</div>
                 <div class="flex items-center gap-x-3">
-                    <form action="#">
-                        <button class="text-sm text-blue-500 hover:text-blue-600">Mark all read</button>
-                    </form>
+
+                    <button class="text-sm mark-all-read text-blue-500 hover:text-blue-600">Mark all read</button>
+
                     <button
                         class="close-noti-popup size-5 rounded-full hover:bg-gray-100 duration-300 inline-flex justify-center items-center cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -37,13 +37,15 @@
             </div>
 
             <template id="notification-template">
-                <li class="p-4">
+                <li class="p-4 notification-item cursor-pointer hover:bg-gray-100">
                     <div class="flex justify-between gap-4">
                         <div class="flex gap-3">
                             <div class="relative">
-                                <div class="size-2 mark-as-read bg-blue-500 rounded-full absolute top-3 -left-2.5"></div>
+                                <div class="size-2 mark-as-read bg-blue-500 rounded-full absolute top-3 -left-2.5">
+                                </div>
                                 <img src="https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1"
-                                    alt="User Image" class="size-10 customer-profile rounded-full object-cover object-center" />
+                                    alt="User Image"
+                                    class="size-10 customer-profile rounded-full object-cover object-center" />
                             </div>
                             <div class="flex flex-col items-start justify-center gap-1">
                                 <p class="text-sm font-medium"><span class="font-bold order-number"></span></p>
@@ -122,5 +124,10 @@
 
 
 @push('scripts')
+    <script>
+        window.Laravel = {
+            userId: {{ auth()->id() }}
+        }
+    </script>
     @vite(['resources/js/notification.js'])
 @endpush

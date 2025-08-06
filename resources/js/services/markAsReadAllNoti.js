@@ -1,7 +1,7 @@
-const fetchNotification = async() => {
+const markAsReadAllNoti = async() => {
 
     try {
-        const res = await fetch('/dashboard/notifications',{
+        const res = await fetch(`/dashboard/mark-as-read-noti`,{
             headers: {
                 "X-Requested-With": "XMLHttpRequest",
             }
@@ -13,4 +13,6 @@ const fetchNotification = async() => {
         console.error("Error fetching order notifications:", e);
     }
 }
-export default fetchNotification
+export default markAsReadAllNoti
+
+

@@ -1,5 +1,5 @@
 import axios from "axios";
-import './echo';
+import './echo.js';
 
 
 window.axios = axios;

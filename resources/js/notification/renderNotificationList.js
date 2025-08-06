@@ -15,7 +15,6 @@ const renderNotificationList = (data, container) => {
 
     if (data.length > 0) {
         for (let notification of data) {
-            console.log(notification)
             const notificationList =  renderNotification(notification);
             container.appendChild(notificationList);
         }

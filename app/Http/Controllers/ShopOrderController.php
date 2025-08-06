@@ -12,7 +12,9 @@ use App\Models\CustomerAddress;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderNotification;
+use App\Models\User;
 use App\Models\UserAddress;
+use App\Notifications\NewOrderNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -106,12 +108,22 @@ if($request->coupon_id) {
 
 
 
-    
+
 }
-OrderNotification::create([
-    'order_id' => $order->id,
-]);
-event(new OrderPlaced($order));
+// OrderNotification::create([
+//     'order_id' => $order->id,
+// ]);
+
+// Notify admin
+$adminUsers = User::where('is_admin', 'admin')->get();
+
+foreach ($adminUsers as $admin) {
+    $admin->notify(new NewOrderNotification($order));
+}
+
+
+// event(new OrderPlaced($order));
+// broadcast(new OrderPlaced($order));
 
 return response()->json(['message' => 'Order created successfully','data'=>$order,'success'=> true]);
 

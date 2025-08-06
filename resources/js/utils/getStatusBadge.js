@@ -1,5 +1,5 @@
 const getStatusBadge = (status) => {
-    const statusKey = status.toLowerCase();
+    const statusKey = status ? status.toLowerCase() : "Pending".toLowerCase();
 
     const statusMap = {
         pending: {

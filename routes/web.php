@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\WishlistController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrderedCustomerController;
 use App\Http\Controllers\ShopCategoryController;
 use App\Http\Controllers\ShopOrderController;
@@ -53,7 +54,8 @@ Route::get('/contact-us', function () {
 
 // Route::get('/test-broadcast', function () {
 //     $order = Order::latest()->first();
-//     event(new OrderPlaced($order));
+//     // event(new OrderPlaced($order));
+//     broadcast(new OrderPlaced($order))->toOthers();
 //     return 'Event fired';
 // });
 
@@ -161,6 +163,11 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
 
 
         Route::get('/order-notification',[OrderNotificationController::class,'index'])->name('order-notification.index');
+        Route::get('/notifications', [NotificationController::class, 'index']);
+
+        Route::get('/mark-as-read-noti/{id}', [NotificationController::class, 'markAsReadNotification'])->name('markAsReadNotification');
+        Route::get('/mark-as-read-noti', [NotificationController::class, 'markAsReadAllNotification'])->name('markAsReadAllNotification');
+
 
 
     });

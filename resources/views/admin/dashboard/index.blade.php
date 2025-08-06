@@ -304,7 +304,7 @@
                                         {{ $order->order_number }}
                                     </td>
                                     <td class="whitespace-wrap px-4  py-4 text-sm text-gray-900">
-                                        <div class="grid grid-cols-4">
+                                        <div class="grid grid-cols-4 gap-x-1.5">
                                             @if ($order->customer->profile_image)
                                                 @if (Str::startsWith($order->customer->profile_image, 'https'))
                                                     <img class="size-12 rounded-full object-cover object-center" src="{{ $order->customer->profile_image }}"
