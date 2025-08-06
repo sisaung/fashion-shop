@@ -151,3 +151,26 @@ class ProductTypeSeeder extends Seeder
         }
     }
 }
+
+
+'order_id' => $this->order->id,
+            'markAsRead' => false,
+            'order_number' => $this->order->order_number,
+            'customer_name' => $this->order->customer_name,
+            'customer' => [
+                'profile_image' => $this->order->customer->profile_image,
+            ],
+            'net_total' => $this->order->net_total,
+            'order_status' => $this->order->order_status,
+            'order_items' => $this->order->orderItems, // assuming relation is correct
+            'created_at' => $this->order->created_at->toDateTimeString(),
+
+public function broadcastOn()
+     {
+         return new PrivateChannel('admin.orders'); // only admins can listen
+     }
+
+ public function broadcastAs()
+    {
+        return 'order.placed';
+    }

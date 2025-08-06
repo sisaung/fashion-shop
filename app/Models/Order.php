@@ -42,4 +42,8 @@ class Order extends Model
     public function customerAddress() {
         return $this->belongsTo(CustomerAddress::class);
     }
+
+    public function orderNotification() {
+        return $this->hasOne(OrderNotification::class);
+    }
 }

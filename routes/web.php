@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\OrderPlaced;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CouponController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FitController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\OrderNotificationController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductImageController;
@@ -19,6 +21,7 @@ use App\Http\Controllers\Admin\WishlistController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrderedCustomerController;
 use App\Http\Controllers\ShopCategoryController;
 use App\Http\Controllers\ShopOrderController;
@@ -27,7 +30,10 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserReviewController;
 use App\Http\Middleware\MustBeAdmin;
+use App\Models\Order;
 use Illuminate\Auth\Middleware\Authenticate;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name(
@@ -46,6 +52,12 @@ Route::get('/contact-us', function () {
     return view('public.contact-us.index');
 });
 
+// Route::get('/test-broadcast', function () {
+//     $order = Order::latest()->first();
+//     // event(new OrderPlaced($order));
+//     broadcast(new OrderPlaced($order))->toOthers();
+//     return 'Event fired';
+// });
 
 Route::controller(AuthController::class)->group(function () {
 
@@ -60,6 +72,9 @@ Route::controller(AuthController::class)->group(function () {
     });
     Route::post('logout', 'logout')->name('logout')->middleware('auth');
 });
+
+Broadcast::routes(['middleware' => ['web', 'auth']]);
+
 
 Route::middleware(['auth', MustBeAdmin::class])->group(function () {
 
@@ -147,9 +162,18 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         Route::get('/report/customers',[ReportController::class,'reportCustomers'])->name('report.customer.index');
 
 
+        Route::get('/order-notification',[OrderNotificationController::class,'index'])->name('order-notification.index');
+        Route::get('/notifications', [NotificationController::class, 'index']);
+
+        Route::get('/mark-as-read-noti/{id}', [NotificationController::class, 'markAsReadNotification'])->name('markAsReadNotification');
+        Route::get('/mark-as-read-noti', [NotificationController::class, 'markAsReadAllNotification'])->name('markAsReadAllNotification');
+
+
 
     });
 });
+
+
 
 
 //public

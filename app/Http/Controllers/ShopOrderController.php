@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderPlaced;
 use App\Http\Requests\ShopOrderCancelRequest;
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\Coupon;
@@ -10,7 +11,10 @@ use App\Models\Customer;
 use App\Models\CustomerAddress;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\OrderNotification;
+use App\Models\User;
 use App\Models\UserAddress;
+use App\Notifications\NewOrderNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -102,8 +106,24 @@ if($request->coupon_id) {
         'coupon_id' => $request->coupon_id,
     ]);
 
-    // Coupon::where('id',$request->coupon_id)->decrement('daily_usage');
+
+
+
 }
+// OrderNotification::create([
+//     'order_id' => $order->id,
+// ]);
+
+// Notify admin
+$adminUsers = User::where('is_admin', 'admin')->get();
+
+foreach ($adminUsers as $admin) {
+    $admin->notify(new NewOrderNotification($order));
+}
+
+
+// event(new OrderPlaced($order));
+// broadcast(new OrderPlaced($order));
 
 return response()->json(['message' => 'Order created successfully','data'=>$order,'success'=> true]);
 
@@ -150,7 +170,7 @@ public function checkCoupon(Request $request)
         return response()->json(['message' => 'This coupon is not active yet.','status' => 404]);
     }
 
-   
+
 
     //  Check expire date
     if ($coupon->coupon_expire_date < $currentDate) {
@@ -197,7 +217,7 @@ public function getOrders() {
 
 
 
-    return view('public.account.order.index',['orders' => $userOrders]);
+return view('public.account.order.index',['orders' => $userOrders]);
 }
 
 public function showOrder($orderNumber) {
