@@ -81,8 +81,9 @@
                                         </td>
                                         <td class="whitespace-wrap px-4 w-[230px] py-4 text-sm text-gray-900">
                                             <div class="grid grid-cols-4">
-
+                                                
                                                 <div class="">
+
                                                     @if ($order->customer->profile_image)
                                                         @if (Str::startsWith($order->customer->profile_image, 'https'))
                                                             <img src="{{ $order->customer->profile_image }}"
@@ -92,7 +93,7 @@
                                                         @else
                                                             <img src="{{ asset('/storage/' . $order->customer->profile_image) }}"
                                                                 class="size-10
-                                                            rounded-full"
+                                                            rounded-full object-cover object-center"
                                                                 alt="{{ $order->customer->customer_name }}" />
                                                         @endif
                                                     @else

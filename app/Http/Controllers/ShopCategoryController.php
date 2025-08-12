@@ -146,22 +146,21 @@ class ShopCategoryController extends Controller
 
             $query->where(function (Builder $q) use ($searchTerm) {
 
-                return $q->where('product_name', 'like', "%$searchTerm%")
-                        ->orWhere('product_name', 'like', "%$searchTerm%")
-                        ->orWhere('sale_price', 'like', "%$searchTerm%")
-                        ->orWhere('display_price', 'like', "%$searchTerm%")
+                return $q->where('product_name', 'LIKE', "%$searchTerm%")
+                        ->orWhere('sale_price', 'LIKE', "%$searchTerm%")
+                        ->orWhere('display_price', 'LIKE', "%$searchTerm%")
 
                     ->orWhereHas('brand', function (Builder $q) use ($searchTerm) {
-                        return $q->where('brand_name', 'like', "%$searchTerm%");
+                        return $q->where('brand_name', 'LIKE', "%$searchTerm%");
                     })
                     ->orWhereHas('productCategory', function (Builder $q) use ($searchTerm) {
-                        return $q->where('category_name', 'like', "%$searchTerm%");
+                        return $q->where('category_name', 'LIKE', "%$searchTerm%");
                     })
                     ->orWhereHas('productType', function (Builder $q) use ($searchTerm) {
-                        return $q->where('name', 'like', "%$searchTerm%");
+                        return $q->where('name', 'LIKE', "%$searchTerm%");
                     })
                     ->orWhereHas('fit', function (Builder $q) use ($searchTerm) {
-                        return $q->where('fit_name', 'like', "%$searchTerm%");
+                        return $q->where('fit_name', 'LIKE', "%$searchTerm%");
                     });
             });
         }

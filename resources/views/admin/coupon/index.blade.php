@@ -17,13 +17,13 @@
                         <thead class="bg-stone-50 sorting-wrapper">
                             <tr>
                                 <th data-sortby="id" scope="col"
-                                    class="px-4 py-3 text-left text-sm font-medium text-gray-500">
+                                    class="px-4 whitespace-nowrap py-3 text-left text-sm font-medium text-gray-500">
 
                                     @include('components.admin.sortTable', ['sortTitle' => 'ID'])
 
                                 </th>
                                 <th data-sortby="coupon_title" scope="col"
-                                    class="px-4 py-3 text-left text-sm font-medium text-gray-500">
+                                    class="px-4 whitespace-nowrap py-3 text-left text-sm font-medium text-gray-500">
                                     @include('components.admin.sortTable', [
                                         'sortTitle' => 'Coupon Title',
                                     ])
@@ -31,7 +31,7 @@
                                 </th>
 
                                 <th data-sortby="coupon_code" scope="col"
-                                    class="px-4 py-3 text-left text-sm font-medium text-gray-500">
+                                    class="px-4 whitespace-nowrap py-3 text-left text-sm font-medium text-gray-500">
                                     @include('components.admin.sortTable', [
                                         'sortTitle' => 'Coupon Code',
                                     ])
@@ -39,7 +39,7 @@
                                 </th>
 
                                 <th data-sortby="coupon_discount" scope="col"
-                                    class="px-4 py-3 flex justify-end text-sm font-medium text-gray-500">
+                                    class="px-4 whitespace-nowrap py-3 flex justify-end text-sm font-medium text-gray-500">
                                     @include('components.admin.sortTable', [
                                         'sortTitle' => 'Coupon Discount',
                                     ])
@@ -49,7 +49,7 @@
 
 
                                 <th data-sortby="coupon_start_date" scope="col"
-                                    class="px-4 py-3 text-end text-sm font-medium text-gray-500">
+                                    class="px-4 whitespace-nowrap py-3 text-end text-sm font-medium text-gray-500">
 
                                     @include('components.admin.sortTable', [
                                         'sortTitle' => 'Coupon Start Date',
@@ -59,7 +59,7 @@
                                 </th>
 
                                 <th data-sortby="coupon_expire_date" scope="col"
-                                    class="px-4 py-3 text-end text-sm font-medium text-gray-500">
+                                    class="px-4 whitespace-nowrap py-3 text-end text-sm font-medium text-gray-500">
                                     @include('components.admin.sortTable', [
                                         'sortTitle' => 'Coupon Expire Date',
                                     ])
@@ -68,7 +68,7 @@
                                 </th>
 
                                 <th data-sortby="coupon_expire_date" scope="col"
-                                    class="px-4 py-3 text-end text-sm font-medium text-gray-500">
+                                    class="px-4 whitespace-nowrap py-3 text-end text-sm font-medium text-gray-500">
                                     @include('components.admin.sortTable', [
                                         'sortTitle' => 'Daily Usage',
                                     ])
@@ -76,17 +76,17 @@
 
                                 </th>
 
-                                <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500">
+                                <th scope="col" class="px-4 whitespace-nowrap py-3 text-left text-sm font-medium text-gray-500">
                                     <div class="flex items-center justify-end cursor-pointer">
                                         Created
                                     </div>
                                 </th>
-                                {{-- <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500">
+                                {{-- <th scope="col" class="px-4 whitespace-nowrap py-3 text-left text-sm font-medium text-gray-500">
                                     <div class="flex items-center justify-end cursor-pointer">
                                         Updated
                                     </div>
                                 </th> --}}
-                                <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500">
+                                <th scope="col" class="px-4 whitespace-nowrap py-3 text-left text-sm font-medium text-gray-500">
                                     <div class="flex items-center justify-center cursor-pointer">
                                         Action
                                     </div>

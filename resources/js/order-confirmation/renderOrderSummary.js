@@ -82,7 +82,7 @@ const renderOrderSummary = (cart) => {
             return;
         } else {
             Toastify({
-                text: "Order added successfully",
+                text: "Coupon added successfully",
                 duration: 3000,
                 close: true,
                 gravity: "top",
@@ -97,23 +97,29 @@ const renderOrderSummary = (cart) => {
             applyBtn.disabled = true;
         }
 
-
         if (data?.discount_type == "percentage" && data.coupon_id) {
             const discountPrice = (data.coupon_discount / 100) * subtotal;
             couponDiscount.textContent = `${numberFormat(discountPrice)} MMK`;
-            const total = subtotal - discountPrice;
-            subtotalEl.textContent = `${numberFormat(total)} MMK`;
-            taxEl.textContent = `${numberFormat(total * 0.05)} MMK`;
-            netTotalEl.textContent = `${numberFormat(total * 1.05)} MMK`;
+            // const total = subtotal - discountPrice;
+            // subtotalEl.textContent = `${numberFormat(total)} MMK`;
+            // taxEl.textContent = `${numberFormat(total * 0.05)} MMK`;
+            // netTotalEl.textContent = `${numberFormat(total * 1.05)} MMK`;
+
+            netTotalEl.textContent = `${numberFormat(
+                netTotal - discountPrice
+            )} MMK`;
             couponId.value = data.coupon_id;
             applyBtn.disabled = true;
         } else {
             const discountPrice = data.coupon_discount;
             couponDiscount.textContent = `${numberFormat(discountPrice)} MMK`;
-            const total = subtotal - discountPrice;
-            subtotalEl.textContent = `${numberFormat(total)} MMK`;
-            taxEl.textContent = `${numberFormat(total * 0.05)} MMK`;
-            netTotalEl.textContent = `${numberFormat(total * 1.05)} MMK`;
+            // const total = subtotal - discountPrice;
+            // subtotalEl.textContent = `${numberFormat(total)} MMK`;
+            // taxEl.textContent = `${numberFormat(total * 0.05)} MMK`;
+            // netTotalEl.textContent = `${numberFormat(total * 1.05)} MMK`;
+            netTotalEl.textContent = `${numberFormat(
+                netTotal - discountPrice
+            )} MMK`;
             couponId.value = data.coupon_id;
             applyBtn.disabled = true;
         }

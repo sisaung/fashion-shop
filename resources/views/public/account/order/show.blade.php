@@ -87,7 +87,8 @@
                                 <div class="border border-pearl-bush-300 rounded-lg px-6 py-4 select-address">
                                     <div class="mb-5 md:mb-3">
                                         <h3 class="font-heading font-semibold mb-3 md:mb-0"> Customer Contact </h3>
-                                        <div class="flex md:flex-row flex-col items-start gap-3 md:gap-0 md:items-center gap-x-5 ">
+                                        <div
+                                            class="flex md:flex-row flex-col items-start gap-3 md:gap-0 md:items-center gap-x-5 ">
                                             <div class="flex items-center gap-x-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="1.5" stroke="currentColor"
@@ -134,7 +135,8 @@
                                                     d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                                             </svg>
 
-                                            <p class="text-sm text-nowrap"> {{ $order->customerAddress->address_detail }} </p>
+                                            <p class="text-sm text-nowrap"> {{ $order->customerAddress->address_detail }}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -195,12 +197,36 @@
                                 </div>
                                 <div class="flex justify-between text-sm text-gray-600">
                                     <span>Coupon Discount</span>
-                                    <span class="coupon-discount"> {{ number_format($order->coupon_discount) }} MMK</span>
+                                    <span class="coupon-discount">
+                                        @if ($order->coupon)
+                                            @if ($order->coupon->discount_type === 'percentage')
+                                                {{ number_format(($order->total_amount * $order->coupon->coupon_discount) / 100) }}
+                                                MMK
+                                            @else
+                                                {{ number_format($order->coupon->coupon_discount) }} MMK
+                                            @endif
+                                        @else
+                                            0 MMK
+                                        @endif
+
+                                    </span>
                                 </div>
 
                                 <div class="border-t pt-4 flex justify-between font-semibold text-gray-900">
                                     <span>Net Total</span>
-                                    <span class="net-total"> {{ number_format($order->net_total) }} MMK</span>
+                                    <span class="net-total">
+                                        @if ($order->coupon)
+                                            @if ($order->coupon->discount_type == 'percentage')
+                                                {{ number_format($order->net_total - ($order->total_amount * $order->coupon->coupon_discount) / 100) }}
+                                                MMK
+                                            @elseif ($order->coupon->discount_type == 'fixed')
+                                                {{ number_format($order->net_total - $order->coupon->coupon_discount) }}
+                                                MMK
+                                            @endif
+                                        @else
+                                            {{ number_format($order->net_total) }} MMK
+                                        @endif
+                                    </span>
                                 </div>
                             </div>
                         </div>

@@ -304,11 +304,11 @@
                                         {{ $order->order_number }}
                                     </td>
                                     <td class="whitespace-wrap px-4  py-4 text-sm text-gray-900">
-                                        <div class="grid grid-cols-4 gap-x-1.5">
+                                        <div class="grid grid-cols-4">
                                             @if ($order->customer->profile_image)
                                                 @if (Str::startsWith($order->customer->profile_image, 'https'))
-                                                    <img class="size-12 rounded-full object-cover object-center" src="{{ $order->customer->profile_image }}"
-                                                        alt="Demo" />
+                                                    <img class="size-12 rounded-full object-cover object-center"
+                                                        src="{{ $order->customer->profile_image }}" alt="Demo" />
                                                 @else
                                                     <img class="size-12 rounded-full object-cover object-center"
                                                         src="{{ asset('storage/' . $order->customer->profile_image) }}"
@@ -341,8 +341,8 @@
                                         @if ($order->coupon)
                                             <div class="flex flex-col items-end justify-center">
                                                 <span class="text-lg">
-                                                    {{ $order->coupon->discount_type == 'percentage' ? $order->coupon->coupon_discount . '%' : number_format($order->coupon->coupon_discount) }}
-                                                    MMK </span>
+                                                    {{ $order->coupon->discount_type == 'percentage' ? $order->coupon->coupon_discount . '%' : number_format($order->coupon->coupon_discount) . 'MMK' }}
+                                                </span>
                                                 <span class="text-xs  text-gray-500">
                                                     {{ $order->coupon->coupon_code }}</span>
                                             </div>

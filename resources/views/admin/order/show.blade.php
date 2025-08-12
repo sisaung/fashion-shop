@@ -121,10 +121,21 @@
 
                                 </td>
                                 <td>
-                                    @if ($order->coupon)
+                                    {{-- @if ($order->coupon)
                                         {{ $order->coupon->discount_type == 'percentage' ? $order->coupon->coupon_discount . ' %' : number_format($order->coupon->coupon_discount) . ' MMK' }}
                                     @else
                                         0
+                                    @endif --}}
+
+                                    @if ($order->coupon)
+                                        @if ($order->coupon->discount_type === 'percentage')
+                                            {{ number_format(($order->total_amount * $order->coupon->coupon_discount) / 100) }}
+                                            MMK
+                                        @else
+                                            {{ number_format($order->coupon->coupon_discount) }} MMK
+                                        @endif
+                                    @else
+                                        0 MMK
                                     @endif
                                 </td>
 
@@ -133,9 +144,23 @@
                             <tr>
                                 <td colspan="3" class=" whitespace-nowrap px-4 py-4  font-medium text-gray-900">
                                     <strong>Net Total</strong>
-                                    (%)
+
                                 </td>
-                                <td> {{ number_format($order->net_total) }} MMK </td>
+
+                                <td>
+
+                                    @if ($order->coupon)
+                                        @if ($order->coupon->discount_type == 'percentage')
+                                            {{ number_format($order->net_total - ($order->total_amount * $order->coupon->coupon_discount) / 100) }}
+                                            MMK
+                                        @elseif ($order->coupon->discount_type == 'fixed')
+                                            {{ number_format($order->net_total - $order->coupon->coupon_discount) }}
+                                            MMK
+                                        @endif
+                                    @else
+                                        {{ number_format($order->net_total) }} MMK
+                                    @endif
+                                </td>
 
                             </tr>
                         </tfoot>
