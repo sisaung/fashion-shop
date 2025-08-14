@@ -169,7 +169,7 @@
 @endphp
 
 <aside class="w-64 h-screen bg-white flex flex-col flex-shrink-0 overflow-y-auto">
-    <h1 class="p-4 text-xl font-heading font-bold py-4 text-center">LoomLuxe</h1>
+    <h1 class="p-4 text-xl font-heading font-bold py-4 text-center">ＬＵＸＥ</h1>
 
 
     <nav class="px-4 space-y-2">

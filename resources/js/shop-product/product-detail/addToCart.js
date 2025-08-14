@@ -94,12 +94,12 @@ const initializeAddToCart = () => {
     updateButtons(); // Initialize
 
     addToCartBtn.addEventListener("click", () => {
-        console.log(selectedStock,quantity)
+        console.log(selectedStock, quantity);
         if (!selectedStock || quantity > selectedStock) {
             // errorMsg.classList.remove("hidden");
-            console.log('eror')
+            console.log("error");
             Toastify({
-                text: "❗ Please select size first",
+                text: "Please select size first",
                 duration: 3000,
                 gravity: "top",
                 position: "center",
@@ -107,12 +107,33 @@ const initializeAddToCart = () => {
                     background: "#fff0f0",
                     fontSize: "14px",
                     color: "#e60000",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
                     boxShadow: "0px",
                 },
                 close: true,
-                avatar: "",
+                avatar: "/icons/exclamation.jpg",
+
             }).showToast();
             return;
+        } else {
+            Toastify({
+                text: "Product added successfully",
+                duration: 2000,
+                close: true,
+                gravity: "top",
+                position: "center",
+                style: {
+                    background: "#ecfdf3",
+                    fontSize: "14px",
+                    color: "#008a2e",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                },
+                avatar: "/icons/check.png",
+            }).showToast();
         }
 
         const product = JSON.parse(addToCartBtn.getAttribute("data-product"));
@@ -169,7 +190,7 @@ const initializeAddToCart = () => {
         if (cartItems.classList.contains("hidden")) {
             cartItems.classList.remove("hidden");
         }
-       
+
         // console.log(JSON.parse(localStorage.getItem("cartItems")));
 
         // window.location.href = "/cart";

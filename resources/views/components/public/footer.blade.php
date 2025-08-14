@@ -5,11 +5,11 @@
         <div class="grid grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 xl:px-0 px-5 gap-10 py-10">
             <div class="lg:col-span-3 col-span-full">
                 <div class="flex gap-2 items-center mb-3">
-                    <img src="{{ asset('/storage/logo/luxury.png') }}" alt="logo" class="h-12">
+                    <img src="{{ asset('/storage/logo/luxe-logo-1.png') }}" alt="logo" class="h-12">
 
                     <div class="flex flex-col">
-                        <h3 class="text-3xl font-heading text-gray-900">LoomLuxe</h3>
-                        <p class="text-sm text-gray-500">fashion shop</p>
+                        <h3 class="text-3xl font-heading text-gray-900">ＬＵＸＥ</h3>
+                        <p class="text-sm text-gray-500">Authentic Fashion</p>
 
                     </div>
                 </div>

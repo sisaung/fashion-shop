@@ -212,7 +212,7 @@
 
                                                 {{-- delete btn for modal --}}
 
-                                                @if ( $product->orderItems->count() == 0)
+                                                @if ($product->orderItems->count() == 0)
                                                     <button data-modal-target="popup-modal-{{ $product->id }}"
                                                         data-modal-toggle="popup-modal-{{ $product->id }}"
                                                         class=" w-full px-5 hover:bg-gray-100 inline-flex py-2 items-center gap-x-3 cursor-pointer"
@@ -245,7 +245,7 @@
 
 
 
-                                                @if ( $product->orderItems->count() == 0)
+                                                @if ($product->orderItems->count() == 0)
                                                     <form id="delete-form-{{ $product->id }}" class="hidden"
                                                         action="{{ route('product.destroy', ['product' => $product->id]) }}"
                                                         method="POST">
@@ -269,7 +269,7 @@
 
 
                                         {{-- delete modal box --}}
-                                        @if ( $product->orderItems->count() == 0)
+                                        @if ($product->orderItems->count() == 0)
                                             <div id="popup-modal-{{ $product->id }}" tabindex="-1"
                                                 class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                                 <div class="relative p-4 w-full max-w-md max-h-full">
@@ -376,6 +376,29 @@
 
     </div>
 @endsection
+
+@if (session('success'))
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Toastify({
+                text: "{{ session('success') }}",
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                style: {
+                    background: "#ecfdf3",
+                    fontSize: "14px",
+                    color: "#008a2e",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                },
+                avatar: "/icons/check.png",
+            }).showToast();
+        });
+    </script>
+@endif
 
 @push('scripts')
     @vite(['resources/js/flowbite/flowbite.min.js'])

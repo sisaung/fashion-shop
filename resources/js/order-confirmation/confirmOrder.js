@@ -47,38 +47,45 @@ const initalizeConfirmOrder = () => {
         if (!addressId) {
             // showErrorToast("Please select an address to place the order");
             Toastify({
-                text: "❗ Please select an address to place the order",
+                text: "Please select an address to place the order",
                 duration: 3000,
                 gravity: "top",
                 position: "center",
-                stopOnFocus: false,
                 style: {
                     background: "#fff0f0",
                     fontSize: "14px",
                     color: "#e60000",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
                     boxShadow: "0px",
                 },
+                close: true,
+                avatar: "/icons/exclamation.jpg",
             }).showToast();
             return;
         } else if (cart.items.length == 0) {
             // showErrorToast("Your cart is empty");
             Toastify({
-                text: "❗ Your cart is empty",
+                text: "Your cart is empty",
                 duration: 3000,
-                stopOnFocus: false,
                 gravity: "top",
                 position: "center",
                 style: {
                     background: "#fff0f0",
                     fontSize: "14px",
                     color: "#e60000",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
                     boxShadow: "0px",
                 },
+                close: true,
+                avatar: "/icons/exclamation.jpg",
             }).showToast();
 
             return;
         } else {
-
             const selectedName = document.querySelector(
                 ".select-address.active-address .shipping-address-name"
             );
@@ -108,8 +115,6 @@ const initalizeConfirmOrder = () => {
                 })),
             };
 
-
-
             const res = await storeOrder("/confirm-order", data, csrfToken);
             const orderData = await res.json();
 
@@ -131,15 +136,19 @@ const initalizeConfirmOrder = () => {
                 Toastify({
                     text: orderData.message,
                     duration: 3000,
-                    stopOnFocus: false,
                     gravity: "top",
                     position: "center",
                     style: {
                         background: "#fff0f0",
                         fontSize: "14px",
                         color: "#e60000",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
                         boxShadow: "0px",
                     },
+                    close: true,
+                    avatar: "/icons/exclamation.jpg",
                 }).showToast();
             }
             couponId.value = "";

@@ -50,9 +50,11 @@
                         class="text-white mb-5 bg-pearl-bush-400 border-0 py-2.5 px-8 focus:outline-none hover:bg-pearl-bush-600 rounded text-sm cursor-pointer duration-300">Login</button>
 
 
-                    <div class="cursor-pointer border border-pearl-bush-200 rounded flex justify-center items-center py-2.5 text-sm ">
-                        <a href="{{ route('redirect.google') }}" class="w-full gap-x-3 inline-flex justify-center items-center">
-                                <img src="{{ asset('/storage/logo/google.png') }}" alt="google" class="size-5">
+                    <div
+                        class="cursor-pointer border border-pearl-bush-200 rounded flex justify-center items-center py-2.5 text-sm ">
+                        <a href="{{ route('redirect.google') }}"
+                            class="w-full gap-x-3 inline-flex justify-center items-center">
+                            <img src="{{ asset('/storage/logo/google.png') }}" alt="google" class="size-5">
                             Login with google </a>
                     </div>
 
@@ -76,3 +78,45 @@
         </form> --}}
     </section>
 @endsection
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        // Success Message
+        @if (session('success'))
+            Toastify({
+                text: "{{ session('success') }}",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "#48bb78", // green-500
+                stopOnFocus: true
+            }).showToast();
+        @endif
+
+        // Error Message
+        @if (session('error'))
+            Toastify({
+                text: "{{ session('error') }}",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                style: {
+                    background: "#fff0f0",
+                    fontSize: "14px",
+                    color: "#e60000",
+                    boxShadow: "0px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                },
+                close: true,
+                avatar: "icons/error.png",
+                stopOnFocus: true
+            }).showToast();
+        @endif
+
+
+
+    });
+</script>

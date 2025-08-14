@@ -29,12 +29,13 @@ class AuthController extends Controller
                 return redirect('/dashboard');
             }
 
-            return redirect('/');
+            return redirect('/')->with('success','Login successfully');
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+        // return back()->withErrors([
+        //     'authError' => 'The provided credentials do not match our records.',
+        // ]);
+        return back()->with('error', 'Invalid Credentials');
     }
 
     public function showRegister() {

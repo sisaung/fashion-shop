@@ -159,9 +159,6 @@ class ProductController extends Controller
             $trendy = 0;
         }
 
-
-
-
         $product = Product::create([
             'product_code' => $productCode,
             'product_name' => $request->product_name,
@@ -182,7 +179,7 @@ class ProductController extends Controller
         ]);
 
 
-        return redirect()->route('manage-image.edit', ['id' => $product->id]);
+        return redirect()->route('manage-image.edit', ['id' => $product->id])->with('success', 'Product created successfully!');
     }
 
     /**
@@ -279,7 +276,7 @@ class ProductController extends Controller
         $product->product_type_id = $request->product_type_id;
        $fitId && $product->fit_id = $fitId;
         $product->save();
-        return redirect()->route('product.index',['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
+        return redirect()->route('product.index',['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q])->with('success', 'Product updated successfully!');
     }
 
     /**
@@ -300,7 +297,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->delete();
 
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('success', 'Product deleted successfully!');
     }
 
 

@@ -6,16 +6,16 @@
             <div class="max-w-7xl container px-3 xl:px-0 mx-auto flex justify-between items-center">
                 <a href="{{ url('/') }}" class="flex items-center gap-x-3 py-2">
                     <div class="sm:block hidden">
-                        <img src="{{ asset('/storage/logo/luxury.png') }}" alt="logo" class="h-10 md:h-12">
+                        <img src="{{ asset('/storage/logo/luxe-logo-1.png') }}" alt="logo" class="h-10 md:h-12">
 
                     </div>
                     <div class="flex flex-col justify-center leading-tight">
-                        <h1 class="text-lg hidden sm:block lg:text-2xl font-medium text-gray-700 font-heading">LoomLuxe
+                        <h1 class="text-lg hidden sm:block lg:text-xl font-medium text-gray-700 font-heading">ＬＵＸＥ
                         </h1>
 
                         <p class="sm:hidden block">ＬＵＸＥ</p>
 
-                        <p class="text-xs text-gray-500 sm:block hidden">Fashion Shop</p>
+                        <p class="text-xs text-gray-500 sm:block hidden">Authentic Fashion</p>
                     </div>
                 </a>
 
