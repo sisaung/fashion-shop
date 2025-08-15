@@ -42,9 +42,9 @@
 
                 if ($gender) {
                     if ($gender === 'male') {
-                        $currentPageTitle = 'Male';
+                        $currentPageTitle = 'Men';
                     } elseif ($gender === 'female') {
-                        $currentPageTitle = 'Female';
+                        $currentPageTitle = 'Women';
                     } elseif ($gender === 'unisex') {
                         $currentPageTitle = 'Unisex';
                     }

@@ -68,6 +68,7 @@ Route::controller(AuthController::class)->group(function () {
         Route::post('register', 'register')->name('register.post');
         Route::get('/auth/redirect',[AuthController::class,'redirectToGoogle'])->name('redirect.google');
         Route::get('auth/google/callback',[AuthController::class,'handleGoogleCallback'])->name('callback.google');
+        Route::post('nextLogin','setNextAndLogin')->name('next-and-login');
 
     });
     Route::post('logout', 'logout')->name('logout')->middleware('auth');
@@ -196,7 +197,6 @@ Route::get('/cart',[CartController::class,'index'])->name('cart.index');
 
 
 Route::middleware(['auth',Authenticate::class])->group(function () {
-    Route::get('/order-confirmation',[ShopOrderController::class,'index'])->name('order-confirmation.index');
     Route::post('/confirm-order',[ShopOrderController::class,'store'])->name('confirm-order.store');
     Route::get('/coupon-check',[ShopOrderController::class,'checkCoupon'])->name('coupon-check.index');
     Route::get('/delivery-address',[ShopOrderController::class,'getDeliveryAddress'])->name('delivery-address.index');
@@ -221,7 +221,6 @@ Route::middleware(['auth',Authenticate::class])->group(function () {
 
    Route::post('/store-wishlist',[WishlistController::class,'store'])->name('wishlist.store');
    Route::get('/get-wishlist',[WishlistController::class,'getWishList'])->name('wishlist.getWishlist');
-    Route::get('/wishlist',[WishlistController::class,'showWishlistShow'])->name('wishlist.showWishlistShow');
     Route::delete('/wishlist/{productId}',[WishlistController::class,'destroy'])->name('wishlist.destroy');
     Route::delete('/wishlist-destroy/{productId}',[WishlistController::class,'destroyWishlist'])->name('wishlist.destroyWishlist');
     Route::post('/wishlist/remove-all', [WishlistController::class, 'removeAllWishlist'])->name('wishlist.removeAllWishlist');
@@ -231,6 +230,11 @@ Route::middleware(['auth',Authenticate::class])->group(function () {
 
    Route::post('/store-customer',[OrderedCustomerController::class,'store'])->name('customer.store');
 });
+
+Route::get('/wishlist',[WishlistController::class,'showWishlistShow'])->middleware('auth')->name('wishlist.showWishlistShow');
+Route::get('/order-confirmation',[ShopOrderController::class,'index'])->middleware('auth')->name('order-confirmation.index');
+
+
 
 Route::get('/get-review/{productId}',[UserReviewController::class,'getshopReview'])->name('review.getReview');
 

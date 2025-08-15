@@ -162,11 +162,21 @@
                                 Proceed to Checkout
                             </a>
                         @endauth
-                        @guest
-                            <a href="{{ route('login') }}"
+                        {{-- @guest
+                            <a href="{{ route('login') }}?next={{ route('order-confirmation.index') }}"
                                 class="w-full block text-center mt-4 bg-pearl-bush-500 text-white text-sm py-3 rounded-lg hover:bg-pearl-bush-700 cursor-pointer transition px-4">
                                 Login to Checkout
                             </a>
+                        @endguest --}}
+                        @guest
+                            <form id="checkout-login-form" action="{{ route('next-and-login') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="next" value="{{ route('order-confirmation.index') }}">
+                                <button type="submit"
+                                    class="w-full block text-center mt-4 bg-pearl-bush-500 text-white text-sm py-3 rounded-lg hover:bg-pearl-bush-700 cursor-pointer transition px-4">
+                                    Login to Checkout
+                                </button>
+                            </form>
                         @endguest
                     </div>
                 </div>

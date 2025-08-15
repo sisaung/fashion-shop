@@ -1,6 +1,10 @@
 const fetchWishlist = async (url) => {
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+            },
+        });
 
         if (response.status === 401) {
             return { message: "Unauthenticated.", wishlist: null };

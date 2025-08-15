@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateWishlistRequest;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
 class WishlistController extends Controller
@@ -191,25 +192,88 @@ class WishlistController extends Controller
         return response()->json(['message' => 'Product removed from wishlist successfully.','success' => true], 200);
     }
 
-    public function getWishList() {
-        $user = Auth::user();
+    // public function getWishList() {
+    //     $user = Auth::user();
 
-        if (!Auth::check()) {
-            return response()->json([
-               'message' => 'Unauthenticated'
-            ], 401);
+    //     if (!Auth::check()) {
+    //         return response()->json([
+    //            'message' => 'Unauthenticated'
+    //         ], 401);
+    //     }
+
+    //     $wishlist = Wishlist::where('user_id', $user->id)->first();
+    //     if($wishlist) {
+
+    //         $wishlist->load('products');
+    //     }
+
+    //     return response()->json(['message' => 'Product added to wishlist successfully.','success' => true,'wishlist' => $wishlist], 200);
+    // }
+
+    // public function getWishList(Request $request)
+    // {
+    //     // Only allow authenticated users to access
+    //     $user = Auth::user();
+    //     if (!$user) {
+    //         // For AJAX, return 401
+    //         if ($request->expectsJson()) {
+    //             return response()->json(['message' => 'Unauthenticated'], 401);
+    //         }
+    //         // For web, redirect to login (should not happen if handled before)
+    //         return redirect()->route('login');
+    //     }
+
+    //     // Load user's wishlist
+    //     $wishlist = Wishlist::where('user_id', $user->id)->first();
+    //     if ($wishlist) {
+    //         $wishlist->load('products');
+    //     }
+
+    //     // Return JSON for AJAX (wishlist is usually fetched via AJAX)
+    //     return response()->json([
+    //         'message' => 'Wishlist fetched successfully',
+    //         'success' => true,
+    //         'wishlist' => $wishlist
+    //     ], 200);
+    // }
+
+    public function getWishList(Request $request)
+    {
+        // Only allow AJAX requests
+        if (!$request->ajax()) {
+            abort(403); // forbid direct browser access
         }
 
-        $wishlist = Wishlist::where('user_id', $user->id)->first();
-        if($wishlist) {
+        // Ensure the user is authenticated
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['message' => 'Unauthenticated'], 401);
+        }
 
+        // Load wishlist
+        $wishlist = Wishlist::where('user_id', $user->id)->first();
+        if ($wishlist) {
             $wishlist->load('products');
         }
 
-        return response()->json(['message' => 'Product added to wishlist successfully.','success' => true,'wishlist' => $wishlist], 200);
+        return response()->json([
+            'message' => 'Wishlist fetched successfully',
+            'success' => true,
+            'wishlist' => $wishlist
+        ], 200);
     }
 
+
+
     public function showWishlistShow() {
+
+        if (!Auth::check()) {
+            // Save the exact URL they were trying to access
+            session(['url.intended' => URL::full()]); // full URL including query params
+
+            // Redirect to login page or Google OAuth
+            return redirect()->route('login'); // or your Google login route
+        }
 
         $wishlist = Wishlist::where('user_id', Auth::user()->id)->first();
         if ($wishlist) {

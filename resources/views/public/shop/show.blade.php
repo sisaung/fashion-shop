@@ -627,15 +627,25 @@
                                         class=" cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 text-white py-2.5  rounded-full px-5 text-sm gap-x-1  inline-flex items-center justify-center transition duration-300 ">Post
                                         Review</button>
                                 @endauth
-                                @guest
-                                    <a class=" cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 text-white py-2.5  rounded-full px-5 text-sm gap-x-1  inline-flex items-center justify-center transition duration-300 "
-                                        href="{{ route('login') }}">Login Review </a>
-                                @endguest
+
                             </div>
                         </div>
 
                     </div>
                 </form>
+
+            </div>
+            <div>
+                @guest
+                    <form action="{{ route('next-and-login') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="next" value="{{ route('shop.show', ['slug' => $product->slug]) }}">
+                        <button type="submit"
+                            class="cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 text-white py-2.5  rounded-full px-5 text-sm gap-x-1  inline-flex items-center justify-center transition duration-300 ">Login
+                            Review </button>
+                    </form>
+
+                @endguest
             </div>
 
 
@@ -793,7 +803,11 @@
                     background: "#ecfdf3",
                     fontSize: "14px",
                     color: "#008a2e",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
                 },
+                avatar: "/icons/check.png",
             }).showToast();
         </script>
     @endif

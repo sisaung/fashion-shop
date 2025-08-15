@@ -200,12 +200,16 @@
                 duration: 3000,
                 close: true,
                 gravity: "top",
-                position: "right",
+                position: "center",
                 style: {
                     background: "#ecfdf3",
                     fontSize: "14px",
                     color: "#008a2e",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
                 },
+                avatar: "/icons/check.png",
             }).showToast();
         </script>
     @endif

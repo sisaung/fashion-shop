@@ -16,6 +16,7 @@ return new class extends Migration
             $table->text('review');
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('session_id')->nullable();
             $table->string('rating');
             $table->string('is_show')->default(0);
             $table->integer('is_verified')->default(0);

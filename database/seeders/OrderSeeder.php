@@ -171,10 +171,21 @@ class OrderSeeder extends Seeder
         $total = 0;
 
         // Random 1-3 items
-        $items = $stocks->random( min(3, $stocks->count()) );
-        if ($items instanceof Stock) {
-            $items = collect([$items]);
-        }
+        // $items = $stocks->random( min(3, $stocks->count()) );
+        // if ($items instanceof Stock) {
+        //     $items = collect([$items]);
+        // }
+
+         // Ensure only one stock per product
+    $uniqueStocks = $stocks
+    ->groupBy('product_id') // Group by product
+    ->map(function ($group) {
+        return $group->random(); // Pick 1 random size for that product
+    })
+    ->values();
+
+// Randomly pick up to 3 products for this order
+$items = $uniqueStocks->random(min(3, $uniqueStocks->count()));
 
         foreach ($items as $stock) {
             $quantity = rand(1, 3);
@@ -197,6 +208,8 @@ class OrderSeeder extends Seeder
         // Update order totals
         $tax = $total * 0.05;
         $net = $total + $tax;
+
+
 
         $order->update([
             'total_amount' => $total,

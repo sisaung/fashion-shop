@@ -10,6 +10,7 @@ const storeWishList = async (url, formData) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                'X-Requested-With': 'XMLHttpRequest',
                 Accept: "applicaton/json",
                 "X-CSRF-TOKEN": csrfToken,
             },

@@ -23,7 +23,7 @@ class UserReviewController extends Controller
         }
 
 
-      
+
 
 
 
@@ -87,15 +87,29 @@ class UserReviewController extends Controller
 
     }
 
-        Review::create([
-            'product_id' => $product->id,
-            'user_id' => Auth::id(),
-            'review' => $request->review,
-            'rating' => $request->rating,
-            'is_show' => $isShow,
-            'is_verified' => $isVerified
+    $reviewData = [
+        'product_id' => $product->id,
+        'user_id' => Auth::id(),
+        'review' => $request->review,
+        'rating' => $request->rating,
+        'is_show' => $isShow,
+        'is_verified' => $isVerified
 
-        ]);
+    ];
+
+    // Guest handling
+    if (Auth::check()) {
+        $reviewData['user_id'] = Auth::id();
+    } else {
+        $reviewData['session_id'] = session()->getId(); // track guest reviews
+        // store intended page in session
+        session(['next_action_after_login' => route('shop.show', ['slug' => $product->slug])]);
+        // redirect to login
+        Review::create($reviewData); // store review even before login
+        return redirect()->route('login');
+    }
+
+        Review::create($reviewData);
 
         return back()->with('success','Review provided successfully');
         ;

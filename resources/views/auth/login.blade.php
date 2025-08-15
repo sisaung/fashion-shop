@@ -52,7 +52,7 @@
 
                     <div
                         class="cursor-pointer border border-pearl-bush-200 rounded flex justify-center items-center py-2.5 text-sm ">
-                        <a href="{{ route('redirect.google') }}"
+                        <a href="{{ route('redirect.google',['next' => request('next')]) }}"
                             class="w-full gap-x-3 inline-flex justify-center items-center">
                             <img src="{{ asset('/storage/logo/google.png') }}" alt="google" class="size-5">
                             Login with google </a>

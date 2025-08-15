@@ -17,11 +17,21 @@ use App\Models\UserAddress;
 use App\Notifications\NewOrderNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
 class ShopOrderController extends Controller
 {
    public function index() {
+    if (!Auth::check()) {
+        // Save the exact URL they were trying to access
+        session(['url.intended' => URL::full()]); // full URL including query params
+
+        // Redirect to login page or Google OAuth
+        return redirect()->route('login'); // or your Google login route
+    }
+
+   
        $userAddress =  UserAddress::all();
 
         return view('public.order-confirmation.index',['useAddress' => $userAddress]);

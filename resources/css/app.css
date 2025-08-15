@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("@import url('https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');");
 
 @import "flowbite/src/themes/default";
 @plugin "flowbite/plugin";
@@ -13,7 +13,7 @@
 
 @theme {
     --font-heading: "serif";
-    --font-sans: "Poppins", sans-serif;
+    --font-sans: "Poppins", "Padauk", sans-serif;
     --color-pearl-bush-50: #f9f6f3;
     --color-pearl-bush-100: #ebe3db;
     --color-pearl-bush-200: #e0d3c8;
@@ -164,7 +164,6 @@
 .active-selected-stock {
     @apply bg-pearl-bush-100 text-pearl-bush-700 border border-pearl-bush-300;
 }
-
 
 /* .notification-order-status {
     @apply order-status text-xs font-semibold  px-2 py-0.5 rounded-full  inline-flex items-center gap-1;

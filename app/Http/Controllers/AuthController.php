@@ -18,6 +18,18 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
+    public function setNextAndLogin(Request $request)
+{
+
+    // Store next page in session
+    session(['next_action_after_login' => $request->input('next')]);
+
+    
+    // Redirect to login page
+    return redirect()->route('login');
+}
+
+
     public function login(LoginRequest $request) {
 
         if(Auth::attempt($request->only('email', 'password'))) {
@@ -29,7 +41,10 @@ class AuthController extends Controller
                 return redirect('/dashboard');
             }
 
-            return redirect('/')->with('success','Login successfully');
+
+            // Redirect to next page if provided
+            $next = session()->pull('next_action_after_login', '/');
+            return redirect()->to($next);
         }
 
         // return back()->withErrors([
@@ -71,11 +86,14 @@ class AuthController extends Controller
 
     }
 
-    public function redirectToGoogle() {
+    public function redirectToGoogle(Request $request) {
+        if ($request->has('next')) {
+            session(['next_action_after_login' => $request->query('next')]);
+        }
         return Socialite::driver('google')->redirect();
     }
 
-    public function handleGoogleCallback() {
+    public function handleGoogleCallback(Request $request) {
         $user =  Socialite::driver('google')->user();
 
 
@@ -100,9 +118,14 @@ class AuthController extends Controller
 
         }
 
-        return redirect('/');
-    }
 
+        $next = session()->pull('next_action_after_login', '/');
+        return redirect()->to($next);
+
+
+
+
+    }
 
 
 }
