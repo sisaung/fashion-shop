@@ -596,12 +596,17 @@
 
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-2">
-                <form action="{{ route('review.store', ['productId' => $product->id]) }}" method="POST">
+                <form
+                    action="@auth
+{{ route('review.store', ['productId' => $product->id]) }}
+                     @else
+                    {{ route('reviewRedirectToLogin', ['productId' => $product->id]) }} @endauth"
+                    method="POST">
                     @csrf
                     <h3 class="font-heading font-semibold text-lg mb-3"> Write Reviews </h3>
                     <div>
                         <textarea name="review" id="" cols="60" rows="10"
-                            class="border border-pearl-bush-400 focus:ring-1 focus:ring-pearl-bush-500 mb-3 w-full rounded-lg "></textarea>
+                            class="border border-pearl-bush-400 focus:ring-1 focus:ring-pearl-bush-500 mb-3 w-full rounded-lg ">{{ old('review') }}</textarea>
 
                         <div class="flex items-center gap-x-5 justify-start xl:justify-end">
                             <div>
@@ -627,26 +632,34 @@
                                         class=" cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 text-white py-2.5  rounded-full px-5 text-sm gap-x-1  inline-flex items-center justify-center transition duration-300 ">Post
                                         Review</button>
                                 @endauth
+                                @guest
+                                    <button type="submit"
+                                        class="cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 text-white py-2.5  rounded-full px-5 text-sm gap-x-1  inline-flex items-center justify-center transition duration-300 ">Login
+                                        Review </button>
+                                @endguest
+
+
 
                             </div>
                         </div>
 
                     </div>
                 </form>
+                {{-- <div class="flex flex-col h-full">
+                    @guest
+                        <form action="{{ route('next-and-login') }}" method="POST" class="mt-auto">
+                            @csrf
+                            <input type="hidden" name="next"
+                                value="{{ route('shop.show', ['slug' => $product->slug]) }}">
+                            <button type="submit"
+                                class="cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 text-white py-2.5  rounded-full px-5 text-sm gap-x-1  inline-flex items-center justify-center transition duration-300 ">Login
+                                Review </button>
+                        </form>
 
+                    @endguest
+                </div> --}}
             </div>
-            <div>
-                @guest
-                    <form action="{{ route('next-and-login') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="next" value="{{ route('shop.show', ['slug' => $product->slug]) }}">
-                        <button type="submit"
-                            class="cursor-pointer bg-pearl-bush-500 hover:bg-pearl-bush-700 text-white py-2.5  rounded-full px-5 text-sm gap-x-1  inline-flex items-center justify-center transition duration-300 ">Login
-                            Review </button>
-                    </form>
 
-                @endguest
-            </div>
 
 
             <section>
@@ -749,9 +762,6 @@
 
 
 
-
-
-
             </section>
 
             <template id="review-pagination-template">
@@ -790,9 +800,9 @@
     @vite(['resources/js/wishList/wishList.js'])
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    @if (session('success'))
+    {{-- @if (session('success'))
         <script>
-            console.log('{{ session('success') }}');
+
             Toastify({
                 text: '{{ session('success') }}',
                 duration: 3000,
@@ -810,5 +820,49 @@
                 avatar: "/icons/check.png",
             }).showToast();
         </script>
-    @endif
+    @endif --}}
+
+    <script>
+        // Show validation errors
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                Toastify({
+                    text: @json($error),
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    style: {
+                        background: "#fff0f0",
+                        fontSize: "14px",
+                        color: "#e60000",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
+                    },
+                    avatar: "/icons/error.png",
+                }).showToast();
+            @endforeach
+        @endif
+
+        // Show success messages
+        @if (session('success'))
+            Toastify({
+                text: @json(session('success')),
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                style: {
+                    background: "#ecfdf3",
+                    fontSize: "14px",
+                    color: "#008a2e",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                },
+                avatar: "/icons/check.png",
+            }).showToast();
+        @endif
+    </script>
 @endpush

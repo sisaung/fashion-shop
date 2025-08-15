@@ -22,9 +22,10 @@ class AuthController extends Controller
 {
 
     // Store next page in session
+
     session(['next_action_after_login' => $request->input('next')]);
 
-    
+
     // Redirect to login page
     return redirect()->route('login');
 }
@@ -40,6 +41,8 @@ class AuthController extends Controller
 
                 return redirect('/dashboard');
             }
+
+            UserReviewController::attachGuestReviewsToUser(Auth::id());
 
 
             // Redirect to next page if provided
@@ -87,13 +90,14 @@ class AuthController extends Controller
     }
 
     public function redirectToGoogle(Request $request) {
+
         if ($request->has('next')) {
             session(['next_action_after_login' => $request->query('next')]);
         }
         return Socialite::driver('google')->redirect();
     }
 
-    public function handleGoogleCallback(Request $request) {
+    public function handleGoogleCallback() {
         $user =  Socialite::driver('google')->user();
 
 
@@ -118,11 +122,11 @@ class AuthController extends Controller
 
         }
 
+        // $attached = UserReviewController::attachGuestReviewsToUser(Auth::id());
+        // dd($attached);
 
         $next = session()->pull('next_action_after_login', '/');
         return redirect()->to($next);
-
-
 
 
     }

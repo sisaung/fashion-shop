@@ -217,7 +217,6 @@ Route::middleware(['auth',Authenticate::class])->group(function () {
 
 
 
-   Route::post('/review-store/{productId}',[UserReviewController::class,'store'])->name('review.store');
 
    Route::post('/store-wishlist',[WishlistController::class,'store'])->name('wishlist.store');
    Route::get('/get-wishlist',[WishlistController::class,'getWishList'])->name('wishlist.getWishlist');
@@ -233,6 +232,9 @@ Route::middleware(['auth',Authenticate::class])->group(function () {
 
 Route::get('/wishlist',[WishlistController::class,'showWishlistShow'])->middleware('auth')->name('wishlist.showWishlistShow');
 Route::get('/order-confirmation',[ShopOrderController::class,'index'])->middleware('auth')->name('order-confirmation.index');
+Route::post('/review-store/{productId}',[UserReviewController::class,'store'])->middleware('auth')->name('review.store');
+Route::post('/review-login/{productId}',[UserReviewController::class,'reviewRedirectToLogin'])->name('reviewRedirectToLogin');
+
 
 
 

@@ -61,6 +61,7 @@ class UserReviewController extends Controller
 
     public function store(StoreReviewRequest $request, $productId) {
 
+
         $validator = Validator::make(['id' => $productId],[
             'id' => 'required|numeric|exists:products,id'
         ]);
@@ -100,18 +101,65 @@ class UserReviewController extends Controller
     // Guest handling
     if (Auth::check()) {
         $reviewData['user_id'] = Auth::id();
-    } else {
-        $reviewData['session_id'] = session()->getId(); // track guest reviews
-        // store intended page in session
-        session(['next_action_after_login' => route('shop.show', ['slug' => $product->slug])]);
-        // redirect to login
-        Review::create($reviewData); // store review even before login
-        return redirect()->route('login');
-    }
-
         Review::create($reviewData);
+        return back()->with('success', 'Review submitted successfully.');
+    } else {
+       // Guest user
+    //    $reviewData['session_id'] = session()->getId();
 
-        return back()->with('success','Review provided successfully');
-        ;
+    //   Review::create($reviewData);
+
+
+       // Store intended product page in session for redirect after login
+       session(['next_action_after_login' => route('shop.show', ['slug' => $product->slug])]);
+    //    session(['guest_session_id' => session()->getId()]);
+
+       return redirect()->route('login');
     }
+
+        // Review::create($reviewData);
+
+        // return back()->with('success','Review provided successfully');
+        // ;
+    }
+
+    public static function attachGuestReviewsToUser($userId)
+    {
+        $guestSessionId = session()->pull('guest_session_id'); // <- use stored value
+
+        if (!$guestSessionId) return; // nothing to attach
+
+        $guestReviews = Review::where('session_id', $guestSessionId)
+            ->whereNull('user_id')
+            ->get();
+
+            return $guestReviews;
+
+        foreach ($guestReviews as $guestReview) {
+            $isVerified = OrderItem::join('orders', 'order_items.order_id', '=', 'orders.id')
+                ->join('stocks', 'order_items.stock_id', '=', 'stocks.id')
+                ->where('orders.customer_id', $userId)
+                ->where('stocks.product_id', $guestReview->product_id)
+                ->where('orders.order_status', 'completed')
+                ->exists();
+
+            $guestReview->update([
+                'user_id' => $userId,
+                'session_id' => null,
+                'is_verified' => $isVerified,
+                'is_show' => 1
+            ]);
+        }
+    }
+
+    public function reviewRedirectToLogin($productId) {
+
+        $product  = Product::find($productId);
+            // Store intended product page in session for redirect after login
+       session(['next_action_after_login' => route('shop.show', ['slug' => $product->slug])]);
+       //    session(['guest_session_id' => session()->getId()]);
+
+          return redirect()->route('login');
+    }
+
 }
