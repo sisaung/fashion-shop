@@ -24,7 +24,7 @@ class UserAddressRequest extends FormRequest
         return [
 
             'name' => 'nullable|string|min:3|max:40',
-            'phone_number' => 'required|string|unique:user_addresses,phone_number',
+            'phone_number' => 'required|string|min:11|regex:/^09[0-9]{9}$/',
             'city' => 'required|string',
             'township' => 'required|string',
             'address_detail' => 'required|string',

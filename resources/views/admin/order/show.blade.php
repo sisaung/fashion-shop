@@ -347,7 +347,7 @@
             @if ($order->is_cancel === '0')
                 <div class="flex flex-col  justify-end  w-full ">
                     <div class="flex gap-x-2  items-center">
-                        <input type="checkbox"
+                        <input type="checkbox" {{ $errors->any() ? 'checked' : '' }}
                             class="toggle-cancellation-order-form text-sm  focus:ring-2 focus:ring-pearl-bush-500 font-medium text-pearl-bush-500 "
                             name="cancel_order" id="cancel_order">
                         <label for="cancel_order" class=" leading-7 select-none text-sm text-gray-600">
@@ -357,7 +357,7 @@
                         </label>
                     </div>
 
-                    <div class="cancel-order-form grid grid-cols-1">
+                    <div class="cancel-order-form grid grid-cols-1 {{ $errors->any() ? '' : 'hidden' }}">
                         <div class="col-span-1">
                             <form action="{{ route('order.cancel', ['id' => $order->id]) }}" method="POST">
                                 @csrf

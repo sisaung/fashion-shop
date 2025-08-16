@@ -346,11 +346,37 @@
 @endsection
 @push('scripts')
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    @if (session('success'))
-        <script>
-            console.log('{{ session('success') }}');
+    <script>
+        // Show validation errors
+
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                Toastify({
+                    text: @json($error),
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "center",
+                    style: {
+                        background: "#fff0f0",
+                        fontSize: "14px",
+                        color: "#e60000",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
+                    },
+                    avatar: "/icons/error.png",
+                }).showToast();
+            @endforeach
+        @endif
+
+
+
+        // Show success messages
+        @if (session('success'))
             Toastify({
-                text: '{{ session('success') }}',
+                text: @json(session('success')),
                 duration: 3000,
                 close: true,
                 gravity: "top",
@@ -359,8 +385,12 @@
                     background: "#ecfdf3",
                     fontSize: "14px",
                     color: "#008a2e",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
                 },
+                avatar: "/icons/check.png",
             }).showToast();
-        </script>
-    @endif
+        @endif
+    </script>
 @endpush

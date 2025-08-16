@@ -52,7 +52,7 @@
 
                     <div
                         class="cursor-pointer border border-pearl-bush-200 rounded flex justify-center items-center py-2.5 text-sm ">
-                        <a href="{{ route('redirect.google',['next' => request('next')]) }}"
+                        <a href="{{ route('redirect.google', ['next' => request('next')]) }}"
                             class="w-full gap-x-3 inline-flex justify-center items-center">
                             <img src="{{ asset('/storage/logo/google.png') }}" alt="google" class="size-5">
                             Login with google </a>
@@ -89,8 +89,15 @@
                 duration: 3000,
                 gravity: "top",
                 position: "right",
-                backgroundColor: "#48bb78", // green-500
-                stopOnFocus: true
+                style: {
+                    background: "#ecfdf3",
+                    fontSize: "14px",
+                    color: "#008a2e",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                },
+                avatar: "/icons/check.png",
             }).showToast();
         @endif
 

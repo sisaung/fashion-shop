@@ -7,7 +7,7 @@ const initializeCancelOrder = () => {
     const reasonInput = document.querySelector(".reason-input");
 
     if (!cancelOrderForm) return;
-    cancelOrderForm.classList.add("hidden");
+    
     if (!toggleCancellationOrderForm) return;
 
     const handleChange = (e) => {

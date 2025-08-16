@@ -134,4 +134,52 @@
 @endsection
 @push('scripts')
     @vite(['resources/js/profile/changeUserProfile.js'])
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        // Show validation errors
+
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                Toastify({
+                    text: @json($error),
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "center",
+                    style: {
+                        background: "#fff0f0",
+                        fontSize: "14px",
+                        color: "#e60000",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
+                    },
+                    avatar: "/icons/error.png",
+                }).showToast();
+            @endforeach
+        @endif
+
+
+
+        // Show success messages
+        @if (session('success'))
+            Toastify({
+                text: @json(session('success')),
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "center",
+                style: {
+                    background: "#ecfdf3",
+                    fontSize: "14px",
+                    color: "#008a2e",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                },
+                avatar: "/icons/check.png",
+            }).showToast();
+        @endif
+    </script>
 @endpush

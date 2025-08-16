@@ -38,20 +38,23 @@
                             {{-- carousel items --}}
                             @foreach ($productImages as $image)
                                 {{-- item --}}
-                                <div class="hidden aspect-square[16/9] w-full overflow-hidden duration-700 ease-in-out rounded-lg" data-carousel-item>
+                                <div class="hidden aspect-square[16/9] w-full overflow-hidden duration-700 ease-in-out rounded-lg"
+                                    data-carousel-item>
 
                                     <img src="{{ asset($image['url']) }}"
-                                        class="absolute  block w-full h-full object-center object-cover"
-                                        alt="...">
+                                        class="absolute  block w-full h-full object-center object-cover" alt="...">
                                     <div class="absolute top-0 left-0 w-full h-full bg-black/35"></div>
                                     <div class="absolute bottom-15 md:bottom-30 left-5 md:left-5 lg::left-10 xl:left-20">
-                                        <p class="text-3xl sm:text-4xl md:text-6xl tracking-wide font-heading text-white font-bold">
+                                        <p
+                                            class="text-3xl sm:text-4xl md:text-6xl tracking-wide font-heading text-white font-bold">
                                             Carry Confidence
                                         </p>
-                                        <p class="text-2xl sm:text-4xl md:text-6xl tracking-wide font-heading font-bold text-white">
+                                        <p
+                                            class="text-2xl sm:text-4xl md:text-6xl tracking-wide font-heading font-bold text-white">
                                             Wear Grace
                                         </p>
-                                        <p class="text-base md:text-lg tracking-wide md:tracking-wider text-white"> Step into outfit that brings comfort,confidence, and a sense of belonging. </p>
+                                        <p class="text-base md:text-lg tracking-wide md:tracking-wider text-white"> Step
+                                            into outfit that brings comfort,confidence, and a sense of belonging. </p>
                                     </div>
 
                                 </div>
@@ -93,8 +96,11 @@
 
                     <section class="space-y-10 md:space-y-5">
                         <div class="space-y-5 md:space-y-0">
-                            <h1 class="text-3xl text-center md:text-start md:text-4xl font-heading  tracking-wide font-semibold"> Explore Our Latest Style </h1>
-                            <p class="text-gray-500 text-center md:text-start font-thin md:text-base text-sm tracking-wide"> Find clothes that match your vibe and every
+                            <h1
+                                class="text-3xl text-center md:text-start md:text-4xl font-heading  tracking-wide font-semibold">
+                                Explore Our Latest Style </h1>
+                            <p class="text-gray-500 text-center md:text-start font-thin md:text-base text-sm tracking-wide">
+                                Find clothes that match your vibe and every
                                 day
                                 better. </p>
                         </div>
@@ -274,4 +280,49 @@
     @vite(['resources/js/shop-product/getLatestStyle.js'])
     @vite(['resources/js/shop-product/product-detail/redirect.js'])
     @vite(['resources/js/shop-product/addWishlistHome.js'])
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        // Show validation errors
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                Toastify({
+                    text: @json($error),
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "center",
+                    style: {
+                        background: "#fff0f0",
+                        fontSize: "14px",
+                        color: "#e60000",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
+                    },
+                    avatar: "/icons/error.png",
+                }).showToast();
+            @endforeach
+        @endif
+
+        // Show success messages
+        @if (session('success'))
+            Toastify({
+                text: @json(session('success')),
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "center",
+                style: {
+                    background: "#ecfdf3",
+                    fontSize: "14px",
+                    color: "#008a2e",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                },
+                avatar: "/icons/check.png",
+            }).showToast();
+        @endif
+    </script>
 @endpush

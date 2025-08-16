@@ -53,7 +53,7 @@ class UserProfileController extends Controller
         }
         $user->profile_image = $path;
         $user->save();
-        return "";
+        return back()->with('success', 'Profile image changed successfully.');
     }
 
 
@@ -64,7 +64,7 @@ class UserProfileController extends Controller
         $user->name = $request->name;
         $user->save();
 
-        return redirect()->route('account.showProfileInformation');
+        return redirect()->route('account.showProfileInformation')->with('success', 'Name changed successfully.');
     }
 
     public function addressIndex() {

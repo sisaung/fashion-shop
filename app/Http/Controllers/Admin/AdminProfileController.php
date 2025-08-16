@@ -29,13 +29,13 @@ class AdminProfileController extends Controller
         }
 
         $path = null;
-      
+
         // if($request->hasFile('profile_image')) {
                $path =  $request->file('profile_image')->store('profile_images','public');
 
         $user->profile_image = $path;
         $user->save();
-        return "";
+        return back()->with('success', 'Profile Image Changed successfully');
 
         // }else {
         //     return   response()->json(['message' => "Invalid File"]);
@@ -52,7 +52,7 @@ class AdminProfileController extends Controller
         $user->name = $request->name;
         $user->save();
 
-        return redirect()->route('admin-profile.index');
+        return redirect()->route('admin-profile.index')->with('success', 'Name Changed successfully');
     }
 
     public function changePasswordIndex() {
@@ -77,7 +77,7 @@ class AdminProfileController extends Controller
      $request->session()->invalidate();
      $request->session()->regenerateToken();
 
-     return redirect()->route('login');
+     return redirect()->route('login')->with('success', 'Password Changed successfully');
     }
 
 }

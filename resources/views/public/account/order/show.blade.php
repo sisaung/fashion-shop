@@ -87,8 +87,7 @@
                                 <div class="border border-pearl-bush-300 rounded-lg px-6 py-4 select-address">
                                     <div class="mb-5 md:mb-3">
                                         <h3 class="font-heading font-semibold mb-3 md:mb-0"> Customer Contact </h3>
-                                        <div
-                                            class="flex md:flex-row flex-col items-start gap-3 md:gap-0 md:items-center gap-x-5 ">
+                                        <div class="flex md:flex-row flex-col items-start md:gap-5 md:items-center gap-3 ">
                                             <div class="flex items-center gap-x-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="1.5" stroke="currentColor"
@@ -163,7 +162,7 @@
                 </div>
 
                 {{-- Right Column --}}
-                <div class="space-y-4">
+                <div class="space-y-4 mb-5 xl:mb-0">
                     <div class="flex items-center gap-x-2  ">
                         <p class="font-heading text-gray-700">Ordered Summary
                             @if ($order->is_cancel)
@@ -257,52 +256,54 @@
                                 <label for="cancel_order"
                                     class="leading-7 select-none text-stone-500 text-sm font-heading"> Order Cancellation
                                     Form </label>
-                                <input type="checkbox"
-                                    class="toggle-cancellation-order-form text-sm  focus:ring-2 focus:ring-pearl-bush-500 font-medium text-pearl-bush-500 "
+                                <input type="checkbox" {{ $errors->any() ? 'checked' : '' }}
+                                    class="toggle-cancellation-order-form  text-sm  focus:ring-2 focus:ring-pearl-bush-500 font-medium text-pearl-bush-500 "
                                     name="cancel_order" id="cancel_order">
                             </div>
-                            <form action="{{ route('account.cancelOrder', ['id' => $order->id]) }}" method="POST"
-                                class="cancel-order-form">
-                                @csrf
-                                @method('PATCH')
+                            <div class="cancel-order-form {{ $errors->any() ? '' : 'hidden' }}">
+                                <form action="{{ route('account.cancelOrder', ['id' => $order->id]) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
 
-                                <textarea class="reason-input border border-pearl-bush-400 rounded focus:ring-1 focus:ring-pearl-bush-500"
-                                    name="cancel_reason" id="cancel_reason" cols="30" rows="4"></textarea>
+                                    <textarea class="reason-input border border-pearl-bush-400 rounded focus:ring-1 focus:ring-pearl-bush-500"
+                                        name="cancel_reason" id="cancel_reason" cols="30" rows="4"></textarea>
 
-                                @error('cancel_reason')
-                                    <p class="text-xs text-red-500"> {{ $message }} </p>
-                                @enderror
-
-                                <div class="flex  flex-wrap gap-3">
-                                    @foreach ($orderCancellationReasons as $reason)
-                                        <p data-reason="{{ $reason['description'] }}"
-                                            class="cancel-reason-tag cursor-pointer text-xs border text-pearl-bush-500 border-pearl-bush-400  px-2 py-1 rounded-full">
-                                            {{ $reason['tag'] }} </p>
-                                    @endforeach
-                                </div>
-
-                                <div class="mt-3">
-                                    <input type="checkbox"
-                                        class="toggle-cancellation-order-form text-sm  focus:ring-2 focus:ring-pearl-bush-500 font-medium text-pearl-bush-500 "
-                                        name="sure_cancel_order" id="sure_cancel_order">
-                                    <label for="sure_cancel_order" class=" leading-7 select-none text-sm text-gray-600">
-
-                                        Check this box if you want to cancel the order
-
-                                    </label>
-                                    @error('sure_cancel_order')
-                                        <p class="text-xs text-red-500"> {{ $message }} </p>
+                                    @error('cancel_reason')
+                                        <p class="text-xs text-red-500 cancel-reason-error"> {{ $message }} </p>
                                     @enderror
-                                </div>
 
-                                <div class="mt-3">
-                                    <button type="submit"
-                                        class="text-white bg-pearl-bush-400 border-0 py-2 px-8 focus:outline-none hover:bg-pearl-bush-600 rounded text-sm  cursor-pointer duration-300">
-                                        Cancel
-                                    </button>
-                                </div>
+                                    <div class="flex  flex-wrap gap-3">
+                                        @foreach ($orderCancellationReasons as $reason)
+                                            <p data-reason="{{ $reason['description'] }}"
+                                                class="cancel-reason-tag cursor-pointer text-xs border text-pearl-bush-500 border-pearl-bush-400  px-2 py-1 rounded-full">
+                                                {{ $reason['tag'] }} </p>
+                                        @endforeach
+                                    </div>
 
-                            </form>
+                                    <div class="mt-3">
+                                        <input type="checkbox"
+                                            class="toggle-cancellation-order-form text-sm  focus:ring-2 focus:ring-pearl-bush-500 font-medium text-pearl-bush-500 "
+                                            name="sure_cancel_order" id="sure_cancel_order">
+                                        <label for="sure_cancel_order"
+                                            class=" leading-7 select-none text-sm text-gray-600">
+
+                                            Check this box if you want to cancel the order
+
+                                        </label>
+                                        @error('sure_cancel_order')
+                                            <p class="text-xs text-red-500 cancel-check-error"> {{ $message }} </p>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <button type="submit"
+                                            class="text-white bg-pearl-bush-400 border-0 py-2 px-8 focus:outline-none hover:bg-pearl-bush-600 rounded text-sm  cursor-pointer duration-300">
+                                            Cancel
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
                         @elseif ($order->order_status === 'confirmed')
                             <div class="space-y-2">
                                 <div class="flex items-center gap-x-2">
@@ -446,23 +447,53 @@
         </div>
     @endsection
     @push('scripts')
-        @vite(['resources/js/orders/cancelOrder.js'])
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-        @if (session('success'))
-            <script>
-                console.log('{{ session('success') }}');
+        <script>
+            // Show validation errors
+
+
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    Toastify({
+                        text: @json($error),
+                        duration: 3000,
+                        close: true,
+                        gravity: "top",
+                        position: "center",
+                        style: {
+                            background: "#fff0f0",
+                            fontSize: "14px",
+                            color: "#e60000",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "5px",
+                        },
+                        avatar: "/icons/error.png",
+                    }).showToast();
+                @endforeach
+            @endif
+
+
+
+            // Show success messages
+            @if (session('success'))
                 Toastify({
-                    text: '{{ session('success') }}',
+                    text: @json(session('success')),
                     duration: 3000,
                     close: true,
                     gravity: "top",
-                    position: "right",
+                    position: "center",
                     style: {
                         background: "#ecfdf3",
                         fontSize: "14px",
                         color: "#008a2e",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
                     },
+                    avatar: "/icons/check.png",
                 }).showToast();
-            </script>
-        @endif
+            @endif
+        </script>
+        @vite(['resources/js/orders/cancelOrder.js'])
     @endpush
