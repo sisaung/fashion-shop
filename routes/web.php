@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FitController;
+use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\OrderNotificationController;
 use App\Http\Controllers\Admin\ProductCategoryController;
@@ -170,6 +171,12 @@ Route::middleware(['auth', MustBeAdmin::class])->group(function () {
         Route::get('/mark-as-read-noti', [NotificationController::class, 'markAsReadAllNotification'])->name('markAsReadAllNotification');
 
 
+        //invoice
+
+        Route::resource('invoice',InvoiceController::class)->only('index','show');
+        Route::get('invoice/{id}/pdf', [InvoiceController::class, 'generateInvoicePDF'])->name('invoice.pdf');
+
+
 
     });
 });
@@ -224,9 +231,6 @@ Route::middleware(['auth',Authenticate::class])->group(function () {
     Route::delete('/wishlist-destroy/{productId}',[WishlistController::class,'destroyWishlist'])->name('wishlist.destroyWishlist');
     Route::post('/wishlist/remove-all', [WishlistController::class, 'removeAllWishlist'])->name('wishlist.removeAllWishlist');
 
-
-
-
    Route::post('/store-customer',[OrderedCustomerController::class,'store'])->name('customer.store');
 });
 
@@ -240,4 +244,4 @@ Route::post('/review-login/{productId}',[UserReviewController::class,'reviewRedi
 
 Route::get('/get-review/{productId}',[UserReviewController::class,'getshopReview'])->name('review.getReview');
 
-Route::get('test', [TestController::class, 'index']);
+Route::get('/test-mail', [TestController::class, 'index']);

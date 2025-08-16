@@ -9,4 +9,10 @@ class Invoice extends Model
 {
     /** @use HasFactory<\Database\Factories\InvoiceFactory> */
     use HasFactory;
+    protected $fillable = ['order_id','invoice_number','status','pdf_path','status'];
+
+    public function order() {
+
+        return $this->belongsTo(Order::class);
+    }
 }

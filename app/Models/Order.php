@@ -46,4 +46,8 @@ class Order extends Model
     public function orderNotification() {
         return $this->hasOne(OrderNotification::class);
     }
+
+    public function invoice() {
+        return $this->hasOne(Invoice::class);
+    }
 }

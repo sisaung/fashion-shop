@@ -39,7 +39,7 @@ class AuthController extends Controller
 
             if($request->user()->is_admin === 'admin') {
 
-                return redirect('/dashboard');
+                return redirect('/dashboard')->with('success','Login successfully');
             }
 
             UserReviewController::attachGuestReviewsToUser(Auth::id());

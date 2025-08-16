@@ -10,14 +10,21 @@ use App\Http\Requests\DeliverOrderRequest;
 
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Mail\InvoiceMail;
+use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\Stock;
+use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Spatie\Browsershot\Browsershot;
 
 class OrderController extends Controller
 {
@@ -172,66 +179,201 @@ class OrderController extends Controller
         //
     }
 
-    public function confirmOrder(ConfirmOrderRequest $request,$id) {
+//     public function confirmOrder(ConfirmOrderRequest $request,$id) {
 
 
-        $validator = Validator::make(['id' => $id], [
-            'id' => 'required|numeric|exists:orders,id'
-        ]);
 
-        if ($validator->fails()) {
-            return redirect()->route('order.index')
-                ->withErrors($validator)
-                ->withInput();
+//         $validator = Validator::make(['id' => $id], [
+//             'id' => 'required|numeric|exists:orders,id'
+//         ]);
+
+//         if ($validator->fails()) {
+//             return redirect()->route('order.index')
+//                 ->withErrors($validator)
+//                 ->withInput();
+//         }
+
+
+//         $order = Order::with('orderItems.stock')->find($id);
+//         if($order->order_status === 'pending') {
+//             $order->delivery_start_date = $request->start_date;
+//             $order->delivery_end_date = $request->end_date;
+
+//             if($order->orderItems->count() > 1) {
+
+//                 $order->confirm_message = "Your orders have been confirmed";
+//             }
+//                 $order->confirm_message = "Your order has been  confirmed";
+
+//         foreach($order->orderItems as $item) {
+
+//             $stockId = $item->stock_id;
+
+//             $stock = Stock::find($stockId);
+//             $productId = $stock->product_id;
+//             $product = Product::find($productId);
+
+
+
+//             // next feature update
+
+
+//             if($stock->stock_quantity >= $item->quantity && $stock->stock_quantity > 0 && $product->stock_count > 0 && $product->stock_count >= $item->quantity) {
+
+//                 $stock->decrement('stock_quantity', $item->quantity);
+//                 $product->decrement('stock_count', $item->quantity);
+//             }
+//             else {
+//                 return back()->withErrors([
+//                     'start_date' => 'Stock is not available.',
+//                     'end_date' => 'Stock is not available.',
+
+//                 ]);
+//             }
+
+//         }
+
+//         $order->order_status = "confirmed";
+//         $order->save();
+
+
+
+//         if ($order->order_status === 'pending' || $order->order_status === 'cancelled') {
+
+//             return redirect()->back()->with('error', 'Order cannot be confirmed.');
+//         }
+
+
+
+
+//          // Save invoice record in DB
+//    $invoice =  Invoice::create([
+//         'order_id' => $order->id,
+//         'invoice_number' => 'INV-' . Str::padLeft($order->id, 6, '0'),
+//         // 'pdf_path' => $pdfFilePath,
+//         'status' => 'generated',
+//     ]);
+
+//     // Generate PDF file path
+//     $pdfPath = storage_path("app/public/invoices/invoice-{$order->order_number}.pdf");
+
+//     // Make sure directory exists
+//     if (!file_exists(dirname($pdfPath))) {
+//         mkdir(dirname($pdfPath), 0777, true);
+//     }
+
+//     // Generate PDF with Tailwind support
+//     Browsershot::html(
+//         view('admin.invoices.pdf', ['invoice' => $invoice, 'order' => $order])->render()
+//     )
+//         ->format('A4')
+//         ->margins(10, 10, 10, 10)
+//         ->waitUntilNetworkIdle()
+//         ->save($pdfPath);
+
+//         Mail::to($order->customer->customer_email)->send(new InvoiceMail($order, $invoice, $pdfPath));
+
+//         return redirect()->route('order.show',['order' => $order->id])->with('success','Order confirmed successfully');
+//         }
+
+
+//     }
+
+public function confirmOrder(ConfirmOrderRequest $request, $id)
+{
+    // Validate order ID
+    $validator = Validator::make(['id' => $id], [
+        'id' => 'required|numeric|exists:orders,id'
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()->route('order.index')
+            ->withErrors($validator)
+            ->withInput();
+    }
+
+    // Wrap everything in a transaction
+    DB::beginTransaction();
+
+    try {
+        // Load order with items + customer
+        $order = Order::with(['orderItems.stock.product', 'customer'])->findOrFail($id);
+
+        if ($order->order_status !== 'pending' || $order->order_status === 'cancelled') {
+            return redirect()->back()->with('error', 'Order cannot be confirmed.');
         }
 
+        // Set delivery dates
+        $order->delivery_start_date = $request->start_date;
+        $order->delivery_end_date   = $request->end_date;
 
-        $order = Order::with('orderItems.stock')->find($id);
-        if($order->order_status === 'pending') {
-            $order->delivery_start_date = $request->start_date;
-            $order->delivery_end_date = $request->end_date;
+        // Confirmation message
+        $order->confirm_message = $order->orderItems->count() > 1
+            ? "Your orders have been confirmed"
+            : "Your order has been confirmed";
 
-            if($order->orderItems->count() > 1) {
+        // Check stock & decrement
+        foreach ($order->orderItems as $item) {
+            $stock   = $item->stock;
+            $product = $stock->product;
 
-                $order->confirm_message = "Your orders have been confirmed";
-            }
-                $order->confirm_message = "Your order has been  confirmed";
-
-        foreach($order->orderItems as $item) {
-
-            $stockId = $item->stock_id;
-
-            $stock = Stock::find($stockId);
-            $productId = $stock->product_id;
-            $product = Product::find($productId);
-
-
-
-            // next feature update
-
-
-            if($stock->stock_quantity >= $item->quantity && $stock->stock_quantity > 0 && $product->stock_count > 0 && $product->stock_count >= $item->quantity) {
-
+            if (
+                $stock->stock_quantity >= $item->quantity &&
+                $product->stock_count >= $item->quantity
+            ) {
                 $stock->decrement('stock_quantity', $item->quantity);
                 $product->decrement('stock_count', $item->quantity);
-            }
-            else {
+            } else {
+                DB::rollBack();
                 return back()->withErrors([
                     'start_date' => 'Stock is not available.',
-                    'end_date' => 'Stock is not available.',
-
+                    'end_date'   => 'Stock is not available.',
                 ]);
             }
-
         }
+
+        // Update order status
         $order->order_status = "confirmed";
         $order->save();
 
-        return redirect()->route('order.show',['order' => $order->id]);
+        // Save invoice record
+        $invoice = Invoice::create([
+            'order_id'       => $order->id,
+            'invoice_number' => 'INV-' . Str::padLeft($order->id, 6, '0'),
+            'status'         => 'generated',
+        ]);
+
+        // Generate PDF path
+        $pdfPath = storage_path("app/public/invoices/invoice-{$order->order_number}.pdf");
+
+        if (!file_exists(dirname($pdfPath))) {
+            mkdir(dirname($pdfPath), 0777, true);
         }
 
+        // Generate PDF with Tailwind styles using Browsershot
+        Browsershot::html(
+            view('admin.invoices.pdf', compact('invoice', 'order'))->render()
+        )
+            ->format('A4')
+            ->margins(10, 10, 10, 10)
+            ->waitUntilNetworkIdle()
+            ->save($pdfPath);
 
+        // Commit transaction
+    DB::commit();
+
+        // Send invoice email with attachment
+        Mail::to($order->customer->customer_email)
+            ->send(new InvoiceMail($order, $invoice, $pdfPath));
+
+        return redirect()->route('order.show', ['order' => $order->id])
+            ->with('success', 'Order confirmed successfully and invoice sent to customer.');
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return back()->with('error', 'Something went wrong: ' . $e->getMessage());
     }
+}
 
     public function deliverOrder(DeliverOrderRequest $request,$id) {
 
@@ -259,7 +401,7 @@ class OrderController extends Controller
 
             $order->save();
 
-            return redirect()->route('order.show',['order' => $order->id]);
+            return redirect()->route('order.show',['order' => $order->id])->with('success','Order delivered successfully');
             }
             else {
                 return back()->withErrors([
@@ -307,7 +449,7 @@ class OrderController extends Controller
                         ]);
                     $order->save();
 
-                    return redirect()->route('order.show',['order' => $order->id]);
+                    return redirect()->route('order.show',['order' => $order->id])->with('success','Order completed successfully');
                     }
                     else {
                         return back()->withErrors([
