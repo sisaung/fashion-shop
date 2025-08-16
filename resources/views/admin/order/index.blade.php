@@ -81,7 +81,7 @@
                                         </td>
                                         <td class="whitespace-wrap px-4 w-[230px] py-4 text-sm text-gray-900">
                                             <div class="grid grid-cols-4">
-                                                
+
                                                 <div class="">
 
                                                     @if ($order->customer->profile_image)
@@ -112,7 +112,7 @@
                                         </td>
 
                                         <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
-                                            {{ $order->total_amount }}
+                                            {{ number_format($order->total_amount) }} MMK
                                         </td>
 
 

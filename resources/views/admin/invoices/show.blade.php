@@ -10,19 +10,19 @@
             <div class="flex items-center justify-between">
                 <h1 class="text-2xl font-semibold">INVOICE</h1>
 
-                    <div class="mt-4">
-                        <a href="{{ route('invoice.pdf', $invoice->id) }}" target="_blank"
-                            class="print:hidden focus:outline-2 focus:outline-cyan-600 active:scale-75 inline-flex items-center gap-1 py-1.5 px-3 bg-cyan-500 hover:bg-cyan-600 duration-300 rounded">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
-                            </svg>
-                            <span class="text-xs text-white">Download</span>
-                        </a>
+                <div class="mt-4">
+                    <a href="{{ route('invoice.pdf', $invoice->id) }}" target="_blank"
+                        class="print:hidden focus:outline-2 focus:outline-pearl-bush-600 active:scale-75 inline-flex items-center gap-1 py-1.5 px-3 bg-pearl-bush-400 hover:bg-pearl-bush-600 duration-300 rounded">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+                        </svg>
+                        <span class="text-xs text-white">Download</span>
+                    </a>
 
-                    </div>
-               
+                </div>
+
             </div>
 
             <!-- Voucher Info -->

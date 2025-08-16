@@ -236,7 +236,7 @@
                     </a>
                 </div>
 
-                <div class="w-full overflow-x-auto rounded-lg border border-gray-200 ">
+                <div class="w-full overflow-x-auto rounded-lg border border-gray-200 hide-scrollbar ">
                     <table class="w-full divide-y divide-gray-200">
                         <thead class="bg-stone-50 sorting-wrapper">
                             <tr>
@@ -303,19 +303,19 @@
                                     <td class="whitespace-nowrap  px-4 py-4 text-sm font-medium text-gray-900">
                                         {{ $order->order_number }}
                                     </td>
-                                    <td class="whitespace-wrap px-4  py-4 text-sm text-gray-900">
+                                    <td class="whitespace-wrap w-[230px] px-4  py-4 text-sm text-gray-900">
                                         <div class="grid grid-cols-4">
                                             @if ($order->customer->profile_image)
                                                 @if (Str::startsWith($order->customer->profile_image, 'https'))
-                                                    <img class="size-12 rounded-full object-cover object-center"
+                                                    <img class="size-10 rounded-full object-cover object-center"
                                                         src="{{ $order->customer->profile_image }}" alt="Demo" />
                                                 @else
-                                                    <img class="size-12 rounded-full object-cover object-center"
+                                                    <img class="size-10 rounded-full object-cover object-center"
                                                         src="{{ asset('storage/' . $order->customer->profile_image) }}"
                                                         alt="Demo" />
                                                 @endif
                                             @else
-                                                <img class="size-12 rounded-full"
+                                                <img class="size-10 rounded-full"
                                                     src="https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1"
                                                     alt="Demo" />
                                             @endif
@@ -329,7 +329,7 @@
                                     </td>
 
                                     <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
-                                        {{ $order->total_amount }}
+                                        {{ number_format($order->total_amount) }} MMK
                                     </td>
 
 

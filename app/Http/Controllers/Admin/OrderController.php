@@ -363,8 +363,8 @@ public function confirmOrder(ConfirmOrderRequest $request, $id)
     DB::commit();
 
         // Send invoice email with attachment
-        Mail::to($order->customer->customer_email)
-            ->send(new InvoiceMail($order, $invoice, $pdfPath));
+        // Mail::to($order->customer->customer_email)
+        //     ->send(new InvoiceMail($order, $invoice, $pdfPath));
 
         return redirect()->route('order.show', ['order' => $order->id])
             ->with('success', 'Order confirmed successfully and invoice sent to customer.');

@@ -4,13 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Invoice {{ $invoice->invoice_number }}</title>
-    {{-- @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css'])
-    @else
-    @endif --}}
-
-
-
 </head>
 
 <body class="bg-gray-100 p-6">
@@ -61,7 +54,7 @@
                     <thead style="background-color:#f5f5f5;" class="bg-gray-100">
                         <tr>
                             <th class="px-4 py-3 text-sm font-normal text-left text-gray-500">Products</th>
-                            <th class="px-4 py-3 text-sm font-normal text-left text-gray-500">Size</th>
+                            <th class="px-4 py-3 text-sm font-normal text-center text-gray-500">Size</th>
                             <th class="px-4 py-3 text-sm font-normal text-right text-gray-500">QTY</th>
                             <th class="px-4 py-3 text-sm font-normal text-right text-gray-500">Price</th>
 

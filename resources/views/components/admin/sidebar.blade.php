@@ -151,6 +151,7 @@
     $orderRoutes = ['order.*', 'coupon.*'];
     $reportRoutes = ['report.sale.*', 'report.order.*', 'report.customer.*'];
 
+
     function isDropdownOpen(array $routes)
     {
         foreach ($routes as $route) {
@@ -501,10 +502,29 @@
                         Customers
                     </span>
                 </a>
+
+
             </div>
 
 
+
         </div>
+
+        <!-- Invoice -->
+        <a href="{{ url('/dashboard/invoice') }}"
+            class="block px-4 py-2 text-sm rounded duration-500 {{ Request::routeIs('invoice.index') ? ' bg-pearl-bush-100 hover:bg-pearl-bush-100 text-pearl-bush-700' : 'hover:bg-stone-100 hover:text-pearl-bush-700' }}">
+            <span class="inline-flex items-center gap-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="lucide lucide-receipt-text-icon lucide-receipt-text">
+                    <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" />
+                    <path d="M14 8H8" />
+                    <path d="M16 12H8" />
+                    <path d="M13 16H8" />
+                </svg>
+                Invoice
+            </span>
+        </a>
     </nav>
     <div class="mt-auto border-t  border-pearl-bush-100 p-4">
         <form action="{{ route('logout') }}" method="POST">

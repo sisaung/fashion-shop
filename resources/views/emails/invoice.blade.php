@@ -29,7 +29,7 @@
     <p>
         <strong>Order Number:</strong> {{ $order->order_number }}<br>
         <strong>Order Date:</strong> {{ $order->created_at->format('F d, Y') }}<br>
-        <strong>Total Amount:</strong> ${{ number_format($order->total_amount, 2) }} MMK
+        <strong>Total Amount:</strong> ${{ number_format($order->total_amount) }} MMK
     </p>
 
     <h3>Shipping Address</h3>
@@ -44,8 +44,8 @@
         @foreach ($order->orderItems as $item)
             <li>
                 {{ $item->stock->product->product_name }} - {{ $item->quantity }} x
-                ${{ number_format($item->sale_price, 2) }} =
-                ${{ number_format($item->quantity * $item->sale_price, 2) }} MMK
+                {{ number_format($item->sale_price) }} =
+                {{ number_format($item->quantity * $item->sale_price) }} MMK
             </li>
         @endforeach
     </ul>

@@ -140,7 +140,7 @@ class InvoiceController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('invoices.index')
+            return redirect()->route('invoice.index')
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -217,24 +217,55 @@ public function generateInvoicePDF($invoiceId)
         mkdir($pdfFolder, 0755, true);
     }
 
-    $pdfFilePath = "invoices/invoice_{$invoice->id}.pdf";
+    $pdfFilePath = "invoices/invoice_{$invoice->invoice_number}.pdf";
     $fullPath = storage_path("app/public/{$pdfFilePath}");
 
-    // Generate PDF from Blade
+    // Render Blade HTML
     $html = view('admin.invoices.pdf', compact('invoice', 'order'))->render();
 
-    $manifest = json_decode(file_get_contents(public_path('build/manifest.json')), true);
-    $cssFile = public_path('build/' . $manifest['resources/css/app.css']['file']);
-    if (!file_exists($cssFile)) {
-        throw new \Exception("CSS file not found: {$cssFile}");
+    // For Tailwind v4, we need to include the runtime engine
+    $tailwindRuntime = <<<HTML
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+    <script>
+        tailwind.config = {
+            important: '#tailwind-pdf',
+        }
+    </script>
+    HTML;
+
+    $fullHtml = <<<HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Invoice</title>
+  {$tailwindRuntime}
+  <style>
+    @media print {
+        body {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
     }
+    #tailwind-pdf {
+        all: initial;
+    }
+  </style>
+</head>
+<body>
+  <div id="tailwind-pdf" class="bg-gray-100 p-6">
+    {$html}
+  </div>
+</body>
+</html>
+HTML;
 
-    $css = file_get_contents($cssFile);
-
-    Browsershot::html($html)
-        ->addStyle($css)          // <-- add Tailwind CSS here
+    // Generate PDF
+    Browsershot::html($fullHtml)
         ->noSandbox()
         ->waitUntilNetworkIdle()
+        ->emulateMedia('print')
+        ->showBackground()
         ->format('A4')
         ->save($fullPath);
 
@@ -243,5 +274,6 @@ public function generateInvoicePDF($invoiceId)
 
     return response()->download($fullPath);
 }
+
 
 }
