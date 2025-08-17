@@ -107,7 +107,7 @@ class StockAnalysisController extends Controller
         ];
     });
 
-    
+
 
     return response()->json($result);
 
@@ -118,16 +118,22 @@ public function calculatePrice(Request $request) {
     $productTypeId = $request->input('stock_by_product_type');
     $brandId = $request->input('stock_by_brand');
 
+    $query = Product::query();
+
     if (!$productTypeId && !$brandId) {
+        $products = $query->get();
         // Both are null, do not calculate
+        $totalSalePrice = $products->sum('sale_price');
+    $totalOriginalPrice = $products->sum('original_price');
+    $totalProfit = $totalSalePrice - $totalOriginalPrice;
         return response()->json([
-            'totalSalePrice' => 0,
-            'totalOriginalPrice' => 0,
-            'totalProfit' => 0,
+            'totalSalePrice' => $totalSalePrice,
+            'totalOriginalPrice' => $totalOriginalPrice,
+            'totalProfit' => $totalProfit,
         ]);
     }
 
-    $query = Product::query();
+
 
     if ($productTypeId) {
         $query->where('product_type_id', $productTypeId);
@@ -138,6 +144,8 @@ public function calculatePrice(Request $request) {
     }
 
     $products = $query->get();
+
+
 
     $totalSalePrice = $products->sum('sale_price');
     $totalOriginalPrice = $products->sum('original_price');

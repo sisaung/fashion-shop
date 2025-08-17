@@ -254,7 +254,6 @@ const initializeStockAnalysis = async () => {
                         backgroundColor: "#ccb6a5",
                         barThickness, // fixed thickness if single
                         maxBarThickness, // max width of bar
-
                     },
                 ],
             },
@@ -292,8 +291,10 @@ const initializeStockAnalysis = async () => {
 
     // total stock category
     const stockCategories = await fetchTotalStock();
+    const data = await fetchAllTotalPrice();
     stockTotal.textContent = stockCategories.totalStock;
     renderStockCategoryList(stockCategories.categories, categoryContainer);
+    showAllTotalPrice(data);
 
     function renderCategoryChart(data) {
         data.categories.sort((a, b) => b.stock - a.stock);
@@ -384,6 +385,7 @@ const initializeStockAnalysis = async () => {
             await updateBrandAndChart(selectedProductTypeId);
             const data = await fetchAllTotalPrice(params.toString());
 
+            console.log(data);
             showAllTotalPrice(data);
         }
 
@@ -408,7 +410,6 @@ const initializeStockAnalysis = async () => {
                 // Update brand list and chart
                 await updateBrandAndChart(productTypeId, null);
                 const data = await fetchAllTotalPrice(searchParams.toString());
-
                 showAllTotalPrice(data);
             });
         });
@@ -563,7 +564,6 @@ const initializeStockAnalysis = async () => {
         // }
 
         const data = await fetchAllTotalPrice();
-        console.log(data);
         showAllTotalPrice(data);
     }
 

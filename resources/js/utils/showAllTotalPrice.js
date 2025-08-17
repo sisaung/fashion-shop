@@ -1,6 +1,7 @@
 import numberFormat from "./numberFormat";
 
 const showAllTotalPrice = (data) => {
+    
     const totalSalePrice = document.querySelector(".total-sale-price");
     const totalOriginalPrice = document.querySelector(".total-original-price");
     const totalProfit = document.querySelector(".total-profit");
