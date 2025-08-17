@@ -132,7 +132,7 @@ class ProductTypeController extends Controller
         $productType->fits()->attach($fits);
         $productType->sizes()->attach($sizes);
 
-        return redirect()->route('product-type.index');
+        return redirect()->route('product-type.index')->with('success','Product Type created successfully');
     }
 
     /**
@@ -205,7 +205,7 @@ class ProductTypeController extends Controller
         $productType->sizes()->sync($sizes);
         $productType->save();
 
-        return redirect()->route('product-type.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
+        return redirect()->route('product-type.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q])->with('success','Product Type updated successfully');
     }
 
     /**
@@ -226,7 +226,7 @@ class ProductTypeController extends Controller
         $productType = ProductType::find($id);
         $productType->delete();
 
-        return redirect()->route('product-type.index');
+        return redirect()->route('product-type.index')->with('success','Product Type deleted successfully');
     }
 
     public function getProductTypes($id) {

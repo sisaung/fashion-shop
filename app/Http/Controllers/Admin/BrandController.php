@@ -83,7 +83,7 @@ class BrandController extends Controller
             'user_id' => Auth::id()
 
         ]);
-        return redirect()->route('brand.index');
+        return redirect()->route('brand.index')->with('success','Brand created successfully');
     }
 
     /**
@@ -160,7 +160,7 @@ class BrandController extends Controller
 
 
         $brand->save();
-        return redirect()->route('brand.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->search]);
+        return redirect()->route('brand.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->search])->with('success','Brand updated successfully');
     }
 
     /**
@@ -184,6 +184,6 @@ class BrandController extends Controller
         $brand = Brand::find($id);
         $brand->delete();
 
-        return redirect()->route('brand.index');
+        return redirect()->route('brand.index')->with('success','Brand deleted successfully');
     }
 }

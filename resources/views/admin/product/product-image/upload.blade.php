@@ -84,20 +84,21 @@
 
             <div data-product-id="{{ $product->id }}"
                 data-manage-image-url="{{ route('manage-image.edit', ['id' => $product->id]) }}"
-                class="manage-image-upload border border-dashed border-pearl-bush-400 rounded-md px-10 py-12 flex justify-center items-center cursor-pointer hover:bg-pearl-bush-100 duration-300 ">
+                class="manage-image-upload border border-dashed border-pearl-bush-400 rounded-md px-10 py-12 flex flex-col justify-center items-center cursor-pointer hover:bg-pearl-bush-100 gap-1.5 duration-300 ">
+                <div
+                    class="size-12 rounded-full border text-pearl-bush-500  border-gray-300 flex justify-center items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-arrow-up-from-line-icon lucide-arrow-up-from-line">
+                        <path d="m18 9-6-6-6 6" />
+                        <path d="M12 3v14" />
+                        <path d="M5 21h14" />
+                    </svg>
+                </div>
                 <button class="cursor-pointer text-gray-600 text-sm "> Upload Image
                 </button>
-                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="8" y="12" width="48" height="40" rx="4" stroke="black" stroke-width="2" />
 
-                    <polygon points="18 45 28 25 38 45" fill="black" />
-                    <polygon points="28 45 38 35 48 45" fill="black" />
 
-                    <line x1="45" y1="12" x2="45" y2="22" stroke="black" stroke-width="2"
-                        stroke-linecap="round" />
-                    <line x1="40" y1="17" x2="50" y2="17" stroke="black" stroke-width="2"
-                        stroke-linecap="round" />
-                </svg>
 
             </div>
 

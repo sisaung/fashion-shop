@@ -114,7 +114,6 @@ const initializeAddToCart = () => {
                 },
                 close: true,
                 avatar: "/icons/exclamation.jpg",
-
             }).showToast();
             return;
         } else {

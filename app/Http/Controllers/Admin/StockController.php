@@ -88,7 +88,7 @@ class StockController extends Controller
     }
 
 
-        return redirect()->route('manage-stock.create',['id' => $id]);
+        return redirect()->route('manage-stock.create',['id' => $id])->with('success','Stock created successfully');
     }
 
     /**
@@ -135,7 +135,7 @@ class StockController extends Controller
         $product->decrement('stock_count', $stock->stock_quantity);
         $stock->delete();
 
-        return redirect()->route('manage-stock.create',['id' => $id]);
+        return redirect()->route('manage-stock.create',['id' => $id])->with('success','Stock deleted successfully');
     }
 
     // public function stockAnalysis()

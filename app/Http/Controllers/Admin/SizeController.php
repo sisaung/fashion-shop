@@ -82,7 +82,7 @@ class SizeController extends Controller
         ]);
 
         // $size->productTypes()->attach($request->product_type_id);
-        return redirect()->route('size.index');
+        return redirect()->route('size.index')->with('success','Size created successfully');
     }
 
     /**
@@ -135,7 +135,7 @@ class SizeController extends Controller
         $size->size_name = $request->size_name;
         // $size->productTypes()->sync($request->product_type_id);
         $size->save();
-        return redirect()->route('size.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
+        return redirect()->route('size.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q])->with('success','Size updated successfully');
     }
 
     /**
@@ -156,6 +156,6 @@ class SizeController extends Controller
         $size = Size::find($id);
         $size->delete();
 
-        return redirect()->route('size.index');
+        return redirect()->route('size.index')->with('success','Size deleted successfully');
     }
 }

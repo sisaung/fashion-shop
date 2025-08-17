@@ -76,7 +76,8 @@
 
                                 </th>
 
-                                <th scope="col" class="px-4 whitespace-nowrap py-3 text-left text-sm font-medium text-gray-500">
+                                <th scope="col"
+                                    class="px-4 whitespace-nowrap py-3 text-left text-sm font-medium text-gray-500">
                                     <div class="flex items-center justify-end cursor-pointer">
                                         Created
                                     </div>
@@ -86,7 +87,8 @@
                                         Updated
                                     </div>
                                 </th> --}}
-                                <th scope="col" class="px-4 whitespace-nowrap py-3 text-left text-sm font-medium text-gray-500">
+                                <th scope="col"
+                                    class="px-4 whitespace-nowrap py-3 text-left text-sm font-medium text-gray-500">
                                     <div class="flex items-center justify-center cursor-pointer">
                                         Action
                                     </div>
@@ -298,4 +300,26 @@
     @vite(['resources/js/search.js'])
     {{-- @vite(['resources/js/pagination.js']) --}}
     @vite(['resources/js/saveCurrentParam'])
+
+    <script>
+        // Show success messages
+        @if (session('success'))
+            Toastify({
+                text: @json(session('success')),
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "center",
+                style: {
+                    background: "#ecfdf3",
+                    fontSize: "14px",
+                    color: "#008a2e",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                },
+                avatar: "/icons/check.png",
+            }).showToast();
+        @endif
+    </script>
 @endpush

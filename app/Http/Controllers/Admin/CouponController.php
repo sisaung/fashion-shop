@@ -78,7 +78,7 @@ class CouponController extends Controller
         'user_id' => Auth::id()
        ]);
 
-       return redirect()->route('coupon.index');
+       return redirect()->route('coupon.index')->with('success','Coupon created successfully');
     }
 
     /**
@@ -135,7 +135,7 @@ class CouponController extends Controller
         $coupon->coupon_expire_date = $request->coupon_expire_date;
         $coupon->save();
 
-        return redirect()->route('coupon.index',['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
+        return redirect()->route('coupon.index',['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q])->with('success','Coupon updated successfully');
     }
 
     /**
@@ -155,6 +155,6 @@ class CouponController extends Controller
 
         $coupon = Coupon::find($id);
         $coupon->delete();
-        return redirect()->route('coupon.index');
+        return redirect()->route('coupon.index')->with('success','Coupon deleted successfully');
     }
 }

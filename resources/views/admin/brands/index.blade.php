@@ -66,13 +66,12 @@
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
 
                                         @if ($brand->brand_image)
-
-                                                <img src="{{ $brand->brand_image }}" alt="{{ $brand->brand_name }}"
-                                                    class="size-14 border p-2 border-pearl-bush-300 rounded object-center object-cover">
-
+                                            <img src="{{ $brand->brand_image }}" alt="{{ $brand->brand_name }}"
+                                                class="size-14 border p-2 border-pearl-bush-300 rounded object-center object-cover">
                                         @else
                                             <img src=" https://user-images.githubusercontent.com/237508/90246627-ecbda400-de2c-11ea-8bfb-b4307bfb975d.png"
-                                                class="size-14 object-center object-cover  p-2 rounded-md" alt="placeholder" />
+                                                class="size-14 object-center object-cover  p-2 rounded-md"
+                                                alt="placeholder" />
                                         @endif
 
                                     </td>
@@ -274,4 +273,25 @@
     @vite(['resources/js/search.js'])
     {{-- @vite(['resources/js/pagination.js']) --}}
     @vite(['resources/js/saveCurrentParam'])
+    <script>
+        // Show success messages
+        @if (session('success'))
+            Toastify({
+                text: @json(session('success')),
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "center",
+                style: {
+                    background: "#ecfdf3",
+                    fontSize: "14px",
+                    color: "#008a2e",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                },
+                avatar: "/icons/check.png",
+            }).showToast();
+        @endif
+    </script>
 @endpush

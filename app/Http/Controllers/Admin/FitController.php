@@ -89,7 +89,7 @@ class FitController extends Controller
         // $fit->productTypes()->attach($request->product_type_id);
 
 
-        return redirect()->route('fit.index');
+        return redirect()->route('fit.index')->with('success','Fit created successfully');
     }
 
     /**
@@ -146,7 +146,7 @@ class FitController extends Controller
         $fit->fit_name = $request->fit_name;
         // $fit->productTypes()->sync($request->product_type_id);
         $fit->save();
-        return redirect()->route('fit.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q]);
+        return redirect()->route('fit.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q])->with('success','Fit updated successfully');
     }
 
     /**
@@ -167,7 +167,7 @@ class FitController extends Controller
         $fit = Fit::find($id);
         $fit->delete();
 
-        return redirect()->route('fit.index');
+        return redirect()->route('fit.index')->with('success','Fit deleted successfully');
     }
 
     public function getFits($id)

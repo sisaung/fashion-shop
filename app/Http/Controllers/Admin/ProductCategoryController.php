@@ -70,7 +70,7 @@ class ProductCategoryController extends Controller
             'category_name' => $request->category_name,
             'user_id' => Auth::id()
         ]);
-        return redirect()->route('product-category.index');
+        return redirect()->route('product-category.index')->with('success','Product Category created successfully');
     }
 
     /**
@@ -122,7 +122,7 @@ class ProductCategoryController extends Controller
         $productCategory->category_name = $request->category_name;
 
         $productCategory->save();
-        return redirect()->route('product-category.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->search]);
+        return redirect()->route('product-category.index', ['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->search])->with('success','Fit updated successfully');
     }
 
     /**
@@ -144,6 +144,6 @@ class ProductCategoryController extends Controller
         $productCategory = ProductCategory::find($id);
         $productCategory->delete();
 
-        return redirect()->route('product-category.index');
+        return redirect()->route('product-category.index')->with('success','Fit deleted successfully');
     }
 }

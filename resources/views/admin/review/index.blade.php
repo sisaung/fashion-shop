@@ -73,7 +73,7 @@
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
                                         <div class="flex gap-x-2">
-                                            
+
                                             <div>
                                                 @if ($review->user->profile_image)
                                                     @if (Str::startsWith($review->user->profile_image, 'https'))
@@ -284,4 +284,25 @@
     @vite(['resources/js/approveReview.js'])
 
     {{-- @vite(['resources/js/pagination.js']) --}}
+    <script>
+        // Show success messages
+        @if (session('success'))
+            Toastify({
+                text: @json(session('success')),
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "center",
+                style: {
+                    background: "#ecfdf3",
+                    fontSize: "14px",
+                    color: "#008a2e",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                },
+                avatar: "/icons/check.png",
+            }).showToast();
+        @endif
+    </script>
 @endpush

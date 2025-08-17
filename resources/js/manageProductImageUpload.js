@@ -1,8 +1,7 @@
 import productImageList from "./product-image/productImageList";
-import renderProductImageList from "./product-image/renderProductImageList";
 import renderProductImageSkeleton from "./product-image/renderProductImageSkeletor";
-import destroyProductImage from "./services/destroyProductImage";
-import { fetchProductImages } from "./services/fetchProductImage";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 const initializeManageProductImageUpload = async () => {
     const currentUrl = location.search;
@@ -37,7 +36,7 @@ const initializeManageProductImageUpload = async () => {
         const files = e.target.files;
 
         if (!files || !currentProductId) return;
-        console.log(files)
+        console.log(files);
         renderProductImageSkeleton(productImageContainer);
 
         const formData = new FormData();
@@ -60,8 +59,23 @@ const initializeManageProductImageUpload = async () => {
             );
 
             if (res.ok) {
-
                 await productImageList(currentProductId, productImageContainer);
+                Toastify({
+                    text: "Image uploaded successfully",
+                    duration: 2000,
+                    close: true,
+                    gravity: "top",
+                    position: "center",
+                    style: {
+                        background: "#ecfdf3",
+                        fontSize: "14px",
+                        color: "#008a2e",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
+                    },
+                    avatar: "/icons/check.png",
+                }).showToast();
             }
         } catch (e) {
             console.log(e);
