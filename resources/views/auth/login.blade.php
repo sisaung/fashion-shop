@@ -2,7 +2,7 @@
 @section('content')
     <section class="text-gray-600 body-font bg-stone-50 h-screen overflow-hidden">
         <div class="flex gap-10">
-            <div class="w-1/2 relative flex justify-center items-center  h-screen">
+            <div class="w-1/2 relative hidden lg:flex justify-center items-center  h-[1000px] xl:h-screen">
 
                 <img src="{{ asset('/storage/login/login.jpg') }}" class="w-full h-full object-center object-cover"
                     alt="">
@@ -12,7 +12,7 @@
                     <p class="text-white/90"> Our Fashion Shop </p>
                 </div>
             </div>
-            <form action="{{ route('login.post') }}" method="POST" class="w-1/3 mx-auto mt-20">
+            <form action="{{ route('login.post') }}" method="POST" class="w-full md:px-0 px-5 md:w-1/2 lg:w-1/3 mx-auto mt-20">
                 @csrf
                 <div class="bg-white  shadow gap-3 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
                     <div class="mb-5 space-y-1">

@@ -1,6 +1,6 @@
 @extends('layout.master')
 @section('content')
-    <div class="max-w-7xl mx-auto container py-10">
+    <div class="max-w-7xl mx-auto container py-10 xl:px-0 px-5">
 
         @include('components.breadcrumb', [
             'currentPageTitle' => 'Wishlist',
@@ -11,13 +11,16 @@
                 ({{ $wishlist ? $wishlist->products->count() : 0 }}) </h1>
             <p class=" text-gray-500">Your saved favorites are here, waiting for their moment</p>
         </div>
-        @if ($wishlist->products->count() > 0)
-            <form action="{{ route('wishlist.removeAllWishlist') }}" method="POST">
-                @csrf
-                <button type="submit" class="remove-all-btn text-gray-500 hover:text-gray-600 cursor-pointer text-sm"> Remove
-                    All</button>
+        @if ($wishlist)
+            @if ($wishlist->products->count() > 0)
+                <form action="{{ route('wishlist.removeAllWishlist') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="remove-all-btn text-gray-500 hover:text-gray-600 cursor-pointer text-sm">
+                        Remove
+                        All</button>
 
-            </form>
+                </form>
+            @endif
         @endif
         <div class="mt-5 space-y-3">
 
@@ -68,7 +71,7 @@
             @endif --}}
 
             @if ($wishlist)
-                <div class="grid grid-cols-5 gap-5">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
                     {{-- @foreach ($wishlist->products as $item)
                     <div class="bg-white border border-pearl-bush-100 rounded-lg p-6 ordered-products-list-container">
                         <div class="flex gap-4 pb-6">

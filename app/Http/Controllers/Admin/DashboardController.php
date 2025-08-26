@@ -112,12 +112,18 @@ class DashboardController extends Controller
         ->whereBetween('created_at', [$start, $end])
         ->sum('net_total');
 
+        // $totalRevenue = Order::where('order_status', 'completed')
+        // ->whereNotNull('payment_received_at')
+        // ->whereBetween('payment_received_at', [$start, $end])
+        // ->sum('net_total');
 
-        //revenue
+        // Revenue = only orders already paid
         $totalRevenue = Order::where('order_status', 'completed')
     ->whereNotNull('payment_received_at')
-    ->whereBetween('payment_received_at', [$start, $end])
+    ->whereBetween('created_at', [$start, $end])
     ->sum('net_total');
+
+
 
 
     //outstanding

@@ -4,7 +4,7 @@
         <div>
             <div class="bg-white p-4 rounded shadow mb-8 ">
                 <h2 class="text-lg font-semibold mb-4"> Order Counts</h2>
-                <form method="GET" action="{{ route('report.order.index') }}" class="text-end mb-3">
+                <form method="GET" action="{{ route('report.order.index') }}" class="mb-3 text-end">
                     <div class="relative inline-block w-42">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor"

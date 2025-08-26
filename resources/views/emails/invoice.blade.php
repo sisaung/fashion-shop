@@ -29,7 +29,7 @@
     <p>
         <strong>Order Number:</strong> {{ $order->order_number }}<br>
         <strong>Order Date:</strong> {{ $order->created_at->format('F d, Y') }}<br>
-        <strong>Total Amount:</strong> ${{ number_format($order->total_amount) }} MMK
+        <strong>Total Amount:</strong> {{ number_format($order->total_amount) }} MMK
     </p>
 
     <h3>Shipping Address</h3>

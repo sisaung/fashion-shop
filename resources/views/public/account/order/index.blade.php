@@ -1,11 +1,13 @@
 @extends('components.public.accountLayout')
 @section('container')
     <div class="pb-10">
-        <div class="flex items-start md:flex-row flex-col gap-3  md:px-0 md:gap-0 md:items-center  my-5 justify-start md:justify-between">
+        <div
+            class="flex items-start md:flex-row flex-col gap-3  md:px-0 md:gap-0 md:items-center  my-5 justify-start md:justify-between">
             <div>
                 <h1 class="font-heading px-5 "> Your Orders </h1>
             </div>
-            <div class="flex sm:flex-row flex-col items-start sm:items-center justify-start sm:justify-between px-5  w-full md:w-auto gap-3 sm:gap-0">
+            <div
+                class="flex sm:flex-row flex-col items-start sm:items-center justify-start sm:justify-between px-5  w-full md:w-auto gap-3 sm:gap-0">
                 <div class="text-sm text-gray-700">
                     Showing <span class="font-semibold">{{ $orders->firstItem() ?? 0 }}</span>
                     to <span class="font-semibold">{{ $orders->lastItem() ?? 0 }}</span>
@@ -269,3 +271,27 @@
         </div>
     </div>
 </div> --}}
+@push('scripts')
+    @if (!empty($success))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Toastify({
+                    text: "{{ $success }}",
+                    duration: 2000,
+                    close: true,
+                    gravity: "top",
+                    position: "center",
+                    style: {
+                        background: "#ecfdf3",
+                        fontSize: "14px",
+                        color: "#008a2e",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
+                    },
+                    avatar: "/icons/check.png",
+                }).showToast();
+            });
+        </script>
+    @endif
+@endpush

@@ -123,7 +123,9 @@
                                     </td>
 
                                     <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-900">
-                                        {{ $invoice->status }}
+                                        @include('components.admin.invoiceStatusBadge', [
+                                            'invoiceStatus' => $invoice->status,
+                                        ])
                                     </td>
 
 

@@ -204,6 +204,78 @@ class InvoiceController extends Controller
 //     return response()->download($fullPath);
 // }
 
+// public function generateInvoicePDF($invoiceId)
+// {
+//     $invoice = Invoice::with('order.orderItems.stock.product', 'order.customerAddress', 'order.coupon')
+//         ->findOrFail($invoiceId);
+
+//     $order = $invoice->order;
+
+//     // Create folder if missing
+//     $pdfFolder = storage_path('app/public/invoices');
+//     if (!file_exists($pdfFolder)) {
+//         mkdir($pdfFolder, 0755, true);
+//     }
+
+//     $pdfFilePath = "invoices/invoice_{$invoice->invoice_number}.pdf";
+//     $fullPath = storage_path("app/public/{$pdfFilePath}");
+
+//     // Render Blade HTML
+//     $html = view('admin.invoices.pdf', compact('invoice', 'order'))->render();
+
+//     // For Tailwind v4, we need to include the runtime engine
+//     $tailwindRuntime = <<<HTML
+//     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+//     <script>
+//         tailwind.config = {
+//             important: '#tailwind-pdf',
+//         }
+//     </script>
+//     HTML;
+
+//     $fullHtml = <<<HTML
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//   <meta charset="UTF-8">
+//   <title>Invoice</title>
+//   {$tailwindRuntime}
+//   <style>
+//     @media print {
+//         body {
+//             -webkit-print-color-adjust: exact;
+//             print-color-adjust: exact;
+//         }
+//     }
+//     #tailwind-pdf {
+//         all: initial;
+//     }
+//   </style>
+// </head>
+// <body>
+//   <div id="tailwind-pdf" class="bg-gray-100 p-6">
+//     {$html}
+//   </div>
+// </body>
+// </html>
+// HTML;
+
+//     // Generate PDF
+//     Browsershot::html($fullHtml)
+//         ->noSandbox()
+//         ->waitUntilNetworkIdle()
+//         ->emulateMedia('print')
+//         ->showBackground()
+//         ->format('A4')
+//         ->save($fullPath);
+
+//     // Save path in DB
+//     $invoice->update(['pdf_path' => $pdfFilePath]);
+
+//     return response()->download($fullPath);
+// }
+
+
 public function generateInvoicePDF($invoiceId)
 {
     $invoice = Invoice::with('order.orderItems.stock.product', 'order.customerAddress', 'order.coupon')
@@ -220,47 +292,49 @@ public function generateInvoicePDF($invoiceId)
     $pdfFilePath = "invoices/invoice_{$invoice->invoice_number}.pdf";
     $fullPath = storage_path("app/public/{$pdfFilePath}");
 
+    // ✅ Load Tailwind CSS from Vite manifest
+    $manifestPath = public_path('build/manifest.json');
+    if (!file_exists($manifestPath)) {
+        throw new \Exception('Vite manifest.json not found. Run "npm run build".');
+    }
+
+    $manifest = json_decode(file_get_contents($manifestPath), true);
+
+    if (!isset($manifest['resources/css/app.css']['file'])) {
+        throw new \Exception('CSS entry not found in manifest.json');
+    }
+
+    $cssFile = $manifest['resources/css/app.css']['file']; // e.g. assets/app-xyz123.css
+    $cssPath = public_path("build/{$cssFile}");
+    $css     = file_get_contents($cssPath);
+
     // Render Blade HTML
     $html = view('admin.invoices.pdf', compact('invoice', 'order'))->render();
 
-    // For Tailwind v4, we need to include the runtime engine
-    $tailwindRuntime = <<<HTML
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
-    <script>
-        tailwind.config = {
-            important: '#tailwind-pdf',
-        }
-    </script>
-    HTML;
-
+    // Build full HTML with Tailwind CSS inline
     $fullHtml = <<<HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Invoice</title>
-  {$tailwindRuntime}
   <style>
+    {$css}
     @media print {
         body {
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
         }
     }
-    #tailwind-pdf {
-        all: initial;
-    }
   </style>
 </head>
-<body>
-  <div id="tailwind-pdf" class="bg-gray-100 p-6">
-    {$html}
-  </div>
+<body class="bg-gray-100 p-6">
+  {$html}
 </body>
 </html>
 HTML;
 
-    // Generate PDF
+    // Generate PDF with Tailwind
     Browsershot::html($fullHtml)
         ->noSandbox()
         ->waitUntilNetworkIdle()
@@ -271,9 +345,9 @@ HTML;
 
     // Save path in DB
     $invoice->update(['pdf_path' => $pdfFilePath]);
+    $invoice->save();
 
     return response()->download($fullPath);
 }
-
 
 }

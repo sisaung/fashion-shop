@@ -23,7 +23,7 @@ const renderSummary = (cart) => {
         return acc + productPrice * item.quantity;
     }, 0);
 
-    const tax = subtotal * 0.03;
+    const tax = subtotal * 0.05;
     const netTotal = subtotal + tax;
 
     const format = (num) => numberFormat(num);

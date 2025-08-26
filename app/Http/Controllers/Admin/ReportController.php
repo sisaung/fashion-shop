@@ -223,56 +223,66 @@ $bestSelling = DB::table('order_items')
     public function showMonthlyOrders(Request $request) {
 
         $timeFilter = $request->input('time_filter', 'this_year');
+        $customStart = $request->input('start_date');
+        $customEnd = $request->input('end_date');
 
-    switch ($timeFilter) {
-        case 'today':
-            $startDate = Carbon::today()->startOfDay();
-            $endDate = Carbon::today()->endOfDay();
-            $groupBy = 'HOUR(created_at)';
-            break;
+        if($customStart && $customEnd) {
 
-        case 'yesterday':
-            $startDate = Carbon::yesterday()->startOfDay();
-            $endDate = Carbon::yesterday()->endOfDay();
-            $groupBy = 'HOUR(created_at)';
-            break;
+            $startDate = Carbon::parse($customStart)->startOfDay();
+            $endDate = Carbon::parse($customEnd)->endOfDay();
+            $groupBy = 'DATE(created_at)'; // Custom date range grouped by day
+        }else {
+            switch ($timeFilter) {
+                case 'today':
+                    $startDate = Carbon::today()->startOfDay();
+                    $endDate = Carbon::today()->endOfDay();
+                    $groupBy = 'HOUR(created_at)';
+                    break;
 
-        case 'last_7_days':
-            $startDate = Carbon::now()->subDays(7)->startOfDay();
-            $endDate = Carbon::now()->endOfDay();
-            $groupBy = 'DATE(created_at)';
-            break;
+                case 'yesterday':
+                    $startDate = Carbon::yesterday()->startOfDay();
+                    $endDate = Carbon::yesterday()->endOfDay();
+                    $groupBy = 'HOUR(created_at)';
+                    break;
 
-        case 'this_month':
-            $startDate = Carbon::now()->startOfMonth();
-            $endDate = Carbon::now()->endOfMonth();
-            $groupBy = 'DATE(created_at)';
-            break;
+                case 'last_7_days':
+                    $startDate = Carbon::now()->subDays(7)->startOfDay();
+                    $endDate = Carbon::now()->endOfDay();
+                    $groupBy = 'DATE(created_at)';
+                    break;
 
-        case 'last_month':
-            $startDate = Carbon::now()->subMonth()->startOfMonth();
-            $endDate = Carbon::now()->subMonth()->endOfMonth();
-            $groupBy = 'DATE(created_at)';
-            break;
+                case 'this_month':
+                    $startDate = Carbon::now()->startOfMonth();
+                    $endDate = Carbon::now()->endOfMonth();
+                    $groupBy = 'DATE(created_at)';
+                    break;
 
-        case 'this_year':
-            $startDate = Carbon::now()->startOfYear();
-            $endDate = Carbon::now()->endOfYear();
-            $groupBy = 'MONTH(created_at)';
-            break;
+                case 'last_month':
+                    $startDate = Carbon::now()->subMonth()->startOfMonth();
+                    $endDate = Carbon::now()->subMonth()->endOfMonth();
+                    $groupBy = 'DATE(created_at)';
+                    break;
 
-        case 'last_year':
-            $startDate = Carbon::now()->subYear()->startOfYear();
-            $endDate = Carbon::now()->subYear()->endOfYear();
-            $groupBy = 'MONTH(created_at)';
-            break;
+                case 'this_year':
+                    $startDate = Carbon::now()->startOfYear();
+                    $endDate = Carbon::now()->endOfYear();
+                    $groupBy = 'MONTH(created_at)';
+                    break;
 
-        default:
-            $startDate = Carbon::now()->startOfYear();
-            $endDate = Carbon::now()->endOfYear();
-            $groupBy = 'MONTH(created_at)';
-            break;
-    }
+                case 'last_year':
+                    $startDate = Carbon::now()->subYear()->startOfYear();
+                    $endDate = Carbon::now()->subYear()->endOfYear();
+                    $groupBy = 'MONTH(created_at)';
+                    break;
+
+                default:
+                    $startDate = Carbon::now()->startOfYear();
+                    $endDate = Carbon::now()->endOfYear();
+                    $groupBy = 'MONTH(created_at)';
+                    break;
+            }
+        }
+
 
     // Get combined chart data
     $chartData = Order::select(
@@ -334,7 +344,9 @@ $bestSelling = DB::table('order_items')
             'orderCounts' => $orderCounts,
             'sales' => $sales,
             'timeFilter' => $timeFilter,
-            'orderedStatus' => $orderedStatus
+            'orderedStatus' => $orderedStatus,
+            'customStart' => $customStart,
+            'customEnd' => $customEnd
         ]);
     }
 

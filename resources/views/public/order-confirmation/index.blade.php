@@ -406,4 +406,5 @@
     @vite(['resources/js/order-confirmation/applyCoupon.js'])
     @vite(['resources/js/order-confirmation/deliveryInformation.js'])
     @vite(['resources/js/order-confirmation/confirmOrder.js'])
+   
 @endpush

@@ -30,6 +30,7 @@
                         us</a>
                     @auth
                         <form action="{{ route('logout') }}" method="POST">
+                            @csrf
                             <button
                             type="submit"
                                 class="text-sm text-gray-500 hover:text-gray-700 duration-300 font-thin tracking-wide leading-8">
@@ -88,7 +89,7 @@
 
                     <div class="flex flex-col">
                         <span class="font-medium text-gray-900  font-heading">Email</span>
-                        <span class="font-medium text-gray-900  font-heading">loomluxe@gmail.com</span>
+                        <span class="font-medium text-gray-900  font-heading">luxefashion@gmail.com</span>
                     </div>
 
                 </div>

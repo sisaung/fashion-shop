@@ -251,10 +251,15 @@
                         </div>
                     </form>
                 @elseif ($order->order_status === 'completed')
-                    <button type="submit"
-                        class="text-white bg-pearl-bush-400 border-0 py-2 px-8 focus:outline-none hover:bg-pearl-bush-600 rounded text-sm w-full cursor-pointer duration-300">Order
-                        Completed
-                    </button>
+                    <div class="space-y-3">
+                        <button type="submit"
+                            class="text-white bg-pearl-bush-400 border-0 py-2 px-8 focus:outline-none rounded text-sm w-full cursor-pointer duration-300">Order
+                            Completed
+                        </button>
+                        <a href="{{ route('invoice.show', ['invoice' => $order->invoice->id]) }}"
+                            class="text-white block bg-pearl-bush-400 border-0 py-2 px-8 focus:outline-none text-center hover:bg-pearl-bush-600 rounded text-sm w-full cursor-pointer duration-300">See
+                            Invoice</a>
+                    </div>
                 @endif
             </div>
             <div class="col-span-2">

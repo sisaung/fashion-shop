@@ -131,7 +131,8 @@ const initalizeConfirmOrder = () => {
                         color: "#008a2e",
                     },
                 }).showToast();
-                window.location.href = location.origin + "/account/orders";
+                window.location.href =
+                    location.origin + "/account/orders?success=1";
             } else {
                 Toastify({
                     text: orderData.message,

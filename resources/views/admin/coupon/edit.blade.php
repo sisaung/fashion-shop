@@ -145,7 +145,7 @@
                             text-red-500
                         @enderror leading-7 text-sm text-gray-600">Coupon
                                 Expire Date</label>
-                            <input type="date" id="coupon_expire_date" name="coupon_expire_date"
+                            <input type="date" id="edit_coupon_expire_date" name="coupon_expire_date"
                                 value="{{ old('coupon_expire_date', $coupon->coupon_expire_date) }}"
                                 class="@error('coupon_expire_date')
                             is-invalid

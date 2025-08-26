@@ -35,7 +35,7 @@ class InvoiceMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Order #{$this->order->order_number} Confirmed",
+            subject: "Order #{$this->order->order_number} has been confirmed",
         );
     }
 

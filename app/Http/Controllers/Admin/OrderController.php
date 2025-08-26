@@ -350,14 +350,56 @@ public function confirmOrder(ConfirmOrderRequest $request, $id)
             mkdir(dirname($pdfPath), 0777, true);
         }
 
-        // Generate PDF with Tailwind styles using Browsershot
-        Browsershot::html(
-            view('admin.invoices.pdf', compact('invoice', 'order'))->render()
-        )
-            ->format('A4')
-            ->margins(10, 10, 10, 10)
-            ->waitUntilNetworkIdle()
-            ->save($pdfPath);
+// ✅ Load Tailwind CSS from Vite manifest
+$manifestPath = public_path('build/manifest.json');
+if (!file_exists($manifestPath)) {
+    throw new \Exception('Vite manifest.json not found. Run "npm run build".');
+}
+
+$manifest = json_decode(file_get_contents($manifestPath), true);
+
+if (!isset($manifest['resources/css/app.css']['file'])) {
+    throw new \Exception('CSS entry not found in manifest.json');
+}
+
+$cssFile = $manifest['resources/css/app.css']['file']; // e.g. assets/app-123abc.css
+$cssPath = public_path("build/{$cssFile}");
+$css     = file_get_contents($cssPath);
+
+// Render Blade HTML
+$html = view('admin.invoices.pdf', compact('invoice', 'order'))->render();
+
+// Build full HTML with Tailwind CSS inline
+$fullHtml = <<<HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Invoice</title>
+<style>
+{$css}
+@media print {
+body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+}
+</style>
+</head>
+<body class="bg-gray-100 p-6">
+{$html}
+</body>
+</html>
+HTML;
+
+// Generate PDF with Tailwind styles
+Browsershot::html($fullHtml)
+    ->noSandbox()
+    ->waitUntilNetworkIdle()
+    ->emulateMedia('print')
+    ->showBackground()
+    ->format('A4')
+    ->save($pdfPath);
 
         // Commit transaction
     DB::commit();
@@ -365,6 +407,8 @@ public function confirmOrder(ConfirmOrderRequest $request, $id)
         // Send invoice email with attachment
         Mail::to($order->customer->customer_email)
             ->send(new InvoiceMail($order, $invoice, $pdfPath));
+        $invoice->update(['status' => 'sent']);
+        $invoice->save();
 
         return redirect()->route('order.show', ['order' => $order->id])
             ->with('success', 'Order confirmed successfully and invoice sent to customer.');

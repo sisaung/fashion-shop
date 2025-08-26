@@ -106,7 +106,7 @@
                                 class="@error('coupon_start_date')
                             text-red-500
                         @enderror leading-7 text-sm text-gray-600">Coupon
-                                Expire Date </label>
+                                Start Date </label>
                             <input type="date" id="coupon_start_date" name="coupon_start_date"
                                 value="{{ old('coupon_start_date') }}"
                                 class="@error('coupon_start_date')

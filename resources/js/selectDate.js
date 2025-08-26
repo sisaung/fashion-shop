@@ -13,7 +13,12 @@ const initializeSelectDate = () => {
     });
 
     flatpickr("#coupon_expire_date", {
+        // dateFormat: "Y-m-d",
+        minDate: "today",
+    });
+    flatpickr("#edit_coupon_expire_date", {
         dateFormat: "Y-m-d",
+
     });
 };
 

@@ -31,7 +31,7 @@ class ShopOrderController extends Controller
         return redirect()->route('login'); // or your Google login route
     }
 
-   
+
        $userAddress =  UserAddress::all();
 
         return view('public.order-confirmation.index',['useAddress' => $userAddress]);
@@ -215,7 +215,7 @@ public function checkCoupon(Request $request)
     return view('public.order-confirmation.index',['userAddress' => $userAddress]);
 }
 
-public function getOrders() {
+public function getOrders(Request $request) {
 
 
 
@@ -227,7 +227,7 @@ public function getOrders() {
 
 
 
-return view('public.account.order.index',['orders' => $userOrders]);
+return view('public.account.order.index',['orders' => $userOrders,'success' => $request->query('success') ? 'Order placed successfully!' : null]);
 }
 
 public function showOrder($orderNumber) {
