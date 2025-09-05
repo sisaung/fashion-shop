@@ -24,6 +24,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrderedCustomerController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ShopCategoryController;
 use App\Http\Controllers\ShopOrderController;
 use App\Http\Controllers\StockAnalysisController;
@@ -221,8 +222,8 @@ Route::middleware(['auth',Authenticate::class])->group(function () {
    Route::post('/account/address/store',[UserProfileController::class,'storeAdress'])->name('account.storeAdress');
    Route::delete('/account/address/delete/{id}',[UserProfileController::class,'destroyAddress'])->name('account.destroyAddress');
    Route::put('/account/address/update/{id}',[UserProfileController::class,'updateAddress'])->name('account.updateAddress');
-
-
+    Route::get('/account/payment',[PaymentController::class,'index'])->name('account.paymentIndex');
+    Route::get('/order-confirmation/manage-address',[UserProfileController::class,'goToManageAddress'])->name('account.goToManageAddress');
 
 
    Route::post('/store-wishlist',[WishlistController::class,'store'])->name('wishlist.store');

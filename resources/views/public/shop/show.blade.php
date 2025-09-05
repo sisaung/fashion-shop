@@ -192,10 +192,11 @@
                         <div class="text-xl text-gray-800 space-x-2 ">
 
                             @if ($product->discount_type)
-                                <span class="line-through text-gray-500"> {{ $product->sale_price }} MMK </span>
-                                <span> {{ $product->display_price }} MMK </span>
+                                <span class="line-through text-gray-500"> {{ number_format($product->sale_price) }} MMK
+                                </span>
+                                <span> {{ number_format($product->display_price) }} MMK </span>
                             @else
-                                <span> {{ $product->display_price }} MMK </span>
+                                <span> {{ number_format($product->display_price) }} MMK </span>
                             @endif
                         </div>
                         {{-- <div class="text-gray-600">Free shipping on orders over 300,000 MMK</div> --}}
@@ -544,13 +545,13 @@
 
                             <h3 class="text-lg font-semibold text-gray-900 mb-3"> {{ $product->product_name }} -
                                 {{ $product->product_code }} </h3>
-                            <p class="text-gray-700 leading-relaxed">{{ $product->description }}</p>
+                            <p class="text-gray-500 leading-relaxed">{{ $product->product_description }}</p>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {{-- <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <h4 class="font-semibold text-gray-900 mb-3">Key Features</h4>
                                 <ul class="space-y-2 text-gray-700 list-disc list-inside">
-                                    <li>Slim fit</li>
+                                    <li> {{ $product->fit->fit_name }} </li>
                                     <li>Flat-knit collar</li>
                                     <li>Number of buttons: 2</li>
                                     <li>Short sleeves</li>
@@ -567,7 +568,7 @@
                                     <li>Iron on medium heat</li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -800,6 +801,7 @@
     @vite(['resources/js/wishList/wishList.js'])
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
     {{-- @if (session('success'))
         <script>
 

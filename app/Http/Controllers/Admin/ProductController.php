@@ -175,6 +175,7 @@ class ProductController extends Controller
             'product_category_id' => $request->product_category_id,
             'product_type_id' => $request->product_type_id,
             'fit_id' => $fitId,
+            'product_description' => $request->description,
             'user_id' => Auth::id()
         ]);
 
@@ -260,6 +261,8 @@ class ProductController extends Controller
         if(!$request->fit_id) {
             $fitId = null;
         }
+
+        
         $product = Product::find($id);
         $product->product_code = $product->product_code;
         $product->product_name = $request->product_name;
@@ -274,6 +277,7 @@ class ProductController extends Controller
         $product->brand_id = $request->brand_id;
         $product->product_category_id = $request->product_category_id;
         $product->product_type_id = $request->product_type_id;
+        $product->product_description = $request->description;
        $fitId && $product->fit_id = $fitId;
         $product->save();
         return redirect()->route('product.index',['sort_by' => $request->sort_by, 'sort_direction' => $request->sort_direction, 'limit' => $request->limit, 'page' => $request->page, 'q' => $request->q])->with('success', 'Product updated successfully!');

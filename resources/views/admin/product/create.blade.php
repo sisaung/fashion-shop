@@ -263,7 +263,7 @@
 
                         <textarea
                             class="w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                            name="description" id="" cols="30" rows="7">
+                            name="description" id="description" cols="30" rows="7">
 
                         </textarea>
                         @error('description')
@@ -349,4 +349,6 @@
     @vite(['resources/js/filterProductType.js'])
     @vite(['resources/js/filterFit.js'])
     @vite(['resources/js/calculateProFit.js'])
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+   
 @endpush

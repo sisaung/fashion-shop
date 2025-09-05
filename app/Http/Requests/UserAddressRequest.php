@@ -24,7 +24,7 @@ class UserAddressRequest extends FormRequest
         return [
 
             'name' => 'nullable|string|min:3|max:40',
-            'phone_number' => 'required|string|min:11|regex:/^09[0-9]{9}$/',
+            'phone_number' => 'required|string',
             'city' => 'required|string',
             'township' => 'required|string',
             'address_detail' => 'required|string',
@@ -32,3 +32,4 @@ class UserAddressRequest extends FormRequest
         ];
     }
 }
+// min:11|regex:/^09[0-9]{9}$/

@@ -98,7 +98,7 @@
 
 
                                                 <p class="text-sm">
-                                                    {{ $order->customer->customer_name }} </p>
+                                                    {{ $order->customer_name }} </p>
                                             </div>
                                             <div class="flex items-center gap-x-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

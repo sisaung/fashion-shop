@@ -377,28 +377,6 @@
     </div>
 @endsection
 
-@if (session('success'))
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            Toastify({
-                text: "{{ session('success') }}",
-                duration: 3000,
-                close: true,
-                gravity: "top",
-                position: "right",
-                style: {
-                    background: "#ecfdf3",
-                    fontSize: "14px",
-                    color: "#008a2e",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "5px",
-                },
-                avatar: "/icons/check.png",
-            }).showToast();
-        });
-    </script>
-@endif
 
 @push('scripts')
     @vite(['resources/js/flowbite/flowbite.min.js'])
@@ -408,4 +386,28 @@
     @vite(['resources/js/saveCurrentParam'])
     @vite(['resources/js/manageProductImage'])
     @vite(['resources/js/manageProductStock'])
+
+    @if (session('success'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Toastify({
+                    text: @json(session('success')),
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "center",
+                    style: {
+                        background: "#ecfdf3",
+                        fontSize: "14px",
+                        color: "#008a2e",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
+                    },
+                    avatar: "/icons/check.png",
+                }).showToast();
+            });
+        </script>
+    @endif
+
 @endpush

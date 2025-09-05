@@ -84,8 +84,19 @@ class UserProfileController extends Controller
 
 
 
-        // return redirect()->route('account.addressIndex');
-        return redirect()->back()->with('success', 'Address added successfully.');
+        // check session flag
+        $returnTo = session('return_to', 'account'); // default account
+
+        // clear it after using
+        session()->forget('return_to');
+
+        if ($returnTo === 'order-confirmation') {
+            return redirect()->route('order-confirmation.index')
+                             ->with('success', 'Address added successfully.');
+        }
+
+        return redirect()->route('account.addressIndex')
+                         ->with('success', 'Address added successfully.');
 
 }
 
@@ -120,5 +131,13 @@ public function updateAddress(UpdateUserAddressRequest $request,$id) {
     // return redirect()->route('account.addressIndex');
     return redirect()->back()->with('success', 'Address updated successfully.');
 
+}
+
+public function goToManageAddress() {
+     // Remember where to go back after saving address
+     session(['return_to' => 'order-confirmation']);
+
+     // Redirect to account address page
+     return redirect()->route('account.addressIndex');
 }
 }

@@ -181,7 +181,7 @@
                                     </td>
 
                                     <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
-                                        {{ $order->total_amount }}
+                                        {{ number_format($order->total_amount) }} MMK
                                     </td>
 
 

@@ -22,7 +22,7 @@
                         <input type="hidden" name="sort_direction" value="{{ old('sort_direction', $sort_direction) }}">
                         <input type="hidden" name="limit" value="{{ old('limit', $limit) }}">
                         <input type="hidden" name="page" value="{{ old('page', $page) }}">
-                        <input type="hidden" name="search" value="{{ old('page', $q) }}">
+                        <input type="hidden" name="q" value="{{ old('page', $q) }}">
 
                         <label for="size_name" class="leading-7 text-sm text-gray-600">Size Name</label>
                         <input type="text" id="size_name" name="size_name"

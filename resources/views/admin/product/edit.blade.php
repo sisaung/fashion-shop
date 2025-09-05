@@ -76,6 +76,7 @@
             </div>
 
         </div>
+
         <h1 class="mt-5 mb-5 text-xl px-5"> Edit Product </h1>
         <div>
             <form action="{{ route('product.update', ['product' => $product->id]) }}" method="POST">
@@ -89,7 +90,7 @@
                     <input type="hidden" name="sort_direction" value="{{ old('sort_direction', $sort_direction) }}">
                     <input type="hidden" name="limit" value="{{ old('limit', $limit) }}">
                     <input type="hidden" name="page" value="{{ old('page', $page) }}">
-                    <input type="hidden" name="search" value="{{ old('page', $q) }}">
+                    <input type="hidden" name="q" value="{{ old('page', $q) }}">
 
                     {{-- product code --}}
                     <div class="relative mb-4 col-span-2">
@@ -363,9 +364,8 @@
 
                         <textarea
                             class="w-full bg-white rounded border border-gray-300 focus:border-pearl-bush-400 focus:ring-2 focus:ring-pearl-bush-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                            value="{{ old('description', $product->description) }}" name="description" id="" cols="30"
-                            rows="7">
-
+                            name="description" id="" cols="30" rows="7">
+                            {{ old('description', $product->product_description) }}
                         </textarea>
                         @error('description')
                             <p class="text-sm text-red-500"> {{ $message }}</p>

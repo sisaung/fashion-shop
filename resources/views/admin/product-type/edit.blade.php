@@ -23,7 +23,7 @@
                         <input type="hidden" name="sort_direction" value="{{ old('sort_direction', $sort_direction) }}">
                         <input type="hidden" name="limit" value="{{ old('limit', $limit) }}">
                         <input type="hidden" name="page" value="{{ old('page', $page) }}">
-                        <input type="hidden" name="search" value="{{ old('page', $q) }}">
+                        <input type="hidden" name="q" value="{{ old('page', $q) }}">
 
                         <label for="name" class="leading-7 text-sm text-gray-600">Product Type Name</label>
                         <input type="text" id="name" name="name" value="{{ old('name', $productType->name) }}"
@@ -168,7 +168,7 @@
 
     {{-- tom select js --}}
     <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
-    
+
     @vite(['resources/js/fitTag.js'])
     @vite(['resources/js/sizeTag.js'])
 @endpush

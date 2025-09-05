@@ -53,11 +53,16 @@ const initializeAddToCart = () => {
         increaseBtn.disabled = !selectedStock || quantity >= selectedStock;
         decreaseBtn.classList.add("pointer-events-none");
         increaseBtn.classList.add("pointer-events-none");
+        decreaseBtn.classList.add("opacity-50");
+        increaseBtn.classList.add("opacity-50");
+
         if (quantity > 1) {
             decreaseBtn.classList.remove("pointer-events-none");
+            decreaseBtn.classList.remove("opacity-50");
         }
         if (quantity < selectedStock) {
             increaseBtn.classList.remove("pointer-events-none");
+            increaseBtn.classList.remove("opacity-50");
         }
     }
 
@@ -65,6 +70,7 @@ const initializeAddToCart = () => {
         if (!selectedStock) {
             console.log("remove");
             errorMsg.classList.remove("hidden");
+
             return;
         }
 
@@ -73,6 +79,7 @@ const initializeAddToCart = () => {
             quantityValue.textContent = quantity;
             quantity = quantity;
             updateButtons();
+        } else {
         }
     });
 
@@ -97,7 +104,7 @@ const initializeAddToCart = () => {
         console.log(selectedStock, quantity);
         if (!selectedStock || quantity > selectedStock) {
             // errorMsg.classList.remove("hidden");
-            console.log("error");
+
             Toastify({
                 text: "Please select size first",
                 duration: 3000,

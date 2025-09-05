@@ -19,7 +19,7 @@ const initializeNotification = async () => {
         ".notification-container"
     );
 
-    // Check if user has clicked bell before (YouTube style)
+    // Check if user has clicked bell before
     const hasSeenNotifications =
         localStorage.getItem("notificationSeen") === "true";
 
@@ -28,10 +28,19 @@ const initializeNotification = async () => {
 
     if (data && data.length > 0) {
         renderNotificationList(data, notificationContainer);
+        console.log(data);
 
         // Show count only if user has NOT clicked bell before
-        if (!hasSeenNotifications) {
-            notifCount.textContent = data.length > 9 ? "9+" : data.length;
+        // if (!hasSeenNotifications) {
+        //     notifCount.textContent = data.length > 9 ? "9+" : data.length;
+        //     notifCountContainer.classList.remove("hidden");
+        // } else {
+        //     notifCount.textContent = 0;
+        //     notifCountContainer.classList.add("hidden");
+        // }
+        if (data.unreadCount > 0) {
+            notifCount.textContent =
+                data.unreadCount > 9 ? "9+" : data.unreadCount;
             notifCountContainer.classList.remove("hidden");
         } else {
             notifCount.textContent = 0;

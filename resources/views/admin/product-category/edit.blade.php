@@ -23,7 +23,7 @@
                         <input type="hidden" name="sort_direction" value="{{ old('sort_direction', $sort_direction) }}">
                         <input type="hidden" name="limit" value="{{ old('limit', $limit) }}">
                         <input type="hidden" name="page" value="{{ old('page', $page) }}">
-                        <input type="hidden" name="search" value="{{ old('page', $q) }}">
+                        <input type="hidden" name="q" value="{{ old('page', $q) }}">
 
                         <label for="category_name"
                             class="@error('category_name')

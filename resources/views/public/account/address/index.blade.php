@@ -2,7 +2,7 @@
 @section('container')
     <div class="px-5">
         <div class="mt-5 flex items-center gap-x-2 mb-5">
-            <p class="font-heading text-stone-600"> Manaage Address </p>
+            <p class="font-heading text-stone-600"> Manage Address </p>
             <button data-modal-target="small-modal" data-modal-toggle="small-modal"
                 class="text-sm font-medium bg-pearl-bush-400 text-white py-2 px-4 rounded-full cursor-pointer  hover:bg-pearl-bush-500 duration-300">
                 Add New Address</button>
@@ -335,12 +335,16 @@
             document.addEventListener("DOMContentLoaded", function() {
                 const modalElement = document.getElementById('small-modal');
                 if (modalElement) {
-                    const modal = new Modal(modalElement);
+                    const modal = new Modal(modalElement, {
+                        backdrop: 'dynamic',
+                        backdropClasses: 'bg-black bg-opacity-50 fixed inset-0 z-40' // z-40 < modal z-50
+                    });
                     modal.show();
                 }
             });
         </script>
     @endif
+
 
 
 @endsection
@@ -350,26 +354,26 @@
         // Show validation errors
 
 
-        @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                Toastify({
-                    text: @json($error),
-                    duration: 3000,
-                    close: true,
-                    gravity: "top",
-                    position: "center",
-                    style: {
-                        background: "#fff0f0",
-                        fontSize: "14px",
-                        color: "#e60000",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "5px",
-                    },
-                    avatar: "/icons/error.png",
-                }).showToast();
-            @endforeach
-        @endif
+        // @if ($errors->any())
+        //     @foreach ($errors->all() as $error)
+        //         Toastify({
+        //             text: @json($error),
+        //             duration: 3000,
+        //             close: true,
+        //             gravity: "top",
+        //             position: "center",
+        //             style: {
+        //                 background: "#fff0f0",
+        //                 fontSize: "14px",
+        //                 color: "#e60000",
+        //                 display: "flex",
+        //                 alignItems: "center",
+        //                 gap: "5px",
+        //             },
+        //             avatar: "/icons/error.png",
+        //         }).showToast();
+        //     @endforeach
+        // @endif
 
 
 

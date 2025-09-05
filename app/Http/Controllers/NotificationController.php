@@ -18,6 +18,7 @@ class NotificationController extends Controller
                 'id' => $notification->id,
                 'data' => $notification->data,
                 'read_at' => $notification->read_at,
+                'unreadcount' => $notification->unreadcount,
                 'created_at' => $notification->created_at->toDateTimeString(),
             ];
         });

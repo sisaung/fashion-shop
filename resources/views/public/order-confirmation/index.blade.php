@@ -211,6 +211,9 @@
                                                 </div>
                                             </div>
                                         @endforeach
+                                        <a href="{{ route('account.goToManageAddress') }}"
+                                            class="py-1 px-3 text-xs font-medium text-pearl-bush-400 bg-white rounded-lg border border-pearl-bush-400 hover:bg-pearl-bush-50 focus:z-10 focus:ring-1">
+                                            Manage Address</a>
                                     @else
                                         <form method="POST" class="space-y-5" action="{{ route('address.store') }}">
                                             @csrf
@@ -406,5 +409,26 @@
     @vite(['resources/js/order-confirmation/applyCoupon.js'])
     @vite(['resources/js/order-confirmation/deliveryInformation.js'])
     @vite(['resources/js/order-confirmation/confirmOrder.js'])
-   
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        // Show success messages
+        @if (session('success'))
+            Toastify({
+                text: @json(session('success')),
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "center",
+                style: {
+                    background: "#ecfdf3",
+                    fontSize: "14px",
+                    color: "#008a2e",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                },
+                avatar: "/icons/check.png",
+            }).showToast();
+        @endif
+    </script>
 @endpush

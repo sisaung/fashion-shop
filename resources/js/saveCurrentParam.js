@@ -1,6 +1,6 @@
 
 const initializeCurrentParam = () => {
-    
+
   const currentUrl = location.search;
   const container = document.querySelector('.body-container');
 
@@ -12,14 +12,13 @@ const initializeCurrentParam = () => {
     // e.stopPropagation();
 
     const editUrl = e.target.closest('[data-edit-url]')
-
     if(editUrl) {
 
         const action = editUrl.dataset.editUrl;
 
    location.href = `${action}${currentUrl}`
-     
-       
+
+
     }
 
 
@@ -28,7 +27,7 @@ const initializeCurrentParam = () => {
 
   container.addEventListener("click",handleClick)
 
-  
+
 
 }
 

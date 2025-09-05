@@ -64,7 +64,8 @@
                 </a>
             </div>
             <div>
-                <a class="flex items-center menu-btn gap-x-3  px-4 py-3 rounded mr-5 hover:bg-stone-100">
+                <a href="{{ route('account.paymentIndex') }}"
+                    class="flex items-center menu-btn gap-x-3  px-4 py-3 rounded mr-5 {{ Request::routeIs('account.paymentIndex') ? 'bg-pearl-bush-100 hover:bg-pearl-bush-100 ' : 'hover:bg-stone-100 ' }}">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-4.5">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -164,7 +165,8 @@
                 </a>
             </div>
             <div>
-                <a class="flex text-nowrap border border-pearl-bush-500 rounded-full flex-nowrap items-center menu-btn gap-x-2  px-4 justify-center  py-2 text-sm  hover:bg-stone-100">
+                <a
+                    class="flex text-nowrap border border-pearl-bush-500 rounded-full flex-nowrap items-center menu-btn gap-x-2  px-4 justify-center  py-2 text-sm  hover:bg-stone-100">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-4.5">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -181,7 +183,8 @@
             <div>
                 <form action="{{ route('logout') }}" method="POST" class="hover:bg-stone-100">
                     @csrf
-                    <button type="submit" class="px-4 py-2 text-sm cursor-pointer flex text-nowrap border border-pearl-bush-500 rounded-full flex-nowrap items-center gap-x-2  ">
+                    <button type="submit"
+                        class="px-4 py-2 text-sm cursor-pointer flex text-nowrap border border-pearl-bush-500 rounded-full flex-nowrap items-center gap-x-2  ">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-4.5">
                             <path stroke-linecap="round" stroke-linejoin="round"
