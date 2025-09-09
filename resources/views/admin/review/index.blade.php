@@ -84,8 +84,7 @@
                                                             class="h-10 w-10 rounded-full" alt="{{ $review->user->name }}">
                                                     @endif
                                                 @else
-                                                    <img class="h-10 w-10 rounded-full"
-                                                        src="https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1"
+                                                    <img class="h-10 w-10 rounded-full" src="{{ '/fallback/user.webp' }}"
                                                         alt="{{ $review->user->name }}">
                                                 @endif
                                             </div>

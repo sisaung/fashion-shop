@@ -114,11 +114,11 @@
                                                 @if ($customer->customer->profile_image)
                                                     @if (Str::startsWith($customer->customer->profile_image, 'https:'))
                                                         <img src="{{ $customer->customer->profile_image }}"
-                                                        class="size-10 rounded-full"
+                                                            class="size-10 rounded-full"
                                                             alt="{{ $customer->customer->customer_name }}">
                                                     @else
                                                         <img src="{{ asset('storage/' . $customer->customer->profile_image) }}"
-                                                        class="size-10 rounded-full"
+                                                            class="size-10 rounded-full"
                                                             alt="{{ $customer->customer->customer_name }}">
                                                     @endif
                                                 @else
@@ -143,7 +143,7 @@
                                     <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
                                         {{ $customer->total_orders }}</td>
                                     <td class="whitespace-nowrap text-end px-4 py-4 text-sm text-gray-900">
-                                        ${{ number_format($customer->total_spent) }} MMK</td>
+                                        {{ number_format($customer->total_spent) }} MMK</td>
 
                                 </tr>
                             @endforeach

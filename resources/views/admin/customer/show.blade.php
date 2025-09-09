@@ -39,9 +39,7 @@
                                             src="{{ asset('storage/' . $customer->profile_image) }}" alt="Demo" />
                                     @endif
                                 @else
-                                    <img class="w-20 rounded-full"
-                                        src="https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1"
-                                        alt="Demo" />
+                                    <img class="w-20 rounded-full" src="{{ '/fallback/user.webp' }}" alt="Demo" />
                                 @endif
                             </td>
                         </tr>

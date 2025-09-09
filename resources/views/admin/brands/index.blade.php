@@ -69,7 +69,7 @@
                                             <img src="{{ $brand->brand_image }}" alt="{{ $brand->brand_name }}"
                                                 class="size-14 border p-2 border-pearl-bush-300 rounded object-center object-cover">
                                         @else
-                                            <img src=" https://user-images.githubusercontent.com/237508/90246627-ecbda400-de2c-11ea-8bfb-b4307bfb975d.png"
+                                            <img src="{{ asset('/fallback/brand.png') }}"
                                                 class="size-14 object-center object-cover  p-2 rounded-md"
                                                 alt="placeholder" />
                                         @endif

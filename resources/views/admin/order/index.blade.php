@@ -97,8 +97,7 @@
                                                                 alt="{{ $order->customer->customer_name }}" />
                                                         @endif
                                                     @else
-                                                        <img src="https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1≈"
-                                                            class="size-10 rounded-full"
+                                                        <img src="{{ '/fallback/user.webp' }}" class="size-10 rounded-full"
                                                             alt="{{ $order->customer->customer_name }}" />
                                                     @endif
                                                 </div>

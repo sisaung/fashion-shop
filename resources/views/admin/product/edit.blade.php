@@ -92,8 +92,9 @@
                     <input type="hidden" name="page" value="{{ old('page', $page) }}">
                     <input type="hidden" name="q" value="{{ old('page', $q) }}">
 
+
                     {{-- product code --}}
-                    <div class="relative mb-4 col-span-2">
+                    {{-- <div class="relative mb-4 col-span-2">
                         <label for="product_code"
                             class="@error('product_code')
                             text-red-500
@@ -108,7 +109,7 @@
                         @error('product_code')
                             <p class="text-sm text-red-500"> {{ $message }}</p>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     {{-- product name --}}
                     <div class="relative mb-4 col-span-2">
@@ -130,7 +131,7 @@
                     </div>
 
 
-
+                    <div class="col-span-2"></div>
                     <div class="col-span-2"></div>
                     <div class="col-span-2"></div>
 

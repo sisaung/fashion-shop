@@ -4,15 +4,24 @@
 
         {{-- Main Content --}}
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
-            <div class=" clear-cart-container px-5 absolute">
-                <button
-                    class="clear-all-btn flex text-stone-500  hover:text-stone-600 hover:underline-offset-4 hover:underline cursor-pointer text-sm px-4 py-2 rounded-full">Clear
-                    All</button>
+
+
+            <div class=" clear-cart-container px-5 absolute w-[90%] lg:w-3/5 ml-5">
+                <div class="flex w-full justify-between items-center">
+                    <span class="total-cart-item-container hidden text-stone-800  hover:text-stone-900">All Items ( <span
+                            class="total-cart-item-count"> 0
+                        </span>
+                        )</span>
+                    <button
+                        class=" clear-all-btn flex text-stone-500  hover:text-stone-600 hover:underline-offset-4 hover:underline cursor-pointer text-sm px-4 py-2 rounded-full">Clear
+                        All</button>
+                </div>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-3 md:gap-12 gap-12 p-8">
 
                 {{-- Cart Items --}}
                 <div class="lg:col-span-2 h-auto  lg:h-screen overflow-y-auto hide-scrollbar">
+
 
                     <div class="empty-cart-output">
 

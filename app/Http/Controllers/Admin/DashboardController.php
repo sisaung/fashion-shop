@@ -144,13 +144,13 @@ class DashboardController extends Controller
         // revenue in selected period vs previous period
         $periodRevenue = Order::
         whereNotNull('payment_received_at')
-        ->whereBetween('payment_received_at', [$start, $end])
+        ->whereBetween('created_at', [$start, $end])
         ->sum('net_total');
 
 
         $previousRevenue = Order::
         whereNotNull('payment_received_at')
-        ->whereBetween('payment_received_at', [$previousStart, $previousEnd])
+        ->whereBetween('created_at', [$previousStart, $previousEnd])
         ->sum('net_total');
 
           // sale in selected period vs previous period

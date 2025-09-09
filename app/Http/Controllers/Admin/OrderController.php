@@ -485,6 +485,8 @@ Browsershot::html($fullHtml)
                     ->toArray();
 
                         $order->confirm_message = "Your order completed";
+                        $order->payment_received_at = now();
+                        $order->is_paid = 1;
                         Review::where('user_id', $order->customer_id)
                         ->whereIn('product_id', $productIds)
                         ->update([

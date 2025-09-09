@@ -1,6 +1,6 @@
 @extends('components.public.accountLayout')
 @section('container')
-    <div class="px-5">
+    <div class="px-5 pb-3 lg:pb-0">
         <div class="mt-5 flex items-center gap-x-2 mb-5">
             <p class="font-heading text-stone-600"> Manage Address </p>
             <button data-modal-target="small-modal" data-modal-toggle="small-modal"
@@ -124,7 +124,7 @@
         <div>
 
             @if (Auth::user()->address()->count() > 0)
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     @foreach (Auth::user()->address as $address)
                         <div class="group  border space-y-3 border-pearl-bush-400 rounded-md p-5">
 

@@ -3,7 +3,7 @@
     <div class="bg-white rounded-lg  py-6">
 
         <p class="font-heading text-stone-600 px-5 mb-3"> Available Payment Methods </p>
-        <div class="grid grid-cols-3 gap-3 px-5">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 px-5">
             <div>
                 <div class="border border-pearl-bush-400 rounded-lg p-4 flex items-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

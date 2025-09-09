@@ -63,19 +63,36 @@ const renderOrderSummary = (cart) => {
 
         if (data.status === 404 || data.status === 401) {
             Toastify({
-                text: "❗" + data.message,
+                text: data.message,
                 duration: 3000,
                 gravity: "top",
-                position: "right",
+                position: "center",
                 style: {
-                    background: "#fee2e2",
+                    background: "#fff0f0",
                     fontSize: "14px",
-                    color: "red",
+                    color: "#e60000",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
                     boxShadow: "0px",
                 },
                 close: true,
-                avatar: "",
+                avatar: "/icons/exclamation.jpg",
             }).showToast();
+            // Toastify({
+            //     text: "❗" + data.message,
+            //     duration: 3000,
+            //     gravity: "top",
+            //     position: "right",
+            //     style: {
+            //         background: "#fee2e2",
+            //         fontSize: "14px",
+            //         color: "red",
+            //         boxShadow: "0px",
+            //     },
+            //     close: true,
+            //     avatar: "",
+            // }).showToast();
             couponInput.value = "";
             applyBtn.disabled = true;
 
